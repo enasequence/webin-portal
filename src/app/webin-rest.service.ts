@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import 'rxjs/add/operator/toPromise';
+// import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class WebinRestService {
@@ -26,37 +26,44 @@ export class WebinRestService {
     }
   }
 
-  public async addSpreadsheet(spreadsheetFile: File): Promise<void> {
-    console.info('Add spreadsheet');
-
+  async post(formData: FormData) {
     const headers = this.headers();
 
+    const response: HttpResponse<any> = await this.http
+      .post(this._baseUrl, formData, { headers, observe: 'response' })
+      // .toPromise()
+      .subscribe(
+        // Success.
+        data => { /* TODO */ },
+        // Errors.
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+              // A client-side or network error occurred. Handle it accordingly.
+              console.log('An error occurred:', err.error.message);
+          }
+          else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+          }
+      });
+  }
+
+  public addSpreadsheet(spreadsheetFile: File) {
+    console.info('Add spreadsheet');
     const formData: FormData = new FormData();
     this.add(formData, 'ADD', spreadsheetFile);
-
-    const response: HttpResponse<any> = await this.http
-      .post(this._baseUrl, formData, { headers, observe: 'response' })
-      .toPromise();
-
-    console.log(response.status);
+    this.post(formData);
   }
 
-  public async updateSpreadsheet(spreadsheetFile: File): Promise<void> {
+  public updateSpreadsheet(spreadsheetFile: File) {
     console.info('Update spreadsheet');
-
-    const headers = this.headers();
-
     const formData: FormData = new FormData();
     this.add(formData, 'UPDATE', spreadsheetFile);
-
-    const response: HttpResponse<any> = await this.http
-      .post(this._baseUrl, formData, { headers, observe: 'response' })
-      .toPromise();
-
-    console.log(response.status);
+    this.post(formData);
   }
 
-  public async submitXml(
+  public submitXml(
     submissionFile: File,
     studyFile: File,
     projectFile: File,
@@ -66,12 +73,9 @@ export class WebinRestService {
     analysisFile: File,
     dacFile: File,
     policyFile: File,
-    datasetFile: File): Promise<void> {
+    datasetFile: File) {
 
     console.info('Submit XML');
-
-    const headers = this.headers();
-
     const formData: FormData = new FormData();
     this.add(formData, 'SUBMISSION', submissionFile);
     this.add(formData, 'STUDY', studyFile);
@@ -83,11 +87,6 @@ export class WebinRestService {
     this.add(formData, 'DAC', dacFile);
     this.add(formData, 'POLICY', policyFile);
     this.add(formData, 'DATASET', datasetFile);
-
-    const response: HttpResponse<any> = await this.http
-      .post(this._baseUrl, formData, { headers, observe: 'response' })
-      .toPromise();
-
-    console.log(response.status);
+    this.post(formData);
   }
 }

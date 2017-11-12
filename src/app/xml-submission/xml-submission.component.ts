@@ -51,6 +51,11 @@ export class XmlSubmissionComponent implements OnInit {
     console.info("Run file: " + this.runFile);
   }
 
+  onChangeAnalysisFile(files) {
+    this.analysisFile = files[0];
+    console.info("Analysis file: " + this.analysisFile);
+  }
+
   onChangeDacFile(files) {
     this.dacFile = files[0];
     console.info("Dac file: " + this.dacFile);
