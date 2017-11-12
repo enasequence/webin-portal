@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 // import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class WebinRestService {
   async post(formData: FormData) {
     const headers = this.headers();
 
-    const response: HttpResponse<any> = await this.http
+    await this.http
       .post(this._baseUrl, formData, { headers, observe: 'response' })
       // .toPromise()
       .subscribe(
