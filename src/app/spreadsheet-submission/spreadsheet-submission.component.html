@@ -61,26 +61,26 @@
       </div>
   </mat-step>
   <mat-step [stepControl]="submissionSubmitFormGroup">
-    <form [formGroup]="submissionSubmitFormGroup">
       <ng-template matStepLabel>Submit spreadsheet</ng-template>
-<!--      <mat-form-field> -->
-
-
         <p>Submit spreadsheet</p>
         <p>
           <input type="file" #file (change)="onChangeSpreadsheetFile(file.files)"/>
         </p>
         <p>
+        <mat-radio-group class ="app-radio-group" [(ngModel)]="addOrUpdate">
+          <mat-radio-button class ="app-radio-button" value="add">Submit new records</mat-radio-button>
+          <mat-radio-button class ="app-radio-button" value="update">Update existing records</mat-radio-button>
+        </mat-radio-group>
+      </p>
+        <p>
           <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
         </p>
-<!--      </mat-form-field> -->
       <div>
         <button mat-button matStepperPrevious>Back</button>
       </div>
-    </form>
   </mat-step>
-</mat-horizontal-stepper>
 
+</mat-horizontal-stepper>
 
 <!-- Copyright 2017 Google Inc. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that

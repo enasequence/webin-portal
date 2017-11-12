@@ -42,6 +42,8 @@ export class SpreadsheetSubmissionComponent implements OnInit {
 
   spreadsheetFile: File;
 
+  addOrUpdate: string = 'add';
+
   // https://stackoverflow.com/questions/35399617/angular-2-file-upload-from-input-type-file
   onChangeSpreadsheetFile(files) {
     this.spreadsheetFile = files[0];
@@ -55,7 +57,12 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   //angular.io/guide/http
   // https://stackoverflow.com/questions/46059226/upload-image-with-httpclient
   submit() {
-      this.webinRestService.submitSpreadsheet(this.spreadsheetFile);
+    if (this.addOrUpdate == 'add') {
+      this.webinRestService.addSpreadsheet(this.spreadsheetFile);
+    }
+    else {
+      this.webinRestService.updateSpreadsheet(this.spreadsheetFile);
+    }
   }
 
   constructor(

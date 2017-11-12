@@ -26,12 +26,28 @@ export class WebinRestService {
     }
   }
 
-  public async submitSpreadsheet(spreadsheetFile: File): Promise<void> {
+  public async addSpreadsheet(spreadsheetFile: File): Promise<void> {
+    console.info('Add spreadsheet');
 
     const headers = this.headers();
 
     const formData: FormData = new FormData();
-    this.add(formData, 'SPREADSHEET', spreadsheetFile);
+    this.add(formData, 'ADD', spreadsheetFile);
+
+    const response: HttpResponse<any> = await this.http
+      .post(this._baseUrl, formData, { headers, observe: 'response' })
+      .toPromise();
+
+    console.log(response.status);
+  }
+
+  public async updateSpreadsheet(spreadsheetFile: File): Promise<void> {
+    console.info('Update spreadsheet');
+
+    const headers = this.headers();
+
+    const formData: FormData = new FormData();
+    this.add(formData, 'UPDATE', spreadsheetFile);
 
     const response: HttpResponse<any> = await this.http
       .post(this._baseUrl, formData, { headers, observe: 'response' })
@@ -51,6 +67,8 @@ export class WebinRestService {
     dacFile: File,
     policyFile: File,
     datasetFile: File): Promise<void> {
+
+    console.info('Submit XML');
 
     const headers = this.headers();
 

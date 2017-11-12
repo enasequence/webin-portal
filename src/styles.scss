@@ -130,6 +130,20 @@ $accent: map-get($app-theme, accent);
     background-color: #FFD2D2;
 }
 
+.app-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.app-radio-button {
+  margin: 5px;
+}
+
+.app-selected-value {
+  margin: 15px 0;
+}
+
+
 /*
 .app-file-input-label {
   width:300px;
