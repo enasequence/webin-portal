@@ -50,6 +50,7 @@ import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet
 
 import { WebinRestService } from './webin-rest.service';
 import { SpreadsheetService } from './spreadsheet.service';
+import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
 
 @NgModule({
   imports: [
@@ -99,7 +100,8 @@ import { SpreadsheetService } from './spreadsheet.service';
     SpreadsheetSubmissionComponent,
     SubmissionTypeSelectorComponent,
     SubmissionFormatSelectorComponent,
-    SubmissionSpreadsheetSelectorComponent
+    SubmissionSpreadsheetSelectorComponent,
+    XmlSubmissionComponent
   ],
   bootstrap: [
       AppComponent

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import { SubmissionFormatSelectorComponent } from '../submission-format-selector/submission-format-selector.component';
@@ -10,12 +10,13 @@ import { WebinRestService } from '../webin-rest.service';
   selector: 'app-spreadsheet-submission',
   templateUrl: './spreadsheet-submission.component.html',
   styleUrls: ['./spreadsheet-submission.component.css'],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     SubmissionFormatSelectorComponent,
     SubmissionSpreadsheetSelectorComponent
   ]
 })
-export class SpreadsheetSubmissionComponent {
+export class SpreadsheetSubmissionComponent implements OnInit {
 
   submissionType: string;
   submissionFormat: string;

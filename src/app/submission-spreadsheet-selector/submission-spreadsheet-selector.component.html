@@ -5,25 +5,29 @@
 </p>
 
 <ng-container *ngIf="submissionFormat !== undefined">
-
+  <p>
+    Spreadsheet format:
+  </p>
   <mat-radio-group class ="submission-spreadsheet-radio-group" [(ngModel)]="submissionSpreadsheet">
 
       <mat-radio-button class ="submission-spreadsheet-radio-button" value="xslx">
-        xslx spreadsheet template
+        xslx
       </mat-radio-button>
 
       <mat-radio-button class ="submission-spreadsheet-radio-button" value="xsl">
-        xsl spreadsheet template
+        xsl
       </mat-radio-button>
 
       <mat-radio-button class ="submission-spreadsheet-radio-button" value="tsv">
-        tsv template
+        tsv
       </mat-radio-button>
 
   </mat-radio-group>
 
   <p>
-    <button mat-raised-button color="accent" [disabled]="submissionSpreadsheet == undefined" (click)="download()">Download {{getSpreadsheetFileName()}}</button>
+    <button mat-raised-button color="accent" [disabled]="submissionSpreadsheet == undefined" (click)="download()">
+      Download {{getSpreadsheetFileName()}}
+    </button>
   </p>
 
 </ng-container>
