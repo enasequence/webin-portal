@@ -1,7 +1,7 @@
 
-<mat-radio-group class ="submission-format-radio-group" [(ngModel)]="submissionFormat">
+<mat-radio-group class ="app-radio-group" [(ngModel)]="submissionFormat">
   <ng-container *ngIf="submissionType == 'Reads'">
-    <mat-radio-button class ="submission-format-radio-button" *ngFor="let format of readFormats" [value]="format">
+    <mat-radio-button class ="app-radio-button" *ngFor="let format of readFormats" [value]="format">
       {{format}}
     </mat-radio-button>
   </ng-container>
@@ -9,7 +9,7 @@
     <p>
       Genomes:
     </p>
-    <mat-radio-button class ="submission-format-radio-button" *ngFor="let format of genomeFormats" [value]="format">
+    <mat-radio-button class ="app-radio-button" *ngFor="let format of genomeFormats" [value]="format">
       {{format}}
     </mat-radio-button>
     <p>
@@ -23,7 +23,7 @@
     <p>
       Transciptomes:
     </p>
-    <mat-radio-button class ="submission-format-radio-button" *ngFor="let format of transcriptomeFormats" [value]="format">
+    <mat-radio-button class ="app-radio-button" *ngFor="let format of transcriptomeFormats" [value]="format">
       {{format}}
     </mat-radio-button>
     <p>

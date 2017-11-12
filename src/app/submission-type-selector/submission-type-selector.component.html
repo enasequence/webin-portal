@@ -1,10 +1,10 @@
 
-<mat-radio-group [(ngModel)]="submissionType">
+<mat-radio-group class="app-radio-group" [(ngModel)]="submissionType">
 
   <mat-expansion-panel (click)="submissionType = 'Reads'">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <mat-radio-button class="submission-type-radio-button" value="Reads">
+        <mat-radio-button class="app-radio-button" value="Reads">
           Reads
         </mat-radio-button>
       </mat-panel-title>
@@ -31,7 +31,7 @@
   <mat-expansion-panel (click)="submissionType = 'Genomes'">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <mat-radio-button class="submission-type-radio-button" value="Genomes">
+        <mat-radio-button class="app-radio-button" value="Genomes">
           Genomes
         </mat-radio-button>
       </mat-panel-title>
@@ -53,7 +53,7 @@
     <mat-expansion-panel (click)="submissionType = 'Transcriptomes'">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <mat-radio-button class="submission-type-radio-button" value="Transcriptomes">
+          <mat-radio-button class="app-radio-button" value="Transcriptomes">
             Transcriptomes
           </mat-radio-button>
         </mat-panel-title>
