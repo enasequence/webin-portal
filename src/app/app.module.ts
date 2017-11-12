@@ -43,7 +43,7 @@ import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { submissionStepperComponent } from './submission-stepper/submission-stepper.component';
+import { SpreadsheetSubmissionComponent } from './spreadsheet-submission/spreadsheet-submission.component';
 import { SubmissionTypeSelectorComponent } from './submission-type-selector/submission-type-selector.component';
 import { SubmissionFormatSelectorComponent } from './submission-format-selector/submission-format-selector.component';
 import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet-selector/submission-spreadsheet-selector.component';
@@ -96,7 +96,7 @@ import { SpreadsheetService } from './spreadsheet.service';
   ],
   declarations: [
     AppComponent,
-    submissionStepperComponent,
+    SpreadsheetSubmissionComponent,
     SubmissionTypeSelectorComponent,
     SubmissionFormatSelectorComponent,
     SubmissionSpreadsheetSelectorComponent

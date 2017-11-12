@@ -7,15 +7,15 @@ import { SubmissionSpreadsheetSelectorComponent } from '../submission-spreadshee
 import { WebinRestService } from '../webin-rest.service';
 
 @Component({
-  selector: 'app-submission-stepper',
-  templateUrl: './submission-stepper.component.html',
-  styleUrls: ['./submission-stepper.component.css'],
+  selector: 'app-spreadsheet-submission',
+  templateUrl: './spreadsheet-submission.component.html',
+  styleUrls: ['./spreadsheet-submission.component.css'],
   providers: [
     SubmissionFormatSelectorComponent,
     SubmissionSpreadsheetSelectorComponent
   ]
 })
-export class submissionStepperComponent {
+export class SpreadsheetSubmissionComponent {
 
   submissionType: string;
   submissionFormat: string;
