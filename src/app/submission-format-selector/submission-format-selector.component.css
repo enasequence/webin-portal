@@ -1,0 +1,12 @@
+.submission-format-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.submission-format-radio-button {
+  margin: 5px;
+}
+
+.submission-format-selected-value {
+  margin: 15px 0;
+}

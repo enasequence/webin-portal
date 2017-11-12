@@ -1,0 +1,36 @@
+
+<mat-radio-group class ="submission-format-radio-group" [(ngModel)]="submissionFormat">
+  <ng-container *ngIf="submissionType == 'Reads'">
+    <mat-radio-button class ="submission-format-radio-button" *ngFor="let format of readFormats" [value]="format">
+      {{format}}
+    </mat-radio-button>
+  </ng-container>
+  <ng-container *ngIf="submissionType == 'Genomes'">
+    <p>
+      Genomes:
+    </p>
+    <mat-radio-button class ="submission-format-radio-button" *ngFor="let format of genomeFormats" [value]="format">
+      {{format}}
+    </mat-radio-button>
+    <p>
+    <span class = "app-primary-color">
+    <i class="material-icons">announcement</i>
+    </span>
+      Unannotated sequences are submitted in Fasta format and annotated sequences in flat file format.
+    </p>
+  </ng-container>
+  <ng-container *ngIf="submissionType == 'Transcriptomes'">
+    <p>
+      Transciptomes:
+    </p>
+    <mat-radio-button class ="submission-format-radio-button" *ngFor="let format of transcriptomeFormats" [value]="format">
+      {{format}}
+    </mat-radio-button>
+    <p>
+      <span class = "app-primary-color">
+      <i class="material-icons">announcement</i>
+      </span>
+      Unannotated sequences are submitted in Fasta format and annotated sequences in flat file format.
+    </p>
+  </ng-container>
+</mat-radio-group>

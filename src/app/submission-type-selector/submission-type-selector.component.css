@@ -1,0 +1,17 @@
+.submission-type-card {
+  width: 250px;
+}
+
+.submission-type-title {
+  font-size:20px;
+  font-weight:400;
+  line-height:26px;
+}
+
+.submission-type-radio-button {
+  margin: 5px;
+}
+
+.submission-type-selected-value {
+  margin: 15px 0;
+}

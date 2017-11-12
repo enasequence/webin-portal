@@ -1,0 +1,87 @@
+
+<mat-grid-list cols="4" rowHeight="50px">
+
+  <mat-grid-tile>
+    <mat-chip-list>
+      <mat-chip>{{submissionType}}</mat-chip>
+    </mat-chip-list>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-chip-list>
+      <mat-chip *ngIf="submissionFormat !== undefined">{{submissionFormat}}</mat-chip>
+    </mat-chip-list>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-chip-list>
+      <mat-chip *ngIf="submissionSpreadsheet !== undefined">{{submissionSpreadsheet}}</mat-chip>
+    </mat-chip-list>
+  </mat-grid-tile>
+
+</mat-grid-list>
+
+<mat-horizontal-stepper>
+
+  <mat-step [stepControl]="submissionTypeFormGroup">
+      <ng-template matStepLabel>Select submission type</ng-template>
+
+      <app-submission-type-selector (onSubmissionTypeChange)="consumeSubmissionTypeChange($event)">
+      </app-submission-type-selector>
+
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+  </mat-step>
+  <mat-step [stepControl]="submissionFormatFormGroup">
+      <ng-template matStepLabel>Select submission format</ng-template>
+
+        <app-submission-format-selector
+          [submissionType]='submissionType'
+          (onSubmissionFormatChange)="consumeSubmissionFormatChange($event)">
+        </app-submission-format-selector>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+  </mat-step>
+  <mat-step [stepControl]="submissionSpreadsheetFormGroup">
+      <ng-template matStepLabel>Download spreadsheet</ng-template>
+
+        <app-submission-spreadsheet-selector
+          [submissionType]='submissionType'
+          [submissionFormat]='submissionFormat'
+          (onSubmissionSpreadsheetChange)="consumeSubmissionSpreadsheetChange($event)">
+        </app-submission-spreadsheet-selector>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+  </mat-step>
+  <mat-step [stepControl]="submissionSubmitFormGroup">
+    <form [formGroup]="submissionSubmitFormGroup">
+      <ng-template matStepLabel>Submit spreadsheet</ng-template>
+<!--      <mat-form-field> -->
+
+
+        <p>Submit spreadsheet</p>
+        <p>
+          <input type="file" #file (change)="onChangeSpreadsheetFile(file.files)"/>
+        </p>
+        <p>
+          <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
+        </p>
+<!--      </mat-form-field> -->
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
+
+
+<!-- Copyright 2017 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

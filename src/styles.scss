@@ -1,0 +1,131 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Material icons
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+// Fonts
+
+@import url('https://fonts.googleapis.com/icon?family=Roboto');
+
+body {
+ font-family: Roboto;
+}
+
+// Material theme
+
+/*
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+*/
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+// https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/ebi-global.css
+// primary #007c82
+// accent (analogous) #38983e
+// http://mcg.mbitson.com
+$mat-ebi-primary: (
+  50 : #e0eff0,
+  100 : #b3d8da,
+  200 : #80bec1,
+  300 : #4da3a8,
+  400 : #269095,
+  500 : #007c82,
+  600 : #00747a,
+  700 : #00696f,
+  800 : #005f65,
+  900 : #004c52,
+  A100 : #85f4ff,
+  A200 : #52efff,
+  A400 : #1febff,
+  A700 : #05e8ff,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$mat-ebi-accent: (
+  50 : #e7f3e8,
+  100 : #c3e0c5,
+  200 : #9ccc9f,
+  300 : #74b778,
+  400 : #56a75b,
+  500 : #38983e,
+  600 : #329038,
+  700 : #2b8530,
+  800 : #247b28,
+  900 : #176a1b,
+  A100 : #a3ffa7,
+  A200 : #70ff76,
+  A400 : #3dff45,
+  A700 : #24ff2c,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$app-primary: mat-palette($mat-ebi-primary);
+$app-accent:  mat-palette($mat-ebi-accent);
+$app-warn:    mat-palette($mat-red);
+
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);
+
+// Styles
+
+$primary: map-get($app-theme, primary);
+$accent: map-get($app-theme, accent);
+
+.app-primary-color {
+  color: mat-color($primary);
+}
+
+.app-accent-color {
+  color: mat-color($accent);
+}
+
+.app-warning, .app-error {
+  margin: 10px 0px;
+  padding:12px;
+}
+
+.app-warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.app-error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}

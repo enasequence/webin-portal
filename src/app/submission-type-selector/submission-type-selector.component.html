@@ -1,0 +1,80 @@
+
+<mat-radio-group [(ngModel)]="submissionType">
+
+  <mat-expansion-panel (click)="submissionType = 'Reads'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-radio-button class="submission-type-radio-button" value="Reads">
+          Reads
+        </mat-radio-button>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      <p>
+      Raw sequencing reads are submitted as runs. Each run
+      is associated with read data files, experimental information,
+      a study and a sample.
+      </p>
+      <p>
+        <span class = "app-primary-color">
+        <i class="material-icons">announcement</i>
+        </span>
+        Read data must be uploaded before runs can be submitted.
+      </p>
+      <p>
+        <span class = "app-primary-color">
+        <i class="material-icons">announcement</i>
+        </span>
+      Studies and samples must be submitted before runs are submitted.
+      </p>
+    </mat-expansion-panel>
+
+  <mat-expansion-panel (click)="submissionType = 'Genomes'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-radio-button class="submission-type-radio-button" value="Genomes">
+          Genomes
+        </mat-radio-button>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      <p>
+      Genome assemblies can contain contigs, scaffolds, chromosomes,
+      unlocalised sequences and optional functional annotation. Typically,
+      each assembly is associated with a unique BioProject and BioSample combination. Assembly
+      updates are detected automatically from this unique pairing.
+      </p>
+      <p>
+        <span class = "app-primary-color">
+        <i class="material-icons">announcement</i>
+        </span>
+      BioProjects and BioSamples must be submitted before genome assemblies are submitted.
+      </p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (click)="submissionType = 'Transcriptomes'">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-radio-button class="submission-type-radio-button" value="Transcriptomes">
+            Transcriptomes
+          </mat-radio-button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>
+      Transcriptome assemblies contain transcripts and optional functional annotation.
+      Transcriptome assemblies are submitted as a fasta file and a transcriptome
+      assembly info file. If the transcripts are associated with functional
+      sequence annotation then the sequences are submitted using a flat file.
+    </p>
+      <p>
+      Each transcriptome assembly is associated with a BioProject and a BioSample.
+      </p>
+      <p>
+        <span class = "app-primary-color">
+        <i class="material-icons">announcement</i>
+        </span>
+
+      BioProjects and BioSamples must be submitted before transcriptome assemblies are submitted.
+      </p>
+    </mat-expansion-panel>
+
+
+</mat-radio-group>

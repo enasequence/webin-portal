@@ -1,0 +1,29 @@
+
+<p class="app-error" *ngIf="submissionFormat == undefined">
+  <i class="material-icons">error</i>
+  Please select submission format
+</p>
+
+<ng-container *ngIf="submissionFormat !== undefined">
+
+  <mat-radio-group class ="submission-spreadsheet-radio-group" [(ngModel)]="submissionSpreadsheet">
+
+      <mat-radio-button class ="submission-spreadsheet-radio-button" value="xslx">
+        xslx spreadsheet template
+      </mat-radio-button>
+
+      <mat-radio-button class ="submission-spreadsheet-radio-button" value="xsl">
+        xsl spreadsheet template
+      </mat-radio-button>
+
+      <mat-radio-button class ="submission-spreadsheet-radio-button" value="tsv">
+        tsv template
+      </mat-radio-button>
+
+  </mat-radio-group>
+
+  <p>
+    <button mat-raised-button color="accent" [disabled]="submissionSpreadsheet == undefined" (click)="download()">Download {{getSpreadsheetFileName()}}</button>
+  </p>
+
+</ng-container>
