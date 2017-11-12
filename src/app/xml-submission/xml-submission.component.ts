@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import { WebinRestService } from '../webin-rest.service';
 
@@ -10,8 +9,6 @@ import { WebinRestService } from '../webin-rest.service';
   encapsulation: ViewEncapsulation.None
 })
 export class XmlSubmissionComponent implements OnInit {
-
-  submissionSubmitFormGroup: FormGroup;
 
   submissionFile: File;
   studyFile: File;
@@ -99,13 +96,9 @@ export class XmlSubmissionComponent implements OnInit {
   }
 
   constructor(
-    private _formBuilder: FormBuilder,
     private webinRestService: WebinRestService) {
   }
 
   ngOnInit() {
-    this.submissionSubmitFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 }

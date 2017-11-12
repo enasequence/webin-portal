@@ -1,4 +1,4 @@
-import { Component,  EventEmitter, Output, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import {saveAs as importedSaveAs} from "file-saver";
 
 import { SpreadsheetService } from '../spreadsheet.service';

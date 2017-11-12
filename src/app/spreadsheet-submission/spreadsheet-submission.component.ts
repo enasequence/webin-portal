@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import { SubmissionFormatSelectorComponent } from '../submission-format-selector/submission-format-selector.component';
 import { SubmissionSpreadsheetSelectorComponent } from '../submission-spreadsheet-selector/submission-spreadsheet-selector.component';
@@ -38,8 +37,6 @@ export class SpreadsheetSubmissionComponent implements OnInit {
     console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
   }
 
-  submissionSubmitFormGroup: FormGroup;
-
   spreadsheetFile: File;
 
   addOrUpdate: string = 'add';
@@ -66,13 +63,9 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   }
 
   constructor(
-    private _formBuilder: FormBuilder,
     private webinRestService: WebinRestService) {
   }
 
   ngOnInit() {
-    this.submissionSubmitFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 }

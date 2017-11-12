@@ -1,54 +1,46 @@
-<form [formGroup]="submissionSubmitFormGroup">
+<p>Submission XML (mandatory)</p>
+<p>
+  <!-- <label for="submissionFile" class="app-file-input-label">Submission XML (mandatory)</label> -->
+  <!-- id="submissionFile"  -->
+  <input type="file" #submissionFile (change)="onChangeSubmissionFile(submissionFile.files)"/>
+</p>
+<p>Study XML</p>
+<p>
+  <input type="file" #studyFile (change)="onChangeStudyFile(studyFile.files)"/>
+</p>
+<p>Project XML</p>
+<p>
+  <input type="file" #projectFile (change)="onChangeProjectFile(projectFile.files)"/>
+</p>
+<p>Sample XML</p>
+<p>
+  <input type="file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)"/>
+</p>
+<p>Experiment XML</p>
+<p>
+  <input type="file" #experimentFile (change)="onChangeExperimentFile(experimentFile.files)"/>
+</p>
+<p>Run XML</p>
+<p>
+  <input type="file" #runFile (change)="onChangeRunFile(runFile.files)"/>
+</p>
+<p>Analysis XML</p>
+<p>
+  <input type="file" #analysisFile (change)="onChangeAnalysisFile(analysisFile.files)"/>
+</p>
+<p>DAC XML</p>
+<p>
+  <input type="file" #dacFile (change)="onChangeDacFile(dacFile.files)"/>
+</p>
+<p>Policy XML</p>
+<p>
+  <input type="file" #policyFile (change)="onChangePolicyFile(policyFile.files)"/>
+</p>
+<p>Dataset XML</p>
+<p>
+  <input type="file" #datasetFile (change)="onChangeDatasetFile(datasetFile.files)"/>
+</p>
 
-<!--      <mat-form-field> -->
-
-    <p>Submission XML (mandatory)</p>
-    <p>
-      <!-- <label for="submissionFile" class="app-file-input-label">Submission XML (mandatory)</label> -->
-      <!-- id="submissionFile"  -->
-      <input type="file" #submissionFile (change)="onChangeSubmissionFile(submissionFile.files)"/>
-    </p>
-    <p>Study XML</p>
-    <p>
-      <input type="file" #studyFile (change)="onChangeStudyFile(studyFile.files)"/>
-    </p>
-    <p>Project XML</p>
-    <p>
-      <input type="file" #projectFile (change)="onChangeProjectFile(projectFile.files)"/>
-    </p>
-    <p>Sample XML</p>
-    <p>
-      <input type="file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)"/>
-    </p>
-    <p>Experiment XML</p>
-    <p>
-      <input type="file" #experimentFile (change)="onChangeExperimentFile(experimentFile.files)"/>
-    </p>
-    <p>Run XML</p>
-    <p>
-      <input type="file" #runFile (change)="onChangeRunFile(runFile.files)"/>
-    </p>
-    <p>Analysis XML</p>
-    <p>
-      <input type="file" #analysisFile (change)="onChangeAnalysisFile(analysisFile.files)"/>
-    </p>
-    <p>DAC XML</p>
-    <p>
-      <input type="file" #dacFile (change)="onChangeDacFile(dacFile.files)"/>
-    </p>
-    <p>Policy XML</p>
-    <p>
-      <input type="file" #policyFile (change)="onChangePolicyFile(policyFile.files)"/>
-    </p>
-    <p>Dataset XML</p>
-    <p>
-      <input type="file" #datasetFile (change)="onChangeDatasetFile(datasetFile.files)"/>
-    </p>
-
-    <p>
-      <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
-    </p>
-
-<!--      </mat-form-field> -->
-
-</form>
+<p>
+  <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
+</p>
