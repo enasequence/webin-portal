@@ -1,22 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-// import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class WebinRestService {
 
   private _baseUrl = 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/';
 
-  // TODO
-  username: string = 'lbower@ebi.ac.uk';
-  password: string = 'sausages';
-
   constructor(private http: HttpClient) { }
 
   headers() {
     return new HttpHeaders()
       .append('Content-Type', 'multipart/form-data')
-      .append("Authorization", "Basic " + btoa(this.username + ':' + this.password))
       .append("Content-Type", "application/x-www-form-urlencoded");
   }
 
@@ -31,20 +25,18 @@ export class WebinRestService {
 
     await this.http
       .post(this._baseUrl, formData, { headers, observe: 'response' })
-      // .toPromise()
       .subscribe(
         // Success.
-        data => { /* TODO */ },
+        data => {
+          console.log(`Webin REST call to ${this._baseUrl} finished succesfully`);
+        },
         // Errors.
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-              // A client-side or network error occurred. Handle it accordingly.
-              console.log('An error occurred:', err.error.message);
+            console.log(`Webin REST call to ${this._baseUrl} finished with a client or network error ${err.error.message}`);
           }
           else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+            console.log(`Webin REST call to ${this._baseUrl} finished with a server error code: ${err.status}, body was: ${err.error}`);
           }
       });
   }

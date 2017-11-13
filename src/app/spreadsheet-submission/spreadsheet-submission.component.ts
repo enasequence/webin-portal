@@ -24,17 +24,17 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   consumeSubmissionTypeChange(submissionType: string) {
     this.submissionType = submissionType;
     this.submissionFormat = undefined;
-    console.info('Received changed submission type: ' + submissionType);
+    // console.info('Received changed submission type: ' + submissionType);
   }
 
   consumeSubmissionFormatChange(submissionFormat: string) {
     this.submissionFormat = submissionFormat;
-    console.info('Received changed submission format: ' + submissionFormat);
+    // console.info('Received changed submission format: ' + submissionFormat);
   }
 
   consumeSubmissionSpreadsheetChange(submissionSpreadsheet: string) {
     this.submissionSpreadsheet = submissionSpreadsheet;
-    console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
+    // console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
   }
 
   spreadsheetFile: File;

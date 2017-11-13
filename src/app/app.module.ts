@@ -41,6 +41,7 @@ import {
 
 import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SpreadsheetSubmissionComponent } from './spreadsheet-submission/spreadsheet-submission.component';
@@ -51,7 +52,9 @@ import { XmlSubmissionComponent } from './xml-submission/xml-submission.componen
 
 import { WebinRestService } from './webin-rest.service';
 import { SpreadsheetService } from './spreadsheet.service';
-import { AuthenticationService } from './authentication.service';
+import { WebinAuthenticationService } from './webin-authentication.service';
+
+import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
 
 @NgModule({
   imports: [
@@ -110,7 +113,12 @@ import { AuthenticationService } from './authentication.service';
   providers: [
     WebinRestService,
     SpreadsheetService,
-    AuthenticationService
+    WebinAuthenticationService,
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: WebinAuthenticationInterceptor,
+        multi: true,
+    }
   ]
 })
 export class AppModule { }
