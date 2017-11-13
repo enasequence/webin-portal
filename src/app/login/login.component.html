@@ -1,0 +1,29 @@
+<mat-grid-list cols="3">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="login-card">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle>Please provide your Webin credentials</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+        <mat-form-field>
+          <input matInput placeholder="Webin submission account" required [(ngModel)]="username">
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field>
+          <input type="password" matInput placeholder="Password" required [(ngModel)]="password">
+        </mat-form-field>
+        </p>
+        <button md-raised-button color="accent" type="submit" name="action" (click)="login()">Login</button>
+
+        <p class="app-error" *ngIf="error">
+          <i class="material-icons">error</i>
+          Invalid Webin submission account or password
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

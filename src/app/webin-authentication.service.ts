@@ -2,14 +2,17 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class WebinAuthenticationService {
 
-  private _baseUrl = 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/login';
+  private _baseUrl = 'https://www-test.ebi.ac.uk/ena/submit/drop-box/login';
 
-  username: string = 'lbower@ebi.ac.uk';
-  password: string = 'sausages';
+  private username: string;
+  private password: string;
+  public authenticated: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -20,33 +23,22 @@ export class WebinAuthenticationService {
 
   headers() {
     return new HttpHeaders()
-//      .append('Content-Type', 'multipart/form-data')
-      .append("Authorization", getAuthorizationHeader())
-//      .append("Content-Type", "application/x-www-form-urlencoded");
+      .append("Authorization", this.getAuthorizationHeader())
   }
 
-  login(username: string, password: string) {
+  public logout() {
+    this.username = undefined;
+    this.password = undefined;
+  }
+
+  public login(username: string, password: string) : Observable<any> {
+    console.log('Webin authentication login');
+
     this.username = username;
     this.password = password;
 
     const headers = this.headers();
-    const formData: FormData = new FormData();
-    this.http.post(this._baseUrl, formData, { headers, observe: 'response' })
-      .subscribe(
-        // Success.
-        data => {
-          console.log(`Webin authentication call to ${this._baseUrl} finished succesfully`);
-        },
-        // Errors.
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            console.log(`Webin authentication call to ${this._baseUrl} finished with a client or network error ${err.error.message}`);
-          }
-          else {
-            console.log(`Webin authentication call to ${this._baseUrl} finished with a server error code: ${err.status}, body was: ${err.error}`);
-          }
-      });
-
+    return this.http.get(this._baseUrl, { headers, observe: 'response' });
 
 /*
     return this.http.post(WebinAuthenticationService.AUTH_TOKEN, body, {headers})

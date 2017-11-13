@@ -11,9 +11,9 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.info('WebinAuthenticationInterceptor');
 
     if (req.url.match(this._baseUrlRegex)) {
+      console.info('WebinAuthenticationInterceptor');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
       const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationHeader())});
       return next.handle(authReq);

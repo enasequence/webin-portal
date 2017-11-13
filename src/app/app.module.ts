@@ -44,6 +44,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { SpreadsheetSubmissionComponent } from './spreadsheet-submission/spreadsheet-submission.component';
 import { SubmissionTypeSelectorComponent } from './submission-type-selector/submission-type-selector.component';
 import { SubmissionFormatSelectorComponent } from './submission-format-selector/submission-format-selector.component';
@@ -53,8 +55,28 @@ import { XmlSubmissionComponent } from './xml-submission/xml-submission.componen
 import { WebinRestService } from './webin-rest.service';
 import { SpreadsheetService } from './spreadsheet.service';
 import { WebinAuthenticationService } from './webin-authentication.service';
+import { WebinAuthenticationGuardService } from './webin-authentication-guard.service';
 
 import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
+
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  {
+    path: '',
+    component: LoginComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: '**',
+    component: DashboardComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  }
+];
 
 @NgModule({
   imports: [
@@ -98,6 +120,13 @@ import { WebinAuthenticationInterceptor } from './webin-authentication.intercept
       MatTabsModule,
       MatToolbarModule,
       MatTooltipModule,
+
+      // Router
+      RouterModule.forRoot(
+        appRoutes,
+        { enableTracing: true } // <-- debugging purposes only
+      ),
+
   ],
   declarations: [
     AppComponent,
@@ -105,7 +134,9 @@ import { WebinAuthenticationInterceptor } from './webin-authentication.intercept
     SubmissionTypeSelectorComponent,
     SubmissionFormatSelectorComponent,
     SubmissionSpreadsheetSelectorComponent,
-    XmlSubmissionComponent
+    XmlSubmissionComponent,
+    LoginComponent,
+    DashboardComponent
   ],
   bootstrap: [
       AppComponent
@@ -114,6 +145,7 @@ import { WebinAuthenticationInterceptor } from './webin-authentication.intercept
     WebinRestService,
     SpreadsheetService,
     WebinAuthenticationService,
+    WebinAuthenticationGuardService,
     {
         provide: HTTP_INTERCEPTORS,
         useClass: WebinAuthenticationInterceptor,
