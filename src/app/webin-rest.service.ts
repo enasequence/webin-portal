@@ -20,7 +20,7 @@ export class WebinRestService {
       .append("Content-Type", "application/x-www-form-urlencoded");
   }
 
-  add(formData: FormData, name: string, file: File) {
+  appendFile(formData: FormData, name: string, file: File) {
     if (file !== undefined) {
       formData.append(name, file, file.name);
     }
@@ -52,14 +52,32 @@ export class WebinRestService {
   public addSpreadsheet(spreadsheetFile: File) {
     console.info('Add spreadsheet');
     const formData: FormData = new FormData();
-    this.add(formData, 'ADD', spreadsheetFile);
+    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
+    formData.append('SPREADSHEET-ACTION', 'ADD');
     this.post(formData);
   }
 
   public updateSpreadsheet(spreadsheetFile: File) {
     console.info('Update spreadsheet');
     const formData: FormData = new FormData();
-    this.add(formData, 'UPDATE', spreadsheetFile);
+    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
+    formData.append('SPREADSHEET-ACTION', 'MODIFY');
+    this.post(formData);
+  }
+
+  public validateAddSpreadsheet(spreadsheetFile: File) {
+    console.info('Validate add spreadsheet');
+    const formData: FormData = new FormData();
+    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
+    formData.append('SPREADSHEET-ACTION', 'ADD,VALIDATE');
+    this.post(formData);
+  }
+
+  public validateUpdateSpreadsheet(spreadsheetFile: File) {
+    console.info('Validate update spreadsheet');
+    const formData: FormData = new FormData();
+    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
+    formData.append('SPREADSHEET-ACTION', 'MODIFY,VALIDATE');
     this.post(formData);
   }
 
@@ -77,16 +95,16 @@ export class WebinRestService {
 
     console.info('Submit XML');
     const formData: FormData = new FormData();
-    this.add(formData, 'SUBMISSION', submissionFile);
-    this.add(formData, 'STUDY', studyFile);
-    this.add(formData, 'PROJECT', projectFile);
-    this.add(formData, 'SAMPLE', sampleFile);
-    this.add(formData, 'EXPERIMENT', experimentFile);
-    this.add(formData, 'RUN', runFile);
-    this.add(formData, 'ANALYSIS', analysisFile);
-    this.add(formData, 'DAC', dacFile);
-    this.add(formData, 'POLICY', policyFile);
-    this.add(formData, 'DATASET', datasetFile);
+    this.appendFile(formData, 'SUBMISSION', submissionFile);
+    this.appendFile(formData, 'STUDY', studyFile);
+    this.appendFile(formData, 'PROJECT', projectFile);
+    this.appendFile(formData, 'SAMPLE', sampleFile);
+    this.appendFile(formData, 'EXPERIMENT', experimentFile);
+    this.appendFile(formData, 'RUN', runFile);
+    this.appendFile(formData, 'ANALYSIS', analysisFile);
+    this.appendFile(formData, 'DAC', dacFile);
+    this.appendFile(formData, 'POLICY', policyFile);
+    this.appendFile(formData, 'DATASET', datasetFile);
     this.post(formData);
   }
 }

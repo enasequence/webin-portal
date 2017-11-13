@@ -47,10 +47,11 @@ import { SpreadsheetSubmissionComponent } from './spreadsheet-submission/spreads
 import { SubmissionTypeSelectorComponent } from './submission-type-selector/submission-type-selector.component';
 import { SubmissionFormatSelectorComponent } from './submission-format-selector/submission-format-selector.component';
 import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet-selector/submission-spreadsheet-selector.component';
+import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { SpreadsheetService } from './spreadsheet.service';
-import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
+import { AuthenticationService } from './authentication.service';
 
 @NgModule({
   imports: [
@@ -108,7 +109,8 @@ import { XmlSubmissionComponent } from './xml-submission/xml-submission.componen
   ],
   providers: [
     WebinRestService,
-    SpreadsheetService
+    SpreadsheetService,
+    AuthenticationService
   ]
 })
 export class AppModule { }

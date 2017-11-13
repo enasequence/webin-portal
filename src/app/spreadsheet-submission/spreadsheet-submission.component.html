@@ -67,9 +67,11 @@
           <input type="file" #file (change)="onChangeSpreadsheetFile(file.files)"/>
         </p>
         <p>
-        <mat-radio-group class ="app-radio-group" [(ngModel)]="addOrUpdate">
+        <mat-radio-group class ="app-radio-group" [(ngModel)]="action">
           <mat-radio-button class ="app-radio-button" value="add">Submit new records</mat-radio-button>
           <mat-radio-button class ="app-radio-button" value="update">Update existing records</mat-radio-button>
+          <mat-radio-button class ="app-radio-button" value="validate add">Validate but do not submit new records</mat-radio-button>
+          <mat-radio-button class ="app-radio-button" value="validate update">Validate but do not update existing records</mat-radio-button>
         </mat-radio-group>
       </p>
         <p>
