@@ -1,17 +1,185 @@
+<!-- view-source:https://ebiwd.github.io/EBI-Pattern-library/sample-site-v1.2/boilerplate/blank.html -->
+
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Webin REST Portal</title>
+  <!-- For Angular -->
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- For Angular -->
 
+  <meta charset="utf-8" />
+  <title>The European Bioinformatics Institute &lt; EMBL-EBI</title>
+  <meta name="description" content="EMBL-EBI" /><!-- Describe what this page is about -->
+  <meta name="keywords" content="bioinformatics, europe, institute" /><!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
+  <meta name="author" content="EMBL-EBI" /><!-- Your [project-name] here -->
+  <meta name="HandheldFriendly" content="true" />
+  <meta name="MobileOptimized" content="width" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#70BDBD" /> <!-- Android Chrome mobile browser tab color -->
+
+  <!-- Add information on the life cycle of this page -->
+  <meta name="ebi:owner" content="John Doe" /> <!-- Who should be contacted about changes -->
+  <meta name="ebi:review-cycle" content="30" /> <!-- In days, how often should the content be reviewed -->
+  <meta name="ebi:last-review" content="2015-12-20" /> <!-- The last time the content was reviewed -->
+  <meta name="ebi:expiry" content="2016-01-20" /> <!-- When this content is no longer relevant -->
+
+  <!-- If you link to any other sites frequently, consider optimising performance with a DNS prefetch -->
+  <link rel="dns-prefetch" href="//www.ebi.ac.uk" />
+
+  <!-- If you have custom icon, replace these as appropriate.
+       You can generate them at realfavicongenerator.net -->
+  <link rel="icon" type="image/x-icon" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/favicon.ico" />
+  <link rel="icon" type="image/png" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192×192" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/android-chrome-192x192.png" /> <!-- Android (192px) -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/apple-icon-114x114.png" /> <!-- For iPhone 4 Retina display (114px) -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/apple-icon-72x72.png" /> <!-- For iPad (72px) -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/apple-icon-144x144.png" /> <!-- For iPad retinat (144px) -->
+  <link rel="apple-touch-icon-precomposed" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/apple-icon-57x57.png" /> <!-- For iPhone (57px) -->
+  <link rel="mask-icon" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/safari-pinned-tab.svg" color="#ffffff" /> <!-- Safari icon for pinned tab -->
+  <meta name="msapplication-TileColor" content="#2b5797" /> <!-- MS Icons -->
+  <meta name="msapplication-TileImage" content="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/images/logos/EMBL-EBI/favicons/mstile-144x144.png" />
+
+  <!-- CSS: implied media=all -->
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/css/foundation.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/ebi-global.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all" />
+
+  <!-- Use this CSS file for any custom styling -->
+  <!--
+    <link rel="stylesheet" href="css/custom.css" type="text/css" media="all" />
+  -->
+
+  <!-- If you have a custom header image or colour -->
+  <!--
+  <meta name="ebi:masthead-color" content="#000" />
+  <meta name="ebi:masthead-image" content="//www.ebi.ac.uk/web_guidelines/EBI-Framework/images/backgrounds/embl-ebi-background.jpg" />
+  -->
+
+  <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
+  <!-- also inform ES so we can host your colour palette file -->
+  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/theme-embl-petrol.css" type="text/css" media="all" />
+  <!-- end CSS-->
 </head>
 
-<body class="mat-app-background">
-  <app-root></app-root>
-</body>
+<body  class="level2" >  <!-- Angular class="mat-app-background" -->
+  <div id="skip-to">
+     <ul>
+       <li><a href="#content">Skip to main content</a></li>
+       <li><a href="#local-nav">Skip to local navigation</a></li>
+       <li><a href="#global-nav">Skip to EBI global navigation menu</a></li>
+       <li><a href="#global-nav-expanded">Skip to expanded EBI global navigation menu (includes all sub-sections)</a></li>
+     </ul>
+   </div>
 
-</html>
+   <header id="masthead-black-bar" class="clearfix masthead-black-bar">
+     <nav class="row">
+       <ul id="global-nav" class="menu">
+         <!-- set active class as appropriate -->
+         <li class="home-mobile"><a href="//www.ebi.ac.uk"></a></li>
+         <li class="home active"><a href="//www.ebi.ac.uk">EMBL-EBI</a></li>
+         <li class="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
+         <li class="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
+         <li class="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
+         <li class="about"><a href="//www.ebi.ac.uk/about">About us</a></li>
+         <li class="search">
+           <a href="#" data-toggle="search-global-dropdown"><span class="show-for-small-only">Search</span></a>
+           <div id="search-global-dropdown" class="dropdown-pane" data-dropdown data-options="closeOnClick:true;">
+           <!-- The dropdown menu will be programatically added by script.js -->
+           </div>
+         </li>
+         <li class="float-right show-for-medium embl-selector">
+           <button class="button float-right" type="button" data-toggle="embl-dropdown">Hinxton</button>
+           <!-- The dropdown menu will be programatically added by script.js -->
+         </li>
+       </ul>
+     </nav>
+   </header>
+
+   <div id="content">
+      <div data-sticky-container>
+        <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
+          <div class="masthead-inner row">
+            <!-- local-title -->
+            <div class="columns medium-12" id="local-title">
+              <h1><a href="../../" title="Back to [service-name] homepage">Webin REST Service Portal</a></h1>
+            </div>
+            <!-- /local-title -->
+            <!-- local-nav -->
+            <nav >
+              <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
+                <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
+              </ul>
+            </nav>
+            <!-- /local-nav -->
+          </div>
+        </header>
+      </div>
+
+      <!-- Suggested layout containers -->
+        <section id="main-content-area" class="row" role="main">
+
+
+         <app-root></app-root>
+
+
+        </section>
+
+
+        <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
+         <!--
+         <footer id="local-footer" class="local-footer" role="local-footer">
+           <div class="row">
+             <span class="reference">How to reference this page: ...</span>
+           </div>
+         </footer>
+         -->
+         <!-- End optional local footer -->
+       </div>
+       <!-- End suggested layout containers / #content -->
+
+       <footer>
+         <div id="global-footer" class="global-footer">
+           <nav id="global-nav-expanded" class="global-nav-expanded row">
+             <!-- Footer will be automatically inserted by footer.js -->
+           </nav>
+           <section id="ebi-footer-meta" class="ebi-footer-meta row">
+             <!-- Footer meta will be automatically inserted by footer.js -->
+           </section>
+         </div>
+       </footer>
+
+       <!-- JavaScript -->
+        <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+        <!--
+        <script>window.jQuery || document.write('<script src="../js/libs/jquery-1.10.2.min.js"><\/script>')</script>
+        -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!-- Your custom JavaScript file scan go here... change names accordingly -->
+        <!--
+        <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
+        <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
+        -->
+
+        <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
+
+        <!-- The Foundation theme JavaScript -->
+        <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
+        <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
+        <script type="text/JavaScript">$(document).foundation();</script>
+        <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
+
+        <!-- Google Analytics details... -->
+        <!-- Change UA-XXXXX-X to be your site's ID -->
+        <!--
+        <script>
+          window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+          Modernizr.load({
+            load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+          });
+        </script>
+        -->
+      </body>
+      </html>
