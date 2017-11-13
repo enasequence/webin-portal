@@ -23,7 +23,7 @@
 
 <mat-horizontal-stepper>
 
-  <mat-step [stepControl]="submissionTypeFormGroup">
+  <mat-step>
       <ng-template matStepLabel>Select submission type</ng-template>
 
       <app-submission-type-selector (onSubmissionTypeChange)="consumeSubmissionTypeChange($event)">
@@ -33,7 +33,7 @@
         <button mat-button matStepperNext>Next</button>
       </div>
   </mat-step>
-  <mat-step [stepControl]="submissionFormatFormGroup">
+  <mat-step>
       <ng-template matStepLabel>Select submission format</ng-template>
 
         <app-submission-format-selector
@@ -46,7 +46,7 @@
         <button mat-button matStepperNext>Next</button>
       </div>
   </mat-step>
-  <mat-step [stepControl]="submissionSpreadsheetFormGroup">
+  <mat-step>
       <ng-template matStepLabel>Download spreadsheet</ng-template>
 
         <app-submission-spreadsheet-selector
@@ -60,7 +60,7 @@
         <button mat-button matStepperNext>Next</button>
       </div>
   </mat-step>
-  <mat-step [stepControl]="submissionSubmitFormGroup">
+  <mat-step>
       <ng-template matStepLabel>Submit spreadsheet</ng-template>
         <p>Submit spreadsheet</p>
         <p>
