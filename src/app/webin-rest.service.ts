@@ -44,32 +44,32 @@ export class WebinRestService {
   public addSpreadsheet(spreadsheetFile: File) {
     console.info('Add spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
-    formData.append('SPREADSHEET-ACTION', 'ADD');
+    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
+    formData.append('ACTION', 'ADD');
     this.post(formData);
   }
 
   public updateSpreadsheet(spreadsheetFile: File) {
     console.info('Update spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
-    formData.append('SPREADSHEET-ACTION', 'MODIFY');
+    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
+    formData.append('ACTION', 'MODIFY');
     this.post(formData);
   }
 
   public validateAddSpreadsheet(spreadsheetFile: File) {
     console.info('Validate add spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
-    formData.append('SPREADSHEET-ACTION', 'ADD,VALIDATE');
+    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
+    formData.append('ACTION', 'ADD,VALIDATE');
     this.post(formData);
   }
 
   public validateUpdateSpreadsheet(spreadsheetFile: File) {
     console.info('Validate update spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SPREADSHEET-FILE', spreadsheetFile);
-    formData.append('SPREADSHEET-ACTION', 'MODIFY,VALIDATE');
+    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
+    formData.append('ACTION', 'MODIFY,VALIDATE');
     this.post(formData);
   }
 
