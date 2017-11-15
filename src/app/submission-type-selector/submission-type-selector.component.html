@@ -73,6 +73,26 @@
         </span>
       BioProjects and BioSamples must be submitted before transcriptome assemblies are submitted.
       </p>
+      <p>
+        <span class = "app-primary-color">
+        <i class="material-icons">info</i>
+        </span>
+        Transcriptome assemblies must be submitted with an info file. The info file is a text file with the following
+        fields:
+      </p>
+      <pre>
+        Assembly Name: PLEASE FILL
+        Assembly Method: PLEASE FILL
+        Sequencing Technology: PLEASE FILL
+      </pre>
+      <p>
+        <button mat-raised-button color="accent" (click)="downloadTranscriptomeInfo()">
+          Download {{transcriptomeInfoFileName}}
+        </button>
+      </p>
+
+
+
     </mat-expansion-panel>
 
 
