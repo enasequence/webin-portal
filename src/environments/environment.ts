@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/login',
-  spreadsheetServiceUrl: 'https://github.com/enasequence/sequencetools/blob/master/'
+  spreadsheetServiceUrl: 'https://raw.githubusercontent.com/enasequence/sub-spreadsheet/master/'
 };

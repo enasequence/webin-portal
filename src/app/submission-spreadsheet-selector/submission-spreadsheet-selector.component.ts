@@ -24,13 +24,34 @@ export class SubmissionSpreadsheetSelectorComponent implements OnInit {
   }
 
   getSpreadsheetFileName() {
-    return 'README.md';
-/*
-      return
-        this.submissionType.toLowerCase() + '-' +
-        this.submissionFormat.toLowerCase() + '.' +
-        this._submissionSpreadsheet.toLowerCase();
-*/
+    if (this._submissionSpreadsheet != undefined) {
+      if (this.submissionType == 'Transcriptomes') {
+        if (this.submissionFormat == 'unannotated sequences') {
+          return 'transcriptome_unannotated' + '.' + this._submissionSpreadsheet;
+        }
+        else if (this.submissionFormat == 'annotated sequences') {
+          return 'transcriptome_annotated' + '.' + this._submissionSpreadsheet;
+        }
+      }
+      else if (this.submissionType == 'Genomes') {
+        if (this.submissionFormat == 'unannotated sequences') {
+        }
+        else if (this.submissionFormat == 'annotated sequences') {
+        }
+      }
+      else if (this.submissionType == 'Reads') {
+        if (this.submissionFormat == 'CRAM') {
+        }
+        else if (this.submissionFormat == 'BAM') {
+        }
+        else if (this.submissionFormat == 'Fastq') {
+        }
+        else if (this.submissionFormat == 'Paired Fastq') {
+        }
+      }
+    }
+
+    return "Unknown spreadsheet file";
   }
 
   set submissionSpreadsheet(submissionSpreadsheet: string) {
