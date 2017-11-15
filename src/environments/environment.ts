@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
+  webinAuthenticationServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/login',
+  spreadsheetServiceUrl: 'https://github.com/enasequence/sequencetools/blob/master/'
 };

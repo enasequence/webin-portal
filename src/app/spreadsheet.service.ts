@@ -3,6 +3,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 import {Observable} from 'rxjs/Rx';
 //import 'rxjs/add/operator/toPromise';
@@ -12,7 +13,7 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class SpreadsheetService {
 
-  private _baseUrl = 'https://github.com/enasequence/sequencetools/blob/master/';
+  private _baseUrl = environment.spreadsheetServiceUrl;
 
   constructor(private http: HttpClient) { }
 

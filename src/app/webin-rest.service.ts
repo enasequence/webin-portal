@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class WebinRestService {
 
-  private _baseUrl = 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/';
+  private _baseUrl = environment.webinServiceUrl;
 
   constructor(private http: HttpClient) { }
 

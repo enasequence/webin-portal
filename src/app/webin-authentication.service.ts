@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class WebinAuthenticationService {
 
-  private _baseUrl = 'https://www-test.ebi.ac.uk/ena/submit/drop-box/login';
+  private _baseUrl = environment.webinAuthenticationServiceUrl;
 
   private username: string;
   private password: string;
