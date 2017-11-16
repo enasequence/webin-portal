@@ -77,6 +77,38 @@
         <p>
           <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
         </p>
+
+        <div *ngIf="webinErrorDataSource !== undefined">
+
+          <p class="app-error">
+            <i class="material-icons">error</i>
+            Submission failed. Please see a list of errors below.
+          </p>
+
+
+          <div class="app-table-container mat-elevation-z8">
+
+
+            <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
+
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <ng-container matColumnDef="error">
+                <mat-header-cell *matHeaderCellDef>Submission error</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.error}}</mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="webinErrorTableColumns"></mat-header-row>
+               <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
+
+
+            </mat-table>
+
+          </div>
+
+        </div>
+
       <div>
         <button mat-button matStepperPrevious>Back</button>
       </div>

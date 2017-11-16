@@ -107,12 +107,23 @@ export class WebinRestService {
     if (!isError) {
       let nodes = rootNode.childNodes;
       for (i = 0; i < nodes.length; i++) {
-        receipt.accessions.push(
-          {
-            type: nodes[i].tagName,
-            accession: nodes[i].getAttribute('accession'),
-            alias: nodes[i].getAttribute('alias')
-          });
+        if (nodes[i].tagName == "ANALYSIS" ||
+            nodes[i].tagName == "EXPERIMENT" ||
+            nodes[i].tagName == "RUN" ||
+            nodes[i].tagName == "SAMPLE" ||
+            nodes[i].tagName == "STUDY" ||
+            nodes[i].tagName == "DAC" ||
+            nodes[i].tagName == "POLICY" ||
+            nodes[i].tagName == "DATASET" ||
+            nodes[i].tagName == "PROJECT" ||
+            nodes[i].tagName == "SUBMISSION") {
+          receipt.accessions.push(
+            {
+              type: nodes[i].tagName,
+              accession: nodes[i].getAttribute('accession'),
+              alias: nodes[i].getAttribute('alias')
+            });
+        }
       }
     }
     else {

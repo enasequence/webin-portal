@@ -1,10 +1,16 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
+import { MatTableDataSource } from '@angular/material';
 
 import { SubmissionFormatSelectorComponent } from '../submission-format-selector/submission-format-selector.component';
 import { SubmissionSpreadsheetSelectorComponent } from '../submission-spreadsheet-selector/submission-spreadsheet-selector.component';
 
 import { WebinRestService } from '../webin-rest.service';
+
+
+export interface webinErrorTableRow {
+  error: string;
+}
 
 @Component({
   selector: 'app-spreadsheet-submission',
@@ -18,34 +24,39 @@ import { WebinRestService } from '../webin-rest.service';
 })
 export class SpreadsheetSubmissionComponent implements OnInit {
 
+  webinErrorTableColumns = ['error'];
+  webinErrorDataSource: MatTableDataSource<WebinErrorTableRow>;
+
   submissionType: string;
   submissionFormat: string;
   submissionSpreadsheet: string;
+  spreadsheetFile: File;
+  action: string = 'add';
 
   consumeSubmissionTypeChange(submissionType: string) {
     this.submissionType = submissionType;
     this.submissionFormat = undefined;
+    this.webinErrorDataSource = undefined;
     // console.info('Received changed submission type: ' + submissionType);
   }
 
   consumeSubmissionFormatChange(submissionFormat: string) {
     this.submissionFormat = submissionFormat;
+    this.webinErrorDataSource = undefined;
     // console.info('Received changed submission format: ' + submissionFormat);
   }
 
   consumeSubmissionSpreadsheetChange(submissionSpreadsheet: string) {
     this.submissionSpreadsheet = submissionSpreadsheet;
+    this.webinErrorDataSource = undefined;
     // console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
   }
-
-  spreadsheetFile: File;
-
-  action: string = 'add';
 
   // https://stackoverflow.com/questions/35399617/angular-2-file-upload-from-input-type-file
   onChangeSpreadsheetFile(files) {
     this.spreadsheetFile = files[0];
-    console.info("Spreadsheet file: " + this.spreadsheetFile);
+    this.webinErrorDataSource = undefined;
+    //console.info("Spreadsheet file: " + this.spreadsheetFile);
   }
 
   canSubmit() {
@@ -77,6 +88,7 @@ export class SpreadsheetSubmissionComponent implements OnInit {
               // HttpResponse when using {observe: 'response'}
               let result = this.webinRestService.parseResult(data);
               console.log('** Webin spreadsheet submission succeeded **', result);
+              this.webinErrorDataSource = new MatTableDataSource<WebinErrorTableRow>(result.errors);
           },
           // Errors
           (err: HttpErrorResponse) => {
