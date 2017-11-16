@@ -6,23 +6,23 @@
     </mat-radio-button>
   </ng-container>
   <ng-container *ngIf="submissionType == 'Genomes'">
-    <p>
-      Genomes:
-    </p>
     <mat-radio-button class ="app-radio-button" *ngFor="let format of genomeFormats" [value]="format">
       {{format}}
     </mat-radio-button>
     <p>
-    <span class = "app-primary-color">
-    <i class="material-icons">info</i>
-    </span>
-      Unannotated sequences are submitted in Fasta format and annotated sequences in flat file format.
+      <span class = "app-primary-color">
+      <i class="material-icons">info</i>
+      </span>
+      Unannotated sequences are submitted using a Fasta file.
+    </p>
+    <p>
+      <span class = "app-primary-color">
+      <i class="material-icons">info</i>
+      </span>
+      Annotated sequences are submitted using an EMBL-Bank flat file.
     </p>
   </ng-container>
   <ng-container *ngIf="submissionType == 'Transcriptomes'">
-    <p>
-      Transciptomes:
-    </p>
     <mat-radio-button class ="app-radio-button" *ngFor="let format of transcriptomeFormats" [value]="format">
       {{format}}
     </mat-radio-button>
@@ -30,7 +30,13 @@
       <span class = "app-primary-color">
       <i class="material-icons">info</i>
       </span>
-      Unannotated sequences are submitted in Fasta format and annotated sequences in flat file format.
+      Unannotated sequences are submitted using a Fasta file.
+    </p>
+    <p>
+      <span class = "app-primary-color">
+      <i class="material-icons">info</i>
+      </span>
+      Annotated sequences are submitted using an EMBL-Bank flat file.
     </p>
   </ng-container>
 </mat-radio-group>

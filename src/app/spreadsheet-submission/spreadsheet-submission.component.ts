@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 import { SubmissionFormatSelectorComponent } from '../submission-format-selector/submission-format-selector.component';
 import { SubmissionSpreadsheetSelectorComponent } from '../submission-spreadsheet-selector/submission-spreadsheet-selector.component';
@@ -51,22 +52,50 @@ export class SpreadsheetSubmissionComponent implements OnInit {
     return this.spreadsheetFile !== undefined;
   }
 
-  //angular.io/guide/http
-  // https://stackoverflow.com/questions/46059226/upload-image-with-httpclient
   submit() {
+    console.log('** Webin spreadsheet submission **');
+
+    let observable: Observable<text>;
+
     if (this.action == 'add') {
-      this.webinRestService.addSpreadsheet(this.spreadsheetFile);
+      observable = this.webinRestService.addSpreadsheet(this.spreadsheetFile);
     }
     else if (this.action == 'update') {
-      this.webinRestService.updateSpreadsheet(this.spreadsheetFile);
+      observable = this.webinRestService.updateSpreadsheet(this.spreadsheetFile);
     }
     else if (this.action == 'validate add') {
-      this.webinRestService.validateAddSpreadsheet(this.spreadsheetFile);
+      observable = this.webinRestService.validateAddSpreadsheet(this.spreadsheetFile);
     }
     else if (this.action == 'validate update') {
-      this.webinRestService.validateUpdateSpreadsheet(this.spreadsheetFile);
+      observable = this.webinRestService.validateUpdateSpreadsheet(this.spreadsheetFile);
     }
+
+    if (observable != null) {
+        observable.subscribe(
+          // Success
+          data => {
+              // HttpResponse when using {observe: 'response'}
+              console.log('** Webin spreadsheet submission succeeded **');
+              this.parseResult(data);
+          },
+          // Errors
+          (err: HttpErrorResponse) => {
+            console.log('** Webin spreadsheet submission failed **', err);
+
+            if (err.error instanceof Error) {
+              console.log(`Webin login finished with a client or network error ${err.error.message}`);
+            }
+            else {
+              console.log(`Webin login finished with a server error code: ${err.status}, body was: ${err.error}`);
+            }
+        });
+      }
   }
+
+  parseResult(data) {
+    console.log("********* Parse result: ", data);
+  }
+
 
   constructor(
     private webinRestService: WebinRestService) {

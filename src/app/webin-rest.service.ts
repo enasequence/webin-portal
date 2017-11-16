@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
+
+// import { Observable } from 'rxjs/Rx';
+
 @Injectable()
 export class WebinRestService {
 
@@ -12,7 +15,6 @@ export class WebinRestService {
   headers() {
     return new HttpHeaders()
       .append('Content-Type', 'multipart/form-data')
-      .append("Content-Type", "application/x-www-form-urlencoded");
   }
 
   appendFile(formData: FormData, name: string, file: File) {
@@ -21,57 +23,41 @@ export class WebinRestService {
     }
   }
 
-  async post(formData: FormData) {
+  post(formData: FormData) : Observable<text> {
     const headers = this.headers();
-
-    await this.http
-      .post(this._baseUrl, formData, { headers, observe: 'response' })
-      .subscribe(
-        // Success.
-        data => {
-          console.log(`Webin REST call to ${this._baseUrl} finished succesfully`);
-        },
-        // Errors.
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            console.log(`Webin REST call to ${this._baseUrl} finished with a client or network error ${err.error.message}`);
-          }
-          else {
-            console.log(`Webin REST call to ${this._baseUrl} finished with a server error code: ${err.status}, body was: ${err.error}`);
-          }
-      });
+    return this.http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
   }
 
   public addSpreadsheet(spreadsheetFile: File) {
     console.info('Add spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    formData.append('ACTION', 'ADD');
-    this.post(formData);
+    //formData.append('ACTION', 'ADD');
+    return this.post(formData);
   }
 
   public updateSpreadsheet(spreadsheetFile: File) {
     console.info('Update spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    formData.append('ACTION', 'MODIFY');
-    this.post(formData);
+    //formData.append('ACTION', 'MODIFY');
+    return this.post(formData);
   }
 
   public validateAddSpreadsheet(spreadsheetFile: File) {
     console.info('Validate add spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    formData.append('ACTION', 'ADD,VALIDATE');
-    this.post(formData);
+    //formData.append('ACTION', 'ADD,VALIDATE');
+    return this.post(formData);
   }
 
   public validateUpdateSpreadsheet(spreadsheetFile: File) {
     console.info('Validate update spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    formData.append('ACTION', 'MODIFY,VALIDATE');
-    this.post(formData);
+    //formData.append('ACTION', 'MODIFY,VALIDATE');
+    return this.post(formData);
   }
 
   public submitXml(
@@ -98,6 +84,6 @@ export class WebinRestService {
     this.appendFile(formData, 'DAC', dacFile);
     this.appendFile(formData, 'POLICY', policyFile);
     this.appendFile(formData, 'DATASET', datasetFile);
-    this.post(formData);
+    return this.post(formData);
   }
 }
