@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 export class WebinRestService {
 
   private _baseUrl = environment.webinServiceUrl;
+  private xmlParser = new DOMParser();
 
   constructor(private http: HttpClient) { }
 
@@ -85,5 +86,48 @@ export class WebinRestService {
     this.appendFile(formData, 'POLICY', policyFile);
     this.appendFile(formData, 'DATASET', datasetFile);
     return this.post(formData);
+  }
+
+
+  public parseResult(data) {
+
+    let xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
+    let rootNode = xmlDoc.getElementsByTagName('RECEIPT')[0];
+    let isError: boolean = (rootNode.getAttribute('success') != 'true');
+
+    let receipt = {
+      isError: isError,
+      xml: data.body,
+      accessions: [],
+      errors: []
+    };
+
+    var i: number = 0;
+
+    if (!isError) {
+      let nodes = rootNode.childNodes;
+      for (i = 0; i < nodes.length; i++) {
+        receipt.accessions.push(
+          {
+            type: nodes[i].tagName,
+            accession: nodes[i].getAttribute('accession'),
+            alias: nodes[i].getAttribute('alias')
+          });
+      }
+    }
+    else {
+      let messageRootNode = rootNode.getElementsByTagName('MESSAGES')[0];
+      let nodes = messageRootNode.getElementsByTagName('ERROR');
+      for (i = 0; i < nodes.length; i++) {
+        console.log(nodes[i]);
+        console.log(nodes[i].textContent);
+        receipt.errors.push(
+          {
+            error: nodes[i].textContent
+          });
+      }
+    }
+
+    return receipt;
   }
 }

@@ -75,8 +75,8 @@ export class SpreadsheetSubmissionComponent implements OnInit {
           // Success
           data => {
               // HttpResponse when using {observe: 'response'}
-              console.log('** Webin spreadsheet submission succeeded **');
-              this.parseResult(data);
+              let result = this.webinRestService.parseResult(data);
+              console.log('** Webin spreadsheet submission succeeded **', result);
           },
           // Errors
           (err: HttpErrorResponse) => {
@@ -90,10 +90,6 @@ export class SpreadsheetSubmissionComponent implements OnInit {
             }
         });
       }
-  }
-
-  parseResult(data) {
-    console.log("********* Parse result: ", data);
   }
 
 
