@@ -143,11 +143,18 @@ $accent: map-get($app-theme, accent);
   margin: 15px 0;
 }
 
-.app-table-container container {
+.app-table-container {
   display: flex;
   flex-direction: column;
   max-height: 500px;
   min-width: 300px;
+  border: 1px solid LightGray;
+}
+
+.app-table-header {
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .mat-table {

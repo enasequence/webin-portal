@@ -80,28 +80,22 @@
 
         <div *ngIf="webinErrorDataSource !== undefined">
 
-          <p class="app-error">
-            <i class="material-icons">error</i>
-            Submission failed. Please see a list of errors below.
-          </p>
+          <div class="app-table-container">
 
-
-          <div class="app-table-container mat-elevation-z8">
-
+            <p class="app-error">
+              <i class="material-icons">error</i>
+              Submission failed. Please see a list of errors below.
+            </p>
 
             <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
 
-              <!--- Note that these columns can be defined in any order.
-                    The actual rendered columns are set as a property on the row definition" -->
-
               <ng-container matColumnDef="error">
-                <mat-header-cell *matHeaderCellDef>Submission error</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef><span class="app-table-header">Error message</span></mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.error}}</mat-cell>
               </ng-container>
 
               <mat-header-row *matHeaderRowDef="webinErrorTableColumns"></mat-header-row>
-               <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
-
+              <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
 
             </mat-table>
 
