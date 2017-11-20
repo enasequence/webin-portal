@@ -78,26 +78,60 @@
           <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
         </p>
 
+
         <div *ngIf="webinErrorDataSource !== undefined">
+
+          <div class="app-error">
+              <i class="material-icons">error</i>
+              Submission failed. Please see a list of errors below.
+          </div>
+
+          <div class="container"
+               fxLayout
+               fxLayoutAlign="space-around start"
+               fxLayoutGap="10px">
+            <div fxFlex>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-select [(value)]="errorDisplay" placeholder="Show">
+                  <mat-option value="table">
+                     Errors
+                  </mat-option>
+                  <mat-option value="xml">
+                     Receipt XML
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
 
           <div class="app-table-container">
 
-            <p class="app-error">
-              <i class="material-icons">error</i>
-              Submission failed. Please see a list of errors below.
-            </p>
+            <div *ngIf="errorDisplay=='table'">
 
-            <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
+              <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
 
-              <ng-container matColumnDef="error">
-                <mat-header-cell *matHeaderCellDef><span class="app-table-header">Error message</span></mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.error}}</mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="error">
+                  <mat-header-cell *matHeaderCellDef><span class="app-table-header">Error message</span></mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.error}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="webinErrorTableColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
 
-              <mat-header-row *matHeaderRowDef="webinErrorTableColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
+              </mat-table>
 
-            </mat-table>
+              <mat-paginator #webinErrorPaginator
+                             [length]="getNumberOfErrors()"
+                             [pageSize]="1"
+                             [pageSizeOptions]="[1, 25, 50]">
+              </mat-paginator>
+
+            </div>
+
+            <div *ngIf="errorDisplay=='xml'">
+
+            </div>
 
           </div>
 
