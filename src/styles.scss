@@ -157,6 +157,12 @@ $accent: map-get($app-theme, accent);
   font-size: 16px;
 }
 
+.app-receipt {
+    height: 300px;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 .mat-table {
   overflow: auto;
   max-height: 500px;

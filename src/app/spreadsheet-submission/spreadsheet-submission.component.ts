@@ -7,7 +7,6 @@ import { SubmissionSpreadsheetSelectorComponent } from '../submission-spreadshee
 import { WebinRestService } from '../webin-rest.service';
 
 import {Observable} from 'rxjs/Observable';
- import {Subject} from 'rxjs/Subject';
 
 export interface WebinError {
   error: string;
@@ -27,8 +26,8 @@ export class SpreadsheetSubmissionComponent implements OnInit {
 
   webinErrorTableColumns = ['error'];
   webinErrorDataSource: WebinErrorDataSource;
-  result;
   @ViewChild(MatPaginator) webinErrorPaginator: MatPaginator;
+  result;
 
   submissionType: string;
   submissionFormat: string;
@@ -44,9 +43,6 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-  }
-
   getNumberOfErrors() {
     console.log(this.result);
     if (this.result == null || this.result.errors == null) {
@@ -58,30 +54,30 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   consumeSubmissionTypeChange(submissionType: string) {
     this.submissionType = submissionType;
     this.submissionFormat = undefined;
-    this.webinErrorDataSource = null;
-    this.result = null;
+    this.webinErrorDataSource = undefined;
+    this.result = undefined;
     // console.info('Received changed submission type: ' + submissionType);
   }
 
   consumeSubmissionFormatChange(submissionFormat: string) {
     this.submissionFormat = submissionFormat;
-    this.webinErrorDataSource = null;
-    this.result = null;
+    this.webinErrorDataSource = undefined;
+    this.result = undefined;
     // console.info('Received changed submission format: ' + submissionFormat);
   }
 
   consumeSubmissionSpreadsheetChange(submissionSpreadsheet: string) {
     this.submissionSpreadsheet = submissionSpreadsheet;
-    this.webinErrorDataSource = null;
-    this.result = null;
+    this.webinErrorDataSource = undefined;
+    this.result = undefined;
     // console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
   }
 
   // https://stackoverflow.com/questions/35399617/angular-2-file-upload-from-input-type-file
   onChangeSpreadsheetFile(files) {
     this.spreadsheetFile = files[0];
-    this.webinErrorDataSource = null;
-    this.result = null;
+    this.webinErrorDataSource = undefined;
+    this.result = undefined;
     //console.info("Spreadsheet file: " + this.spreadsheetFile);
   }
 
