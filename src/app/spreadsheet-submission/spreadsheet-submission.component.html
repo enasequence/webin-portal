@@ -86,12 +86,14 @@
               Submission failed. Please see a list of errors below.
           </div>
 
+          <!--
           <div class="container"
                fxLayout
                fxLayoutAlign="space-around start"
                fxLayoutGap="10px">
             <div fxFlex>
             </div>
+          -->
             <div>
               <mat-form-field>
                 <mat-select [(value)]="errorDisplay" placeholder="Show">
@@ -104,11 +106,13 @@
                 </mat-select>
               </mat-form-field>
             </div>
+          <!--
           </div>
+          -->
 
-          <div class="app-table-container">
+          <div>
 
-            <div *ngIf="errorDisplay=='table'">
+            <div *ngIf="errorDisplay=='table'" class="app-table-container">
 
               <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
 
@@ -129,8 +133,15 @@
 
             </div>
 
-            <div *ngIf="errorDisplay=='xml'" class="app-receipt">
-              <pre>{{result.xml}}</pre>
+            <div *ngIf="errorDisplay=='xml'">
+              <div class="app-receipt app-table-container">
+                <pre>{{result.xml}}</pre>
+              </div>
+              <p>
+                <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
+                  Download Receipt XML
+                </button>
+              </p>
             </div>
 
           </div>
