@@ -78,6 +78,13 @@
           <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
         </p>
 
+        <div *ngIf="resultError !== undefined">
+          <div class="app-error">
+              <i class="material-icons">error</i>
+              {{resultError}}
+          </div>
+        </div>
+
         <div *ngIf="result !== undefined">
 
           <!-- Show success or failure -->
@@ -129,7 +136,7 @@
                Download accessions
              </button>
            </div>
-           
+
             <div>
               <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
                 Download receipt XML

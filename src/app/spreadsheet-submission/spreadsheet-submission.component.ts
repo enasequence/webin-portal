@@ -38,6 +38,7 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   @ViewChild(MatPaginator) webinErrorPaginator: MatPaginator;
   @ViewChild(MatPaginator) webinAccessionPaginator: MatPaginator;
   result;
+  resultError;
 
   submissionType: string;
   submissionFormat: string;
@@ -71,6 +72,7 @@ export class SpreadsheetSubmissionComponent implements OnInit {
     this.webinErrorDataSource = undefined;
     this.webinAccessionDataSource = undefined;
     this.result = undefined;
+    this.resultError = undefined;
   }
 
   consumeSubmissionTypeChange(submissionType: string) {
@@ -139,16 +141,16 @@ export class SpreadsheetSubmissionComponent implements OnInit {
               }
           },
           // Errors
-          // TODO
           (err: HttpErrorResponse) => {
-            console.log('** Webin spreadsheet submission failed **', err);
+            console.log('** Webin submission failed **', err);
 
             if (err.error instanceof Error) {
-              console.log(`Webin login finished with a client or network error ${err.error.message}`);
+              this.resultError = `Webin submission failed because of a client or network error: ${err.error.message}`;
             }
             else {
-              console.log(`Webin login finished with a server error code: ${err.status}, body was: ${err.error}`);
+              this.resultError = `Webin submission failed because of a server error ${err.status}: ${err.error}`;
             }
+            console.log(this.resultError);
         });
       }
   }
