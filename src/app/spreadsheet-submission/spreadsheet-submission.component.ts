@@ -13,6 +13,12 @@ export interface WebinError {
   error: string;
 }
 
+export interface WebinAccession {
+  type: string;
+  accession: string;
+  alias: string;
+}
+
 @Component({
   selector: 'app-spreadsheet-submission',
   templateUrl: './spreadsheet-submission.component.html',
@@ -26,8 +32,11 @@ export interface WebinError {
 export class SpreadsheetSubmissionComponent implements OnInit {
 
   webinErrorTableColumns = ['error'];
-  webinErrorDataSource: WebinErrorDataSource;
+  webinAccessionTableColumns = ['type', 'accession', 'alias'];
+  webinErrorDataSource;
+  webinAccessionDataSource;
   @ViewChild(MatPaginator) webinErrorPaginator: MatPaginator;
+  @ViewChild(MatPaginator) webinAccessionPaginator: MatPaginator;
   result;
 
   submissionType: string;
@@ -35,7 +44,7 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   submissionSpreadsheet: string;
   spreadsheetFile: File;
   action: string = 'add';
-  errorDisplay: string = 'table';
+  resultDisplay: string = 'table';
 
   constructor(
     private webinRestService: WebinRestService) {
@@ -45,40 +54,48 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   }
 
   getNumberOfErrors() {
-    console.log(this.result);
     if (this.result == null || this.result.errors == null) {
       return 0;
     }
     return this.result.errors.length;
   }
 
+  getNumberOfAccessions() {
+    if (this.result == null || this.result.accessions == null) {
+      return 0;
+    }
+    return this.result.accessions.length;
+  }
+
+  private resetResult() {
+    this.webinErrorDataSource = undefined;
+    this.webinAccessionDataSource = undefined;
+    this.result = undefined;
+  }
+
   consumeSubmissionTypeChange(submissionType: string) {
     this.submissionType = submissionType;
     this.submissionFormat = undefined;
-    this.webinErrorDataSource = undefined;
-    this.result = undefined;
+    this.resetResult();
     // console.info('Received changed submission type: ' + submissionType);
   }
 
   consumeSubmissionFormatChange(submissionFormat: string) {
     this.submissionFormat = submissionFormat;
-    this.webinErrorDataSource = undefined;
-    this.result = undefined;
+    this.resetResult();
     // console.info('Received changed submission format: ' + submissionFormat);
   }
 
   consumeSubmissionSpreadsheetChange(submissionSpreadsheet: string) {
     this.submissionSpreadsheet = submissionSpreadsheet;
-    this.webinErrorDataSource = undefined;
-    this.result = undefined;
+    this.resetResult();
     // console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
   }
 
   // https://stackoverflow.com/questions/35399617/angular-2-file-upload-from-input-type-file
   onChangeSpreadsheetFile(files) {
     this.spreadsheetFile = files[0];
-    this.webinErrorDataSource = undefined;
-    this.result = undefined;
+    this.resetResult();
     //console.info("Spreadsheet file: " + this.spreadsheetFile);
   }
 
@@ -112,10 +129,17 @@ export class SpreadsheetSubmissionComponent implements OnInit {
               this.result = this.webinRestService.parseResult(data);
               console.log('** Webin spreadsheet submission succeeded **', this.result);
 
-              this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
-              this.webinErrorDataSource.paginator = this.webinErrorPaginator;
+              if (this.result.isError) {
+                this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
+                this.webinErrorDataSource.paginator = this.webinErrorPaginator;
+              }
+              else {
+                this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(this.result.accessions);
+                this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
+              }
           },
           // Errors
+          // TODO
           (err: HttpErrorResponse) => {
             console.log('** Webin spreadsheet submission failed **', err);
 

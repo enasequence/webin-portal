@@ -104,6 +104,26 @@ export class WebinRestService {
       errors: []
     };
 
+    // SUCCESS TEST ->
+    /*
+    receipt.isError = false;
+    receipt.accessions = [
+      {
+        type: 'Test1',
+        accession: 'accession1',
+        alias: 'alias1'
+      },
+      {
+        type: 'Test2',
+        accession: 'accession2',
+        alias: 'alias2'
+      }
+    );
+    ];
+    */
+    // <- TEST
+
+
     var i: number = 0;
 
     if (!isError) {

@@ -116,7 +116,7 @@ $accent: map-get($app-theme, accent);
   color: mat-color($accent);
 }
 
-.app-warning, .app-error {
+.app-warning, .app-error, .app-success {
   margin: 10px 0px;
   padding:12px;
 }
@@ -125,9 +125,15 @@ $accent: map-get($app-theme, accent);
     color: #9F6000;
     background-color: #FEEFB3;
 }
+
 .app-error {
     color: #D8000C;
     background-color: #FFD2D2;
+}
+
+.app-success {
+    color: #31708F;
+    background-color: #D9EDF7;
 }
 
 .app-radio-group {
@@ -149,7 +155,7 @@ $accent: map-get($app-theme, accent);
   max-height: 500px;
   min-width: 300px;
   border: 1px solid LightGray;
-  margin-bottom: 10px;
+  margin: 10px 0px;
 }
 
 .app-table-header {
