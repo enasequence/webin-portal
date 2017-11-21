@@ -131,6 +131,6 @@ export class SpreadsheetSubmissionComponent implements OnInit {
 
   downloadReceiptXml() {
     var blob = new Blob([this.result.xml], {type: "text/plain;charset=utf-8"});
-    importedSaveAs(blob, "Receipt.xml");
+    importedSaveAs(blob, "Receipt-" + this.result.date + ".xml");
   }
 }

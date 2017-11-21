@@ -94,10 +94,12 @@ export class WebinRestService {
     let xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
     let rootNode = xmlDoc.getElementsByTagName('RECEIPT')[0];
     let isError: boolean = (rootNode.getAttribute('success') != 'true');
+    let date: string = rootNode.getAttribute('receiptDate');
 
     let receipt = {
       isError: isError,
       xml: data.body,
+      date: date,
       accessions: [],
       errors: []
     };
