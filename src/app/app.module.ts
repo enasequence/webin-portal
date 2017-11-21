@@ -52,6 +52,7 @@ import { SubmissionTypeSelectorComponent } from './submission-type-selector/subm
 import { SubmissionFormatSelectorComponent } from './submission-format-selector/submission-format-selector.component';
 import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet-selector/submission-spreadsheet-selector.component';
 import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
+import { SubmissionResultComponent } from './submission-result/submission-result.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { SpreadsheetService } from './spreadsheet.service';
@@ -83,7 +84,7 @@ const appRoutes: Routes = [
   imports: [
       BrowserModule,
       BrowserAnimationsModule,
-      FlexLayoutModule,      
+      FlexLayoutModule,
       FormsModule,
       HttpModule,
       HttpClientModule,
@@ -137,8 +138,9 @@ const appRoutes: Routes = [
     SubmissionFormatSelectorComponent,
     SubmissionSpreadsheetSelectorComponent,
     XmlSubmissionComponent,
+    SubmissionResultComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   bootstrap: [
       AppComponent

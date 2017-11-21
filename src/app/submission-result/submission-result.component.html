@@ -1,0 +1,144 @@
+<div *ngIf="resultError !== undefined">
+  <div class="app-error">
+      <i class="material-icons">error</i>
+      {{resultError}}
+  </div>
+</div>
+
+<div *ngIf="result !== undefined">
+
+  <!-- Show success or failure -->
+
+  <div *ngIf="webinErrorDataSource !== undefined">
+    <div class="app-error">
+        <i class="material-icons">error</i>
+        Submission failed. Please see the list of errors below.
+    </div>
+  </div>
+  <div *ngIf="webinAccessionDataSource !== undefined">
+    <div class="app-success">
+        <i class="material-icons">done</i>
+        Submission was successful. Please see the list of assigned accession numbers below.
+    </div>
+  </div>
+
+
+  <!-- Show table or XML selector -->
+
+  <div class="container"
+       fxLayout
+       fxLayoutAlign="space-around start"
+       fxLayoutGap="10px">
+    <div>
+      <mat-form-field>
+        <mat-select [(value)]="resultDisplay" placeholder="Show">
+          <mat-option value="table">
+             Table
+          </mat-option>
+          <mat-option value="xml">
+             Receipt XML
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex>
+   </div>
+
+
+   <div *ngIf="webinErrorDataSource !== undefined">
+     <button mat-raised-button color="accent" (click)="downloadErrorTable()">
+       Download errors
+     </button>
+   </div>
+
+   <div *ngIf="webinAccessionDataSource !== undefined">
+     <button mat-raised-button color="accent" (click)="downloadAccessionTable()">
+       Download accessions
+     </button>
+   </div>
+
+    <div>
+      <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
+        Download receipt XML
+      </button>
+    </div>
+  </div>
+
+  <!-- Show errors -->
+
+  <div *ngIf="webinErrorDataSource !== undefined">
+
+    <div *ngIf="resultDisplay=='table'" class="app-table-container">
+
+      <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
+
+        <ng-container matColumnDef="error">
+          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Error message</span></mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.error}}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="webinErrorTableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
+
+      </mat-table>
+
+      <mat-paginator #webinErrorPaginator
+                     [length]="getNumberOfErrors()"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
+
+    </div>
+
+    <div *ngIf="resultDisplay=='xml'">
+      <div class="app-receipt app-table-container">
+        <pre>{{result.xml}}</pre>
+      </div>
+    </div>
+
+  </div> <!-- <div *ngIf="webinErrorDataSource !== undefined"> -->
+
+  <!-- Show accessions -->
+
+  <div *ngIf="webinAccessionDataSource !== undefined">
+
+    <div *ngIf="resultDisplay=='table'" class="app-table-container">
+
+      <mat-table #webinAccessionTable [dataSource]="webinAccessionDataSource" >
+
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Type</span></mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.type}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="accession">
+          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Accession</span></mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.accession}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="alias">
+          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Unique name (alias)</span></mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.alias}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="webinAccessionTableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: webinAccessionTableColumns;"></mat-row>
+
+      </mat-table>
+
+      <mat-paginator #webinAccessionPaginator
+                     [length]="getNumberOfAccessions()"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
+
+    </div>
+
+    <div *ngIf="resultDisplay=='xml'">
+      <div class="app-receipt app-table-container">
+        <pre>{{result.xml}}</pre>
+      </div>
+    </div>
+
+  </div> <!-- <div *ngIf="webinErrorDataSource !== undefined"> -->
+
+</div> <!-- <div *ngIf="result !== undefined"> -->
