@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+
+import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 
 import { WebinRestService } from '../webin-rest.service';
 
@@ -9,6 +11,8 @@ import { WebinRestService } from '../webin-rest.service';
   encapsulation: ViewEncapsulation.None
 })
 export class XmlSubmissionComponent implements OnInit {
+
+  @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
 
   submissionFile: File;
   studyFile: File;
@@ -21,54 +25,61 @@ export class XmlSubmissionComponent implements OnInit {
   policyFile: File;
   datasetFile: File;
 
+  constructor(
+    private webinRestService: WebinRestService) {
+  }
+
+  ngOnInit() {
+  }
+
   onChangeSubmissionFile(files) {
     this.submissionFile = files[0];
-    console.info("Submission file: " + this.submissionFile);
+    //console.info("Submission file: " + this.submissionFile);
   }
 
   onChangeStudyFile(files) {
     this.studyFile = files[0];
-    console.info("Study file: " + this.studyFile);
+    //console.info("Study file: " + this.studyFile);
   }
 
   onChangeProjectFile(files) {
     this.projectFile = files[0];
-    console.info("Project file: " + this.projectFile);
+    //console.info("Project file: " + this.projectFile);
   }
 
   onChangeSampleFile(files) {
     this.sampleFile = files[0];
-    console.info("Sample file: " + this.sampleFile);
+    //console.info("Sample file: " + this.sampleFile);
   }
 
   onChangeExperimentFile(files) {
     this.experimentFile = files[0];
-    console.info("Experiment file: " + this.experimentFile);
+    //console.info("Experiment file: " + this.experimentFile);
   }
 
   onChangeRunFile(files) {
     this.runFile = files[0];
-    console.info("Run file: " + this.runFile);
+    //console.info("Run file: " + this.runFile);
   }
 
   onChangeAnalysisFile(files) {
     this.analysisFile = files[0];
-    console.info("Analysis file: " + this.analysisFile);
+    //console.info("Analysis file: " + this.analysisFile);
   }
 
   onChangeDacFile(files) {
     this.dacFile = files[0];
-    console.info("Dac file: " + this.dacFile);
+    //console.info("Dac file: " + this.dacFile);
   }
 
   onChangePolicyFile(files) {
     this.policyFile = files[0];
-    console.info("Policy file: " + this.policyFile);
+    //console.info("Policy file: " + this.policyFile);
   }
 
   onChangeDatasetFile(files) {
     this.datasetFile = files[0];
-    console.info("Dataset file: " + this.datasetFile);
+    //console.info("Dataset file: " + this.datasetFile);
   }
 
   canSubmit() {
@@ -84,9 +95,10 @@ export class XmlSubmissionComponent implements OnInit {
       this.datasetFile !== undefined);
   }
 
-  //angular.io/guide/http
-  // https://stackoverflow.com/questions/46059226/upload-image-with-httpclient
   submit() {
+    console.log('** Webin spreadsheet submission **');
+
+    let observable: Observable<text> =
       this.webinRestService.submitXml(
         this.submissionFile,
         this.studyFile,
@@ -98,12 +110,7 @@ export class XmlSubmissionComponent implements OnInit {
         this.dacFile,
         this.policyFile,
         this.datasetFile);
-  }
 
-  constructor(
-    private webinRestService: WebinRestService) {
-  }
-
-  ngOnInit() {
+    this.submissionResult.submit(observable);
   }
 }
