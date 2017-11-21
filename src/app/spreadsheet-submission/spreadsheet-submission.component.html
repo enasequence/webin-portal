@@ -116,9 +116,23 @@
             </div>
             <div fxFlex>
            </div>
+
+
+           <div *ngIf="webinErrorDataSource !== undefined">
+             <button mat-raised-button color="accent" (click)="downloadErrorTable()">
+               Download errors
+             </button>
+           </div>
+
+           <div *ngIf="webinAccessionDataSource !== undefined">
+             <button mat-raised-button color="accent" (click)="downloadAccessionTable()">
+               Download accessions
+             </button>
+           </div>
+           
             <div>
               <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
-                Download Receipt XML
+                Download receipt XML
               </button>
             </div>
           </div>

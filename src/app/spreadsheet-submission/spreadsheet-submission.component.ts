@@ -155,6 +155,48 @@ export class SpreadsheetSubmissionComponent implements OnInit {
 
   downloadReceiptXml() {
     var blob = new Blob([this.result.xml], {type: "text/plain;charset=utf-8"});
-    importedSaveAs(blob, "Receipt-" + this.result.date + ".xml");
+    importedSaveAs(blob, "Webin-receipt-" + this.result.date + ".xml");
   }
+
+  downloadErrorTable() {
+    if (this.result.errors == null) {
+      return;
+    }
+
+    let arr = [];
+    arr.push(
+      "ERROR");
+    let len = this.result.errors.length;
+    for (let i = 0; i < len; i++) {
+      arr.push(
+        this.result.errors[i].error
+      );
+    }
+    var blob = new Blob([arr.join("\n")], {type: "text/plain;charset=utf-8"});
+    importedSaveAs(blob, "Webin-errors-" + this.result.date + ".txt");
+  }
+
+  downloadAccessionTable() {
+    if (this.result.accessions == null) {
+      return;
+    }
+
+    let arr = [];
+    arr.push(
+      "TYPE\t" +
+      "ACCESSION\t" +
+      "ALIAS");
+    let len = this.result.accessions.length;
+    for (let i = 0; i < len; i++) {
+      arr.push(
+        this.result.accessions[i].type + "\t" +
+        this.result.accessions[i].accession + "\t" +
+        this.result.accessions[i].alias
+      );
+    }
+    var blob = new Blob([arr.join("\n")], {type: "text/plain;charset=utf-8"});
+    importedSaveAs(blob, "Webin-accessions-" + this.result.date + ".txt");
+  }
+
+
 }
