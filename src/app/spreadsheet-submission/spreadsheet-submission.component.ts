@@ -26,7 +26,7 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   submissionFormat: string;
   submissionSpreadsheet: string;
   spreadsheetFile: File;
-  action: string = 'add';
+  action: string = 'Submit';
 
   constructor(
     private webinRestService: WebinRestService) {
@@ -54,7 +54,6 @@ export class SpreadsheetSubmissionComponent implements OnInit {
     // console.info('Received changed submission spreadsheet: ' + submissionSpreadsheet);
   }
 
-  // https://stackoverflow.com/questions/35399617/angular-2-file-upload-from-input-type-file
   onChangeSpreadsheetFile(files) {
     this.spreadsheetFile = files[0];
     this.submissionResult.reset();
@@ -70,16 +69,16 @@ export class SpreadsheetSubmissionComponent implements OnInit {
 
     let observable: Observable<text>;
 
-    if (this.action == 'add') {
+    if (this.action == 'Submit') {
       observable = this.webinRestService.addSpreadsheet(this.spreadsheetFile);
     }
-    else if (this.action == 'update') {
+    else if (this.action == 'Update') {
       observable = this.webinRestService.updateSpreadsheet(this.spreadsheetFile);
     }
-    else if (this.action == 'validate add') {
+    else if (this.action == 'Validate') {
       observable = this.webinRestService.validateAddSpreadsheet(this.spreadsheetFile);
     }
-    else if (this.action == 'validate update') {
+    else if (this.action == 'Validate update') {
       observable = this.webinRestService.validateUpdateSpreadsheet(this.spreadsheetFile);
     }
 
