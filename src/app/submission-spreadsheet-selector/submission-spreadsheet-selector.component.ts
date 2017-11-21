@@ -51,7 +51,7 @@ export class SubmissionSpreadsheetSelectorComponent implements OnInit {
       }
     }
 
-    return "Unknown spreadsheet file";
+    return "";
   }
 
   set submissionSpreadsheet(submissionSpreadsheet: string) {
