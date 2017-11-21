@@ -78,27 +78,25 @@
           <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
         </p>
 
+        <div *ngIf="result !== undefined">
 
-        <div *ngIf="webinErrorDataSource !== undefined">
-
-          <div class="app-error">
-              <i class="material-icons">error</i>
-              Submission failed. Please see a list of errors below.
+          <div *ngIf="webinErrorDataSource !== undefined">
+            <div class="app-error">
+                <i class="material-icons">error</i>
+                Submission failed. Please see a list of errors below.
+            </div>
           </div>
 
-          <!--
+          <!-- Show table/XML -->
           <div class="container"
                fxLayout
                fxLayoutAlign="space-around start"
                fxLayoutGap="10px">
-            <div fxFlex>
-            </div>
-          -->
             <div>
               <mat-form-field>
                 <mat-select [(value)]="errorDisplay" placeholder="Show">
                   <mat-option value="table">
-                     Errors
+                     Table
                   </mat-option>
                   <mat-option value="xml">
                      Receipt XML
@@ -106,11 +104,16 @@
                 </mat-select>
               </mat-form-field>
             </div>
-          <!--
+            <div fxFlex>
+           </div>
+            <div>
+              <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
+                Download Receipt XML
+              </button>
+            </div>
           </div>
-          -->
 
-          <div>
+          <div *ngIf="webinErrorDataSource !== undefined">
 
             <div *ngIf="errorDisplay=='table'" class="app-table-container">
 
@@ -137,16 +140,11 @@
               <div class="app-receipt app-table-container">
                 <pre>{{result.xml}}</pre>
               </div>
-              <p>
-                <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
-                  Download Receipt XML
-                </button>
-              </p>
             </div>
 
-          </div>
+          </div> <!-- <div *ngIf="webinErrorDataSource !== undefined"> -->
 
-        </div>
+        </div> <!-- <div *ngIf="result !== undefined"> -->
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
