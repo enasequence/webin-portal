@@ -3,54 +3,38 @@
   <mat-step>
     <ng-template matStepLabel>Select XML files</ng-template>
 
+    <div class="container"
+         fxLayout
+         fxLayout.xs="column"
+         fxLayoutAlign="space-around start"
+         fxLayoutGap="10px">
+      <div fxFlex="50">
+        Submission XML (mandatory)
+        <input type="file" class="app-choose-file" #submissionFile (change)="onChangeSubmissionFile(submissionFile.files)"/>
+        Study XML
+        <input type="file" class="app-choose-file" #studyFile (change)="onChangeStudyFile(studyFile.files)"/>
+        Project XML
+        <input type="file" class="app-choose-file" #projectFile (change)="onChangeProjectFile(projectFile.files)"/>
+        Sample XML
+        <input type="file" class="app-choose-file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)"/>
+        Experiment XML
+        <input type="file" class="app-choose-file" #experimentFile (change)="onChangeExperimentFile(experimentFile.files)"/>
+        Run XML
+        <input type="file" class="app-choose-file" #runFile (change)="onChangeRunFile(runFile.files)"/>
+        Analysis XML
+        <input type="file" class="app-choose-file" #analysisFile (change)="onChangeAnalysisFile(analysisFile.files)"/>
+      </div>
+      <div fxFlex>
+        EGA DAC XML
+        <input type="file" class="app-choose-file" #dacFile (change)="onChangeDacFile(dacFile.files)"/>
+        EGA Policy XML
+        <input type="file" class="app-choose-file" #policyFile (change)="onChangePolicyFile(policyFile.files)"/>
+        EGA Dataset XML
+        <input type="file" class="app-choose-file" #datasetFile (change)="onChangeDatasetFile(datasetFile.files)"/>
+      </div>
+    </div>
 
-    <p>Submission XML (mandatory)</p>
-    <p>
-      <!-- <label for="submissionFile" class="app-file-input-label">Submission XML (mandatory)</label> -->
-      <!-- id="submissionFile"  -->
-      <input type="file" #submissionFile (change)="onChangeSubmissionFile(submissionFile.files)"/>
-    </p>
-    <p>Study XML</p>
-    <p>
-      <input type="file" #studyFile (change)="onChangeStudyFile(studyFile.files)"/>
-    </p>
-    <p>Project XML</p>
-    <p>
-      <input type="file" #projectFile (change)="onChangeProjectFile(projectFile.files)"/>
-    </p>
-    <p>Sample XML</p>
-    <p>
-      <input type="file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)"/>
-    </p>
-    <p>Experiment XML</p>
-    <p>
-      <input type="file" #experimentFile (change)="onChangeExperimentFile(experimentFile.files)"/>
-    </p>
-    <p>Run XML</p>
-    <p>
-      <input type="file" #runFile (change)="onChangeRunFile(runFile.files)"/>
-    </p>
-    <p>Analysis XML</p>
-    <p>
-      <input type="file" #analysisFile (change)="onChangeAnalysisFile(analysisFile.files)"/>
-    </p>
-    <p>DAC XML</p>
-    <p>
-      <input type="file" #dacFile (change)="onChangeDacFile(dacFile.files)"/>
-    </p>
-    <p>Policy XML</p>
-    <p>
-      <input type="file" #policyFile (change)="onChangePolicyFile(policyFile.files)"/>
-    </p>
-    <p>Dataset XML</p>
-    <p>
-      <input type="file" #datasetFile (change)="onChangeDatasetFile(datasetFile.files)"/>
-    </p>
-
-    <p>
-      <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
-    </p>
-
+    <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
 
     <app-submission-result #submissionResult></app-submission-result>
 

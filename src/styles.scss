@@ -146,7 +146,11 @@ $accent: map-get($app-theme, accent);
 }
 
 .app-selected-value {
-  margin: 15px 0;
+  margin: 10px 0;
+}
+
+.app-choose-file {
+  margin: 10px 0;
 }
 
 .app-table-container {

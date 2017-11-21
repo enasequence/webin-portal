@@ -62,18 +62,14 @@
   </mat-step>
   <mat-step>
       <ng-template matStepLabel>Submit spreadsheet</ng-template>
-        <p>Submit spreadsheet</p>
-        <p>
-          <input type="file" #file (change)="onChangeSpreadsheetFile(file.files)"/>
-        </p>
-        <p>
+        Submit spreadsheet
+        <input type="file" class="app-choose-file" #file (change)="onChangeSpreadsheetFile(file.files)"/>
         <mat-radio-group class ="app-radio-group" [(ngModel)]="action">
           <mat-radio-button class ="app-radio-button" value="add">Submit new records</mat-radio-button>
           <mat-radio-button class ="app-radio-button" value="update">Update existing records</mat-radio-button>
           <mat-radio-button class ="app-radio-button" value="validate add">Validate but do not submit new records</mat-radio-button>
           <mat-radio-button class ="app-radio-button" value="validate update">Validate but do not update existing records</mat-radio-button>
         </mat-radio-group>
-      </p>
         <p>
           <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
         </p>
