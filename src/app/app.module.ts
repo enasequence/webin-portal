@@ -53,8 +53,11 @@ import { SubmissionFormatSelectorComponent } from './submission-format-selector/
 import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet-selector/submission-spreadsheet-selector.component';
 import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
+import { ReportComponent } from './report/report.component';
+import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 import { WebinRestService } from './webin-rest.service';
+import { WebinReportService } from './webin-report.service';
 import { SpreadsheetService } from './spreadsheet.service';
 import { WebinAuthenticationService } from './webin-authentication.service';
 import { WebinAuthenticationGuardService } from './webin-authentication-guard.service';
@@ -141,12 +144,15 @@ const appRoutes: Routes = [
     SubmissionResultComponent,
     LoginComponent,
     DashboardComponent,
+    ReportComponent,
+    ReportDialogComponent,
   ],
   bootstrap: [
       AppComponent
   ],
   providers: [
     WebinRestService,
+    WebinReportService,
     SpreadsheetService,
     WebinAuthenticationService,
     WebinAuthenticationGuardService,
@@ -155,6 +161,9 @@ const appRoutes: Routes = [
         useClass: WebinAuthenticationInterceptor,
         multi: true,
     }
+  ],
+  entryComponents: [
+    ReportDialogComponent,
   ]
 })
 export class AppModule { }

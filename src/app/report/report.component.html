@@ -1,0 +1,45 @@
+
+
+<div *ngIf="dataError !== undefined">
+  <div class="app-error">
+      <i class="material-icons">error</i>
+      {{dataError}}
+  </div>
+</div>
+
+<p>
+  <button mat-raised-button color="accent" (click)="report()">Search</button>
+</p>
+
+<div *ngIf="dataSource !== undefined">
+
+  <mat-table [dataSource]="dataSource">
+      <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
+  	    <mat-header-cell *matHeaderCellDef>{{ col }}</mat-header-cell>
+  	    <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickRow(row)"></mat-row>
+
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [length]="getNumberOfRows()"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 25, 50]">
+  </mat-paginator>
+
+<!--
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="Id">
+      <mat-header-cell *matHeaderCellDef><span class="app-table-header">Id</span></mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.report.id}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+-->
+</div>
