@@ -52,6 +52,32 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  setSampleReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Submission date',
+      'Status'
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      'Submission date': this.submissionDateColumnCallback.bind(this),
+      Status: this.statusColumnCallback.bind(this)
+    };
+  }
+
+  setRunReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Submission date',
+      'Status'
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      'Submission date': this.submissionDateColumnCallback.bind(this),
+      Status: this.statusColumnCallback.bind(this)
+    };
+  }
+
   setAnalysisReportColumns() {
     this.displayedColumns = [
       'Accession',
@@ -155,12 +181,19 @@ export class ReportComponent implements OnInit {
 
   report() {
     let observable: Observable<text>;
-    console.log(" ** report **", this.reportType);
+    //console.log(" ** report **", this.reportType);
+
     if (this.reportType == "studies") {
       observable = this.webinReportService.getStudiesAll();
     }
+    if (this.reportType == "samples") {
+      observable = this.webinReportService.getSamplesAll();
+    }
+    if (this.reportType == "runs") {
+      observable = this.webinReportService.getRunsAll();
+    }
     if (this.reportType == "analyses") {
-      observable = this.webinReportService.getAnalysisAll();
+      observable = this.webinReportService.getAnalysesAll();
     }
 
       if (observable != null) {

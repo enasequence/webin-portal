@@ -12,16 +12,28 @@ export class WebinReportService {
   public getStudiesAll() : Observable<text> {
     return this.getAll('studies');
   }
-
   public getStudiesOne(id: string) : Observable<text> {
     return this.getOne('studies', id);
   }
 
-  public getAnalysisAll() : Observable<text> {
-    return this.getAll('analyses');
+  public getSamplesAll() : Observable<text> {
+    return this.getAll('samples');
+  }
+  public getSamplesOne(id: string) : Observable<text> {
+    return this.getOne('samples', id);
   }
 
-  public getAnalysisOne(id: string) : Observable<text> {
+  public getRunsAll() : Observable<text> {
+    return this.getAll('runs');
+  }
+  public getRunsOne(id: string) : Observable<text> {
+    return this.getOne('runs', id);
+  }
+
+  public getAnalysesAll() : Observable<text> {
+    return this.getAll('analyses');
+  }
+  public getAnalysesOne(id: string) : Observable<text> {
     return this.getOne('analyses', id);
   }
 
