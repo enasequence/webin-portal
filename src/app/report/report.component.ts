@@ -184,15 +184,19 @@ export class ReportComponent implements OnInit {
     //console.log(" ** report **", this.reportType);
 
     if (this.reportType == "studies") {
+      this.setStudyReportColumns();
       observable = this.webinReportService.getStudiesAll();
     }
     if (this.reportType == "samples") {
+      this.setSampleReportColumns();
       observable = this.webinReportService.getSamplesAll();
     }
     if (this.reportType == "runs") {
+      this.setRunReportColumns();      
       observable = this.webinReportService.getRunsAll();
     }
     if (this.reportType == "analyses") {
+      this.setAnalysisReportColumns();
       observable = this.webinReportService.getAnalysesAll();
     }
 
@@ -205,7 +209,6 @@ export class ReportComponent implements OnInit {
               this.data = data;
               console.log('** Webin reports service **', this.data);
 
-              this.setAnalysisReportColumns();
               this.dataSource = new MatTableDataSource<WebinError>(this.data);
               this.dataSource.paginator = this.paginator;
           },
