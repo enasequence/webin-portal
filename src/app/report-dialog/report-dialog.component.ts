@@ -21,21 +21,18 @@ export class ReportDialogComponent implements OnInit {
     }
 
     reportChangeStudies() {
-      //console.log('reportChangeStudies');
-      this.dialogRef.close(
-        {
-          type: 'reportChange',
-          report: 'studies',
-          id: this.data.study
-        });
+      this.dialogRef.close(this.reportChange('studies', this.data.study));
     }
 
     reportChangeSamples() {
-      this.dialogRef.close(
-        {
+      this.dialogRef.close(this.reportChange('samples', this.data.samples));
+    }
+
+    reportChange(report: string, id: string) {
+        return {
           type: 'reportChange',
-          report: 'samples',
-          id: this.data.samples
+          report: report,
+          id: id
         });
     }
 }
