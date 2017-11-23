@@ -42,12 +42,18 @@ export class ReportComponent implements OnInit {
   setStudyReportColumns() {
     this.displayedColumns = [
       'Accession',
+      'Project',
+      'Title',
       'Submission date',
-      'Status'
+      'Release date'
+      'Status',
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      Project: this.secondaryIdColumnCallback.bind(this),
+      Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
+      'Release date': this.releaseDateColumnCallback.bind(this),
       Status: this.statusColumnCallback.bind(this)
     };
   }
@@ -178,28 +184,54 @@ export class ReportComponent implements OnInit {
     return this.getSampleId(result);
   }
 
-  analysisTypeColumnCallback(result) {
-    let analysisType: string = result.report.analysisType;
-    if (analysisType) {
-      let str: string = analysisType.toLowerCase();
+  tokenFormat(token: string) {
+    if (token) {
+      let str: string = token.toLowerCase();
       str = str.replace(/_/g, ' ');
-      analysisType = str.charAt(0).toUpperCase() + str.slice(1);
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
-    return analysisType;
+    return token;
   }
 
-  submissionDateColumnCallback(result) {
+  analysisTypeColumnCallback(result) {
+    return this.tokenFormat(result.report.analysisType);
+  }
+
+  dateFormat(date: Date) {
     let month = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    let date: Date = new Date(result.report.firstCreated);
-    return date.getDate() + "/" +
-           month[date.getMonth()]  + "/" +
+    let day = date.getDate();
+    let daySuffix: string;
+    if(day > 3 && day < 21) {
+      daySuffix = 'th';
+    }
+    else {
+      switch (day % 10) {
+        case 1: daySuffix = "st";
+        case 2: daySuffix = "nd";
+        case 3: daySuffix = "rd";
+        default: daySuffix = "th";
+      }
+    }
+
+    return date.getDate() + daySuffix + " " +
+           month[date.getMonth()]  + " " +
            date.getFullYear();
   }
 
+  submissionDateColumnCallback(result) {
+    let date: Date = new Date(result.report.firstCreated);
+    return this.dateFormat(date);
+  }
+
+  releaseDateColumnCallback(result) {
+    let date: Date = new Date(result.report.holdDate);
+    return this.dateFormat(date);
+  }
+
   statusColumnCallback(result) {
-    return result.report.releaseStatus;
+    return this.tokenFormat(result.report.releaseStatus);
   }
 
   fileNameColumnCallback(result) {
@@ -226,12 +258,13 @@ export class ReportComponent implements OnInit {
     return result.report.archiveStatus;
   }
 
+  secondaryIdColumnCallback(result) {
+    return result.report.secondaryId;
+  }
 
-
-
-
-
-
+  titleColumnCallback(result) {
+    return result.report.title;
+  }
 
 
 
