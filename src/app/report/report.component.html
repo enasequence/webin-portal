@@ -18,17 +18,27 @@
     </mat-spinner>
 </div>
 
-
 <div *ngIf="dataSource !== undefined">
 
   <mat-table [dataSource]="dataSource">
       <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
   	    <mat-header-cell *matHeaderCellDef>{{ col }}</mat-header-cell>
-  	    <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
+        <div *ngIf="col!='Action'">
+  	      <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
+        </div>
+        <div *ngIf="col=='Action'">
+          <mat-cell *matCellDef="let element">
+            <button>
+              <span class = "app-primary-color">
+                <i class="material-icons" (click)="action(element)">open_in_new</i>
+              </span>
+            </button>
+          </mat-cell>
+        </div>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickRow(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> <!-- (click)="clickRow(row)" -->
 
   </mat-table>
 

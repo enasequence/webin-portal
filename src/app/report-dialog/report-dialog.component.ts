@@ -17,6 +17,26 @@ export class ReportDialogComponent implements OnInit {
     }
 
     closeDialog() {
-      this.dialogRef.close('Pizza!');
+      this.dialogRef.close();
+    }
+
+    reportChangeStudies() {
+      //console.log('reportChangeStudies');
+      this.dialogRef.close(
+        {
+          type: 'reportChange',
+          report: 'studies',
+          id: this.data.study
+        });
+    }
+
+    reportChangeSamples() {
+      //console.log('reportChangeSampless');
+      this.dialogRef.close(
+        {
+          type: 'reportChange',
+          report: 'samples',
+          id: this.data.samples
+        });
     }
 }

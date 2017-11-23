@@ -1,29 +1,29 @@
 
 <div>
-  <mat-tab-group>
+  <mat-tab-group #tabGroup>
     <mat-tab label="Submit spreadsheet">
       <app-spreadsheet-submission></app-spreadsheet-submission>
     </mat-tab>
     <mat-tab label="Submit XML">
       <app-xml-submission></app-xml-submission>
     </mat-tab>
-    <mat-tab label="Studies">
-      <app-report [reportType]="'studies'"></app-report>
+    <mat-tab #studies label="Studies">
+      <app-report [reportType]="'studies'" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
-    <mat-tab label="Samples">
-      <app-report [reportType]="'samples'"></app-report>
+    <mat-tab #samples label="Samples">
+      <app-report [reportType]="'samples'" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
-    <mat-tab label="Runs">
-      <app-report [reportType]="'runs'"></app-report>
+    <mat-tab #runs label="Runs">
+      <app-report [reportType]="'runs'" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
-    <mat-tab label="Analyses">
-      <app-report [reportType]="'analyses'"></app-report>
+    <mat-tab #analyses label="Analyses">
+      <app-report [reportType]="'analyses'" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
-    <mat-tab label="Run files">
-      <app-report [reportType]="'run files'"></app-report>
+    <mat-tab #runFiles label="Run files">
+      <app-report [reportType]="'run files'" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
-    <mat-tab label="Analysis files">
-      <app-report [reportType]="'analysis files'"></app-report>
+    <mat-tab #analysisFiles label="Analysis files">
+      <app-report [reportType]="'analysis files'" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
 
   </mat-tab-group>

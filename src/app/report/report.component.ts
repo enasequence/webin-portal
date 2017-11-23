@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewEncapsulation, Input, Output, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -23,16 +23,18 @@ export class ReportComponent implements OnInit {
   }
 
   @Input() reportType: string;
-  id: string;
+  public id: string;
   spinner: boolean;
 
   data;
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) dataPaginator: MatPaginator;
+
   dataError;
   displayedColumns;
   displayedColumnsCallback;
 
+  @Output() public onReportChange = new EventEmitter<any>();
 
   getSearchButtonText() {
     //if (this.id) {
@@ -49,6 +51,7 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Release date'
       'Status',
+      // 'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -68,7 +71,8 @@ export class ReportComponent implements OnInit {
       'Organism',
       'Tax id',
       'Submission date',
-      'Status'
+      'Status',
+      // 'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -89,7 +93,8 @@ export class ReportComponent implements OnInit {
       'Sample',
       'Experiment',
       'Submission date',
-      'Status'
+      'Status',
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -109,7 +114,8 @@ export class ReportComponent implements OnInit {
       'Study',
       'Sample',
       'Submission date',
-      'Status'
+      'Status',
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -320,24 +326,31 @@ export class ReportComponent implements OnInit {
   }
 
 
-  clickRow(row) {
-    console.log("clickRow", this, row);
+  action(result) {
+    console.log("** action **", result);
+    // Show study action.
+    let study: string = this.getStudyId(result);
+    // Show samples action.
+    let samples: string;
+    if (this.getSampleId(result)) {
+      samples = this.getId(result);
+    }
+
     let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
 //      height: '400px',
 //       width: '250px',
       data: {
-        study: 'test',
-        sample: 'test'
+        study: study,
+        samples: samples
       }
     });
 
-    reportDialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+    reportDialogRef.afterClosed().subscribe(data => {
+      if (data && data.type && data.type == 'reportChange') {
+        this.onReportChange.emit(data);
+      }
     });
   }
-
-
-
 
   report() {
     let observable: Observable<text>;

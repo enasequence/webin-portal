@@ -1,11 +1,26 @@
-<h2 mat-dialog-title>TODO TITLE</h2>
-<mat-dialog-content>
-TODO CONTENT
+<h2 mat-dialog-title>Actions</h2>
 
-study: {{ data.study }}
-sample: {{ data.sample }}
+<mat-dialog-content>
+
+  <mat-chip-list class="mat-chip-list-stacked">
+
+    <div *ngIf="data.study">
+      <mat-chip (click)="reportChangeStudies()">
+        Show study {{ data.study }}
+      </mat-chip>
+    </div>
+
+    <div *ngIf="data.samples">
+      <mat-chip (click)="reportChangeSamples()">
+        Show samples for {{ data.samples }}
+      </mat-chip>
+    </div>
+
+  </mat-chip-list>
 
 </mat-dialog-content>
+<p>
+</p>
 
 <mat-dialog-actions>
 <!--
