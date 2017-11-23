@@ -26,18 +26,11 @@ export class ReportComponent implements OnInit {
   id: string;
 
   data;
-  dataSource;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) dataPaginator: MatPaginator;
   dataError;
   displayedColumns;
   displayedColumnsCallback;
-
-  getNumberOfRows() {
-    if (this.data == null || this.data.length == null) {
-      return 0;
-    }
-    return this.data.length;
-  }
 
   setStudyReportColumns() {
     this.displayedColumns = [
@@ -375,8 +368,8 @@ export class ReportComponent implements OnInit {
               this.data = data;
               console.log('** Webin reports service **', this.data);
 
-              this.dataSource = new MatTableDataSource<WebinError>(this.data);
-              this.dataSource.paginator = this.paginator;
+              this.dataSource = new MatTableDataSource<any>(this.data);
+              this.dataSource.paginator = this.dataPaginator;
           },
           // Errors
           (err: HttpErrorResponse) => {
