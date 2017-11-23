@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+  ReportType = ReportType;   // Allows to use in template
+
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
   @ViewChild('studies') studies: ReportComponent;
   @ViewChild('samples') samples: ReportComponent;

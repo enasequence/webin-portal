@@ -4,6 +4,6 @@ export enum ReportType {
   samples          = 3,
   runs             = 4,
   analyses         = 5,
-  'run files'      = 6,
-  'analysis files' = 7
+  runFiles         = 6,
+  analysisFiles    = 7
 }

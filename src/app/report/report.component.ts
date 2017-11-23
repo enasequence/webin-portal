@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+import { ReportType } from '../report-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
 
@@ -22,7 +23,7 @@ export class ReportComponent implements OnInit {
   ngOnInit() {
   }
 
-  @Input() reportType: string;
+  @Input() reportType: ReportType;
   public id: string;
   spinner: boolean;
 
@@ -390,7 +391,7 @@ export class ReportComponent implements OnInit {
 
   initReport()
   {
-    if (this.reportType == "studies") {
+    if (this.reportType == ReportType.studies) {
       this.setStudyReportColumns();
       if (this.id) {
         return this.webinReportService.getStudiesOne(this.id);
@@ -398,7 +399,7 @@ export class ReportComponent implements OnInit {
       return this.webinReportService.getStudiesAll();
     }
 
-    if (this.reportType == "samples") {
+    if (this.reportType == ReportType.samples) {
       this.setSampleReportColumns();
       if (this.id) {
         return this.webinReportService.getSamplesOne(this.id);
@@ -406,7 +407,7 @@ export class ReportComponent implements OnInit {
       return this.webinReportService.getSamplesAll();
     }
 
-    if (this.reportType == "runs") {
+    if (this.reportType == ReportType.runs) {
       this.setRunReportColumns();
       if (this.id) {
         return this.webinReportService.getRunsOne(this.id);
@@ -414,7 +415,7 @@ export class ReportComponent implements OnInit {
       return this.webinReportService.getRunsAll();
     }
 
-    if (this.reportType == "analyses") {
+    if (this.reportType == ReportType.analyses) {
       this.setAnalysisReportColumns();
       if (this.id) {
         return this.webinReportService.getAnalysesOne(this.id);
@@ -422,7 +423,7 @@ export class ReportComponent implements OnInit {
       return this.webinReportService.getAnalysesAll();
     }
 
-    if (this.reportType == "run files") {
+    if (this.reportType == ReportType.runFiles) {
       this.setRunFileReportColumns();
       if (this.id) {
         return this.webinReportService.getRunFilesOne(this.id);
@@ -430,13 +431,13 @@ export class ReportComponent implements OnInit {
       return this.webinReportService.getRunFilesAll();
     }
 
-    if (this.reportType == "analysis files") {
+    if (this.reportType == ReportType.analysisFiles) {
       this.setAnalysisFileReportColumns();
       if (this.id) {
         return this.webinReportService.getAnalysisFilesOne(this.id);
       }
       return this.webinReportService.getAnalysisFilesAll();
     }
-    
+
   }
 }
