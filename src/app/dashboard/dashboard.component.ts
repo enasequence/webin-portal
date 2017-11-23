@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 
 import { ReportComponent } from '../report/report.component';
+import { ReportType } from '../report-type.enum';
 
 @Component({
   selector: 'app-main',
@@ -28,18 +29,10 @@ export class DashboardComponent implements OnInit {
   @ViewChild('runFiles') runFiles: ReportComponent;
   @ViewChild('analysisFiles') analysisFiles: ReportComponent;
 
-  reportIndex = {
-    studies: 2,
-    samples: 3,
-    runs: 4,
-    analyses: 5,
-    'run files': 6,
-    'analysis files': 7
-  };
-
   consumeReportChange(event) {
-    this[event.report].id = event.id;
-    this[event.report].report();
-    this.tabGroup.selectedIndex = this.reportIndex[event.report];
+    console.log("** consumeReportChange **", event);
+    this[ReportType[event.report]].id = event.id;
+    this[ReportType[event.report]].report();
+    this.tabGroup.selectedIndex = event.report;
   }
 }

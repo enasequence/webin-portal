@@ -353,68 +353,9 @@ export class ReportComponent implements OnInit {
   }
 
   report() {
-    let observable: Observable<text>;
     //console.log(" ** report **", this.reportType);
 
-    if (this.reportType == "studies") {
-      this.setStudyReportColumns();
-      if (this.id) {
-        observable = this.webinReportService.getStudiesOne(this.id);
-      }
-      else {
-        observable = this.webinReportService.getStudiesAll();
-      }
-    }
-
-    if (this.reportType == "samples") {
-      this.setSampleReportColumns();
-      if (this.id) {
-        observable = this.webinReportService.getSamplesOne(this.id);
-      }
-      else {
-        observable = this.webinReportService.getSamplesAll();
-      }
-    }
-
-    if (this.reportType == "runs") {
-      this.setRunReportColumns();
-      if (this.id) {
-        observable = this.webinReportService.getRunsOne(this.id);
-      }
-      else {
-        observable = this.webinReportService.getRunsAll();
-      }
-    }
-
-    if (this.reportType == "analyses") {
-      this.setAnalysisReportColumns();
-      if (this.id) {
-        observable = this.webinReportService.getAnalysesOne(this.id);
-      }
-      else {
-        observable = this.webinReportService.getAnalysesAll();
-      }
-    }
-
-    if (this.reportType == "run files") {
-      this.setRunFileReportColumns();
-      if (this.id) {
-        observable = this.webinReportService.getRunFilesOne(this.id);
-      }
-      else {
-        observable = this.webinReportService.getRunFilesAll();
-      }
-    }
-
-    if (this.reportType == "analysis files") {
-      this.setAnalysisFileReportColumns();
-      if (this.id) {
-        observable = this.webinReportService.getAnalysisFilesOne(this.id);
-      }
-      else {
-        observable = this.webinReportService.getAnalysisFilesAll();
-      }
-    }
+    let observable: Observable<text> = this.initReport();
 
     if (observable != null) {
       this.spinner = true;
@@ -445,5 +386,57 @@ export class ReportComponent implements OnInit {
           console.log(this.dataError);
       });
     }
+  }
+
+  initReport()
+  {
+    if (this.reportType == "studies") {
+      this.setStudyReportColumns();
+      if (this.id) {
+        return this.webinReportService.getStudiesOne(this.id);
+      }
+      return this.webinReportService.getStudiesAll();
+    }
+
+    if (this.reportType == "samples") {
+      this.setSampleReportColumns();
+      if (this.id) {
+        return this.webinReportService.getSamplesOne(this.id);
+      }
+      return this.webinReportService.getSamplesAll();
+    }
+
+    if (this.reportType == "runs") {
+      this.setRunReportColumns();
+      if (this.id) {
+        return this.webinReportService.getRunsOne(this.id);
+      }
+      return this.webinReportService.getRunsAll();
+    }
+
+    if (this.reportType == "analyses") {
+      this.setAnalysisReportColumns();
+      if (this.id) {
+        return this.webinReportService.getAnalysesOne(this.id);
+      }
+      return this.webinReportService.getAnalysesAll();
+    }
+
+    if (this.reportType == "run files") {
+      this.setRunFileReportColumns();
+      if (this.id) {
+        return this.webinReportService.getRunFilesOne(this.id);
+      }
+      return this.webinReportService.getRunFilesAll();
+    }
+
+    if (this.reportType == "analysis files") {
+      this.setAnalysisFileReportColumns();
+      if (this.id) {
+        return this.webinReportService.getAnalysisFilesOne(this.id);
+      }
+      return this.webinReportService.getAnalysisFilesAll();
+    }
+    
   }
 }
