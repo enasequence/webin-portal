@@ -37,6 +37,20 @@ export class WebinReportService {
     return this.getOne('analyses', id);
   }
 
+  public getRunFilesAll() : Observable<text> {
+    return this.getAll('run-files');
+  }
+  public getRunFilesOne(id: string) : Observable<text> {
+    return this.getOne('run-files', id);
+  }
+
+  public getAnalysisFilesAll() : Observable<text> {
+    return this.getAll('analysis-files');
+  }
+  public getAnalysisFilesOne(id: string) : Observable<text> {
+    return this.getOne('analysis-files', id);
+  }
+
 
   private getAll(reportType: string) : Observable<text> {
     let url: string = this._baseUrl + "/" + reportType;

@@ -97,6 +97,54 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  setRunFileReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      //'Submission date',
+      'File name',
+      'File format',
+      'File size',
+      //'Checksum method',
+      'MD5 checksum',
+      'Archive status'
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      //'Submission date': this.submissionDateColumnCallback.bind(this),
+      'File name': this.fileNameColumnCallback.bind(this),
+      'File format': this.fileFormatColumnCallback.bind(this),
+      'File size': this.fileSizeColumnCallback.bind(this),
+      //'Checksum method': this.fileChecksumMethodColumnCallback.bind(this),
+      'MD5 checksum': this.fileChecksumColumnCallback.bind(this),
+      'Archive status': this.fileArchiveStatusColumnCallback.bind(this)
+    };
+  }
+
+  setAnalysisFileReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      //'Analysis type',
+      //'Submission date',
+      'File name',
+      'File format',
+      'File size',
+      //'Checksum method',
+      'MD5 checksum',
+      'Archive status'
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      //'Analysis type': this.analysisTypeColumnCallback.bind(this),
+      //'Submission date': this.submissionDateColumnCallback.bind(this),
+      'File name': this.fileNameColumnCallback.bind(this),
+      'File format': this.fileFormatColumnCallback.bind(this),
+      'File size': this.fileSizeColumnCallback.bind(this),
+      //'Checksum method': this.fileChecksumMethodColumnCallback.bind(this),
+      'MD5 checksum': this.fileChecksumColumnCallback.bind(this),
+      'Archive status': this.fileArchiveStatusColumnCallback.bind(this)
+    };
+  }
+
   getId(result) {
     if (result.report.egaId) {
       return result.report.egaId;
@@ -154,6 +202,41 @@ export class ReportComponent implements OnInit {
     return result.report.releaseStatus;
   }
 
+  fileNameColumnCallback(result) {
+    return result.report.fileName;
+  }
+
+  fileSizeColumnCallback(result) {
+    return result.report.bytes;
+  }
+
+  fileChecksumMethodColumnCallback(result) {
+    return result.report.checksumMethod;
+  }
+
+  fileChecksumColumnCallback(result) {
+    return result.report.checksum;
+  }
+
+  fileFormatColumnCallback(result) {
+    return result.report.fileFormat;
+  }
+
+  fileArchiveStatusColumnCallback(result) {
+    return result.report.archiveStatus;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   getElementValue(result, col) {
     let callback = this.displayedColumnsCallback[col];
     return this.displayedColumnsCallback[col](result);
@@ -192,12 +275,20 @@ export class ReportComponent implements OnInit {
       observable = this.webinReportService.getSamplesAll();
     }
     if (this.reportType == "runs") {
-      this.setRunReportColumns();      
+      this.setRunReportColumns();
       observable = this.webinReportService.getRunsAll();
     }
     if (this.reportType == "analyses") {
       this.setAnalysisReportColumns();
       observable = this.webinReportService.getAnalysesAll();
+    }
+    if (this.reportType == "run files") {
+      this.setRunFileReportColumns();
+      observable = this.webinReportService.getRunFilesAll();
+    }
+    if (this.reportType == "analysis files") {
+      this.setAnalysisFileReportColumns();
+      observable = this.webinReportService.getAnalysisFilesAll();
     }
 
       if (observable != null) {
