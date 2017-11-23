@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ReportType } from '../report-type.enum';
+import { ReportActionType } from '../report-action-type.enum';
 
 @Component({
   selector: 'app-report-dialog',
@@ -18,23 +19,17 @@ export class ReportDialogComponent implements OnInit {
     ngOnInit() {
     }
 
+    ReportType = ReportType;   // Allows use in template
+
     closeDialog() {
       this.dialogRef.close();
     }
 
-    reportChangeStudies() {
-      this.dialogRef.close(this.reportChange(ReportType.studies, this.data.study));
-    }
-
-    reportChangeSamples() {
-      this.dialogRef.close(this.reportChange(ReportType.samples, this.data.samples));
-    }
-
-    reportChange(report: ReportType, id: string) {
-        return {
-          type: 'reportChange',
-          report: report,
-          id: id
-        });
+    changeReport(reportType : ReportType) {
+      this.dialogRef.close({
+        reportActionType: ReportActionType.changeReport,
+        reportType: reportType,
+        id: this.data[reportType]
+      });
     }
 }

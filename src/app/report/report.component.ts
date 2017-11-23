@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { ReportType } from '../report-type.enum';
+import { ReportActionType } from '../report-action-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
 
@@ -175,29 +176,44 @@ export class ReportComponent implements OnInit {
   }
 
   action(result) {
+    let dialogInputData = {};
     //console.log("** action **", result);
 
-    // Pass study id to the dialog to allow navigation to studies report.
-    let study: string = this.getStudyId(result);
+    // Allow navigation to studies report.
+    if (this.getStudyId(result)) {
+      dialogInputData[ReportType.studies] = this.getStudyId(result);
+    }
 
-    // Pass object id to the dialog to allow navigation to samples report.
-    let samples: string;
+    // Allow navigation to samples report.
     if (this.getSampleId(result)) {
-      samples = this.getId(result);
+      dialogInputData[ReportType.samples] = this.getId(result);
+    }
+
+    // Allow navigation to run report.
+    if (this.reportType == ReportType.studies ||
+        this.reportType == ReportType.samples ||
+        this.reportType == ReportType.runFiles) {
+      dialogInputData[ReportType.runs] = this.getId(result);
+    }
+
+    // Allow navigation to analysis report.
+    if (this.reportType == ReportType.studies ||
+        this.reportType == ReportType.samples ||
+        this.reportType == ReportType.analysisFiles) {
+      dialogInputData[ReportType.analyses] = this.getId(result);
     }
 
     // Create data for report dialog.
     let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
-      // height: '400px',
-      // width: '250px',
-      data: {
-        study: study,
-        samples: samples
-      }
+        // height: '400px',
+        // width: '250px',
+        data: dialogInputData
     });
 
     reportDialogRef.afterClosed().subscribe(data => {
-      if (data && data.type && data.type == 'reportChange') {
+      console.log(" ** reports dialog closed **" , data);
+      if (data && data.reportActionType == ReportActionType.changeReport) {
+        console.log(" ** onReportChange **" , data);
         this.onReportChange.emit(data);
       }
     });

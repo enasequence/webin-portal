@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  ReportType = ReportType;   // Allows to use in template
+  ReportType = ReportType;   // Allows use in template
 
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
   @ViewChild('studies') studies: ReportComponent;
@@ -33,8 +33,8 @@ export class DashboardComponent implements OnInit {
 
   consumeReportChange(event) {
     console.log("** consumeReportChange **", event);
-    this[ReportType[event.report]].id = event.id;
-    this[ReportType[event.report]].report();
-    this.tabGroup.selectedIndex = event.report;
+    this[ReportType[event.reportType]].id = event.id;
+    this[ReportType[event.reportType]].report();
+    this.tabGroup.selectedIndex = event.reportType;
   }
 }
