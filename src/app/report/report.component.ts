@@ -24,6 +24,7 @@ export class ReportComponent implements OnInit {
 
   @Input() reportType: string;
   id: string;
+  spinner: boolean;
 
   data;
   dataSource: MatTableDataSource<any>;
@@ -402,30 +403,34 @@ export class ReportComponent implements OnInit {
       }
     }
 
-      if (observable != null) {
-        observable.subscribe(
-          // Success
-          data => {
-              // HttpResponse when using {observe: 'response'}
-              //this.result = this.webinRestService.parseResult(data);
-              this.data = data;
-              console.log('** Webin reports service **', this.data);
+    if (observable != null) {
+      this.spinner = true;
 
-              this.dataSource = new MatTableDataSource<any>(this.data);
-              this.dataSource.paginator = this.dataPaginator;
-          },
-          // Errors
-          (err: HttpErrorResponse) => {
-            console.log('** Webin submission failed **', err);
+      observable.subscribe(
+        // Success
+        data => {
+            // HttpResponse when using {observe: 'response'}
+            //this.result = this.webinRestService.parseResult(data);
+            this.data = data;
+            console.log('** Webin reports service **', this.data);
 
-            if (err.error instanceof Error) {
-              this.dataError = `Webin reports failed because of a client or network error: ${err.error.message}`;
-            }
-            else {
-              this.dataError = `Webin reports failed because of a server error ${err.status}: ${err.error}`;
-            }
-            console.log(this.dataError);
-        });
+            this.spinner = false;
+
+            this.dataSource = new MatTableDataSource<any>(this.data);
+            this.dataSource.paginator = this.dataPaginator;
+        },
+        // Errors
+        (err: HttpErrorResponse) => {
+          console.log('** Webin submission failed **', err);
+
+          if (err.error instanceof Error) {
+            this.dataError = `Webin reports failed because of a client or network error: ${err.error.message}`;
+          }
+          else {
+            this.dataError = `Webin reports failed because of a server error ${err.status}: ${err.error}`;
+          }
+          console.log(this.dataError);
+      });
     }
   }
 }
