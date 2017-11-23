@@ -42,7 +42,7 @@ export class ReportComponent implements OnInit {
   setStudyReportColumns() {
     this.displayedColumns = [
       'Accession',
-      'Project',
+      'BioProject',
       'Title',
       'Submission date',
       'Release date'
@@ -50,7 +50,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
-      Project: this.secondaryIdColumnCallback.bind(this),
+      BioProject: this.secondaryIdColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
       'Release date': this.releaseDateColumnCallback.bind(this),
@@ -61,11 +61,19 @@ export class ReportComponent implements OnInit {
   setSampleReportColumns() {
     this.displayedColumns = [
       'Accession',
+      'BioSample',
+      'Title',
+      'Organism',
+      'Tax id',
       'Submission date',
       'Status'
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      BioSample: this.secondaryIdColumnCallback.bind(this),
+      Title: this.titleColumnCallback.bind(this),
+      Organism: this.organismColumnCallback.bind(this),
+      'Tax id': this.taxIdColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
       Status: this.statusColumnCallback.bind(this)
     };
@@ -264,6 +272,18 @@ export class ReportComponent implements OnInit {
 
   titleColumnCallback(result) {
     return result.report.title;
+  }
+
+  titleColumnCallback(result) {
+    return result.report.title;
+  }
+
+  organismColumnCallback(result) {
+    return result.report.scientificName;
+  }
+
+  taxIdColumnCallback(result) {
+    return result.report.taxId;
   }
 
 
