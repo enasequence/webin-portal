@@ -40,20 +40,6 @@ export class SubmissionResultComponent implements OnInit {
   ngOnInit() {
   }
 
-  getNumberOfErrors() {
-    if (this.result == null || this.result.errors == null) {
-      return 0;
-    }
-    return this.result.errors.length;
-  }
-
-  getNumberOfAccessions() {
-    if (this.result == null || this.result.accessions == null) {
-      return 0;
-    }
-    return this.result.accessions.length;
-  }
-
   private reset() {
     this.webinErrorDataSource = undefined;
     this.webinAccessionDataSource = undefined;
