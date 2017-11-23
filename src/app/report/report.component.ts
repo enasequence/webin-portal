@@ -25,24 +25,17 @@ export class ReportComponent implements OnInit {
 
   @Input() reportType: ReportType;
   public id: string;
-  spinner: boolean;
 
   data;
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) dataPaginator: MatPaginator;
-
-  dataError;
   displayedColumns;
   displayedColumnsCallback;
+  dataError;
+
+  spinner: boolean;
 
   @Output() public onReportChange = new EventEmitter<any>();
-
-  getSearchButtonText() {
-    //if (this.id) {
-    //  return "Search " + this.id;
-    //}
-    return "Search";
-  }
 
   setStudyReportColumns() {
     this.displayedColumns = [
@@ -176,6 +169,131 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  getElementValue(result, col) {
+    let callback = this.displayedColumnsCallback[col];
+    return this.displayedColumnsCallback[col](result);
+  }
+
+  action(result) {
+    //console.log("** action **", result);
+
+    // Pass study id to the dialog to allow navigation to studies report.
+    let study: string = this.getStudyId(result);
+
+    // Pass object id to the dialog to allow navigation to samples report.
+    let samples: string;
+    if (this.getSampleId(result)) {
+      samples = this.getId(result);
+    }
+
+    // Create data for report dialog.
+    let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
+      // height: '400px',
+      // width: '250px',
+      data: {
+        study: study,
+        samples: samples
+      }
+    });
+
+    reportDialogRef.afterClosed().subscribe(data => {
+      if (data && data.type && data.type == 'reportChange') {
+        this.onReportChange.emit(data);
+      }
+    });
+  }
+
+  report() {
+    //console.log(" ** report **", this.reportType);
+
+    let observable: Observable<text> = this.initReport();
+
+    if (observable != null) {
+      this.spinner = true;
+
+      observable.subscribe(
+        // Success
+        data => {
+            // HttpResponse when using {observe: 'response'}
+            //this.result = this.webinRestService.parseResult(data);
+            this.data = data;
+            console.log('** Webin reports service **', this.data);
+
+            this.spinner = false;
+
+            this.dataSource = new MatTableDataSource<any>(this.data);
+            this.dataSource.paginator = this.dataPaginator;
+        },
+        // Errors
+        (err: HttpErrorResponse) => {
+          console.log('** Webin submission failed **', err);
+
+          if (err.error instanceof Error) {
+            this.dataError = `Webin reports failed because of a client or network error: ${err.error.message}`;
+          }
+          else {
+            this.dataError = `Webin reports failed because of a server error ${err.status}: ${err.error}`;
+          }
+          console.log(this.dataError);
+      });
+    }
+  }
+
+  initReport()
+  {
+    if (this.reportType == ReportType.studies) {
+      this.setStudyReportColumns();
+      if (this.id) {
+        return this.webinReportService.getStudiesOne(this.id);
+      }
+      return this.webinReportService.getStudiesAll();
+    }
+
+    if (this.reportType == ReportType.samples) {
+      this.setSampleReportColumns();
+      if (this.id) {
+        return this.webinReportService.getSamplesOne(this.id);
+      }
+      return this.webinReportService.getSamplesAll();
+    }
+
+    if (this.reportType == ReportType.runs) {
+      this.setRunReportColumns();
+      if (this.id) {
+        return this.webinReportService.getRunsOne(this.id);
+      }
+      return this.webinReportService.getRunsAll();
+    }
+
+    if (this.reportType == ReportType.analyses) {
+      this.setAnalysisReportColumns();
+      if (this.id) {
+        return this.webinReportService.getAnalysesOne(this.id);
+      }
+      return this.webinReportService.getAnalysesAll();
+    }
+
+    if (this.reportType == ReportType.runFiles) {
+      this.setRunFileReportColumns();
+      if (this.id) {
+        return this.webinReportService.getRunFilesOne(this.id);
+      }
+      return this.webinReportService.getRunFilesAll();
+    }
+
+    if (this.reportType == ReportType.analysisFiles) {
+      this.setAnalysisFileReportColumns();
+      if (this.id) {
+        return this.webinReportService.getAnalysisFilesOne(this.id);
+      }
+      return this.webinReportService.getAnalysisFilesAll();
+    }
+  }
+
+
+  // Id getters
+  //
+
   getId(result) {
     if (result.report.egaId) {
       return result.report.egaId;
@@ -203,6 +321,9 @@ export class ReportComponent implements OnInit {
     }
     return result.report.experimentId;
   }
+
+  // Column callbacks
+  //
 
   accessionColumnCallback(result) {
     return this.getId(result);
@@ -317,127 +438,5 @@ export class ReportComponent implements OnInit {
 
   instrumentColumnCallback(result) {
    return result.report.instrumentModel;
-  }
-
-
-
-  getElementValue(result, col) {
-    let callback = this.displayedColumnsCallback[col];
-    return this.displayedColumnsCallback[col](result);
-  }
-
-
-  action(result) {
-    console.log("** action **", result);
-    // Show study action.
-    let study: string = this.getStudyId(result);
-    // Show samples action.
-    let samples: string;
-    if (this.getSampleId(result)) {
-      samples = this.getId(result);
-    }
-
-    let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
-//      height: '400px',
-//       width: '250px',
-      data: {
-        study: study,
-        samples: samples
-      }
-    });
-
-    reportDialogRef.afterClosed().subscribe(data => {
-      if (data && data.type && data.type == 'reportChange') {
-        this.onReportChange.emit(data);
-      }
-    });
-  }
-
-  report() {
-    //console.log(" ** report **", this.reportType);
-
-    let observable: Observable<text> = this.initReport();
-
-    if (observable != null) {
-      this.spinner = true;
-
-      observable.subscribe(
-        // Success
-        data => {
-            // HttpResponse when using {observe: 'response'}
-            //this.result = this.webinRestService.parseResult(data);
-            this.data = data;
-            console.log('** Webin reports service **', this.data);
-
-            this.spinner = false;
-
-            this.dataSource = new MatTableDataSource<any>(this.data);
-            this.dataSource.paginator = this.dataPaginator;
-        },
-        // Errors
-        (err: HttpErrorResponse) => {
-          console.log('** Webin submission failed **', err);
-
-          if (err.error instanceof Error) {
-            this.dataError = `Webin reports failed because of a client or network error: ${err.error.message}`;
-          }
-          else {
-            this.dataError = `Webin reports failed because of a server error ${err.status}: ${err.error}`;
-          }
-          console.log(this.dataError);
-      });
-    }
-  }
-
-  initReport()
-  {
-    if (this.reportType == ReportType.studies) {
-      this.setStudyReportColumns();
-      if (this.id) {
-        return this.webinReportService.getStudiesOne(this.id);
-      }
-      return this.webinReportService.getStudiesAll();
-    }
-
-    if (this.reportType == ReportType.samples) {
-      this.setSampleReportColumns();
-      if (this.id) {
-        return this.webinReportService.getSamplesOne(this.id);
-      }
-      return this.webinReportService.getSamplesAll();
-    }
-
-    if (this.reportType == ReportType.runs) {
-      this.setRunReportColumns();
-      if (this.id) {
-        return this.webinReportService.getRunsOne(this.id);
-      }
-      return this.webinReportService.getRunsAll();
-    }
-
-    if (this.reportType == ReportType.analyses) {
-      this.setAnalysisReportColumns();
-      if (this.id) {
-        return this.webinReportService.getAnalysesOne(this.id);
-      }
-      return this.webinReportService.getAnalysesAll();
-    }
-
-    if (this.reportType == ReportType.runFiles) {
-      this.setRunFileReportColumns();
-      if (this.id) {
-        return this.webinReportService.getRunFilesOne(this.id);
-      }
-      return this.webinReportService.getRunFilesAll();
-    }
-
-    if (this.reportType == ReportType.analysisFiles) {
-      this.setAnalysisFileReportColumns();
-      if (this.id) {
-        return this.webinReportService.getAnalysisFilesOne(this.id);
-      }
-      return this.webinReportService.getAnalysisFilesAll();
-    }
-
   }
 }
