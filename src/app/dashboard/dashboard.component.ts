@@ -20,13 +20,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
-  @ViewChild(ReportComponent) studies: ReportComponent;
-  @ViewChild(ReportComponent) samples: ReportComponent;
-  @ViewChild(ReportComponent) runs: ReportComponent;
-  @ViewChild(ReportComponent) analyses: ReportComponent;
-  @ViewChild(ReportComponent) runFiles: ReportComponent;
-  @ViewChild(ReportComponent) analysisFiles: ReportComponent;
+  @ViewChild('tabGroup') tabGroup: MatTabGroup;
+  @ViewChild('studies') studies: ReportComponent;
+  @ViewChild('samples') samples: ReportComponent;
+  @ViewChild('runs') runs: ReportComponent;
+  @ViewChild('analyses') analyses: ReportComponent;
+  @ViewChild('runFiles') runFiles: ReportComponent;
+  @ViewChild('analysisFiles') analysisFiles: ReportComponent;
 
   reportIndex = {
     studies: 2,
@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit {
   };
 
   consumeReportChange(event) {
-    console.log("** report change **", event, this.reportIndex[event.report]);
     this[event.report].id = event.id;
     this[event.report].report();
     this.tabGroup.selectedIndex = this.reportIndex[event.report];

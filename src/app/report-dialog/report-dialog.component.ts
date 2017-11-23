@@ -31,7 +31,6 @@ export class ReportDialogComponent implements OnInit {
     }
 
     reportChangeSamples() {
-      //console.log('reportChangeSampless');
       this.dialogRef.close(
         {
           type: 'reportChange',

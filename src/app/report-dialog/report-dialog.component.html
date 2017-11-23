@@ -4,17 +4,17 @@
 
   <mat-chip-list class="mat-chip-list-stacked">
 
-    <div *ngIf="data.study">
+    <p *ngIf="data.study">
       <mat-chip (click)="reportChangeStudies()">
         Show study {{ data.study }}
       </mat-chip>
-    </div>
+    </p>
 
-    <div *ngIf="data.samples">
+    <p *ngIf="data.samples">
       <mat-chip (click)="reportChangeSamples()">
         Show samples for {{ data.samples }}
       </mat-chip>
-    </div>
+    </p>
 
   </mat-chip-list>
 

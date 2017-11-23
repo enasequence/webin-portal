@@ -7,7 +7,7 @@ import { WebinAuthenticationService } from './webin-authentication.service';
 export class WebinAuthenticationInterceptor implements HttpInterceptor {
 
   private _webinRestServiceBaseUrlRegex = /.*drop-box\/submit\/.*/;
-  private _webinReportServiceBaseUrlRegex = /.*ves-hx-5a:8221\/api.*/;
+  private _webinReportServiceBaseUrlRegex = /.*ena\/submit\/report.*/;
 
   constructor(private injector: Injector) {}
 
