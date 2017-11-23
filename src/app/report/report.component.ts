@@ -82,11 +82,19 @@ export class ReportComponent implements OnInit {
   setRunReportColumns() {
     this.displayedColumns = [
       'Accession',
+      'Instrument',
+      'Study',
+      'Sample',
+      'Experiment',
       'Submission date',
       'Status'
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      Instrument: this.instrumentColumnCallback.bind(this),
+      Study: this.studyColumnCallback.bind(this),
+      Sample: this.sampleColumnCallback.bind(this),
+      Experiment: this.experimentColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
       Status: this.statusColumnCallback.bind(this)
     };
@@ -95,17 +103,17 @@ export class ReportComponent implements OnInit {
   setAnalysisReportColumns() {
     this.displayedColumns = [
       'Accession',
+      'Analysis type',
       'Study',
       'Sample',
-      'Analysis type',
       'Submission date',
       'Status'
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Analysis type': this.analysisTypeColumnCallback.bind(this),
       Study: this.studyColumnCallback.bind(this),
       Sample: this.sampleColumnCallback.bind(this),
-      'Analysis type': this.analysisTypeColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
       Status: this.statusColumnCallback.bind(this)
     };
@@ -177,7 +185,14 @@ export class ReportComponent implements OnInit {
     if (result.report.sampleEgaId) {
       return result.report.sampleEgaId;
     }
-    result.report.sampleId;
+    return result.report.sampleId;
+  }
+
+  getExperimentId(result) {
+    if (result.report.experimentEgaId) {
+      return result.report.experimentEgaId;
+    }
+    return result.report.experimentId;
   }
 
   accessionColumnCallback(result) {
@@ -191,6 +206,11 @@ export class ReportComponent implements OnInit {
   sampleColumnCallback(result) {
     return this.getSampleId(result);
   }
+
+  experimentColumnCallback(result) {
+    return this.getExperimentId(result);
+  }
+
 
   tokenFormat(token: string) {
     if (token) {
@@ -286,7 +306,9 @@ export class ReportComponent implements OnInit {
     return result.report.taxId;
   }
 
-
+  instrumentColumnCallback(result) {
+   return result.report.instrumentModel;
+  }
 
 
 
