@@ -32,6 +32,14 @@ export class ReportComponent implements OnInit {
   displayedColumns;
   displayedColumnsCallback;
 
+
+  getSearchButtonText() {
+    //if (this.id) {
+    //  return "Search " + this.id;
+    //}
+    return "Search";
+  }
+
   setStudyReportColumns() {
     this.displayedColumns = [
       'Accession',
@@ -336,27 +344,62 @@ export class ReportComponent implements OnInit {
 
     if (this.reportType == "studies") {
       this.setStudyReportColumns();
-      observable = this.webinReportService.getStudiesAll();
+      if (this.id) {
+        observable = this.webinReportService.getStudiesOne(this.id);
+      }
+      else {
+        observable = this.webinReportService.getStudiesAll();
+      }
     }
+
     if (this.reportType == "samples") {
       this.setSampleReportColumns();
-      observable = this.webinReportService.getSamplesAll();
+      if (this.id) {
+        observable = this.webinReportService.getSamplesOne(this.id);
+      }
+      else {
+        observable = this.webinReportService.getSamplesAll();
+      }
     }
+
     if (this.reportType == "runs") {
       this.setRunReportColumns();
-      observable = this.webinReportService.getRunsAll();
+      if (this.id) {
+        observable = this.webinReportService.getRunsOne(this.id);
+      }
+      else {
+        observable = this.webinReportService.getRunsAll();
+      }
     }
+
     if (this.reportType == "analyses") {
       this.setAnalysisReportColumns();
-      observable = this.webinReportService.getAnalysesAll();
+      if (this.id) {
+        observable = this.webinReportService.getAnalysesOne(this.id);
+      }
+      else {
+        observable = this.webinReportService.getAnalysesAll();
+      }
     }
+
     if (this.reportType == "run files") {
       this.setRunFileReportColumns();
-      observable = this.webinReportService.getRunFilesAll();
+      if (this.id) {
+        observable = this.webinReportService.getRunFilesOne(this.id);
+      }
+      else {
+        observable = this.webinReportService.getRunFilesAll();
+      }
     }
+
     if (this.reportType == "analysis files") {
       this.setAnalysisFileReportColumns();
-      observable = this.webinReportService.getAnalysisFilesAll();
+      if (this.id) {
+        observable = this.webinReportService.getAnalysisFilesOne(this.id);
+      }
+      else {
+        observable = this.webinReportService.getAnalysisFilesAll();
+      }
     }
 
       if (observable != null) {
