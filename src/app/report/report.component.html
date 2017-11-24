@@ -21,26 +21,23 @@
     <mat-option value="100">
       100
     </mat-option>
-    <mat-option value="250">
-      250
-    </mat-option>
     <mat-option value="500">
       500
     </mat-option>
     <mat-option value="1000">
       1000
     </mat-option>
-    <mat-option value="2500">
-      2500
-    </mat-option>
     <mat-option value="5000">
       5000
+    </mat-option>
+    <mat-option value="10000">
+      10000
     </mat-option>
   </mat-select>
 </mat-form-field>
 
 <div *ngIf="spinner">
-    <mat-spinner style="margin:0 auto;" mode="indeterminate">
+    <mat-spinner [diameter]="60" style="margin:0 auto;">
     </mat-spinner>
 </div>
 
