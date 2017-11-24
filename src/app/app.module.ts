@@ -72,11 +72,6 @@ const appRoutes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [WebinAuthenticationGuardService],
-  },
-  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService],

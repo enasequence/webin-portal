@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
       console.log(`Webin authentication succeeded`);
       this.error = false;
       this.webinAuthenticationService.authenticated = true;
-      this.router.navigateByUrl('dashboard');
+      this.router.navigateByUrl('dashboard', { skipLocationChange: true });
     }
 
     onFailedLogin() {
