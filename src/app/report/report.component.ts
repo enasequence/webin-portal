@@ -39,13 +39,24 @@ export class ReportComponent implements OnInit {
   displayedColumnsCallback;
   dataError;
 
+  private _showAlias: boolean = false;
+
+  get showAlias(): string {
+    return this._showAlias;
+  }
+
+  set showAlias(showAlias: string) {
+    this._showAlias = showAlias;
+    this.initReportColumns();
+  }
+
   spinner: boolean;
 
   @Output() public onReportChange = new EventEmitter<any>();
 
   setStudyReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'BioProject',
       'Title',
       'Submission date',
@@ -55,6 +66,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       BioProject: this.secondaryIdColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
@@ -65,7 +77,7 @@ export class ReportComponent implements OnInit {
 
   setSampleReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'BioSample',
       'Title',
       'Organism',
@@ -76,6 +88,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       BioSample: this.secondaryIdColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       Organism: this.organismColumnCallback.bind(this),
@@ -87,7 +100,7 @@ export class ReportComponent implements OnInit {
 
   setRunReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'Instrument',
       'Study',
       'Sample',
@@ -98,6 +111,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       Instrument: this.instrumentColumnCallback.bind(this),
       Study: this.studyColumnCallback.bind(this),
       Sample: this.sampleColumnCallback.bind(this),
@@ -109,7 +123,7 @@ export class ReportComponent implements OnInit {
 
   setAnalysisReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'Analysis type',
       'Study',
       'Sample',
@@ -119,6 +133,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       'Analysis type': this.analysisTypeColumnCallback.bind(this),
       Study: this.studyColumnCallback.bind(this),
       Sample: this.sampleColumnCallback.bind(this),
@@ -179,7 +194,7 @@ export class ReportComponent implements OnInit {
 
   setDacReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'Title',
       'Submission date',
       'Status',
@@ -187,6 +202,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
       Status: this.statusColumnCallback.bind(this)
@@ -195,7 +211,7 @@ export class ReportComponent implements OnInit {
 
   setPolicyReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'Dac',
       'Title',
       'Submission date',
@@ -204,6 +220,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       Dac: this.dacColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
@@ -213,7 +230,7 @@ export class ReportComponent implements OnInit {
 
   setDatasetReportColumns() {
     this.displayedColumns = [
-      'Accession',
+      this._showAlias ? 'Unique name' : 'Accession',
       'Policy',
       'Title',
       'Submission date',
@@ -222,6 +239,7 @@ export class ReportComponent implements OnInit {
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
       Policy: this.policyColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
@@ -298,7 +316,8 @@ export class ReportComponent implements OnInit {
   report() {
     //console.log(" ** report **", this.reportType);
 
-    let observable: Observable<any> = this.initReport();
+    this.initReportColumns();
+    let observable: Observable<any> = this.initReportObservable()
 
     if (observable != null) {
       this.spinner = true;
@@ -329,10 +348,40 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  initReport()
+  initReportColumns()
   {
     if (this.reportType == ReportType.studies) {
       this.setStudyReportColumns();
+    }
+    else if (this.reportType == ReportType.samples) {
+      this.setSampleReportColumns();
+    }
+    else if (this.reportType == ReportType.runs) {
+      this.setRunReportColumns();
+    }
+    else if (this.reportType == ReportType.analyses) {
+      this.setAnalysisReportColumns();
+    }
+    else if (this.reportType == ReportType.runFiles) {
+      this.setRunFileReportColumns();
+    }
+    else if (this.reportType == ReportType.analysisFiles) {
+      this.setAnalysisFileReportColumns();
+    }
+    else if (this.reportType == ReportType.dacs) {
+      this.setDacReportColumns();
+    }
+    else if (this.reportType == ReportType.policies) {
+      this.setPolicyReportColumns();
+    }
+    else if (this.reportType == ReportType.datasets) {
+      this.setDatasetReportColumns();
+    }
+  }
+
+  initReportObservable()
+  {
+    if (this.reportType == ReportType.studies) {
       if (this.id) {
         return this.webinReportService.getStudies(this.id, this.rows);
       }
@@ -340,7 +389,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.samples) {
-      this.setSampleReportColumns();
       if (this.id) {
         return this.webinReportService.getSamples(this.id, this.rows);
       }
@@ -348,7 +396,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.runs) {
-      this.setRunReportColumns();
       if (this.id) {
         return this.webinReportService.getRuns(this.id, this.rows);
       }
@@ -356,7 +403,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.analyses) {
-      this.setAnalysisReportColumns();
       if (this.id) {
         return this.webinReportService.getAnalyses(this.id, this.rows);
       }
@@ -364,7 +410,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.runFiles) {
-      this.setRunFileReportColumns();
       if (this.id) {
         return this.webinReportService.getRunFiles(this.id, this.rows);
       }
@@ -372,7 +417,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.analysisFiles) {
-      this.setAnalysisFileReportColumns();
       if (this.id) {
         return this.webinReportService.getAnalysisFiles(this.id, this.rows);
       }
@@ -380,7 +424,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.dacs) {
-      this.setDacReportColumns();
       if (this.id) {
         return this.webinReportService.getDacs(this.id, this.rows);
       }
@@ -388,7 +431,6 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.policies) {
-      this.setPolicyReportColumns();
       if (this.id) {
         return this.webinReportService.getPolicies(this.id, this.rows);
       }
@@ -396,13 +438,11 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType == ReportType.datasets) {
-      this.setDatasetReportColumns();
       if (this.id) {
         return this.webinReportService.getDatasets(this.id, this.rows);
       }
       return this.webinReportService.getDatasetsAll(this.rows);
     }
-
   }
 
 
@@ -450,6 +490,10 @@ export class ReportComponent implements OnInit {
 
   accessionColumnCallback(result) {
     return this.getId(result);
+  }
+
+  aliasColumnCallback(result) {
+    return result.report.alias;
   }
 
   studyColumnCallback(result) {

@@ -2,8 +2,8 @@
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
-  Search without an accession or unique name to show most recently submitted {{ReportType[reportType]}}. Only
-  {{ReportType[reportType]}} owned by your submission account will be shown.
+  Search by accession or unique name to show {{rows}} most recent {{ReportType[reportType]}}
+  owned by your submission account.
 </p>
 
 <mat-form-field>
@@ -36,6 +36,10 @@
   </mat-select>
 </mat-form-field>
 
+<mat-slide-toggle [(ngModel)]="showAlias" *ngIf="this.reportType != ReportType.runFiles && this.reportType != ReportType.analysisFiles">
+  Showing  {{showAlias ? 'unique names' : 'accessions'}}
+</mat-slide-toggle>
+
 <div *ngIf="spinner" style="height:55px;">
     <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
     </mat-spinner>
@@ -47,7 +51,7 @@
       <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
   	    <mat-header-cell *matHeaderCellDef>{{ col }}</mat-header-cell>
         <div *ngIf="col!='Action'">
-  	      <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
+  	         <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
         </div>
         <div *ngIf="col=='Action'">
           <mat-cell *matCellDef="let element">
