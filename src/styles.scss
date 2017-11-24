@@ -183,5 +183,9 @@ $accent: map-get($app-theme, accent);
 }
 
 .mat-chip {
-   text-align: center;
+  text-align: center;
+}
+
+.mat-tab-label {
+  min-width: 1px !important;
 }
