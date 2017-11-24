@@ -83,16 +83,7 @@ export class XmlSubmissionComponent implements OnInit {
   }
 
   canSubmit() {
-    return this.submissionFile !== undefined && (
-      this.studyFile  !== undefined ||
-      this.projectFile !== undefined ||
-      this.sampleFile !== undefined ||
-      this.experimentFile !== undefined ||
-      this.runFile !== undefined ||
-      this.analysisFile !== undefined ||
-      this.dacFile !== undefined ||
-      this.policyFile !== undefined ||
-      this.datasetFile !== undefined);
+    return this.submissionFile !== undefined;
   }
 
   submit() {

@@ -33,6 +33,8 @@ export class SubmissionResultComponent implements OnInit {
   resultError;
   resultDisplay: string = 'table';
 
+  spinner: boolean;
+
   constructor(
     private webinRestService: WebinRestService) {
   }
@@ -49,9 +51,12 @@ export class SubmissionResultComponent implements OnInit {
 
   submit(observable: Observable<text>) {
     if (observable != null) {
+      this.spinner = true;
         observable.subscribe(
           // Success
           data => {
+            this.spinner = false;
+
               // HttpResponse when using {observe: 'response'}
               this.result = this.webinRestService.parseResult(data);
               console.log('** Webin spreadsheet submission succeeded **', this.result);

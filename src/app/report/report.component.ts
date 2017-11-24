@@ -237,15 +237,13 @@ export class ReportComponent implements OnInit {
       observable.subscribe(
         // Success
         data => {
-            // HttpResponse when using {observe: 'response'}
-            //this.result = this.webinRestService.parseResult(data);
-            this.data = data;
-            console.log('** Webin reports service **', this.data);
+          this.spinner = false;
 
-            this.spinner = false;
+          this.data = data;
+          console.log('** Webin reports service **', this.data);
 
-            this.dataSource = new MatTableDataSource<any>(this.data);
-            this.dataSource.paginator = this.dataPaginator;
+          this.dataSource = new MatTableDataSource<any>(this.data);
+          this.dataSource.paginator = this.dataPaginator;
         },
         // Errors
         (err: HttpErrorResponse) => {

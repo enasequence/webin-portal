@@ -1,3 +1,8 @@
+<div *ngIf="spinner">
+    <mat-spinner style="margin:0 auto;" mode="indeterminate">
+    </mat-spinner>
+</div>
+
 <div *ngIf="resultError !== undefined">
   <div class="app-error">
       <i class="material-icons">error</i>
