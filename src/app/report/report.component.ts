@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, ViewEncapsulation, Input, Output, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { ReportType } from '../report-type.enum';
@@ -47,7 +49,7 @@ export class ReportComponent implements OnInit {
       'BioProject',
       'Title',
       'Submission date',
-      'Release date'
+      'Release date',
       'Status',
       'Action' // No callback for Action column
     ];
@@ -235,7 +237,7 @@ export class ReportComponent implements OnInit {
   report() {
     //console.log(" ** report **", this.reportType);
 
-    let observable: Observable<text> = this.initReport();
+    let observable: Observable<any> = this.initReport();
 
     if (observable != null) {
       this.spinner = true;
@@ -445,10 +447,6 @@ export class ReportComponent implements OnInit {
 
   secondaryIdColumnCallback(result) {
     return result.report.secondaryId;
-  }
-
-  titleColumnCallback(result) {
-    return result.report.title;
   }
 
   titleColumnCallback(result) {

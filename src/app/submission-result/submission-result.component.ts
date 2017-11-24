@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { WebinRestService } from '../webin-rest.service';
 
@@ -42,14 +43,14 @@ export class SubmissionResultComponent implements OnInit {
   ngOnInit() {
   }
 
-  private reset() {
+  reset() {
     this.webinErrorDataSource = undefined;
     this.webinAccessionDataSource = undefined;
     this.result = undefined;
     this.resultError = undefined;
   }
 
-  submit(observable: Observable<text>) {
+  submit(observable: Observable<any>) {
     if (observable != null) {
       this.spinner = true;
         observable.subscribe(

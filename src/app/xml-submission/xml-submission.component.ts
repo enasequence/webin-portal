@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 
@@ -89,7 +90,7 @@ export class XmlSubmissionComponent implements OnInit {
   submit() {
     console.log('** Webin spreadsheet submission **');
 
-    let observable: Observable<text> =
+    let observable: Observable<any> =
       this.webinRestService.submitXml(
         this.submissionFile,
         this.studyFile,

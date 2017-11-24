@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
-
-
-// import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class WebinRestService {
@@ -24,7 +22,7 @@ export class WebinRestService {
     }
   }
 
-  post(formData: FormData) : Observable<text> {
+  post(formData: FormData) : Observable<any> {
     const headers = this.headers();
     return this.http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
   }
@@ -92,7 +90,7 @@ export class WebinRestService {
   public parseResult(data) {
 
     let xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
-    let rootNode = xmlDoc.getElementsByTagName('RECEIPT')[0];
+    let rootNode: any = xmlDoc.getElementsByTagName('RECEIPT')[0];
     let isError: boolean = (rootNode.getAttribute('success') != 'true');
     let date: string = rootNode.getAttribute('receiptDate');
 
@@ -104,46 +102,27 @@ export class WebinRestService {
       errors: []
     };
 
-    // SUCCESS TEST ->
-    /*
-    receipt.isError = false;
-    receipt.accessions = [
-      {
-        type: 'Test1',
-        accession: 'accession1',
-        alias: 'alias1'
-      },
-      {
-        type: 'Test2',
-        accession: 'accession2',
-        alias: 'alias2'
-      }
-    );
-    ];
-    */
-    // <- TEST
-
-
     var i: number = 0;
 
     if (!isError) {
       let nodes = rootNode.childNodes;
       for (i = 0; i < nodes.length; i++) {
-        if (nodes[i].tagName == "ANALYSIS" ||
-            nodes[i].tagName == "EXPERIMENT" ||
-            nodes[i].tagName == "RUN" ||
-            nodes[i].tagName == "SAMPLE" ||
-            nodes[i].tagName == "STUDY" ||
-            nodes[i].tagName == "DAC" ||
-            nodes[i].tagName == "POLICY" ||
-            nodes[i].tagName == "DATASET" ||
-            nodes[i].tagName == "PROJECT" ||
-            nodes[i].tagName == "SUBMISSION") {
+        let childNode = nodes[i];
+        if (childNode.tagName == "ANALYSIS" ||
+            childNode.tagName == "EXPERIMENT" ||
+            childNode.tagName == "RUN" ||
+            childNode.tagName == "SAMPLE" ||
+            childNode.tagName == "STUDY" ||
+            childNode.tagName == "DAC" ||
+            childNode.tagName == "POLICY" ||
+            childNode.tagName == "DATASET" ||
+            childNode.tagName == "PROJECT" ||
+            childNode.tagName == "SUBMISSION") {
           receipt.accessions.push(
             {
-              type: nodes[i].tagName,
-              accession: nodes[i].getAttribute('accession'),
-              alias: nodes[i].getAttribute('alias')
+              type: childNode.tagName,
+              accession: childNode.getAttribute('accession'),
+              alias: childNode.getAttribute('alias')
             });
         }
       }

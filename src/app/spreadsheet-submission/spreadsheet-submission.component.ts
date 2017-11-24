@@ -67,7 +67,7 @@ export class SpreadsheetSubmissionComponent implements OnInit {
   submit() {
     console.log('** Webin spreadsheet submission **');
 
-    let observable: Observable<text>;
+    let observable: Observable<any>;
 
     if (this.action == 'Submit') {
       observable = this.webinRestService.addSpreadsheet(this.spreadsheetFile);

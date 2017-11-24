@@ -24,13 +24,7 @@ export class ReportDialogComponent implements OnInit {
     closeDialog() {
       this.dialogRef.close();
     }
-    studies          = 2,
-              = 3,
-                 = 4,
-             = 5,
-    runFiles         = 6,
-    analysisFiles    = 7
-
+  
     getTitle() {
       let title: string;
       switch(this.data.reportType) {

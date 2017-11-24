@@ -40,17 +40,5 @@ export class WebinAuthenticationService {
 
     const headers = this.headers();
     return this.http.get(this._baseUrl, { headers, observe: 'response' });
-
-/*
-    return this.http.post(WebinAuthenticationService.AUTH_TOKEN, body, {headers})
-      .map(res => res.json())
-      .map((res: any) => {
-        if (res.access_token) {
-          return res.access_token;
-        }
-        return null;
-      });
   }
-*/
-
 }
