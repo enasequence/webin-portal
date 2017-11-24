@@ -53,6 +53,30 @@ export class WebinReportService {
   }
 
 
+  public getDacsAll(rows: string) : Observable<any> {
+    return this.getAll('dacs', rows);
+  }
+  public getDacs(id: string, rows: string) : Observable<any> {
+    return this.get('dacs', id, rows);
+  }
+
+  public getPoliciesAll(rows: string) : Observable<any> {
+    return this.getAll('policies', rows);
+  }
+  public getPolicies(id: string, rows: string) : Observable<any> {
+    return this.get('policies', id, rows);
+  }
+
+  public getDatasetsAll(rows: string) : Observable<any> {
+    return this.getAll('datasets', rows);
+  }
+  public getDatasets(id: string, rows: string) : Observable<any> {
+    return this.get('datasets', id, rows);
+  }
+
+
+
+
   private getAll(reportType: string, rows: string) : Observable<any> {
     let url: string = this._baseUrl + "/" + reportType + "?max-results=" + rows;
     console.log(url);

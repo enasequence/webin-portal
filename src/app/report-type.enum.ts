@@ -5,5 +5,8 @@ export enum ReportType {
   runs             = 4,
   analyses         = 5,
   runFiles         = 6,
-  analysisFiles    = 7
+  analysisFiles    = 7,
+  dacs             = 8,
+  policies         = 9,
+  datasets         = 10
 }

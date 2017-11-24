@@ -25,6 +25,15 @@
     <mat-tab label="Analysis files">
       <app-report #analysisFiles [reportType]="ReportType.analysisFiles" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
+    <mat-tab label="Dacs">
+      <app-report #dacs [reportType]="ReportType.dacs" (onReportChange)="consumeReportChange($event)"></app-report>
+    </mat-tab>
+    <mat-tab label="Policies">
+      <app-report #policies [reportType]="ReportType.policies" (onReportChange)="consumeReportChange($event)"></app-report>
+    </mat-tab>
+    <mat-tab label="Datasets">
+      <app-report #datasets [reportType]="ReportType.datasets" (onReportChange)="consumeReportChange($event)"></app-report>
+    </mat-tab>
 
   </mat-tab-group>
 </div>

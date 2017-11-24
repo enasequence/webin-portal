@@ -177,6 +177,59 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  setDacReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Title',
+      'Submission date',
+      'Status',
+      //'Action' // No callback for Action column
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      Title: this.titleColumnCallback.bind(this),
+      'Submission date': this.submissionDateColumnCallback.bind(this),
+      Status: this.statusColumnCallback.bind(this)
+    };
+  }
+
+  setPolicyReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Dac',
+      'Title',
+      'Submission date',
+      'Status',
+      //'Action' // No callback for Action column
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      Dac: this.dacColumnCallback.bind(this),
+      Title: this.titleColumnCallback.bind(this),
+      'Submission date': this.submissionDateColumnCallback.bind(this),
+      Status: this.statusColumnCallback.bind(this)
+    };
+  }
+
+  setDatasetReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Policy',
+      'Title',
+      'Submission date',
+      'Status',
+      //'Action' // No callback for Action column
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      Policy: this.policyColumnCallback.bind(this),
+      Title: this.titleColumnCallback.bind(this),
+      'Submission date': this.submissionDateColumnCallback.bind(this),
+      Status: this.statusColumnCallback.bind(this)
+    };
+  }
+
+
   getElementValue(result, col) {
     let callback = this.displayedColumnsCallback[col];
     return this.displayedColumnsCallback[col](result);
@@ -317,6 +370,31 @@ export class ReportComponent implements OnInit {
       }
       return this.webinReportService.getAnalysisFilesAll(this.rows);
     }
+
+    if (this.reportType == ReportType.dacs) {
+      this.setDacReportColumns();
+      if (this.id) {
+        return this.webinReportService.getDacs(this.id, this.rows);
+      }
+      return this.webinReportService.getDacsAll(this.rows);
+    }
+
+    if (this.reportType == ReportType.policies) {
+      this.setPolicyReportColumns();
+      if (this.id) {
+        return this.webinReportService.getPolicies(this.id, this.rows);
+      }
+      return this.webinReportService.getPoliciesAll(this.rows);
+    }
+
+    if (this.reportType == ReportType.datasets) {
+      this.setDatasetReportColumns();
+      if (this.id) {
+        return this.webinReportService.getDatasets(this.id, this.rows);
+      }
+      return this.webinReportService.getDatasetsAll(this.rows);
+    }
+
   }
 
 
@@ -462,6 +540,15 @@ export class ReportComponent implements OnInit {
   }
 
   instrumentColumnCallback(result) {
-   return result.report.instrumentModel;
+    return result.report.instrumentModel;
   }
+
+  dacColumnCallback(result) {
+    return result.report.egaDacId;
+  }
+
+  policyColumnCallback(result) {
+    return result.report.egaPolicyId;
+  }
+
 }
