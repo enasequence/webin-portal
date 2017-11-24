@@ -33,8 +33,8 @@ export class DashboardComponent implements OnInit {
 
   consumeReportChange(event) {
     console.log("** consumeReportChange **", event);
+    this.tabGroup.selectedIndex = event.reportType;    
     this[ReportType[event.reportType]].id = event.id;
     this[ReportType[event.reportType]].report();
-    this.tabGroup.selectedIndex = event.reportType;
   }
 }

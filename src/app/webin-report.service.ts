@@ -59,7 +59,7 @@ export class WebinReportService {
   }
 
   private get(reportType: string, id: string, rows: string) : Observable<text> {
-    let url: string = this._baseUrl + "/" + reportType + "/" + id + "?max-results=" + rows;
+    let url: string = this._baseUrl + "/" + reportType + "/" + id.trim() + "?max-results=" + rows;
     console.log(url);
     return this.http.get(url);
   }
