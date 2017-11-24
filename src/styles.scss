@@ -173,6 +173,10 @@ $accent: map-get($app-theme, accent);
     overflow-y: scroll;
 }
 
+.app-daskboard-tab {
+  min-height: 600px;
+}
+
 .mat-table {
   overflow: auto;
   max-height: 550px;
