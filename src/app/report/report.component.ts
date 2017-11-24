@@ -226,6 +226,11 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  reset() {
+    this.id = undefined;
+    this.report();
+  }
+
   report() {
     //console.log(" ** report **", this.reportType);
 
