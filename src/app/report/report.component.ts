@@ -200,7 +200,7 @@ export class ReportComponent implements OnInit {
       'Title',
       'Submission date',
       'Status',
-      //'Action' // No callback for Action column
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -218,7 +218,7 @@ export class ReportComponent implements OnInit {
       'Title',
       'Submission date',
       'Status',
-      //'Action' // No callback for Action column
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -265,6 +265,14 @@ export class ReportComponent implements OnInit {
         this.reportType == ReportType.analysisFiles) {
       dialogData[ReportType.analyses] = this.getId(result);
     }
+
+    if (this.reportType == ReportType.policies) {
+      dialogData[ReportType.dacs] = this.getDacId(result);
+    }
+    if (this.reportType == ReportType.datasets) {
+      dialogData[ReportType.policies] = this.getPolicyId(result);
+    }
+
 
     // Create data for report dialog.
     let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
@@ -429,6 +437,14 @@ export class ReportComponent implements OnInit {
     return result.report.experimentId;
   }
 
+  getDacId(result) {
+    return result.report.egaDacId;
+  }
+
+  getPolicyId(result) {
+    return result.report.egaPolicyId;
+  }
+
   // Column callbacks
   //
 
@@ -544,11 +560,11 @@ export class ReportComponent implements OnInit {
   }
 
   dacColumnCallback(result) {
-    return result.report.egaDacId;
+    return this.getDacId(result);
   }
 
   policyColumnCallback(result) {
-    return result.report.egaPolicyId;
+    return this.getPolicyId(result);
   }
 
 }

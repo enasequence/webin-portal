@@ -28,6 +28,18 @@
       </mat-chip>
     </p>
 
+    <p *ngIf="data[ReportType.dacs]">
+      <mat-chip (click)="changeReport(ReportType.dacs)">
+        Show dac
+      </mat-chip>
+    </p>
+
+    <p *ngIf="data[ReportType.policies]">
+      <mat-chip (click)="changeReport(ReportType.policies)">
+        Show policy
+      </mat-chip>
+    </p>
+
   </mat-chip-list>
 
 </mat-dialog-content>

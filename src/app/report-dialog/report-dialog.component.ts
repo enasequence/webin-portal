@@ -24,7 +24,7 @@ export class ReportDialogComponent implements OnInit {
     closeDialog() {
       this.dialogRef.close();
     }
-  
+
     getTitle() {
       let title: string;
       switch(this.data.reportType) {
@@ -50,6 +50,18 @@ export class ReportDialogComponent implements OnInit {
          }
          case ReportType.analysisFiles: {
            title = "Submitted files for analysis";
+           break;
+         }
+         case ReportType.datasets: {
+           title = "Dataset";
+           break;
+         }
+         case ReportType.dacs: {
+           title = "Dac";
+           break;
+         }
+         case ReportType.policies: {
+           title = "Policy";
            break;
          }
          default: {

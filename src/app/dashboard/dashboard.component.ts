@@ -30,10 +30,13 @@ export class DashboardComponent implements OnInit {
   @ViewChild('analyses') analyses: ReportComponent;
   @ViewChild('runFiles') runFiles: ReportComponent;
   @ViewChild('analysisFiles') analysisFiles: ReportComponent;
+  @ViewChild('dacs') dacs: ReportComponent;
+  @ViewChild('policies') policies: ReportComponent;
+  @ViewChild('datasets') datasets: ReportComponent;
 
   consumeReportChange(event) {
     console.log("** consumeReportChange **", event);
-    this.tabGroup.selectedIndex = event.reportType;    
+    this.tabGroup.selectedIndex = event.reportType;
     this[ReportType[event.reportType]].id = event.id;
     this[ReportType[event.reportType]].report();
   }
