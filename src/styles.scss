@@ -177,3 +177,7 @@ $accent: map-get($app-theme, accent);
   overflow: auto;
   max-height: 500px;
 }
+
+.mat-chip {
+   text-align: center;
+}

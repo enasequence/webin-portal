@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Actions</h2>
+<h2 mat-dialog-title>{{getTitle()}}</h2>
 
 <mat-dialog-content>
 
@@ -6,25 +6,25 @@
 
     <p *ngIf="data[ReportType.studies]">
       <mat-chip (click)="changeReport(ReportType.studies)">
-        Show study {{data[ReportType.studies]}}
+        Show study
       </mat-chip>
     </p>
 
     <p *ngIf="data[ReportType.samples]">
       <mat-chip (click)="changeReport(ReportType.samples)">
-        Show samples for {{data[ReportType.samples]}}
+        Show samples
       </mat-chip>
     </p>
 
     <p *ngIf="data[ReportType.runs]">
       <mat-chip (click)="changeReport(ReportType.runs)">
-        Show runs for {{data[ReportType.runs]}}
+        Show runs
       </mat-chip>
     </p>
 
     <p *ngIf="data[ReportType.analyses]">
       <mat-chip (click)="changeReport(ReportType.analyses)">
-        Show analyses for {{data[ReportType.analyses]}}
+        Show analyses
       </mat-chip>
     </p>
 

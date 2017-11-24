@@ -180,38 +180,41 @@ export class ReportComponent implements OnInit {
   }
 
   action(result) {
-    let dialogInputData = {};
+    let dialogData = {
+      reportType: this.reportType,
+      id: this.getId(result)
+    };
     //console.log("** action **", result);
 
     // Allow navigation to studies report.
     if (this.getStudyId(result)) {
-      dialogInputData[ReportType.studies] = this.getStudyId(result);
+      dialogData[ReportType.studies] = this.getStudyId(result);
     }
 
     // Allow navigation to samples report.
     if (this.getSampleId(result)) {
-      dialogInputData[ReportType.samples] = this.getId(result);
+      dialogData[ReportType.samples] = this.getId(result);
     }
 
     // Allow navigation to run report.
     if (this.reportType == ReportType.studies ||
         this.reportType == ReportType.samples ||
         this.reportType == ReportType.runFiles) {
-      dialogInputData[ReportType.runs] = this.getId(result);
+      dialogData[ReportType.runs] = this.getId(result);
     }
 
     // Allow navigation to analysis report.
     if (this.reportType == ReportType.studies ||
         this.reportType == ReportType.samples ||
         this.reportType == ReportType.analysisFiles) {
-      dialogInputData[ReportType.analyses] = this.getId(result);
+      dialogData[ReportType.analyses] = this.getId(result);
     }
 
     // Create data for report dialog.
     let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
         // height: '400px',
         // width: '250px',
-        data: dialogInputData
+        data: dialogData
     });
 
     reportDialogRef.afterClosed().subscribe(data => {
