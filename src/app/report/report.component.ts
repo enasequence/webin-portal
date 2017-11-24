@@ -24,6 +24,8 @@ export class ReportComponent implements OnInit {
   ngOnInit() {
   }
 
+  ReportType = ReportType;   // Allows use in template
+
   @Input() reportType: ReportType;
   public id: string;
 
@@ -46,7 +48,7 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Release date'
       'Status',
-      // 'Action' // No callback for Action column
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -67,7 +69,7 @@ export class ReportComponent implements OnInit {
       'Tax id',
       'Submission date',
       'Status',
-      // 'Action' // No callback for Action column
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -131,7 +133,8 @@ export class ReportComponent implements OnInit {
       'File size',
       //'Checksum method',
       'MD5 checksum',
-      'Archive status'
+      'Archive status',
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -155,7 +158,8 @@ export class ReportComponent implements OnInit {
       'File size',
       //'Checksum method',
       'MD5 checksum',
-      'Archive status'
+      'Archive status',
+      'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
