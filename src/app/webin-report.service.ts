@@ -9,59 +9,58 @@ export class WebinReportService {
 
   constructor(private http: HttpClient) { }
 
-  public getStudiesAll() : Observable<text> {
-    return this.getAll('studies');
+  public getStudiesAll(rows: string) : Observable<text> {
+    return this.getAll('studies', rows);
   }
-  public getStudiesOne(id: string) : Observable<text> {
-    return this.getOne('studies', id);
-  }
-
-  public getSamplesAll() : Observable<text> {
-    return this.getAll('samples');
-  }
-  public getSamplesOne(id: string) : Observable<text> {
-    return this.getOne('samples', id);
+  public getStudies(id: string, rows: string) : Observable<text> {
+    return this.get('studies', id, rows);
   }
 
-  public getRunsAll() : Observable<text> {
-    return this.getAll('runs');
+  public getSamplesAll(rows: string) : Observable<text> {
+    return this.getAll('samples', rows);
   }
-  public getRunsOne(id: string) : Observable<text> {
-    return this.getOne('runs', id);
-  }
-
-  public getAnalysesAll() : Observable<text> {
-    return this.getAll('analyses');
-  }
-  public getAnalysesOne(id: string) : Observable<text> {
-    return this.getOne('analyses', id);
+  public getSamples(id: string, rows: string) : Observable<text> {
+    return this.get('samples', id, rows);
   }
 
-  public getRunFilesAll() : Observable<text> {
-    return this.getAll('run-files');
+  public getRunsAll(rows: string) : Observable<text> {
+    return this.getAll('runs', rows);
   }
-  public getRunFilesOne(id: string) : Observable<text> {
-    return this.getOne('run-files', id);
-  }
-
-  public getAnalysisFilesAll() : Observable<text> {
-    return this.getAll('analysis-files');
-  }
-  public getAnalysisFilesOne(id: string) : Observable<text> {
-    return this.getOne('analysis-files', id);
+  public getRuns(id: string, rows: string) : Observable<text> {
+    return this.get('runs', id, rows);
   }
 
+  public getAnalysesAll(rows: string) : Observable<text> {
+    return this.getAll('analyses', rows);
+  }
+  public getAnalyses(id: string, rows: string) : Observable<text> {
+    return this.get('analyses', id, rows);
+  }
 
-  private getAll(reportType: string) : Observable<text> {
-    let url: string = this._baseUrl + "/" + reportType;
+  public getRunFilesAll(rows: string) : Observable<text> {
+    return this.getAll('run-files', rows);
+  }
+  public getRunFiles(id: string, rows: string) : Observable<text> {
+    return this.get('run-files', id, rows);
+  }
+
+  public getAnalysisFilesAll(rows: string) : Observable<text> {
+    return this.getAll('analysis-files', rows);
+  }
+  public getAnalysisFiles(id: string, rows: string) : Observable<text> {
+    return this.get('analysis-files', id, rows);
+  }
+
+
+  private getAll(reportType: string, rows: string) : Observable<text> {
+    let url: string = this._baseUrl + "/" + reportType + "?max-results=" + rows;
     console.log(url);
     return this.http.get(url);
   }
 
-  private getOne(reportType: string, id: string) : Observable<text> {
-    let url: string = this._baseUrl + "/" + reportType + "/" + id;
+  private get(reportType: string, id: string, rows: string) : Observable<text> {
+    let url: string = this._baseUrl + "/" + reportType + "/" + id + "?max-results=" + rows;
     console.log(url);
     return this.http.get(url);
-
   }
 }

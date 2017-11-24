@@ -28,6 +28,7 @@ export class ReportComponent implements OnInit {
 
   @Input() reportType: ReportType;
   public id: string;
+  public rows: string = "100";
 
   data;
   dataSource: MatTableDataSource<any>;
@@ -270,49 +271,49 @@ export class ReportComponent implements OnInit {
     if (this.reportType == ReportType.studies) {
       this.setStudyReportColumns();
       if (this.id) {
-        return this.webinReportService.getStudiesOne(this.id);
+        return this.webinReportService.getStudies(this.id, this.rows);
       }
-      return this.webinReportService.getStudiesAll();
+      return this.webinReportService.getStudiesAll(this.rows);
     }
 
     if (this.reportType == ReportType.samples) {
       this.setSampleReportColumns();
       if (this.id) {
-        return this.webinReportService.getSamplesOne(this.id);
+        return this.webinReportService.getSamples(this.id, this.rows);
       }
-      return this.webinReportService.getSamplesAll();
+      return this.webinReportService.getSamplesAll(this.rows);
     }
 
     if (this.reportType == ReportType.runs) {
       this.setRunReportColumns();
       if (this.id) {
-        return this.webinReportService.getRunsOne(this.id);
+        return this.webinReportService.getRuns(this.id, this.rows);
       }
-      return this.webinReportService.getRunsAll();
+      return this.webinReportService.getRunsAll(this.rows);
     }
 
     if (this.reportType == ReportType.analyses) {
       this.setAnalysisReportColumns();
       if (this.id) {
-        return this.webinReportService.getAnalysesOne(this.id);
+        return this.webinReportService.getAnalyses(this.id, this.rows);
       }
-      return this.webinReportService.getAnalysesAll();
+      return this.webinReportService.getAnalysesAll(this.rows);
     }
 
     if (this.reportType == ReportType.runFiles) {
       this.setRunFileReportColumns();
       if (this.id) {
-        return this.webinReportService.getRunFilesOne(this.id);
+        return this.webinReportService.getRunFiles(this.id, this.rows);
       }
-      return this.webinReportService.getRunFilesAll();
+      return this.webinReportService.getRunFilesAll(this.rows);
     }
 
     if (this.reportType == ReportType.analysisFiles) {
       this.setAnalysisFileReportColumns();
       if (this.id) {
-        return this.webinReportService.getAnalysisFilesOne(this.id);
+        return this.webinReportService.getAnalysisFiles(this.id, this.rows);
       }
-      return this.webinReportService.getAnalysisFilesAll();
+      return this.webinReportService.getAnalysisFilesAll(this.rows);
     }
   }
 
