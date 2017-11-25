@@ -30,6 +30,8 @@ export class WebinAuthenticationService {
   public logout() {
     this.username = undefined;
     this.password = undefined;
+    this.authenticated = false;
+
   }
 
   public login(username: string, password: string) : Observable<any> {
