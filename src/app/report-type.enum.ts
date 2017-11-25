@@ -16,58 +16,48 @@ export enum ReportType {
 
 export class ReportTypeUtils {
 
-  static getTitle(reportType: ReportType, id: string) : string {
-    let title: string;
+  static getCapitalizedSingularName(reportType: ReportType) : string {
     switch(reportType) {
        case ReportType.studies: {
-         title = "Study";
-         break;
+         return "Study";
        }
        case ReportType.projects: {
-         title = "Project";
-         break;
+         return "Project";
        }
        case ReportType.samples: {
-         title = "Sample";
-         break;
+         return "Sample";
        }
        case ReportType.experiments: {
-         title = "Experiments";
-         break;
+         return "Experiment";
        }
        case ReportType.runs: {
-         title = "Run";
-         break;
+         return "Run";
        }
        case ReportType.analyses: {
-         title = "Analysis";
-         break;
+         return "Analysis";
        }
        case ReportType.runFiles: {
-         title = "Submitted files for run";
-         break;
+         return "Submitted files for run";
        }
        case ReportType.analysisFiles: {
-         title = "Submitted files for analysis";
-         break;
+         return "Submitted files for analysis";
        }
        case ReportType.datasets: {
-         title = "Dataset";
-         break;
+         return "Dataset";
        }
        case ReportType.dacs: {
-         title = "Dac";
-         break;
+         return "Dac";
        }
        case ReportType.policies: {
-         title = "Policy";
-         break;
+         return "Policy";
        }
        default: {
          return "";
        }
     }
-    return title + " " + id;
   }
 
+  static getLowerCaseSingularName(reportType: ReportType) : string {
+    return ReportTypeUtils.getCapitalizedSingularName().toLowerCase();
+  }
 }

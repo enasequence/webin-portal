@@ -17,13 +17,13 @@
   <div *ngIf="webinErrorDataSource !== undefined">
     <div class="app-error">
         <i class="material-icons">error</i>
-        Submission failed. Please see the list of errors below.
+        Submission failed.
     </div>
   </div>
   <div *ngIf="webinAccessionDataSource !== undefined">
     <div class="app-success">
         <i class="material-icons">done</i>
-        Submission was successful. Please see the list of assigned accession numbers below.
+        The submission was successful.
     </div>
   </div>
 
@@ -36,16 +36,9 @@
        fxLayoutAlign="space-around start"
        fxLayoutGap="10px">
     <div>
-      <mat-form-field>
-        <mat-select [(value)]="resultDisplay" placeholder="Show">
-          <mat-option value="table">
-             Table
-          </mat-option>
-          <mat-option value="xml">
-             Receipt XML
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-checkbox [(ngModel)]="showReceiptXml">
+          Show receipt XML
+        </mat-checkbox>
     </div>
     <div fxFlex>
    </div>
@@ -74,7 +67,7 @@
 
   <div *ngIf="webinErrorDataSource !== undefined">
 
-    <div *ngIf="resultDisplay=='table'" class="app-table-container">
+    <div *ngIf="!showReceiptXml" class="app-table-container">
 
       <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
 
@@ -89,7 +82,7 @@
 
     </div>
 
-    <div *ngIf="resultDisplay=='xml'">
+    <div *ngIf="showReceiptXml">
       <div class="app-receipt app-table-container">
         <pre>{{result.xml}}</pre>
       </div>
@@ -101,7 +94,7 @@
 
   <div *ngIf="webinAccessionDataSource !== undefined">
 
-    <div *ngIf="resultDisplay=='table'" class="app-table-container">
+    <div *ngIf="!showReceiptXml" class="app-table-container">
 
       <mat-table #webinAccessionTable [dataSource]="webinAccessionDataSource" >
 
@@ -127,7 +120,7 @@
 
     </div>
 
-    <div *ngIf="resultDisplay=='xml'">
+    <div *ngIf="showReceiptXml">
       <div class="app-receipt app-table-container">
         <pre>{{result.xml}}</pre>
       </div>

@@ -26,7 +26,7 @@ export class ReportDialogComponent implements OnInit {
     }
 
     getTitle() {
-        return ReportTypeUtils.getTitle(this.data.reportType, this.data.id);
+        return ReportTypeUtils.getCapitalizedSingularName(this.data.reportType) + ": " + this.data.id;
     }
 
     changeReport(reportType : ReportType) {

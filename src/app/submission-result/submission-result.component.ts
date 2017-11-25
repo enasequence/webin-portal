@@ -32,7 +32,7 @@ export class SubmissionResultComponent implements OnInit {
   @ViewChild(MatPaginator) webinAccessionPaginator: MatPaginator;
   result;
   resultError;
-  resultDisplay: string = 'table';
+  showReceiptXml: boolean = false;
 
   spinner: boolean;
 

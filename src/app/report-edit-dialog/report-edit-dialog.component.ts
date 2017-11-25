@@ -51,7 +51,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   getTitle(): string {
-    return ReportTypeUtils.getTitle(this.data.reportType, this.data.id);
+    return ReportTypeUtils.getCapitalizedSingularName(this.data.reportType) + ": " + this.data.id;
   }
 
   load() {
