@@ -10,31 +10,31 @@ export class WebinXmlReportService {
 
   constructor(private http: HttpClient) { }
 
-  public getStudyXml(id: string) : Observable<any> {
+  getStudyXml(id: string) : Observable<any> {
     return this.getXml('studies', id);
   }
-  public getProjectXml(id: string) : Observable<any> {
+  getProjectXml(id: string) : Observable<any> {
     return this.getXml('projects', id);
   }
-  public getSampleXml(id: string) : Observable<any> {
+  getSampleXml(id: string) : Observable<any> {
     return this.getXml('samples', id);
   }
-  public getRunXml(id: string) : Observable<any> {
+  getRunXml(id: string) : Observable<any> {
     return this.getXml('runs', id);
   }
-  public getExperimentXml(id: string) : Observable<any> {
+  getExperimentXml(id: string) : Observable<any> {
     return this.getXml('experiments', id);
   }
-  public getAnalysisXml(id: string) : Observable<any> {
+  getAnalysisXml(id: string) : Observable<any> {
     return this.getXml('analysess', id);
   }
-  public getDacXml(id: string) : Observable<any> {
+  getDacXml(id: string) : Observable<any> {
     return this.getXml('dacs', id);
   }
-  public getPolicyXml(id: string) : Observable<any> {
+  getPolicyXml(id: string) : Observable<any> {
     return this.getXml('policies', id);
   }
-  public getDatasetXml(id: string) : Observable<any> {
+  getDatasetXml(id: string) : Observable<any> {
     return this.getXml('datasets', id);
   }
 

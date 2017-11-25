@@ -25,7 +25,7 @@ export class SubmissionTypeSelectorComponent implements OnInit {
 
   get submissionType(): string { return this._submissionType; }
 
-  @Output() public onSubmissionTypeChange = new EventEmitter<string>();
+  @Output() onSubmissionTypeChange = new EventEmitter<string>();
 
 
   downloadTranscriptomeInfo() {

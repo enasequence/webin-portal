@@ -64,7 +64,7 @@ export class SubmissionSpreadsheetSelectorComponent implements OnInit {
 
   get submissionSpreadsheet(): string { return this._submissionSpreadsheet; }
 
-  @Output() public onSubmissionSpreadsheetChange = new EventEmitter<string>();
+  @Output() onSubmissionSpreadsheetChange = new EventEmitter<string>();
 
   download() {
       this.spreadsheetService.download(this.getSpreadsheetFileName()).subscribe(blob => {

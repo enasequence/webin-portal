@@ -40,7 +40,7 @@ export class SubmissionFormatSelectorComponent implements OnInit {
 
   get submissionFormat(): string { return this._submissionFormat; }
 
-  @Output() public onSubmissionFormatChange = new EventEmitter<string>();
+  @Output() onSubmissionFormatChange = new EventEmitter<string>();
 
   constructor() { }
 

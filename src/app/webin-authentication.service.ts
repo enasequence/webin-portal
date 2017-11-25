@@ -13,11 +13,11 @@ export class WebinAuthenticationService {
 
   private username: string;
   private password: string;
-  public authenticated: boolean = false;
+  authenticated: boolean = false;
 
   constructor(private http: HttpClient) { }
 
-  public getAuthorizationHeader() {
+  getAuthorizationHeader() {
       console.info('** Webin authorization header **');
       return "Basic " + btoa(this.username + ':' + this.password);
   }
@@ -27,14 +27,14 @@ export class WebinAuthenticationService {
       .append("Authorization", this.getAuthorizationHeader())
   }
 
-  public logout() {
+  logout() {
     this.username = undefined;
     this.password = undefined;
     this.authenticated = false;
 
   }
 
-  public login(username: string, password: string) : Observable<any> {
+  login(username: string, password: string) : Observable<any> {
     console.log('Webin authentication login');
 
     this.username = username;

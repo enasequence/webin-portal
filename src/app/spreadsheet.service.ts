@@ -17,7 +17,7 @@ export class SpreadsheetService {
 
   constructor(private http: HttpClient) { }
 
-  public download(name : string): Observable<Blob> {
+  download(name : string): Observable<Blob> {
       let url = this._baseUrl + '/' + name;
       console.info('Downloading spreadsheet: ' + url);
       return this.http.get(url, {responseType: 'blob'});

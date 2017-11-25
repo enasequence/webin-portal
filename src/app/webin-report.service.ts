@@ -10,67 +10,67 @@ export class WebinReportService {
 
   constructor(private http: HttpClient) { }
 
-  public getStudiesAll(rows: string) : Observable<any> {
+  getStudiesAll(rows: string) : Observable<any> {
     return this.getAll('studies', rows);
   }
-  public getStudies(id: string, rows: string) : Observable<any> {
+  getStudies(id: string, rows: string) : Observable<any> {
     return this.get('studies', id, rows);
   }
 
-  public getSamplesAll(rows: string) : Observable<any> {
+  getSamplesAll(rows: string) : Observable<any> {
     return this.getAll('samples', rows);
   }
-  public getSamples(id: string, rows: string) : Observable<any> {
+  getSamples(id: string, rows: string) : Observable<any> {
     return this.get('samples', id, rows);
   }
 
-  public getRunsAll(rows: string) : Observable<any> {
+  getRunsAll(rows: string) : Observable<any> {
     return this.getAll('runs', rows);
   }
-  public getRuns(id: string, rows: string) : Observable<any> {
+  getRuns(id: string, rows: string) : Observable<any> {
     return this.get('runs', id, rows);
   }
 
-  public getAnalysesAll(rows: string) : Observable<any> {
+  getAnalysesAll(rows: string) : Observable<any> {
     return this.getAll('analyses', rows);
   }
-  public getAnalyses(id: string, rows: string) : Observable<any> {
+  getAnalyses(id: string, rows: string) : Observable<any> {
     return this.get('analyses', id, rows);
   }
 
-  public getRunFilesAll(rows: string) : Observable<any> {
+  getRunFilesAll(rows: string) : Observable<any> {
     return this.getAll('run-files', rows);
   }
-  public getRunFiles(id: string, rows: string) : Observable<any> {
+  getRunFiles(id: string, rows: string) : Observable<any> {
     return this.get('run-files', id, rows);
   }
 
-  public getAnalysisFilesAll(rows: string) : Observable<any> {
+  getAnalysisFilesAll(rows: string) : Observable<any> {
     return this.getAll('analysis-files', rows);
   }
-  public getAnalysisFiles(id: string, rows: string) : Observable<any> {
+  getAnalysisFiles(id: string, rows: string) : Observable<any> {
     return this.get('analysis-files', id, rows);
   }
 
 
-  public getDacsAll(rows: string) : Observable<any> {
+  getDacsAll(rows: string) : Observable<any> {
     return this.getAll('dacs', rows);
   }
-  public getDacs(id: string, rows: string) : Observable<any> {
+  getDacs(id: string, rows: string) : Observable<any> {
     return this.get('dacs', id, rows);
   }
 
-  public getPoliciesAll(rows: string) : Observable<any> {
+  getPoliciesAll(rows: string) : Observable<any> {
     return this.getAll('policies', rows);
   }
-  public getPolicies(id: string, rows: string) : Observable<any> {
+  getPolicies(id: string, rows: string) : Observable<any> {
     return this.get('policies', id, rows);
   }
 
-  public getDatasetsAll(rows: string) : Observable<any> {
+  getDatasetsAll(rows: string) : Observable<any> {
     return this.getAll('datasets', rows);
   }
-  public getDatasets(id: string, rows: string) : Observable<any> {
+  getDatasets(id: string, rows: string) : Observable<any> {
     return this.get('datasets', id, rows);
   }
 

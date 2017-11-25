@@ -25,8 +25,11 @@ export class WebinRestService {
 
   appendXml(formData: FormData, name: string, blob: Blob) {
     if (blob !== undefined) {
-      formData.append(name, blob, name.toLowerCase() + ".xml"));
-      console.log('** appendXml **', name, blob, formData);
+      let fileName: string = blob.name;
+      if (fileName == undefined) {
+        fileName = name.toLowerCase() + ".xml";
+      }
+      formData.append(name, blob, fileName);
     }
   }
 
@@ -35,7 +38,7 @@ export class WebinRestService {
     return this.http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
   }
 
-  public addSpreadsheet(spreadsheet: File) {
+  addSpreadsheet(spreadsheet: File) {
     console.info('Add spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheet);
@@ -43,7 +46,7 @@ export class WebinRestService {
     return this.post(formData);
   }
 
-  public updateSpreadsheet(spreadsheet: File) {
+  updateSpreadsheet(spreadsheet: File) {
     console.info('Update spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheet);
@@ -51,7 +54,7 @@ export class WebinRestService {
     return this.post(formData);
   }
 
-  public validateAddSpreadsheet(spreadsheet: File) {
+  validateAddSpreadsheet(spreadsheet: File) {
     console.info('Validate add spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheet);
@@ -59,7 +62,7 @@ export class WebinRestService {
     return this.post(formData);
   }
 
-  public validateUpdateSpreadsheet(spreadsheet: File) {
+  validateUpdateSpreadsheet(spreadsheet: File) {
     console.info('Validate update spreadsheet');
     const formData: FormData = new FormData();
     this.appendFile(formData, 'SUBMISSION', spreadsheet);
@@ -67,7 +70,7 @@ export class WebinRestService {
     return this.post(formData);
   }
 
-  public updateXml(
+  updateXml(
     reportType: ReportType,
     xml: Blob)
    {
@@ -130,7 +133,7 @@ export class WebinRestService {
     return this.post(formData);
   }
 
-  public submitXml(
+  submitXml(
     submissionXml: Blob,
     studyXml: Blob,
     projectXml: Blob,
@@ -158,7 +161,7 @@ export class WebinRestService {
   }
 
 
-  public parseResult(data) {
+  parseResult(data) {
 
     let xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
     let rootNode: any = xmlDoc.getElementsByTagName('RECEIPT')[0];

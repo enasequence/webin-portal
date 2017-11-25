@@ -30,8 +30,8 @@ export class ReportComponent implements OnInit {
   ReportType = ReportType;   // Allows use in template
 
   @Input() reportType: ReportType;
-  public id: string;
-  public rows: string = "100";
+  id: string;
+  rows: string = "100";
 
   data;
   dataSource: MatTableDataSource<any>;
@@ -53,7 +53,7 @@ export class ReportComponent implements OnInit {
 
   spinner: boolean;
 
-  @Output() public onReportChange = new EventEmitter<any>();
+  @Output() onReportChange = new EventEmitter<any>();
 
   setStudyReportColumns() {
     this.displayedColumns = [
