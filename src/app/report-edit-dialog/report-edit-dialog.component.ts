@@ -28,7 +28,7 @@ export class ReportEditDialogComponent implements OnInit {
   retrieveXmlError: string;
   xml: string;
 
-  private _testRetrieveXmlSuccess: boolean = true;
+  private _testRetrieveXmlSuccess: boolean = false;
 
   ngOnInit() {
     this.load();
@@ -123,15 +123,12 @@ export class ReportEditDialogComponent implements OnInit {
         },
         // Errors
         (err: HttpErrorResponse) => {
-          console.log('** xml retrieval failed **', err);
-
-          if (err.error instanceof Error) {
-            this.retrieveXmlError = `XML retrieval failed because of a client or network error: ${err.error.message}`;
-          }
-          else {
-            this.retrieveXmlError = `XML retrieval failed because of a server error ${err.status}: ${err.error}`;
-          }
-          console.log(this.retrieveXmlError);
+          console.error('** webin xml retrieval service failed **', err);
+          let msg: string = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact us.';
+          //if (err.message) {
+          //  msg += " " + err.message;
+          //}
+          this.retrieveXmlError = msg;
       });
     }
   }

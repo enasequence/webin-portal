@@ -45,16 +45,12 @@ export class LoginComponent implements OnInit {
           },
           // Errors.
           (err: HttpErrorResponse) => {
-            if (err.status == 200) {
+            if (err.status == 200) { // TODO: Angular bug caused by am empty JSON response
               this.onSuccessfulLogin();
             }
-            else if (err.error instanceof Error) {
-              console.log(`Webin login finished with a client or network error ${err.error.message}`);
-              this.onFailedLogin();
-            }
             else {
-              console.log(`Webin login finished with a server error code: ${err.status}, body was: ${err.error}`);
               this.onFailedLogin();
+              console.error(err);
             }
         });
     }

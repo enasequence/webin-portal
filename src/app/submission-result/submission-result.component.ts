@@ -81,15 +81,12 @@ export class SubmissionResultComponent implements OnInit {
           },
           // Errors
           (err: HttpErrorResponse) => {
-            console.log('** Webin submission failed **', err);
-
-            if (err.error instanceof Error) {
-              this.resultError = `Webin submission failed because of a client or network error: ${err.error.message}`;
-            }
-            else {
-              this.resultError = `Webin submission failed because of a server error ${err.status}: ${err.error}`;
-            }
-            console.log(this.resultError);
+            console.error('** Webin submission service failed **', err);
+            let msg: string = 'Webin submission service failed. Please try again later. If the problem persists please contact us.';
+            //if (err.message) {
+            //  msg += " " + err.message;
+            //}
+            this.resultError = msg;
         });
       }
   }

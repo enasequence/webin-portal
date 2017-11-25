@@ -86,7 +86,8 @@ export class ReportComponent implements OnInit {
       'Tax id',
       'Submission date',
       'Status',
-      'Action' // No callback for Action column
+      'Action', // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -109,7 +110,8 @@ export class ReportComponent implements OnInit {
       'Experiment',
       'Submission date',
       'Status',
-      'Action' // No callback for Action column
+      'Action', // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -131,7 +133,8 @@ export class ReportComponent implements OnInit {
       'Sample',
       'Submission date',
       'Status',
-      'Action' // No callback for Action column
+      'Action', // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -201,6 +204,7 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       //'Action' // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -218,7 +222,8 @@ export class ReportComponent implements OnInit {
       'Title',
       'Submission date',
       'Status',
-      'Action' // No callback for Action column
+      'Action', // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -237,7 +242,8 @@ export class ReportComponent implements OnInit {
       'Title',
       'Submission date',
       'Status',
-      'Action' // No callback for Action column
+      'Action', // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -356,15 +362,12 @@ export class ReportComponent implements OnInit {
         },
         // Errors
         (err: HttpErrorResponse) => {
-          console.log('** Webin submission failed **', err);
-
-          if (err.error instanceof Error) {
-            this.dataError = `Webin reports failed because of a client or network error: ${err.error.message}`;
-          }
-          else {
-            this.dataError = `Webin reports failed because of a server error ${err.status}: ${err.error}`;
-          }
-          console.log(this.dataError);
+          console.log('** Webin reports service failed **', err);
+          let msg: string = 'Webin reports service failed. Please try again later. If the problem persists please contact us.';
+          //if (err.message) {
+          //  msg += " " + err.message;
+          //}
+          this.dataError = msg;
       });
     }
   }
