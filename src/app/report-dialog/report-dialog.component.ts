@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { ReportType } from '../report-type.enum';
+import { ReportType, ReportTypeUtils } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 
 @Component({
@@ -26,49 +26,7 @@ export class ReportDialogComponent implements OnInit {
     }
 
     getTitle() {
-      let title: string;
-      switch(this.data.reportType) {
-         case ReportType.studies: {
-           title = "Study";
-           break;
-         }
-         case ReportType.samples: {
-           title = "Sample";
-           break;
-         }
-         case ReportType.runs: {
-           title = "Run";
-           break;
-         }
-         case ReportType.analyses: {
-           title = "Analysis";
-           break;
-         }
-         case ReportType.runFiles: {
-           title = "Submitted files for run";
-           break;
-         }
-         case ReportType.analysisFiles: {
-           title = "Submitted files for analysis";
-           break;
-         }
-         case ReportType.datasets: {
-           title = "Dataset";
-           break;
-         }
-         case ReportType.dacs: {
-           title = "Dac";
-           break;
-         }
-         case ReportType.policies: {
-           title = "Policy";
-           break;
-         }
-         default: {
-           return "";
-         }
-      }
-      return title + " " + this.data.id;
+        return ReportTypeUtils.getTitle(this.data.reportType, this.data.id);
     }
 
     changeReport(reportType : ReportType) {

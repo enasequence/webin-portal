@@ -3,21 +3,18 @@ import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/com
 import { Observable } from 'rxjs/Observable';
 
 import { WebinAuthenticationService } from './webin-authentication.service';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class WebinAuthenticationInterceptor implements HttpInterceptor {
-
-  private _webinRestServiceBaseUrlRegex = /.*drop-box\/submit\/.*/;
-  private _webinReportServiceBaseUrlRegex = /.*ena\/submit\/report.*/;
 
   constructor(private injector: Injector) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (
-      req.url.match(this._webinRestServiceBaseUrlRegex) ||
-      req.url.match(this._webinReportServiceBaseUrlRegex)) {
-      console.info('** WebinAuthenticationInterceptor **');
+    if (!req.url.startsWith(environment.webinAuthenticationServiceUrl) &&
+        !req.url.startsWith(environment.spreadsheetServiceUrl)) {
+      console.info('** Webin authentication interceptor **');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
       const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationHeader())});
       return next.handle(authReq);

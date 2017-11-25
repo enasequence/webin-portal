@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{getTitle()}}</h2>
+
+<mat-dialog-content>
+
+  <div *ngIf="isRetrieveXmlError()">
+
+    <!-- Show XML retrieval error -->
+
+    <div class="app-error">
+        <i class="material-icons">error</i>
+        {{retrieveXmlError}}
+    </div>
+  </div>
+
+  <div *ngIf="!isRetrieveXmlError() && !isUpdateXmlResult()">
+
+      <!-- Show XML editor -->
+
+      <textarea matInput [(ngModel)]="xml" rows="15">
+      </textarea>
+  </div>
+
+  <!-- Show XML update result -->
+
+  <app-submission-result #submissionResult></app-submission-result>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+
+  <div *ngIf="!isRetrieveXmlError() && !isUpdateXmlResult()">
+
+    <!-- Show save XML button -->
+
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  </div>
+
+  <div *ngIf="isUpdateXmlResult() && isUpdateXmlError()">
+
+    <!-- Show back to edit XML button -->
+
+    <button mat-raised-button color="primary" (click)="back()">Back</button>
+
+  </div>
+
+  <!-- Show close button -->
+
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Close</button>
+
+</mat-dialog-actions>

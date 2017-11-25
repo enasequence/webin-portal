@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, ViewEncapsulation, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewEncapsulation, ViewChild, Input, Output } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 
@@ -62,7 +63,8 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Release date',
       'Status',
-      'Action' // No callback for Action column
+      'Action', // No callback for Action column
+      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -305,6 +307,25 @@ export class ReportComponent implements OnInit {
         console.log(" ** onReportChange **" , data);
         this.onReportChange.emit(data);
       }
+    });
+  }
+
+  edit(result) {
+    let dialogData = {
+      reportType: this.reportType,
+      id: this.getId(result)
+    };
+    //console.log("** edit **", result);
+
+    // Create data for report dialog.
+    let reportDialogRef = this.reportDialog.open(ReportEditDialogComponent, {
+        // height: '500px',
+        width: '600px',
+        data: dialogData
+    });
+
+    reportDialogRef.afterClosed().subscribe(data => {
+      console.log(" ** reports dialog closed **");
     });
   }
 

@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angul
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs/Rx';
 
+import { ReportType } from './report-type.enum';
+
 @Injectable()
 export class WebinRestService {
 
@@ -12,13 +14,19 @@ export class WebinRestService {
   constructor(private http: HttpClient) { }
 
   headers() {
-    return new HttpHeaders()
-      .append('Content-Type', 'multipart/form-data')
+    return new HttpHeaders();
   }
 
   appendFile(formData: FormData, name: string, file: File) {
     if (file !== undefined) {
-      formData.append(name, file, file.name);
+      formData.append(name, file);
+    }
+  }
+
+  appendXml(formData: FormData, name: string, blob: Blob) {
+    if (blob !== undefined) {
+      formData.append(name, blob, name.toLowerCase() + ".xml"));
+      console.log('** appendXml **', name, blob, formData);
     }
   }
 
@@ -27,62 +35,125 @@ export class WebinRestService {
     return this.http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
   }
 
-  public addSpreadsheet(spreadsheetFile: File) {
+  public addSpreadsheet(spreadsheet: File) {
     console.info('Add spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    //formData.append('ACTION', 'ADD');
+    this.appendFile(formData, 'SUBMISSION', spreadsheet);
+    formData.append('ACTION', 'ADD');
     return this.post(formData);
   }
 
-  public updateSpreadsheet(spreadsheetFile: File) {
+  public updateSpreadsheet(spreadsheet: File) {
     console.info('Update spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    //formData.append('ACTION', 'MODIFY');
+    this.appendFile(formData, 'SUBMISSION', spreadsheet);
+    formData.append('ACTION', 'MODIFY');
     return this.post(formData);
   }
 
-  public validateAddSpreadsheet(spreadsheetFile: File) {
+  public validateAddSpreadsheet(spreadsheet: File) {
     console.info('Validate add spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    //formData.append('ACTION', 'ADD,VALIDATE');
+    this.appendFile(formData, 'SUBMISSION', spreadsheet);
+    formData.append('ACTION', 'ADD,VALIDATE');
     return this.post(formData);
   }
 
-  public validateUpdateSpreadsheet(spreadsheetFile: File) {
+  public validateUpdateSpreadsheet(spreadsheet: File) {
     console.info('Validate update spreadsheet');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheetFile);
-    //formData.append('ACTION', 'MODIFY,VALIDATE');
+    this.appendFile(formData, 'SUBMISSION', spreadsheet);
+    formData.append('ACTION', 'MODIFY,VALIDATE');
+    return this.post(formData);
+  }
+
+  public updateXml(
+    reportType: ReportType,
+    xml: Blob)
+   {
+     console.info('** Update XML **');
+     let formData: FormData = new FormData();
+
+     let submissionXml: Blob = new Blob([
+       "<SUBMISSION_SET>" +
+       "  <SUBMISSION>" +
+       "	<ACTIONS>" +
+       "    		<ACTION>" +
+       "    			<MODIFY/>" +
+       "    		</ACTION>" +
+       "    	</ACTIONS>" +
+       "    </SUBMISSION>" +
+       "</SUBMISSION_SET>"]);
+
+     this.appendXml(formData, 'SUBMISSION', submissionXml);
+
+     switch(reportType) {
+        case ReportType.studies: {
+          this.appendXml(formData, 'STUDY', xml);
+          break;
+        }
+        case ReportType.projects: {
+          this.appendXml(formData, 'PROJECT', xml);
+          break;
+        }
+        case ReportType.samples: {
+          this.appendXml(formData, 'SAMPLE', xml);
+          break;
+        }
+        case ReportType.experiments: {
+          this.appendXml(formData, 'EXPERIMENT', xml);
+          break;
+        }
+        case ReportType.runs: {
+          this.appendXml(formData, 'RUN', xml);
+          break;
+        }
+        case ReportType.analyses: {
+          this.appendXml(formData, 'ANALYSIS', xml);
+          break;
+        }
+        case ReportType.dacs: {
+          this.appendXml(formData, 'DAC', xml);
+          break;
+        }
+        case ReportType.policies: {
+          this.appendXml(formData, 'POLICY', xml);
+          break;
+        }
+        case ReportType.datasets: {
+          this.appendXml(formData, 'DATASET', xml);
+          break;
+        }
+    }
+
+    console.log("** webin submission form data **", formData);
     return this.post(formData);
   }
 
   public submitXml(
-    submissionFile: File,
-    studyFile: File,
-    projectFile: File,
-    sampleFile: File,
-    experimentFile: File,
-    runFile: File,
-    analysisFile: File,
-    dacFile: File,
-    policyFile: File,
-    datasetFile: File) {
+    submissionXml: Blob,
+    studyXml: Blob,
+    projectXml: Blob,
+    sampleXml: Blob,
+    experimentXml: Blob,
+    runXml: Blob,
+    analysisXml: Blob,
+    dacXml: Blob,
+    policyXml: Blob,
+    datasetXml: Blob) {
 
-    console.info('Submit XML');
+    console.info('** Submit XML **');
     const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', submissionFile);
-    this.appendFile(formData, 'STUDY', studyFile);
-    this.appendFile(formData, 'PROJECT', projectFile);
-    this.appendFile(formData, 'SAMPLE', sampleFile);
-    this.appendFile(formData, 'EXPERIMENT', experimentFile);
-    this.appendFile(formData, 'RUN', runFile);
-    this.appendFile(formData, 'ANALYSIS', analysisFile);
-    this.appendFile(formData, 'DAC', dacFile);
-    this.appendFile(formData, 'POLICY', policyFile);
-    this.appendFile(formData, 'DATASET', datasetFile);
+    this.appendXml(formData, 'SUBMISSION', submissionXml);
+    this.appendXml(formData, 'STUDY', studyXml);
+    this.appendXml(formData, 'PROJECT', projectXml);
+    this.appendXml(formData, 'SAMPLE', sampleXml);
+    this.appendXml(formData, 'EXPERIMENT', experimentXml);
+    this.appendXml(formData, 'RUN', runXml);
+    this.appendXml(formData, 'ANALYSIS', analysisXml);
+    this.appendXml(formData, 'DAC', dacXml);
+    this.appendXml(formData, 'POLICY', policyXml);
+    this.appendXml(formData, 'DATASET', datasetXml);
     return this.post(formData);
   }
 
@@ -131,8 +202,6 @@ export class WebinRestService {
       let messageRootNode = rootNode.getElementsByTagName('MESSAGES')[0];
       let nodes = messageRootNode.getElementsByTagName('ERROR');
       for (i = 0; i < nodes.length; i++) {
-        console.log(nodes[i]);
-        console.log(nodes[i].textContent);
         receipt.errors.push(
           {
             error: nodes[i].textContent

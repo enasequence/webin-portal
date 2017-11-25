@@ -18,7 +18,7 @@ export class WebinAuthenticationService {
   constructor(private http: HttpClient) { }
 
   public getAuthorizationHeader() {
-      console.info('WebinAuthenticationService.getAuthorizationHeader()');
+      console.info('** Webin authorization header **');
       return "Basic " + btoa(this.username + ':' + this.password);
   }
 

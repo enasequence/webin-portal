@@ -58,6 +58,7 @@ import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
+import { WebinXmlReportService } from './webin-xml-report.service';
 import { SpreadsheetService } from './spreadsheet.service';
 import { WebinAuthenticationService } from './webin-authentication.service';
 import { WebinAuthenticationGuardService } from './webin-authentication-guard.service';
@@ -65,6 +66,7 @@ import { WebinAuthenticationGuardService } from './webin-authentication-guard.se
 import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
 
 import { RouterModule, Routes } from '@angular/router';
+import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
 
 const appRoutes: Routes = [
   {
@@ -141,6 +143,7 @@ const appRoutes: Routes = [
     DashboardComponent,
     ReportComponent,
     ReportDialogComponent,
+    ReportEditDialogComponent,
   ],
   bootstrap: [
       AppComponent
@@ -148,6 +151,7 @@ const appRoutes: Routes = [
   providers: [
     WebinRestService,
     WebinReportService,
+    WebinXmlReportService,
     SpreadsheetService,
     WebinAuthenticationService,
     WebinAuthenticationGuardService,
@@ -159,6 +163,7 @@ const appRoutes: Routes = [
   ],
   entryComponents: [
     ReportDialogComponent,
+    ReportEditDialogComponent,
   ]
 })
 export class AppModule { }

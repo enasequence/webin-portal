@@ -43,6 +43,14 @@ export class SubmissionResultComponent implements OnInit {
   ngOnInit() {
   }
 
+  isResult(): boolean {
+    return this.result !== undefined;
+  }
+
+  isError(): boolean {
+    return this.result.isError;
+  }
+
   reset() {
     this.webinErrorDataSource = undefined;
     this.webinAccessionDataSource = undefined;
@@ -60,7 +68,7 @@ export class SubmissionResultComponent implements OnInit {
 
               // HttpResponse when using {observe: 'response'}
               this.result = this.webinRestService.parseResult(data);
-              console.log('** Webin spreadsheet submission succeeded **', this.result);
+              console.log('** Webin submission **', this.result);
 
               if (this.result.isError) {
                 this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);

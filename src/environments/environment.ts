@@ -8,5 +8,6 @@ export const environment = {
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/login',
   webinReportServiceUrl: 'http://ves-hx-5a:8221/ena/submit/report', // TODO
+  webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
   spreadsheetServiceUrl: 'https://raw.githubusercontent.com/enasequence/sub-spreadsheet/master/',
 };
