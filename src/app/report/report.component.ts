@@ -41,11 +41,11 @@ export class ReportComponent implements OnInit {
 
   private _showAlias: boolean = false;
 
-  get showAlias(): string {
+  get showAlias(): boolean {
     return this._showAlias;
   }
 
-  set showAlias(showAlias: string) {
+  set showAlias(showAlias: boolean) {
     this._showAlias = showAlias;
     this.initReportColumns();
   }
