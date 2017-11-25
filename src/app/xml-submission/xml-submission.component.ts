@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 
+import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinRestService } from '../webin-rest.service';
 
 @Component({
@@ -27,10 +28,15 @@ export class XmlSubmissionComponent implements OnInit {
   datasetFile: File;
 
   constructor(
+    private webinAuthenticationService: WebinAuthenticationService,
     private webinRestService: WebinRestService) {
   }
 
   ngOnInit() {
+  }
+
+  isEga(): boolean {
+    return this.webinAuthenticationService.ega;
   }
 
   onChangeSubmissionFile(files) {

@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-
 import { MatTabGroup } from '@angular/material/tabs';
 
 import { ReportComponent } from '../report/report.component';
+
+import { WebinAuthenticationService } from '../webin-authentication.service';
+
 import { ReportType } from '../report-type.enum';
 
 @Component({
@@ -16,9 +18,14 @@ import { ReportType } from '../report-type.enum';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private webinAuthenticationService: WebinAuthenticationService) { }
 
   ngOnInit() {
+  }
+
+  isEga(): boolean {
+    return this.webinAuthenticationService.ega;
   }
 
   ReportType = ReportType;   // Allows use in template
