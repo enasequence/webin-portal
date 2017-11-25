@@ -2,8 +2,8 @@
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
-  Search by accession or unique name to show {{rows}} most recent {{ReportType[reportType]}}
-  owned by your submission account.
+  Search by accession or unique name. The results will show up to {{rows}} most recent {{ReportType[reportType]}}
+  in your submission account.
 </p>
 
 <mat-form-field>
@@ -56,7 +56,7 @@
         <div *ngIf="col=='Action'">
           <mat-cell *matCellDef="let element">
             <button>
-              <span class="app-primary-color">
+              <span class="app-primary-color"  matTooltip="Action">
                 <i class="material-icons" (click)="action(element)">open_in_new</i>
               </span>
             </button>
@@ -64,9 +64,17 @@
         </div>
         <div *ngIf="col=='Edit'">
           <mat-cell *matCellDef="let element">
+            <button>
+              <span class="app-primary-color" matTooltip="Edit">
+                <i class="material-icons" (click)="action(element)">mode_edit</i>
+              </span>
+            </button>
+
+            <!--
             <button mat-button color="primary" (click)="edit(element)">
               Edit
             </button>
+          -->
           </mat-cell>
         </div>
       </ng-container>
