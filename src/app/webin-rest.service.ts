@@ -191,7 +191,7 @@ export class WebinRestService {
             childNode.tagName == "POLICY" ||
             childNode.tagName == "DATASET" ||
             childNode.tagName == "PROJECT" ||
-            childNode.tagName == "SUBMISSION") {
+            ( childNode.tagName == "SUBMISSION" && childNode.getAttribute('accession'))) {
           receipt.accessions.push(
             {
               type: childNode.tagName,

@@ -107,7 +107,7 @@
 
         <ng-container matColumnDef="type">
           <mat-header-cell *matHeaderCellDef><span class="app-table-header">Type</span></mat-header-cell>
-          <mat-cell *matCellDef="let element">{{element.type}}</mat-cell>
+          <mat-cell *matCellDef="let element">{{humanReadableFormat(element.type)}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="accession">

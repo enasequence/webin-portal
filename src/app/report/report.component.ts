@@ -529,8 +529,7 @@ export class ReportComponent implements OnInit {
     return this.getExperimentId(result);
   }
 
-
-  tokenFormat(token: string) {
+  humanReadableFormat(token: string) {
     if (token) {
       let str: string = token.toLowerCase();
       str = str.replace(/_/g, ' ');
@@ -540,7 +539,7 @@ export class ReportComponent implements OnInit {
   }
 
   analysisTypeColumnCallback(result) {
-    return this.tokenFormat(result.report.analysisType);
+    return this.humanReadableFormat(result.report.analysisType);
   }
 
   dateFormat(date: Date) {
@@ -577,7 +576,7 @@ export class ReportComponent implements OnInit {
   }
 
   statusColumnCallback(result) {
-    return this.tokenFormat(result.report.releaseStatus);
+    return this.humanReadableFormat(result.report.releaseStatus);
   }
 
   fileNameColumnCallback(result) {

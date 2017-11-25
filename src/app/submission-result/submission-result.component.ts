@@ -138,4 +138,12 @@ export class SubmissionResultComponent implements OnInit {
     var blob = new Blob([arr.join("\n")], {type: "text/plain;charset=utf-8"});
     importedSaveAs(blob, "Webin-accessions-" + this.result.date + ".txt");
   }
+
+  humanReadableFormat(token: string) {
+    if (token) {
+      let str: string = token.toLowerCase();
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    return token;
+  }
 }
