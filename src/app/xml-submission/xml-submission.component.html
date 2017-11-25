@@ -8,7 +8,7 @@
          fxLayout.xs="column"
          fxLayoutAlign="space-around start"
          fxLayoutGap="10px">
-      <div fxFlex="50">
+      <div fxFlex="33">
         Submission XML (mandatory)
         <input type="file" class="app-choose-file" #submissionFile (change)="onChangeSubmissionFile(submissionFile.files)"/>
         Study XML
@@ -17,6 +17,8 @@
         <input type="file" class="app-choose-file" #projectFile (change)="onChangeProjectFile(projectFile.files)"/>
         Sample XML
         <input type="file" class="app-choose-file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)"/>
+      </div>
+      <div fxFlex="33">
         Experiment XML
         <input type="file" class="app-choose-file" #experimentFile (change)="onChangeExperimentFile(experimentFile.files)"/>
         Run XML
