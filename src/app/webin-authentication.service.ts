@@ -14,7 +14,7 @@ export class WebinAuthenticationService {
   private username: string;
   private password: string;
   authenticated: boolean = false;
-  ega: boolean = true;
+  ega: boolean = false; // TODO
 
   constructor(private http: HttpClient) { }
 
