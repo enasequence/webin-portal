@@ -25,7 +25,7 @@ export class WebinRestService {
 
   appendXml(formData: FormData, name: string, blob: Blob) {
     if (blob !== undefined) {
-      let fileName: string = blob.name;
+      let fileName: string = (blob as File).name;
       if (fileName == undefined) {
         fileName = name.toLowerCase() + ".xml";
       }

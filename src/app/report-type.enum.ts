@@ -57,7 +57,4 @@ export class ReportTypeUtils {
     }
   }
 
-  static getLowerCaseSingularName(reportType: ReportType) : string {
-    return ReportTypeUtils.getCapitalizedSingularName().toLowerCase();
-  }
 }
