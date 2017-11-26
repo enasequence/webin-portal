@@ -1,4 +1,4 @@
-<div *ngIf="spinner" style="height:70px;">
+<div *ngIf="active" style="height:70px;">
     <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
     </mat-spinner>
 </div>
@@ -10,9 +10,9 @@
   </div>
 </div>
 
-<div *ngIf="result !== undefined">
+<div *ngIf="isResult()">
 
-  <!-- Show success or failure -->
+  <!-- Show success or failure message -->
 
   <div *ngIf="webinErrorDataSource !== undefined">
     <div class="app-error">
@@ -27,8 +27,11 @@
     </div>
   </div>
 
+</div>
 
-  <!-- Show table or XML selector -->
+<div *ngIf="showReceipt()">
+
+  <!-- Show receipt -->
 
   <div class="container"
        fxLayout
@@ -42,7 +45,6 @@
     </div>
     <div fxFlex>
    </div>
-
 
    <div *ngIf="webinErrorDataSource !== undefined">
      <button mat-raised-button color="accent" (click)="downloadErrorTable()">
@@ -128,27 +130,26 @@
 
   </div> <!-- <div *ngIf="webinErrorDataSource !== undefined"> -->
 
-</div> <!-- <div *ngIf="result !== undefined"> -->
+  <div [hidden]="webinErrorDataSource == undefined">
+    <!-- the paginator must be created before the dataSource has been defined -->
+    <div *ngIf="!showReceiptXml">
 
+      <mat-paginator #webinErrorPaginator
+                     [pageSize]="10"
+                     [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
 
-<div [hidden]="webinErrorDataSource == undefined">
-  <!-- the paginator must be created before the dataSource has been defined -->
-  <div *ngIf="!showReceiptXml">
+    </div>
 
-    <mat-paginator #webinErrorPaginator
+  </div>
+
+  <div [hidden]="webinAccessionDataSource == undefined">
+
+    <mat-paginator #webinAccessionPaginator
                    [pageSize]="10"
                    [pageSizeOptions]="[10, 25, 50]">
     </mat-paginator>
 
   </div>
 
-</div>
-
-<div [hidden]="webinAccessionDataSource == undefined">
-
-  <mat-paginator #webinAccessionPaginator
-                 [pageSize]="10"
-                 [pageSizeOptions]="[10, 25, 50]">
-  </mat-paginator>
-
-</div>
+</div> <!-- <div *ngIf="showReceipt()"> -->

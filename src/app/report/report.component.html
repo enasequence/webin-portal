@@ -40,7 +40,7 @@
   Show unique name
 </mat-checkbox>
 
-<div *ngIf="spinner" style="height:70px;">
+<div *ngIf="active" style="height:70px;">
     <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
     </mat-spinner>
 </div>
@@ -69,12 +69,7 @@
                 <i class="material-icons" (click)="edit(element)">mode_edit</i>
               </span>
             </button>
-
-            <!--
-            <button mat-button color="primary" (click)="edit(element)">
-              Edit
-            </button>
-          -->
+            
           </mat-cell>
         </div>
       </ng-container>

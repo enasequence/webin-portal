@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -33,8 +33,9 @@ export class SubmissionResultComponent implements OnInit {
   result;
   resultError;
   showReceiptXml: boolean = false;
+  @Input() showReceiptSuccess: boolean = true;
 
-  spinner: boolean;
+  active: boolean;
 
   constructor(
     private webinRestService: WebinRestService) {
@@ -51,6 +52,12 @@ export class SubmissionResultComponent implements OnInit {
     return this.result.isError;
   }
 
+  showReceipt(): boolean {
+    if (!this.isResult()) return false;
+    if (this.isError()) return true;
+    return this.showReceiptSuccess;
+  }
+
   reset() {
     this.webinErrorDataSource = undefined;
     this.webinAccessionDataSource = undefined;
@@ -60,11 +67,11 @@ export class SubmissionResultComponent implements OnInit {
 
   submit(observable: Observable<any>) {
     if (observable != null) {
-      this.spinner = true;
+      this.active = true;
         observable.subscribe(
           // Success
           data => {
-            this.spinner = false;
+            this.active = false;
 
               // HttpResponse when using {observe: 'response'}
               this.result = this.webinRestService.parseResult(data);
@@ -82,7 +89,7 @@ export class SubmissionResultComponent implements OnInit {
           // Errors
           (err: HttpErrorResponse) => {
             console.error('** Webin submission service failed **', err);
-            let msg: string = 'Webin submission service failed. Please try again later. If the problem persists please contact us.';
+            let msg: string = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
             //if (err.message) {
             //  msg += " " + err.message;
             //}

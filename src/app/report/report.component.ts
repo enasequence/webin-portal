@@ -51,7 +51,7 @@ export class ReportComponent implements OnInit {
     this.initReportColumns();
   }
 
-  spinner: boolean;
+  active: boolean;
 
   @Output() onReportChange = new EventEmitter<any>();
 
@@ -330,7 +330,7 @@ export class ReportComponent implements OnInit {
         data: dialogData
     });
 
-    reportDialogRef.afterClosed().subscribe(data => {
+  reportDialogRef.afterClosed().subscribe(data => {
       console.log(" ** reports dialog closed **");
     });
   }
@@ -347,12 +347,12 @@ export class ReportComponent implements OnInit {
     let observable: Observable<any> = this.initReportObservable()
 
     if (observable != null) {
-      this.spinner = true;
+      this.active = true;
 
       observable.subscribe(
         // Success
         data => {
-          this.spinner = false;
+          this.active = false;
 
           this.data = data;
           console.log('** Webin reports service **', this.data);
@@ -363,7 +363,7 @@ export class ReportComponent implements OnInit {
         // Errors
         (err: HttpErrorResponse) => {
           console.log('** Webin reports service failed **', err);
-          let msg: string = 'Webin reports service failed. Please try again later. If the problem persists please contact us.';
+          let msg: string = 'Webin reports service failed. Please try again later. If the problem persists please contact the helpdesk.';
           //if (err.message) {
           //  msg += " " + err.message;
           //}

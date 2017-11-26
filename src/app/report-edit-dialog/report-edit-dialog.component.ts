@@ -28,7 +28,7 @@ export class ReportEditDialogComponent implements OnInit {
   retrieveXmlError: string;
   xml: string;
 
-  private _testRetrieveXmlSuccess: boolean = false;
+  private _testWithMockRetrievedXml: boolean = false;
 
   ngOnInit() {
     this.load();
@@ -55,7 +55,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   load() {
-    if (this._testRetrieveXmlSuccess) {
+    if (this._testWithMockRetrievedXml) {
       this.xml =
         '<?xml version="1.0" encoding="UTF-8"?>' + "\n" +
         '<STUDY accession="ERP021311">' + "\n" +
@@ -64,7 +64,6 @@ export class ReportEditDialogComponent implements OnInit {
         '  <STUDY_TYPE existing_study_type="Population Genomics"/>' + "\n" +
         '</DESCRIPTOR>' + "\n" +
         '</STUDY>';
-      // '<testRetrieveXmlSuccess></testRetrieveXmlSuccess>';
       return;
     }
 
@@ -124,7 +123,7 @@ export class ReportEditDialogComponent implements OnInit {
         // Errors
         (err: HttpErrorResponse) => {
           console.error('** webin xml retrieval service failed **', err);
-          let msg: string = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact us.';
+          let msg: string = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact the helpdesk.';
           //if (err.message) {
           //  msg += " " + err.message;
           //}

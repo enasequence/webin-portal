@@ -22,7 +22,7 @@
 
   <!-- Show XML update result -->
 
-  <app-submission-result #submissionResult></app-submission-result>
+  <app-submission-result [showReceiptSuccess]="false" #submissionResult></app-submission-result>
 
 </mat-dialog-content>
 
@@ -30,14 +30,14 @@
 
   <div *ngIf="!isRetrieveXmlError() && !isUpdateXmlResult()">
 
-    <!-- Show save XML button -->
+    <!-- Show save button -->
 
     <button mat-button color="primary" (click)="save()">Save</button>
-  </div>
+    </div>
 
   <div *ngIf="isUpdateXmlResult() && isUpdateXmlError()">
 
-    <!-- Show back to edit XML button -->
+    <!-- Show back button -->
 
     <button mat-button color="primary" (click)="back()">Back</button>
 
