@@ -14,7 +14,7 @@ export enum ReportType {
 
 export class ReportTypeUtils {
 
-  static getObjectName(reportType: ReportType) : string {
+  static getCapitalisedSingularName(reportType: ReportType) : string {
     switch(reportType) {
        case ReportType.studies: {
          return "Study";
@@ -48,7 +48,49 @@ export class ReportTypeUtils {
        }
        case ReportType.datasets: {
          return "Dataset";
-       }       
+       }
+       default: {
+         return "";
+       }
+    }
+  }
+
+
+  static getPluralName(reportType: ReportType) : string {
+    switch(reportType) {
+       case ReportType.studies: {
+         return "studies";
+       }
+       case ReportType.projects: {
+         return "projects";
+       }
+       case ReportType.samples: {
+         return "samples";
+       }
+       case ReportType.experiments: {
+         return "experiments";
+       }
+       case ReportType.runs: {
+         return "runs";
+       }
+       case ReportType.analyses: {
+         return "analyses";
+       }
+       case ReportType.runFiles: {
+         return "submitted run files";
+       }
+       case ReportType.analysisFiles: {
+         return "submitted analyses files";
+       }
+       case ReportType.dacs: {
+         return "dacs";
+       }
+       case ReportType.policies: {
+         return "policies";
+       }
+       case ReportType.datasets: {
+         return "datasets";
+       }
        default: {
          return "";
        }

@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
-import { ReportType } from '../report-type.enum';
+import { ReportType, ReportTypeUtils } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
@@ -27,6 +27,7 @@ export class ReportComponent implements OnInit {
   }
 
   ReportType = ReportType;   // Allows use in template
+  ReportTypeUtils = ReportTypeUtils;   // Allows use in template
 
   @Input() reportType: ReportType;
   id: string;
