@@ -28,8 +28,6 @@ export class ReportEditDialogComponent implements OnInit {
   retrieveXmlError: string;
   xml: string;
 
-  private _testWithMockRetrievedXml: boolean = false;
-
   ngOnInit() {
     this.load();
   }
@@ -55,18 +53,6 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   load() {
-    if (this._testWithMockRetrievedXml) {
-      this.xml =
-        '<?xml version="1.0" encoding="UTF-8"?>' + "\n" +
-        '<STUDY accession="ERP021311">' + "\n" +
-        '<DESCRIPTOR>' + "\n" +
-        '  <STUDY_TITLE>TEST</STUDY_TITLE>' + "\n" +
-        '  <STUDY_TYPE existing_study_type="Population Genomics"/>' + "\n" +
-        '</DESCRIPTOR>' + "\n" +
-        '</STUDY>';
-      return;
-    }
-
     let observable: Observable<any>;
 
     let id: string = this.data.id;
