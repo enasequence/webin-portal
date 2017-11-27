@@ -30,6 +30,16 @@ export class ReportActionComponent implements OnInit {
       return false;
   }
 
+  isEditXmlAction(reportType: ReportType) : boolean {
+      for(let i = 0; i < this.actions.length; i++) {
+          if (this.actions[i].reportActionType == ReportActionType.editXml &&
+              this.actions[i].reportType == reportType) {
+            return true;
+          }
+      }
+      return false;
+  }
+
   getChangeReportAction(reportType: ReportType) {
       for(let i = 0; i < this.actions.length; i++) {
           if (this.actions[i].reportActionType == ReportActionType.changeReport &&
@@ -39,8 +49,22 @@ export class ReportActionComponent implements OnInit {
       }
   }
 
+  getEditXmlAction(reportType: ReportType) {
+      for(let i = 0; i < this.actions.length; i++) {
+          if (this.actions[i].reportActionType == ReportActionType.editXml &&
+              this.actions[i].reportType == reportType) {
+            return this.actions[i];
+          }
+      }
+  }
+
   changeReportAction(reportType: ReportType) {
     console.log("** change report action **", reportType);
      this.onAction.emit(this.getChangeReportAction(reportType));
-   }
+  }
+
+  editXmlAction(reportType: ReportType) {
+     console.log("** edit xml action **", reportType);
+      this.onAction.emit(this.getEditXmlAction(reportType));
+  }
 }

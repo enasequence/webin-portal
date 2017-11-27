@@ -26,7 +26,7 @@ export class WebinXmlReportService {
     return this.getXml('experiments', id);
   }
   getAnalysisXml(id: string) : Observable<any> {
-    return this.getXml('analysess', id);
+    return this.getXml('analyses', id);
   }
   getDacXml(id: string) : Observable<any> {
     return this.getXml('dacs', id);

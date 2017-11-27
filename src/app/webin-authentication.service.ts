@@ -9,12 +9,11 @@ import { environment } from '../environments/environment';
 @Injectable()
 export class WebinAuthenticationService {
 
-  private _baseUrl = environment.webinAuthenticationServiceUrl;
-
   private username: string;
   private password: string;
   authenticated: boolean = false;
-  ega: boolean = true; // TODO
+  account: string;
+  ega: boolean;
 
   constructor(private http: HttpClient) { }
 
@@ -23,25 +22,42 @@ export class WebinAuthenticationService {
       return "Basic " + btoa(this.username + ':' + this.password);
   }
 
-  headers() {
-    return new HttpHeaders()
-      .append("Authorization", this.getAuthorizationHeader())
-  }
-
-  logout() {
+  public logout() {
     this.username = undefined;
     this.password = undefined;
     this.authenticated = false;
-
+    this.account = false;
+    this.ega = undefined;
   }
 
-  login(username: string, password: string) : Observable<any> {
-    console.log('Webin authentication login');
+  public login(username: string, password: string) : Observable<any> {
+    let baseUrl: string = environment.webinAuthenticationServiceUrl;
+    console.log('** Webin authentication login **', baseUrl);
 
     this.username = username;
     this.password = password;
 
-    const headers = this.headers();
-    return this.http.get(this._baseUrl, { headers, observe: 'response' });
+    let body = { authRealms: [ "SRA", "EGA" ], password: this.password, username: this.username };
+    let headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json')
+      .append('Accept', '*/*');
+
+/*
+===
+var body = JSON.stringify({ authRealms: [ "SRA" ], password:"abc81234", username:"Webin-30" ,"rememberMe":true});
+
+var url = "https://www.ebi.ac.uk/ena/auth/login";
+
+var xhr = new XMLHttpRequest();
+
+xhr.open('POST', url );
+
+xhr.withCredentials = true;
+xhr.setRequestHeader('Content-type',  'application/json');
+===
+  */
+
+
+    return this.http.post(baseUrl, body, { headers, withCredentials: false });
   }
 }

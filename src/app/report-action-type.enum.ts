@@ -1,3 +1,4 @@
 export enum ReportActionType {
-  changeReport = 'changeReport'
+  changeReport = 'changeReport',
+  editXml = 'editXml',
 }

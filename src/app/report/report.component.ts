@@ -63,7 +63,6 @@ export class ReportComponent implements OnInit {
       'Release date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -86,7 +85,6 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -110,7 +108,6 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -133,7 +130,6 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -203,7 +199,6 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -222,7 +217,6 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -242,7 +236,6 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-      'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -267,8 +260,33 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  createEditXmlAction(reportType: ReportType, id: string) {
+    return {
+      reportActionType: ReportActionType.editXml,
+      reportType: reportType,
+      id: id
+    }
+  }
+
   getActions(result) {
     let actions = [];
+
+    // Allow edit XML.
+    if (this.reportType == ReportType.runFiles) {
+      actions.push(this.createEditXmlAction(ReportType.runs, this.getId(result)));
+    }
+    else if (this.reportType == ReportType.analysisFiles) {
+      actions.push(this.createEditXmlAction(ReportType.analyses, this.getId(result)));
+    }
+    else {
+      actions.push(this.createEditXmlAction(this.reportType, this.getId(result)));
+      if (this.reportType == ReportType.studies) {
+        actions.push(this.createEditXmlAction(ReportType.projects, result.report.secondaryId));
+      }
+      if (this.reportType == ReportType.runs) {
+        actions.push(this.createEditXmlAction(ReportType.experiments, this.getExperimentId(result)));
+      }
+    }
 
     // Allow navigation to studies report.
     if (this.getStudyId(result)) {
@@ -323,28 +341,29 @@ export class ReportComponent implements OnInit {
     console.log("** action **", action);
 
     if (action && action.reportActionType == ReportActionType.changeReport) {
-      console.log("** change report **" , action);
+      console.log("** change report action **" , action);
       this.onReportChange.emit(action);
     }
+
+    if (action && action.reportActionType == ReportActionType.editXml) {
+      console.log("** edit xml action **" , action);
+      this.editXml(action);
+    }
+
   }
 
-  edit(result) {
+  editXml(action) {
     let dialogData = {
-      reportType: this.reportType,
-      id: this.getId(result)
+      reportType: action.reportType,
+      id: action.id
     };
-    //console.log("** edit **", result);
 
-    // Create data for report dialog.
     let reportDialogRef = this.reportDialog.open(ReportEditDialogComponent, {
         // height: '500px',
         width: '600px',
         data: dialogData
     });
-
-  reportDialogRef.afterClosed().subscribe(data => {
-      console.log(" ** reports dialog closed **");
-    });
+    reportDialogRef.afterClosed().subscribe(data => {});
   }
 
   reset() {

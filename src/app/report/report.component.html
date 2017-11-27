@@ -50,7 +50,7 @@
   <mat-table [dataSource]="dataSource">
       <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
   	    <mat-header-cell *matHeaderCellDef>{{ col }}</mat-header-cell>
-        <div *ngIf="col!='Action' && col!='Edit'">
+        <div *ngIf="col!='Action'">
   	         <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
         </div>
 
@@ -65,16 +65,6 @@
 
         </div>
 
-        <div *ngIf="col=='Edit'">
-          <mat-cell *matCellDef="let element">
-            <button>
-              <span class="app-primary-color">
-                <i class="material-icons" (click)="edit(element)">mode_edit</i>
-              </span>
-            </button>
-
-          </mat-cell>
-        </div>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

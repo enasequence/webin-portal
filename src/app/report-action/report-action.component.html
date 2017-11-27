@@ -2,6 +2,41 @@
 
 <mat-menu #menu="matMenu">
 
+
+  <!-- Edit XML actions. -->
+
+  <div *ngIf="isEditXmlAction(ReportType.studies)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.studies)">Edit study XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.projects)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.projects)">Edit project XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.samples)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.samples)">Edit sample XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.runs)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.runs)">Edit run XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.experiments)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.experiments)">Edit experiment XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.analyses)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.analyses)">Edit analysis XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.dacs)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.dacs)">Edit dac XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.policies)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.policies)">Edit policy XML</button>
+  </div>
+  <div *ngIf="isEditXmlAction(ReportType.datasets)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.datasets)">Edit dataset XML</button>
+  </div>
+
+
+  <!-- Change report actions. -->
+
+
   <div *ngIf="isChangeReportAction(ReportType.studies)">
     <button mat-menu-item (click)="changeReportAction(ReportType.studies)">Show study</button>
   </div>

@@ -15,10 +15,12 @@ export class LoginComponent implements OnInit {
     private password: string;
     private error: boolean = false;
 
-    onSuccessfulLogin() {
+    onSuccessfulLogin(data) {
       console.log(`Webin authentication succeeded`);
       this.error = false;
       this.webinAuthenticationService.authenticated = true;
+      this.webinAuthenticationService.ega = data.roles.EGA;
+      this.webinAuthenticationService.account = data.principle;
       this.router.navigateByUrl('dashboard', { skipLocationChange: true });
     }
 
@@ -42,16 +44,12 @@ export class LoginComponent implements OnInit {
       this.webinAuthenticationService.login(this.username, this.password)
         .subscribe(
           data => {
+            this.onSuccessfulLogin(data);
           },
           // Errors.
           (err: HttpErrorResponse) => {
-            if (err.status == 200) { // TODO: Angular bug caused by am empty JSON response
-              this.onSuccessfulLogin();
-            }
-            else {
-              this.onFailedLogin();
-              console.error(err);
-            }
+            this.onFailedLogin();
+            console.error(err);
         });
     }
 }
