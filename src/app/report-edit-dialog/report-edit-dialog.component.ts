@@ -51,7 +51,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   getTitle(): string {
-    return ReportTypeUtils.getCapitalizedSingularName(this.data.reportType) + ": " + this.data.id;
+    return ReportTypeUtils.getObjectName(this.data.reportType) + ": " + this.data.id;
   }
 
   load() {
@@ -72,7 +72,7 @@ export class ReportEditDialogComponent implements OnInit {
     let id: string = this.data.id;
     let reportType: ReportType = this.data.reportType;
 
-    console.log('** xml retrieval **', ReportType[reportType], id);
+    console.log('** xml retrieval **', reportType, id);
 
     switch(reportType) {
        case ReportType.studies: {

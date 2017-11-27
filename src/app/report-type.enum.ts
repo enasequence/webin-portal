@@ -1,22 +1,20 @@
 export enum ReportType {
-  // Number is the tab number in dashboard component.
-  studies          = 2,
-  samples          = 3,
-  runs             = 4,
-  analyses         = 5,
-  runFiles         = 6,
-  analysisFiles    = 7,
-  dacs             = 8,
-  policies         = 9,
-  datasets         = 10,
-  // Number is NOT the tab number in dashboard component.
-  projects         = 101,
-  experiments      = 102
+  studies = "studies",
+  projects = "projects",
+  samples = "samples",
+  experiments = "experiments",
+  runs = "runs",
+  analyses = "analyses",
+  runFiles = "runFiles",
+  analysisFiles = "analysisFiles",
+  dacs = "dacs",
+  policies = "policies",
+  datasets = "datasets"
 }
 
 export class ReportTypeUtils {
 
-  static getCapitalizedSingularName(reportType: ReportType) : string {
+  static getObjectName(reportType: ReportType) : string {
     switch(reportType) {
        case ReportType.studies: {
          return "Study";
