@@ -30,13 +30,19 @@
 
     <p *ngIf="data[ReportType.dacs]">
       <mat-chip (click)="changeReport(ReportType.dacs)">
-        Show dac
+        Show dacs
       </mat-chip>
     </p>
 
     <p *ngIf="data[ReportType.policies]">
       <mat-chip (click)="changeReport(ReportType.policies)">
-        Show policy
+        Show policies
+      </mat-chip>
+    </p>
+
+    <p *ngIf="data[ReportType.datasets]">
+      <mat-chip (click)="changeReport(ReportType.datasets)">
+        Show datasets
       </mat-chip>
     </p>
 

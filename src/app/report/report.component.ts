@@ -203,7 +203,7 @@ export class ReportComponent implements OnInit {
       'Title',
       'Submission date',
       'Status',
-      //'Action' // No callback for Action column
+      'Action', // No callback for Action column
       'Edit' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
@@ -292,13 +292,19 @@ export class ReportComponent implements OnInit {
       dialogData[ReportType.analyses] = this.getId(result);
     }
 
+    if (this.reportType == ReportType.dacs) {
+      dialogData[ReportType.policies] = this.getId(result);
+    }
+
     if (this.reportType == ReportType.policies) {
       dialogData[ReportType.dacs] = this.getDacId(result);
+      dialogData[ReportType.datasets] = this.getId(result);
     }
     if (this.reportType == ReportType.datasets) {
       dialogData[ReportType.policies] = this.getPolicyId(result);
     }
 
+    console.log(" ** reports dialog opened **" , dialogData);
 
     // Create data for report dialog.
     let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {

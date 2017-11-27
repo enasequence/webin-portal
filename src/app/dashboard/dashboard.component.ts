@@ -75,8 +75,4 @@ export class DashboardComponent implements OnInit {
     }
     return undefined;
   }
-
-
-  }
-
 }
