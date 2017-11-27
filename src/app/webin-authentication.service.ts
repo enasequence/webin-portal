@@ -42,22 +42,6 @@ export class WebinAuthenticationService {
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
 
-/*
-===
-var body = JSON.stringify({ authRealms: [ "SRA" ], password:"abc81234", username:"Webin-30" ,"rememberMe":true});
-
-var url = "https://www.ebi.ac.uk/ena/auth/login";
-
-var xhr = new XMLHttpRequest();
-
-xhr.open('POST', url );
-
-xhr.withCredentials = true;
-xhr.setRequestHeader('Content-type',  'application/json');
-===
-  */
-
-
     return this.http.post(baseUrl, body, { headers, withCredentials: false });
   }
 }
