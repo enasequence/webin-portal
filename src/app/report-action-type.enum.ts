@@ -1,3 +1,3 @@
 export enum ReportActionType {
-  changeReport = 0
+  changeReport = 'changeReport'
 }

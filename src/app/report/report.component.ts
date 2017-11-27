@@ -255,71 +255,78 @@ export class ReportComponent implements OnInit {
     };
   }
 
-
   getElementValue(result, col) {
     let callback = this.displayedColumnsCallback[col];
     return this.displayedColumnsCallback[col](result);
   }
 
-  action(result) {
-    let dialogData = {
-      reportType: this.reportType,
-      id: this.getId(result)
-    };
-    //console.log("** action **", result);
+  createChangeReportAction(reportType: ReportType, id: string) {
+    return {
+      reportActionType: ReportActionType.changeReport,
+      reportType: reportType,
+      id: id
+    }
+  }
+
+  getActions(result) {
+    let actions = [];
 
     // Allow navigation to studies report.
     if (this.getStudyId(result)) {
-      dialogData[ReportType.studies] = this.getStudyId(result);
+      actions.push(this.createChangeReportAction(ReportType.studies, this.getStudyId(result)));
     }
 
     // Allow navigation to samples report.
     if (this.getSampleId(result)) {
-      dialogData[ReportType.samples] = this.getId(result);
+      actions.push(this.createChangeReportAction(ReportType.samples, this.getId(result)));
     }
 
     // Allow navigation to run report.
     if (this.reportType == ReportType.studies ||
         this.reportType == ReportType.samples ||
         this.reportType == ReportType.runFiles) {
-      dialogData[ReportType.runs] = this.getId(result);
+      actions.push(this.createChangeReportAction(ReportType.runs, this.getId(result)));
     }
 
     // Allow navigation to analysis report.
     if (this.reportType == ReportType.studies ||
         this.reportType == ReportType.samples ||
         this.reportType == ReportType.analysisFiles) {
-      dialogData[ReportType.analyses] = this.getId(result);
+      actions.push(this.createChangeReportAction(ReportType.analyses, this.getId(result)));
+    }
+
+    // Allow navigation to run files.
+    if (this.reportType == ReportType.runs) {
+      actions.push(this.createChangeReportAction(ReportType.runFiles, this.getId(result)));
+    }
+
+    // Allow navigation to analysis files.
+    if (this.reportType == ReportType.analyses) {
+      actions.push(this.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
     }
 
     if (this.reportType == ReportType.dacs) {
-      dialogData[ReportType.policies] = this.getId(result);
+      actions.push(this.createChangeReportAction(ReportType.policies, this.getId(result)));
     }
 
     if (this.reportType == ReportType.policies) {
-      dialogData[ReportType.dacs] = this.getDacId(result);
-      dialogData[ReportType.datasets] = this.getId(result);
+      actions.push(this.createChangeReportAction(ReportType.dacs, this.getDacId(result)));
+      actions.push(this.createChangeReportAction(ReportType.datasets, this.getId(result)));
     }
     if (this.reportType == ReportType.datasets) {
-      dialogData[ReportType.policies] = this.getPolicyId(result);
+      actions.push(this.createChangeReportAction(ReportType.policies, this.getPolicyId(result)));
     }
 
-    console.log(" ** reports dialog opened **" , dialogData);
+    return actions;
+  }
 
-    // Create data for report dialog.
-    let reportDialogRef = this.reportDialog.open(ReportDialogComponent, {
-        // height: '400px',
-        // width: '250px',
-        data: dialogData
-    });
+  action(action) {
+    console.log("** action **", action);
 
-    reportDialogRef.afterClosed().subscribe(data => {
-      console.log(" ** reports dialog closed **" , data);
-      if (data && data.reportActionType == ReportActionType.changeReport) {
-        console.log(" ** onReportChange **" , data);
-        this.onReportChange.emit(data);
-      }
-    });
+    if (action && action.reportActionType == ReportActionType.changeReport) {
+      console.log("** change report **" , action);
+      this.onReportChange.emit(action);
+    }
   }
 
   edit(result) {

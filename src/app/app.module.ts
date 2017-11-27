@@ -54,6 +54,7 @@ import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet
 import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
 import { ReportComponent } from './report/report.component';
+import { ReportActionComponent } from './report-action/report-action.component';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 import { WebinRestService } from './webin-rest.service';
@@ -144,6 +145,7 @@ const appRoutes: Routes = [
     ReportComponent,
     ReportDialogComponent,
     ReportEditDialogComponent,
+    ReportActionComponent,
   ],
   bootstrap: [
       AppComponent

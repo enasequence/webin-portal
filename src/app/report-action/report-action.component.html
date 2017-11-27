@@ -1,0 +1,41 @@
+<button mat-button [matMenuTriggerFor]="menu">Action</button>
+
+<mat-menu #menu="matMenu">
+
+  <div *ngIf="isChangeReportAction(ReportType.studies)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.studies)">Show study</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.samples)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.samples)">Show samples</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.runs)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.runs)">Show runs</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.analyses)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.analyses)">Show analyses</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.runFiles)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.runFiles)">Show run files</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.analysisFiles)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.analysisFiles)">Show analysis files</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.dacs)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.dacs)">Show dac</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.policies)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.policies)">Show policies</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.datasets)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.datasets)">Show datasets</button>
+  </div>
+
+</mat-menu>

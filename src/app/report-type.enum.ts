@@ -40,15 +40,15 @@ export class ReportTypeUtils {
        case ReportType.analysisFiles: {
          return "Submitted files for analysis";
        }
-       case ReportType.datasets: {
-         return "Dataset";
-       }
        case ReportType.dacs: {
          return "Dac";
        }
        case ReportType.policies: {
          return "Policy";
        }
+       case ReportType.datasets: {
+         return "Dataset";
+       }       
        default: {
          return "";
        }

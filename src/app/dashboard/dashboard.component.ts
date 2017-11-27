@@ -31,6 +31,8 @@ export class DashboardComponent implements OnInit {
   ReportType = ReportType;   // Allows use in template
 
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
+
+  // Names must match ReportType
   @ViewChild('studies') studies: ReportComponent;
   @ViewChild('samples') samples: ReportComponent;
   @ViewChild('runs') runs: ReportComponent;
@@ -43,9 +45,11 @@ export class DashboardComponent implements OnInit {
 
   consumeReportChange(event) {
     let newTabIndex = this.getTabIndex(event.reportType);
-    console.log("** change report **", event);
+    console.log("** change dashboard report **", event);
     if (newTabIndex !== undefined) {
       this.tabGroup.selectedIndex = newTabIndex;
+      this[event.reportType].id = event.id;
+      this[event.reportType].report();
     }
   }
 
