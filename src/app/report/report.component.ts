@@ -4,7 +4,6 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';

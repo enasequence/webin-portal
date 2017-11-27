@@ -55,7 +55,6 @@ import { XmlSubmissionComponent } from './xml-submission/xml-submission.componen
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
 import { ReportComponent } from './report/report.component';
 import { ReportActionComponent } from './report-action/report-action.component';
-import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
@@ -143,7 +142,6 @@ const appRoutes: Routes = [
     LoginComponent,
     DashboardComponent,
     ReportComponent,
-    ReportDialogComponent,
     ReportEditDialogComponent,
     ReportActionComponent,
   ],
@@ -164,7 +162,6 @@ const appRoutes: Routes = [
     }
   ],
   entryComponents: [
-    ReportDialogComponent,
     ReportEditDialogComponent,
   ]
 })
