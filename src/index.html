@@ -104,14 +104,17 @@
           <div class="masthead-inner row">
             <!-- local-title -->
             <div class="columns medium-12" id="local-title">
-              <h1><a href="../../" title="Back to [service-name] homepage">Webin Programmatic Submission Portal</a></h1>
+              <h1><app-title></app-title></h1>
             </div>
             <!-- /local-title -->
             <!-- local-nav -->
             <nav >
               <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
                 <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
-                <li><a href="">Logout</a></li>
+                <li><a href="">Logout
+                  <app-login-account>
+                  </app-login-account>
+                </a></li>
               </ul>
             </nav>
             <!-- /local-nav -->

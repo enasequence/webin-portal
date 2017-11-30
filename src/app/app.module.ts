@@ -46,6 +46,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { LoginAccountComponent } from './login-account/login-account.component';
+import { TitleComponent } from './title/title.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SpreadsheetSubmissionComponent } from './spreadsheet-submission/spreadsheet-submission.component';
 import { SubmissionTypeSelectorComponent } from './submission-type-selector/submission-type-selector.component';
@@ -140,13 +142,17 @@ const appRoutes: Routes = [
     XmlSubmissionComponent,
     SubmissionResultComponent,
     LoginComponent,
+    LoginAccountComponent,
     DashboardComponent,
+    TitleComponent,
     ReportComponent,
     ReportEditDialogComponent,
     ReportActionComponent,
   ],
   bootstrap: [
-      AppComponent
+      AppComponent,
+      TitleComponent,
+      LoginAccountComponent
   ],
   providers: [
     WebinRestService,
