@@ -26,7 +26,7 @@ export class WebinAuthenticationService {
     this.username = undefined;
     this.password = undefined;
     this.authenticated = false;
-    this.account = false;
+    this.account = undefined;
     this.ega = undefined;
   }
 
