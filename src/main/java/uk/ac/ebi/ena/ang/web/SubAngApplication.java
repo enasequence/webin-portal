@@ -7,7 +7,7 @@ import org.springframework.boot.system.ApplicationPidFileWriter;
 @SpringBootApplication
 public class SubAngApplication {
 
-	private static String PID_FILE = "sub-ang-release.pid";
+	private static String PID_FILE = "sub-ang.pid";
 
 	public static void main(String[] args) {
 		SpringApplication springApplication = new SpringApplication(SubAngApplication.class);
