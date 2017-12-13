@@ -13,7 +13,7 @@ import { SpreadsheetService } from '../spreadsheet.service';
 export class SubmissionTypeSelectorComponent implements OnInit {
 
   private _submissionType: string;
-  private transcriptomeInfoFileName: string = 'transcriptome.info';
+  transcriptomeInfoFileName: string = 'transcriptome.info';
 
   set submissionType(submissionType: string) {
     if (this._submissionType != submissionType) {

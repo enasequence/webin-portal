@@ -11,9 +11,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-    private username: string;
-    private password: string;
-    private error: boolean = false;
+     username: string;
+     password: string;
+     error: boolean = false;
 
     onSuccessfulLogin(data) {
       console.log(`Webin authentication succeeded`);
