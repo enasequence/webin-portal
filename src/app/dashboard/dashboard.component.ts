@@ -69,12 +69,13 @@ export class DashboardComponent implements OnInit {
     }
     else {
       switch(reportType) {
-        case ReportType.studies: return 2;
-        case ReportType.samples: return 3;
-        case ReportType.runs: return 4;
-        case ReportType.analyses: return 5;
-        case ReportType.runFiles: return 6;
-        case ReportType.analysisFiles: return  7;
+        // Commented out spreadsheet submission option for now.
+        case ReportType.studies: return 1; // 2;
+        case ReportType.samples: return 2; // 3;
+        case ReportType.runs: return 3; // 4;
+        case ReportType.analyses: return 4; // 5;
+        case ReportType.runFiles: return 5; // 6;
+        case ReportType.analysisFiles: return  6; // 7;
       }
     }
     return undefined;
