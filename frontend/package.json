@@ -6,6 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "buildWatch": "ng build --watch=true",
+    "buildDev": "ng build --env=dev",
+    "buildTest": "ng build --env=test",
+    "buildProd": "ng build --env=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

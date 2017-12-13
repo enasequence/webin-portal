@@ -1,0 +1,186 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+        classpath 'org.hidetake:gradle-ssh-plugin:2.9.0'
+	}
+
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+}
+
+
+enum Environment{
+    localdev, localtest, dev , test
+}
+
+ext.version_base = '0.1.1'
+ext.environment =  project.hasProperty('env') ? env : Environment.dev.toString();
+version = version_base + "-$environment"
+ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_dsa")
+ext.envAngularBuildScriptMap = [
+        'test'   : 'buildTest',
+        'dev'    : 'buildDev',
+        'prod'   : 'buildProd',
+        'default': 'build'
+]
+
+
+def props = new Properties()
+file('src/main/resources/application.properties').withInputStream {
+    props.load(it)
+}
+def serverContextPath = props['server.contextPath']
+def serverPort = props['server.port']
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.moowork.node'
+apply plugin: 'org.hidetake.ssh'
+apply plugin: 'maven-publish'
+
+group = 'uk.ac.ebi.ena'
+sourceCompatibility = 1.8
+
+
+repositories {
+	mavenLocal()
+	maven { url "http://ena-dev:8081/artifactory/all" }
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+node {
+    download = true
+    nodeModulesDir = file("frontend")
+}
+
+
+
+task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall'){
+            group = 'application'
+            description = "Build and watches the client side assets for rebuilding"
+            args = ['run','buildWatch']
+        }
+
+task buildClient(type:NpmTask, dependsOn:'npmInstall'){
+            println 'buildClient script:' + getAngularBuildScript()
+            group = 'build'
+            description = "Compile client side folder for production"
+            args = ['run', getAngularBuildScript()]
+        }
+
+
+
+
+remotes {
+    dev {
+        host = 'ves-ebi-5b.ebi.ac.uk'
+        user = 'ena_adm'
+        identity = sshKeyFile
+        knownHosts = allowAnyHosts
+    }
+    test {
+        host = 'ves-ebi-5a'
+        user = 'ena_adm'
+        identity = sshKeyFile
+        knownHosts = allowAnyHosts
+    }
+    prodA {
+        host = 'ves-hx-5a'
+        user = 'ena_adm'
+        identity = sshKeyFile
+        knownHosts = allowAnyHosts
+    }
+    prodB {
+        host = 'ves-hx-5b'
+        user = 'ena_adm'
+        identity = sshKeyFile
+        knownHosts = allowAnyHosts
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username artifactoryUsername
+                password artifactoryPassword
+            }
+            url "http://ena-dev:8081/artifactory/libs-release-local"
+        }
+    }
+}
+
+
+def getEnvRemotes() {
+    def hosts = [] ;
+    switch (environment){
+        case "dev": hosts.add(remotes.dev) ; break;
+        case "test": hosts.add(remotes.test) ; break;
+        case "prod":
+            hosts.add(remotes.prodA) ;
+            hosts.add(remotes.prodB) ;
+            break;
+    }
+    return hosts ;
+}
+
+
+def getAngularBuildScript(){
+    def script = envAngularBuildScriptMap[environment.toString()];
+    if(script) return script;
+    else return envAngularBuildScriptMap['default']
+}
+
+
+task deploy << {
+    ssh.run {
+        println("deployTo task" + "~/ena/generic-deploy.sh $project.name $version environment")
+        for (remote in getEnvRemotes()){
+            println("Deploying into: " + remote)
+            session(remote) {
+                execute "~/ena/generic-deploy.sh $project.name $version $environment $serverPort " +  removeLeadingSlash(serverContextPath)
+            }
+        }
+    }
+}
+
+
+def removeLeadingSlash(url){
+    if(url.substring(0,1) == "/" )return url.substring(1)
+    return url
+}
+
+
+
+jar.manifest {
+    attributes('Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Source-Compatibility': project.sourceCompatibility
+    )
+}
+
+sourceSets.main.resources.includes = [ "**/*.*" ]
+
+deploy.dependsOn(publish)
+publish.dependsOn(assemble)
+bootRun.dependsOn(buildClient)
+jar.dependsOn(buildClient)
