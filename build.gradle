@@ -47,7 +47,7 @@ apply plugin: 'com.moowork.node'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'maven-publish'
 
-group = 'uk.ac.ebi.ena'
+group = 'uk.ac.ebi.ena.sub-ang'
 sourceCompatibility = 1.8
 
 
