@@ -10,7 +10,7 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 })
 export class LoginAccountComponent implements OnInit {
 
-  constructor(private webinAuthenticationService: WebinAuthenticationService) { }
+  constructor(public webinAuthenticationService: WebinAuthenticationService) { }
 
   ngOnInit() {
   }
