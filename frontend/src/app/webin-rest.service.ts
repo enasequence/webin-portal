@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { ReportType } from './report-type.enum';
 
@@ -26,71 +26,38 @@ export class WebinRestService {
   appendXml(formData: FormData, name: string, blob: Blob) {
     if (blob !== undefined) {
       let fileName: string = (blob as File).name;
-      if (fileName == undefined) {
-        fileName = name.toLowerCase() + ".xml";
+      if (fileName === undefined) {
+        fileName = name.toLowerCase() + '.xml';
       }
       formData.append(name, blob, fileName);
     }
   }
 
-  post(formData: FormData) : Observable<any> {
+  post(formData: FormData): Observable<any> {
     const headers = this.headers();
     return this.http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
   }
 
-  addSpreadsheet(spreadsheet: File) {
-    console.info('Add spreadsheet');
-    const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheet);
-    formData.append('ACTION', 'ADD');
-    return this.post(formData);
-  }
-
-  updateSpreadsheet(spreadsheet: File) {
-    console.info('Update spreadsheet');
-    const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheet);
-    formData.append('ACTION', 'MODIFY');
-    return this.post(formData);
-  }
-
-  validateAddSpreadsheet(spreadsheet: File) {
-    console.info('Validate add spreadsheet');
-    const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheet);
-    formData.append('ACTION', 'ADD,VALIDATE');
-    return this.post(formData);
-  }
-
-  validateUpdateSpreadsheet(spreadsheet: File) {
-    console.info('Validate update spreadsheet');
-    const formData: FormData = new FormData();
-    this.appendFile(formData, 'SUBMISSION', spreadsheet);
-    formData.append('ACTION', 'MODIFY,VALIDATE');
-    return this.post(formData);
-  }
-
   updateXml(
     reportType: ReportType,
-    xml: Blob)
-   {
-     console.info('** Update XML **');
-     let formData: FormData = new FormData();
+    xml: Blob) {
+     console.log('** Update XML **');
+     const formData: FormData = new FormData();
 
-     let submissionXml: Blob = new Blob([
-       "<SUBMISSION_SET>" +
-       "  <SUBMISSION>" +
-       "	<ACTIONS>" +
-       "    		<ACTION>" +
-       "    			<MODIFY/>" +
-       "    		</ACTION>" +
-       "    	</ACTIONS>" +
-       "    </SUBMISSION>" +
-       "</SUBMISSION_SET>"]);
+     const submissionXml: Blob = new Blob([
+       '<SUBMISSION_SET>' +
+       '  <SUBMISSION>' +
+       '	<ACTIONS>' +
+       '    		<ACTION>' +
+       '    			<MODIFY/>' +
+       '    		</ACTION>' +
+       '    	</ACTIONS>' +
+       '    </SUBMISSION>' +
+       '</SUBMISSION_SET>']);
 
      this.appendXml(formData, 'SUBMISSION', submissionXml);
 
-     switch(reportType) {
+     switch (reportType) {
         case ReportType.studies: {
           this.appendXml(formData, 'STUDY', xml);
           break;
@@ -129,7 +96,7 @@ export class WebinRestService {
         }
     }
 
-    console.log("** webin submission form data **", formData);
+    console.log('** webin submission form data **', formData);
     return this.post(formData);
   }
 
@@ -145,7 +112,7 @@ export class WebinRestService {
     policyXml: Blob,
     datasetXml: Blob) {
 
-    console.info('** Submit XML **');
+    console.log('** Submit XML **');
     const formData: FormData = new FormData();
     this.appendXml(formData, 'SUBMISSION', submissionXml);
     this.appendXml(formData, 'STUDY', studyXml);
@@ -163,12 +130,12 @@ export class WebinRestService {
 
   parseResult(data) {
 
-    let xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
-    let rootNode: any = xmlDoc.getElementsByTagName('RECEIPT')[0];
-    let isError: boolean = (rootNode.getAttribute('success') != 'true');
-    let date: string = rootNode.getAttribute('receiptDate');
+    const xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
+    const rootNode: any = xmlDoc.getElementsByTagName('RECEIPT')[0];
+    const isError: boolean = (rootNode.getAttribute('success') !== 'true');
+    const date: string = rootNode.getAttribute('receiptDate');
 
-    let receipt = {
+    const receipt = {
       isError: isError,
       xml: data.body,
       date: date,
@@ -176,22 +143,22 @@ export class WebinRestService {
       errors: []
     };
 
-    var i: number = 0;
+    let i = 0;
 
     if (!isError) {
-      let nodes = rootNode.childNodes;
+      const nodes = rootNode.childNodes;
       for (i = 0; i < nodes.length; i++) {
-        let childNode = nodes[i];
-        if (childNode.tagName == "ANALYSIS" ||
-            childNode.tagName == "EXPERIMENT" ||
-            childNode.tagName == "RUN" ||
-            childNode.tagName == "SAMPLE" ||
-            childNode.tagName == "STUDY" ||
-            childNode.tagName == "DAC" ||
-            childNode.tagName == "POLICY" ||
-            childNode.tagName == "DATASET" ||
-            childNode.tagName == "PROJECT" ||
-            ( childNode.tagName == "SUBMISSION" && childNode.getAttribute('accession'))) {
+        const childNode = nodes[i];
+        if (childNode.tagName === 'ANALYSIS' ||
+            childNode.tagName === 'EXPERIMENT' ||
+            childNode.tagName === 'RUN' ||
+            childNode.tagName === 'SAMPLE' ||
+            childNode.tagName === 'STUDY' ||
+            childNode.tagName === 'DAC' ||
+            childNode.tagName === 'POLICY' ||
+            childNode.tagName === 'DATASET' ||
+            childNode.tagName === 'PROJECT' ||
+            ( childNode.tagName === 'SUBMISSION' && childNode.getAttribute('accession'))) {
           receipt.accessions.push(
             {
               type: childNode.tagName,
@@ -200,10 +167,9 @@ export class WebinRestService {
             });
         }
       }
-    }
-    else {
-      let messageRootNode = rootNode.getElementsByTagName('MESSAGES')[0];
-      let nodes = messageRootNode.getElementsByTagName('ERROR');
+    } else {
+      const messageRootNode = rootNode.getElementsByTagName('MESSAGES')[0];
+      const nodes = messageRootNode.getElementsByTagName('ERROR');
       for (i = 0; i < nodes.length; i++) {
         receipt.errors.push(
           {

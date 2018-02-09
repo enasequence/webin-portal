@@ -1,98 +1,98 @@
 export enum ReportType {
-  studies = "studies",
-  projects = "projects",
-  samples = "samples",
-  experiments = "experiments",
-  runs = "runs",
-  analyses = "analyses",
-  runFiles = "runFiles",
-  analysisFiles = "analysisFiles",
-  dacs = "dacs",
-  policies = "policies",
-  datasets = "datasets"
+  studies = 'studies',
+  projects = 'projects',
+  samples = 'samples',
+  experiments = 'experiments',
+  runs = 'runs',
+  analyses = 'analyses',
+  runFiles = 'runFiles',
+  analysisFiles = 'analysisFiles',
+  dacs = 'dacs',
+  policies = 'policies',
+  datasets = 'datasets'
 }
 
 export class ReportTypeUtils {
 
-  static getCapitalisedSingularName(reportType: ReportType) : string {
-    switch(reportType) {
+  static getCapitalisedSingularName(reportType: ReportType): string {
+    switch (reportType) {
        case ReportType.studies: {
-         return "Study";
+         return 'Study';
        }
        case ReportType.projects: {
-         return "Project";
+         return 'Project';
        }
        case ReportType.samples: {
-         return "Sample";
+         return 'Sample';
        }
        case ReportType.experiments: {
-         return "Experiment";
+         return 'Experiment';
        }
        case ReportType.runs: {
-         return "Run";
+         return 'Run';
        }
        case ReportType.analyses: {
-         return "Analysis";
+         return 'Analysis';
        }
        case ReportType.runFiles: {
-         return "Submitted files for run";
+         return 'Submitted files for run';
        }
        case ReportType.analysisFiles: {
-         return "Submitted files for analysis";
+         return 'Submitted files for analysis';
        }
        case ReportType.dacs: {
-         return "Dac";
+         return 'Dac';
        }
        case ReportType.policies: {
-         return "Policy";
+         return 'Policy';
        }
        case ReportType.datasets: {
-         return "Dataset";
+         return 'Dataset';
        }
        default: {
-         return "";
+         return '';
        }
     }
   }
 
 
-  static getPluralName(reportType: ReportType) : string {
-    switch(reportType) {
+  static getPluralName(reportType: ReportType): string {
+    switch (reportType) {
        case ReportType.studies: {
-         return "studies";
+         return 'studies';
        }
        case ReportType.projects: {
-         return "projects";
+         return 'projects';
        }
        case ReportType.samples: {
-         return "samples";
+         return 'samples';
        }
        case ReportType.experiments: {
-         return "experiments";
+         return 'experiments';
        }
        case ReportType.runs: {
-         return "runs";
+         return 'runs';
        }
        case ReportType.analyses: {
-         return "analyses";
+         return 'analyses';
        }
        case ReportType.runFiles: {
-         return "submitted run files";
+         return 'submitted run files';
        }
        case ReportType.analysisFiles: {
-         return "submitted analyses files";
+         return 'submitted analyses files';
        }
        case ReportType.dacs: {
-         return "dacs";
+         return 'dacs';
        }
        case ReportType.policies: {
-         return "policies";
+         return 'policies';
        }
        case ReportType.datasets: {
-         return "datasets";
+         return 'datasets';
        }
        default: {
-         return "";
+         return '';
        }
     }
   }

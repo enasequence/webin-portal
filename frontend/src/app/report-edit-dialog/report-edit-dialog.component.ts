@@ -49,18 +49,18 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   getTitle(): string {
-    return ReportTypeUtils.getCapitalisedSingularName(this.data.reportType) + ": " + this.data.id;
+    return ReportTypeUtils.getCapitalisedSingularName(this.data.reportType) + ': ' + this.data.id;
   }
 
   load() {
     let observable: Observable<any>;
 
-    let id: string = this.data.id;
-    let reportType: ReportType = this.data.reportType;
+    const id: string = this.data.id;
+    const reportType: ReportType = this.data.reportType;
 
     console.log('** xml retrieval **', reportType, id);
 
-    switch(reportType) {
+    switch (reportType) {
        case ReportType.studies: {
          observable = this.webinXmlReportService.getStudyXml(id);
          break;
@@ -109,10 +109,10 @@ export class ReportEditDialogComponent implements OnInit {
         // Errors
         (err: HttpErrorResponse) => {
           console.error('** webin xml retrieval service failed **', err);
-          let msg: string = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact the helpdesk.';
-          //if (err.message) {
-          //  msg += " " + err.message;
-          //}
+          const msg = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          // if (err.message) {
+          //   msg += " " + err.message;
+          // }
           this.retrieveXmlError = msg;
       });
     }
@@ -123,7 +123,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   save() {
-    let observable: Observable<any> = this.webinRestService.updateXml(
+    const observable: Observable<any> = this.webinRestService.updateXml(
       this.data.reportType, new Blob([ this.xml ]));
 
     this.submissionResult.submit(observable);

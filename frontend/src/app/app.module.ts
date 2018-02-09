@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import {FlexLayoutModule } from '@angular/flex-layout';
 
 import {CdkTableModule} from '@angular/cdk/table';
 import {
@@ -40,7 +40,6 @@ import {
   MatStepperModule,
 } from '@angular/material';
 
-import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
@@ -49,10 +48,6 @@ import { LoginComponent } from './login/login.component';
 import { LoginAccountComponent } from './login-account/login-account.component';
 import { TitleComponent } from './title/title.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SpreadsheetSubmissionComponent } from './spreadsheet-submission/spreadsheet-submission.component';
-import { SubmissionTypeSelectorComponent } from './submission-type-selector/submission-type-selector.component';
-import { SubmissionFormatSelectorComponent } from './submission-format-selector/submission-format-selector.component';
-import { SubmissionSpreadsheetSelectorComponent } from './submission-spreadsheet-selector/submission-spreadsheet-selector.component';
 import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
 import { ReportComponent } from './report/report.component';
@@ -61,7 +56,6 @@ import { ReportActionComponent } from './report-action/report-action.component';
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
 import { WebinXmlReportService } from './webin-xml-report.service';
-import { SpreadsheetService } from './spreadsheet.service';
 import { WebinAuthenticationService } from './webin-authentication.service';
 import { WebinAuthenticationGuardService } from './webin-authentication-guard.service';
 
@@ -88,7 +82,6 @@ const appRoutes: Routes = [
       BrowserAnimationsModule,
       FlexLayoutModule,
       FormsModule,
-      HttpModule,
       HttpClientModule,
       ReactiveFormsModule,
 
@@ -135,10 +128,6 @@ const appRoutes: Routes = [
   ],
   declarations: [
     AppComponent,
-    SpreadsheetSubmissionComponent,
-    SubmissionTypeSelectorComponent,
-    SubmissionFormatSelectorComponent,
-    SubmissionSpreadsheetSelectorComponent,
     XmlSubmissionComponent,
     SubmissionResultComponent,
     LoginComponent,
@@ -158,7 +147,6 @@ const appRoutes: Routes = [
     WebinRestService,
     WebinReportService,
     WebinXmlReportService,
-    SpreadsheetService,
     WebinAuthenticationService,
     WebinAuthenticationGuardService,
     {

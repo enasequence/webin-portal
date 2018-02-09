@@ -10,81 +10,81 @@ export class WebinReportService {
 
   constructor(private http: HttpClient) { }
 
-  getStudiesAll(rows: string) : Observable<any> {
+  getStudiesAll(rows: string): Observable<any> {
     return this.getAll('studies', rows);
   }
-  getStudies(id: string, rows: string) : Observable<any> {
+  getStudies(id: string, rows: string): Observable<any> {
     return this.get('studies', id, rows);
   }
 
-  getSamplesAll(rows: string) : Observable<any> {
+  getSamplesAll(rows: string): Observable<any> {
     return this.getAll('samples', rows);
   }
-  getSamples(id: string, rows: string) : Observable<any> {
+  getSamples(id: string, rows: string): Observable<any> {
     return this.get('samples', id, rows);
   }
 
-  getRunsAll(rows: string) : Observable<any> {
+  getRunsAll(rows: string): Observable<any> {
     return this.getAll('runs', rows);
   }
-  getRuns(id: string, rows: string) : Observable<any> {
+  getRuns(id: string, rows: string): Observable<any> {
     return this.get('runs', id, rows);
   }
 
-  getAnalysesAll(rows: string) : Observable<any> {
+  getAnalysesAll(rows: string): Observable<any> {
     return this.getAll('analyses', rows);
   }
-  getAnalyses(id: string, rows: string) : Observable<any> {
+  getAnalyses(id: string, rows: string): Observable<any> {
     return this.get('analyses', id, rows);
   }
 
-  getRunFilesAll(rows: string) : Observable<any> {
+  getRunFilesAll(rows: string): Observable<any> {
     return this.getAll('run-files', rows);
   }
-  getRunFiles(id: string, rows: string) : Observable<any> {
+  getRunFiles(id: string, rows: string): Observable<any> {
     return this.get('run-files', id, rows);
   }
 
-  getAnalysisFilesAll(rows: string) : Observable<any> {
+  getAnalysisFilesAll(rows: string): Observable<any> {
     return this.getAll('analysis-files', rows);
   }
-  getAnalysisFiles(id: string, rows: string) : Observable<any> {
+  getAnalysisFiles(id: string, rows: string): Observable<any> {
     return this.get('analysis-files', id, rows);
   }
 
 
-  getDacsAll(rows: string) : Observable<any> {
+  getDacsAll(rows: string): Observable<any> {
     return this.getAll('dacs', rows);
   }
-  getDacs(id: string, rows: string) : Observable<any> {
+  getDacs(id: string, rows: string): Observable<any> {
     return this.get('dacs', id, rows);
   }
 
-  getPoliciesAll(rows: string) : Observable<any> {
+  getPoliciesAll(rows: string): Observable<any> {
     return this.getAll('policies', rows);
   }
-  getPolicies(id: string, rows: string) : Observable<any> {
+  getPolicies(id: string, rows: string): Observable<any> {
     return this.get('policies', id, rows);
   }
 
-  getDatasetsAll(rows: string) : Observable<any> {
+  getDatasetsAll(rows: string): Observable<any> {
     return this.getAll('datasets', rows);
   }
-  getDatasets(id: string, rows: string) : Observable<any> {
+  getDatasets(id: string, rows: string): Observable<any> {
     return this.get('datasets', id, rows);
   }
 
 
 
 
-  private getAll(reportType: string, rows: string) : Observable<any> {
-    let url: string = this._baseUrl + "/" + reportType + "?max-results=" + rows;
+  private getAll(reportType: string, rows: string): Observable<any> {
+    const url: string = this._baseUrl + '/' + reportType + '?max-results=' + rows;
     console.log(url);
     return this.http.get(url);
   }
 
-  private get(reportType: string, id: string, rows: string) : Observable<any> {
-    let url: string = this._baseUrl + "/" + reportType + "/" + id.trim() + "?max-results=" + rows;
+  private get(reportType: string, id: string, rows: string): Observable<any> {
+    const url: string = this._baseUrl + '/' + reportType + '/' + id.trim() + '?max-results=' + rows;
     console.log(url);
     return this.http.get(url);
   }

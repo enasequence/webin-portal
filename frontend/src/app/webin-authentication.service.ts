@@ -11,15 +11,15 @@ export class WebinAuthenticationService {
 
   private username: string;
   private password: string;
-  authenticated: boolean = false;
+  authenticated = false;
   account: string;
   ega: boolean;
 
   constructor(private http: HttpClient) { }
 
   getAuthorizationHeader() {
-      console.info('** Webin authorization header **');
-      return "Basic " + btoa(this.username + ':' + this.password);
+      console.log('** Webin authorization header **');
+      return 'Basic ' + btoa(this.username + ':' + this.password);
   }
 
   public logout() {
@@ -30,15 +30,15 @@ export class WebinAuthenticationService {
     this.ega = undefined;
   }
 
-  public login(username: string, password: string) : Observable<any> {
-    let baseUrl: string = environment.webinAuthenticationServiceUrl;
+  public login(username: string, password: string): Observable<any> {
+    const baseUrl: string = environment.webinAuthenticationServiceUrl;
     console.log('** Webin authentication login **', baseUrl);
 
     this.username = username;
     this.password = password;
 
-    let body = { authRealms: [ "SRA", "EGA" ], password: this.password, username: this.username };
-    let headers: HttpHeaders = new HttpHeaders()
+    const body = { authRealms: [ 'SRA', 'EGA' ], password: this.password, username: this.username };
+    const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
 

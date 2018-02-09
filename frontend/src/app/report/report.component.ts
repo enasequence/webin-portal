@@ -18,6 +18,23 @@ import { WebinReportService } from '../webin-report.service';
 })
 export class ReportComponent implements OnInit {
 
+  ReportType = ReportType;   // Allows use in template
+  ReportTypeUtils = ReportTypeUtils;   // Allows use in template
+
+  @Input() reportType: ReportType;
+  @Output() onReportChange = new EventEmitter<any>();
+  @ViewChild(MatPaginator) dataPaginator: MatPaginator;
+
+  id: string;
+  rows = '100';
+  data;
+  dataSource: MatTableDataSource<any>;
+  displayedColumns;
+  displayedColumnsCallback;
+  dataError;
+  _showAlias = false;
+  active: boolean;
+
   constructor(
     private webinReportService: WebinReportService,
     private reportDialog: MatDialog) {
@@ -25,22 +42,6 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  ReportType = ReportType;   // Allows use in template
-  ReportTypeUtils = ReportTypeUtils;   // Allows use in template
-
-  @Input() reportType: ReportType;
-  id: string;
-  rows: string = "100";
-
-  data;
-  dataSource: MatTableDataSource<any>;
-  @ViewChild(MatPaginator) dataPaginator: MatPaginator;
-  displayedColumns;
-  displayedColumnsCallback;
-  dataError;
-
-  private _showAlias: boolean = false;
 
   get showAlias(): boolean {
     return this._showAlias;
@@ -50,10 +51,6 @@ export class ReportComponent implements OnInit {
     this._showAlias = showAlias;
     this.initReportColumns();
   }
-
-  active: boolean;
-
-  @Output() onReportChange = new EventEmitter<any>();
 
   setStudyReportColumns() {
     this.displayedColumns = [
@@ -146,22 +143,22 @@ export class ReportComponent implements OnInit {
   setRunFileReportColumns() {
     this.displayedColumns = [
       'Accession',
-      //'Submission date',
+      // 'Submission date',
       'File name',
       'File format',
       'File size',
-      //'Checksum method',
+      // 'Checksum method',
       'MD5 checksum',
       'Archive status',
       'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
-      //'Submission date': this.submissionDateColumnCallback.bind(this),
+      // 'Submission date': this.submissionDateColumnCallback.bind(this),
       'File name': this.fileNameColumnCallback.bind(this),
       'File format': this.fileFormatColumnCallback.bind(this),
       'File size': this.fileSizeColumnCallback.bind(this),
-      //'Checksum method': this.fileChecksumMethodColumnCallback.bind(this),
+      // 'Checksum method': this.fileChecksumMethodColumnCallback.bind(this),
       'MD5 checksum': this.fileChecksumColumnCallback.bind(this),
       'Archive status': this.fileArchiveStatusColumnCallback.bind(this)
     };
@@ -170,24 +167,24 @@ export class ReportComponent implements OnInit {
   setAnalysisFileReportColumns() {
     this.displayedColumns = [
       'Accession',
-      //'Analysis type',
-      //'Submission date',
+      // 'Analysis type',
+      // 'Submission date',
       'File name',
       'File format',
       'File size',
-      //'Checksum method',
+      // 'Checksum method',
       'MD5 checksum',
       'Archive status',
       'Action' // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
-      //'Analysis type': this.analysisTypeColumnCallback.bind(this),
-      //'Submission date': this.submissionDateColumnCallback.bind(this),
+      // 'Analysis type': this.analysisTypeColumnCallback.bind(this),
+      // 'Submission date': this.submissionDateColumnCallback.bind(this),
       'File name': this.fileNameColumnCallback.bind(this),
       'File format': this.fileFormatColumnCallback.bind(this),
       'File size': this.fileSizeColumnCallback.bind(this),
-      //'Checksum method': this.fileChecksumMethodColumnCallback.bind(this),
+      // 'Checksum method': this.fileChecksumMethodColumnCallback.bind(this),
       'MD5 checksum': this.fileChecksumColumnCallback.bind(this),
       'Archive status': this.fileArchiveStatusColumnCallback.bind(this)
     };
@@ -249,7 +246,7 @@ export class ReportComponent implements OnInit {
   }
 
   getElementValue(result, col) {
-    let callback = this.displayedColumnsCallback[col];
+    const callback = this.displayedColumnsCallback[col];
     return this.displayedColumnsCallback[col](result);
   }
 
@@ -258,7 +255,7 @@ export class ReportComponent implements OnInit {
       reportActionType: ReportActionType.changeReport,
       reportType: reportType,
       id: id
-    }
+    };
   }
 
   createEditXmlAction(reportType: ReportType, id: string) {
@@ -266,25 +263,23 @@ export class ReportComponent implements OnInit {
       reportActionType: ReportActionType.editXml,
       reportType: reportType,
       id: id
-    }
+    };
   }
 
   getActions(result) {
-    let actions = [];
+    const actions = [];
 
     // Allow edit XML.
-    if (this.reportType == ReportType.runFiles) {
+    if (this.reportType === ReportType.runFiles) {
       actions.push(this.createEditXmlAction(ReportType.runs, this.getId(result)));
-    }
-    else if (this.reportType == ReportType.analysisFiles) {
+    } else if (this.reportType === ReportType.analysisFiles) {
       actions.push(this.createEditXmlAction(ReportType.analyses, this.getId(result)));
-    }
-    else {
+    } else {
       actions.push(this.createEditXmlAction(this.reportType, this.getId(result)));
-      if (this.reportType == ReportType.studies) {
+      if (this.reportType === ReportType.studies) {
         actions.push(this.createEditXmlAction(ReportType.projects, result.report.secondaryId));
       }
-      if (this.reportType == ReportType.runs) {
+      if (this.reportType === ReportType.runs) {
         actions.push(this.createEditXmlAction(ReportType.experiments, this.getExperimentId(result)));
       }
     }
@@ -300,38 +295,38 @@ export class ReportComponent implements OnInit {
     }
 
     // Allow navigation to run report.
-    if (this.reportType == ReportType.studies ||
-        this.reportType == ReportType.samples ||
-        this.reportType == ReportType.runFiles) {
+    if (this.reportType === ReportType.studies ||
+        this.reportType === ReportType.samples ||
+        this.reportType === ReportType.runFiles) {
       actions.push(this.createChangeReportAction(ReportType.runs, this.getId(result)));
     }
 
     // Allow navigation to analysis report.
-    if (this.reportType == ReportType.studies ||
-        this.reportType == ReportType.samples ||
-        this.reportType == ReportType.analysisFiles) {
+    if (this.reportType === ReportType.studies ||
+        this.reportType === ReportType.samples ||
+        this.reportType === ReportType.analysisFiles) {
       actions.push(this.createChangeReportAction(ReportType.analyses, this.getId(result)));
     }
 
     // Allow navigation to run files.
-    if (this.reportType == ReportType.runs) {
+    if (this.reportType === ReportType.runs) {
       actions.push(this.createChangeReportAction(ReportType.runFiles, this.getId(result)));
     }
 
     // Allow navigation to analysis files.
-    if (this.reportType == ReportType.analyses) {
+    if (this.reportType === ReportType.analyses) {
       actions.push(this.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
     }
 
-    if (this.reportType == ReportType.dacs) {
+    if (this.reportType === ReportType.dacs) {
       actions.push(this.createChangeReportAction(ReportType.policies, this.getId(result)));
     }
 
-    if (this.reportType == ReportType.policies) {
+    if (this.reportType === ReportType.policies) {
       actions.push(this.createChangeReportAction(ReportType.dacs, this.getDacId(result)));
       actions.push(this.createChangeReportAction(ReportType.datasets, this.getId(result)));
     }
-    if (this.reportType == ReportType.datasets) {
+    if (this.reportType === ReportType.datasets) {
       actions.push(this.createChangeReportAction(ReportType.policies, this.getPolicyId(result)));
     }
 
@@ -339,27 +334,27 @@ export class ReportComponent implements OnInit {
   }
 
   action(action) {
-    console.log("** action **", action);
+    console.log('** action **', action);
 
-    if (action && action.reportActionType == ReportActionType.changeReport) {
-      console.log("** change report action **" , action);
+    if (action && action.reportActionType === ReportActionType.changeReport) {
+      console.log('** change report action **' , action);
       this.onReportChange.emit(action);
     }
 
-    if (action && action.reportActionType == ReportActionType.editXml) {
-      console.log("** edit xml action **" , action);
+    if (action && action.reportActionType === ReportActionType.editXml) {
+      console.log('** edit xml action **' , action);
       this.editXml(action);
     }
 
   }
 
   editXml(action) {
-    let dialogData = {
+    const dialogData = {
       reportType: action.reportType,
       id: action.id
     };
 
-    let reportDialogRef = this.reportDialog.open(ReportEditDialogComponent, {
+    const reportDialogRef = this.reportDialog.open(ReportEditDialogComponent, {
         // height: '500px',
         width: '600px',
         data: dialogData
@@ -373,10 +368,10 @@ export class ReportComponent implements OnInit {
   }
 
   report() {
-    //console.log(" ** report **", this.reportType);
+    // console.log(" ** report **", this.reportType);
 
     this.initReportColumns();
-    let observable: Observable<any> = this.initReportObservable()
+    const observable: Observable<any> = this.initReportObservable();
 
     if (observable != null) {
       this.active = true;
@@ -395,105 +390,95 @@ export class ReportComponent implements OnInit {
         // Errors
         (err: HttpErrorResponse) => {
           console.log('** Webin reports service failed **', err);
-          let msg: string = 'Webin reports service failed. Please try again later. If the problem persists please contact the helpdesk.';
-          //if (err.message) {
-          //  msg += " " + err.message;
-          //}
+          const msg = 'Webin reports service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          // if (err.message) {
+          //   msg += " " + err.message;
+          // }
           this.dataError = msg;
       });
     }
   }
 
-  initReportColumns()
-  {
-    if (this.reportType == ReportType.studies) {
+  initReportColumns() {
+    if (this.reportType === ReportType.studies) {
       this.setStudyReportColumns();
-    }
-    else if (this.reportType == ReportType.samples) {
+    } else if (this.reportType === ReportType.samples) {
       this.setSampleReportColumns();
-    }
-    else if (this.reportType == ReportType.runs) {
+    } else if (this.reportType === ReportType.runs) {
       this.setRunReportColumns();
-    }
-    else if (this.reportType == ReportType.analyses) {
+    } else if (this.reportType === ReportType.analyses) {
       this.setAnalysisReportColumns();
-    }
-    else if (this.reportType == ReportType.runFiles) {
+    } else if (this.reportType === ReportType.runFiles) {
       this.setRunFileReportColumns();
-    }
-    else if (this.reportType == ReportType.analysisFiles) {
+    } else if (this.reportType === ReportType.analysisFiles) {
       this.setAnalysisFileReportColumns();
-    }
-    else if (this.reportType == ReportType.dacs) {
+    } else if (this.reportType === ReportType.dacs) {
       this.setDacReportColumns();
-    }
-    else if (this.reportType == ReportType.policies) {
+    } else if (this.reportType === ReportType.policies) {
       this.setPolicyReportColumns();
-    }
-    else if (this.reportType == ReportType.datasets) {
+    } else if (this.reportType === ReportType.datasets) {
       this.setDatasetReportColumns();
     }
   }
 
-  initReportObservable()
-  {
-    if (this.reportType == ReportType.studies) {
+  initReportObservable() {
+    if (this.reportType === ReportType.studies) {
       if (this.id) {
         return this.webinReportService.getStudies(this.id, this.rows);
       }
       return this.webinReportService.getStudiesAll(this.rows);
     }
 
-    if (this.reportType == ReportType.samples) {
+    if (this.reportType === ReportType.samples) {
       if (this.id) {
         return this.webinReportService.getSamples(this.id, this.rows);
       }
       return this.webinReportService.getSamplesAll(this.rows);
     }
 
-    if (this.reportType == ReportType.runs) {
+    if (this.reportType === ReportType.runs) {
       if (this.id) {
         return this.webinReportService.getRuns(this.id, this.rows);
       }
       return this.webinReportService.getRunsAll(this.rows);
     }
 
-    if (this.reportType == ReportType.analyses) {
+    if (this.reportType === ReportType.analyses) {
       if (this.id) {
         return this.webinReportService.getAnalyses(this.id, this.rows);
       }
       return this.webinReportService.getAnalysesAll(this.rows);
     }
 
-    if (this.reportType == ReportType.runFiles) {
+    if (this.reportType === ReportType.runFiles) {
       if (this.id) {
         return this.webinReportService.getRunFiles(this.id, this.rows);
       }
       return this.webinReportService.getRunFilesAll(this.rows);
     }
 
-    if (this.reportType == ReportType.analysisFiles) {
+    if (this.reportType === ReportType.analysisFiles) {
       if (this.id) {
         return this.webinReportService.getAnalysisFiles(this.id, this.rows);
       }
       return this.webinReportService.getAnalysisFilesAll(this.rows);
     }
 
-    if (this.reportType == ReportType.dacs) {
+    if (this.reportType === ReportType.dacs) {
       if (this.id) {
         return this.webinReportService.getDacs(this.id, this.rows);
       }
       return this.webinReportService.getDacsAll(this.rows);
     }
 
-    if (this.reportType == ReportType.policies) {
+    if (this.reportType === ReportType.policies) {
       if (this.id) {
         return this.webinReportService.getPolicies(this.id, this.rows);
       }
       return this.webinReportService.getPoliciesAll(this.rows);
     }
 
-    if (this.reportType == ReportType.datasets) {
+    if (this.reportType === ReportType.datasets) {
       if (this.id) {
         return this.webinReportService.getDatasets(this.id, this.rows);
       }
@@ -578,35 +563,34 @@ export class ReportComponent implements OnInit {
   }
 
   dateFormat(date: Date) {
-    let month = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    let day = date.getDate();
+    const month = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const day = date.getDate();
     let daySuffix: string;
-    if(day > 3 && day < 21) {
+    if (day > 3 && day < 21) {
       daySuffix = 'th';
-    }
-    else {
+    } else {
       switch (day % 10) {
-        case 1: daySuffix = "st";
-        case 2: daySuffix = "nd";
-        case 3: daySuffix = "rd";
-        default: daySuffix = "th";
+        case 1: daySuffix = 'st'; break;
+        case 2: daySuffix = 'nd'; break;
+        case 3: daySuffix = 'rd'; break;
+        default: daySuffix = 'th';
       }
     }
 
-    return date.getDate() + daySuffix + " " +
-           month[date.getMonth()]  + " " +
+    return date.getDate() + daySuffix + ' ' +
+           month[date.getMonth()]  + ' ' +
            date.getFullYear();
   }
 
   submissionDateColumnCallback(result) {
-    let date: Date = new Date(result.report.firstCreated);
+    const date: Date = new Date(result.report.firstCreated);
     return this.dateFormat(date);
   }
 
   releaseDateColumnCallback(result) {
-    let date: Date = new Date(result.report.holdDate);
+    const date: Date = new Date(result.report.holdDate);
     return this.dateFormat(date);
   }
 

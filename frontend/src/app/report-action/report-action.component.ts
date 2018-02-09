@@ -20,20 +20,20 @@ export class ReportActionComponent implements OnInit {
   ngOnInit() {
   }
 
-  isChangeReportAction(reportType: ReportType) : boolean {
-      for(let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType == ReportActionType.changeReport &&
-              this.actions[i].reportType == reportType) {
+  isChangeReportAction(reportType: ReportType): boolean {
+      for (let i = 0; i < this.actions.length; i++) {
+          if (this.actions[i].reportActionType === ReportActionType.changeReport &&
+              this.actions[i].reportType === reportType) {
             return true;
           }
       }
       return false;
   }
 
-  isEditXmlAction(reportType: ReportType) : boolean {
-      for(let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType == ReportActionType.editXml &&
-              this.actions[i].reportType == reportType) {
+  isEditXmlAction(reportType: ReportType): boolean {
+      for (let i = 0; i < this.actions.length; i++) {
+          if (this.actions[i].reportActionType === ReportActionType.editXml &&
+              this.actions[i].reportType === reportType) {
             return true;
           }
       }
@@ -41,30 +41,30 @@ export class ReportActionComponent implements OnInit {
   }
 
   getChangeReportAction(reportType: ReportType) {
-      for(let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType == ReportActionType.changeReport &&
-              this.actions[i].reportType == reportType) {
+      for (let i = 0; i < this.actions.length; i++) {
+          if (this.actions[i].reportActionType === ReportActionType.changeReport &&
+              this.actions[i].reportType === reportType) {
             return this.actions[i];
           }
       }
   }
 
   getEditXmlAction(reportType: ReportType) {
-      for(let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType == ReportActionType.editXml &&
-              this.actions[i].reportType == reportType) {
+      for (let i = 0; i < this.actions.length; i++) {
+          if (this.actions[i].reportActionType === ReportActionType.editXml &&
+              this.actions[i].reportType === reportType) {
             return this.actions[i];
           }
       }
   }
 
   changeReportAction(reportType: ReportType) {
-    console.log("** change report action **", reportType);
+    console.log('** change report action **', reportType);
      this.onAction.emit(this.getChangeReportAction(reportType));
   }
 
   editXmlAction(reportType: ReportType) {
-     console.log("** edit xml action **", reportType);
+     console.log('** edit xml action **', reportType);
       this.onAction.emit(this.getEditXmlAction(reportType));
   }
 }

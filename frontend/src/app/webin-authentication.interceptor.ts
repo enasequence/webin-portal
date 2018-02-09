@@ -1,4 +1,4 @@
-import {Injectable, Injector} from "@angular/core";
+import {Injectable, Injector} from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,14 +12,12 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (!req.url.startsWith(environment.webinAuthenticationServiceUrl) &&
-        !req.url.startsWith(environment.spreadsheetServiceUrl)) {
-      console.info('** Webin authentication interceptor **');
+    if (!req.url.startsWith(environment.webinAuthenticationServiceUrl)) {
+      console.log('** Webin authentication interceptor **');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
       const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationHeader())});
       return next.handle(authReq);
-    }
-    else {
+    } else {
        return next.handle(req);
     }
   }

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
      username: string;
      password: string;
-     error: boolean = false;
+     error = false;
 
     onSuccessfulLogin(data) {
       console.log(`Webin authentication succeeded`);

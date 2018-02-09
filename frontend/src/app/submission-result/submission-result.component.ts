@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WebinRestService } from '../webin-rest.service';
 
 import {Observable} from 'rxjs/Observable';
-import {saveAs as importedSaveAs} from "file-saver";
+import {saveAs as importedSaveAs} from 'file-saver';
 
 export interface WebinError {
   error: string;
@@ -32,8 +32,8 @@ export class SubmissionResultComponent implements OnInit {
   @ViewChild(MatPaginator) webinAccessionPaginator: MatPaginator;
   result;
   resultError;
-  showReceiptXml: boolean = false;
-  @Input() showReceiptSuccess: boolean = true;
+  showReceiptXml = false;
+  @Input() showReceiptSuccess = true;
 
   active: boolean;
 
@@ -53,8 +53,8 @@ export class SubmissionResultComponent implements OnInit {
   }
 
   showReceipt(): boolean {
-    if (!this.isResult()) return false;
-    if (this.isError()) return true;
+    if (!this.isResult()) { return false; }
+    if (this.isError()) { return true; }
     return this.showReceiptSuccess;
   }
 
@@ -80,8 +80,7 @@ export class SubmissionResultComponent implements OnInit {
               if (this.result.isError) {
                 this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
                 this.webinErrorDataSource.paginator = this.webinErrorPaginator;
-              }
-              else {
+              } else {
                 this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(this.result.accessions);
                 this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
               }
@@ -89,18 +88,18 @@ export class SubmissionResultComponent implements OnInit {
           // Errors
           (err: HttpErrorResponse) => {
             console.error('** Webin submission service failed **', err);
-            let msg: string = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
-            //if (err.message) {
-            //  msg += " " + err.message;
-            //}
+            const msg = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
+            // if (err.message) {
+            //   msg += " " + err.message;
+            // }
             this.resultError = msg;
         });
       }
   }
 
   downloadReceiptXml() {
-    var blob = new Blob([this.result.xml], {type: "text/plain;charset=utf-8"});
-    importedSaveAs(blob, "Webin-receipt-" + this.result.date + ".xml");
+    const blob = new Blob([this.result.xml], {type: 'text/plain;charset=utf-8'});
+    importedSaveAs(blob, 'Webin-receipt-' + this.result.date + '.xml');
   }
 
   downloadErrorTable() {
@@ -108,17 +107,17 @@ export class SubmissionResultComponent implements OnInit {
       return;
     }
 
-    let arr = [];
+    const arr = [];
     arr.push(
-      "ERROR");
-    let len = this.result.errors.length;
+      'ERROR');
+    const len = this.result.errors.length;
     for (let i = 0; i < len; i++) {
       arr.push(
         this.result.errors[i].error
       );
     }
-    var blob = new Blob([arr.join("\n")], {type: "text/plain;charset=utf-8"});
-    importedSaveAs(blob, "Webin-errors-" + this.result.date + ".txt");
+    const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
+    importedSaveAs(blob, 'Webin-errors-' + this.result.date + '.txt');
   }
 
   downloadAccessionTable() {
@@ -126,26 +125,26 @@ export class SubmissionResultComponent implements OnInit {
       return;
     }
 
-    let arr = [];
+    const arr = [];
     arr.push(
-      "TYPE\t" +
-      "ACCESSION\t" +
-      "ALIAS");
-    let len = this.result.accessions.length;
+      'TYPE\t' +
+      'ACCESSION\t' +
+      'ALIAS');
+    const len = this.result.accessions.length;
     for (let i = 0; i < len; i++) {
       arr.push(
-        this.result.accessions[i].type + "\t" +
-        this.result.accessions[i].accession + "\t" +
+        this.result.accessions[i].type + '\t' +
+        this.result.accessions[i].accession + '\t' +
         this.result.accessions[i].alias
       );
     }
-    var blob = new Blob([arr.join("\n")], {type: "text/plain;charset=utf-8"});
-    importedSaveAs(blob, "Webin-accessions-" + this.result.date + ".txt");
+    const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
+    importedSaveAs(blob, 'Webin-accessions-' + this.result.date + '.txt');
   }
 
   humanReadableFormat(token: string) {
     if (token) {
-      let str: string = token.toLowerCase();
+      const str: string = token.toLowerCase();
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
     return token;

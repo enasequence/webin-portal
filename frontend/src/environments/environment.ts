@@ -9,5 +9,4 @@ export const environment = {
   webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
-  spreadsheetServiceUrl: 'https://raw.githubusercontent.com/enasequence/sub-spreadsheet/master/',
 };
