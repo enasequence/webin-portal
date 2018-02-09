@@ -2,25 +2,42 @@
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
-  <span *ngIf="reportType != ReportType.runProcess && reportType != ReportType.analysisProcess">
+
+  <span *ngIf="reportType != ReportType.runFiles && reportType != ReportType.analysisFiles && reportType != ReportType.runProcess && reportType != ReportType.analysisProcess">
   Search by accession or unique name. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
-  <span *ngIf="reportType == ReportType.runProcess">
-  Search by accession, unique name or process status. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
-  in your submission account. During run processing, some submitted read data formats are transformed into standard Fastq products
-   while some run data is available only in the submitted format.
+
+  <span *ngIf="reportType == ReportType.runFiles || reportType == ReportType.analysisFiles">
+  Search by accession, unique name or file archival status. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  in your submission account.
   </span>
-  <span *ngIf="reportType == ReportType.analysisProcess">
-  Search by accession, unique name or process status. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
-  in your submission account. During analysis processing, some submitted analysis types are transformed into final products (e.g. genome assemblies or
-    transcriptome assemblies) while some analysis data is available only in the submitted format.
+  <span *ngIf="reportType == ReportType.runProcess || reportType == ReportType.analysisProcess">
+  Search by accession, unique name or file process status. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  in your submission account. During processing some submitted data files are transformed into other products.
   </span>
 </p>
 
 <mat-form-field>
   <input matInput placeholder="Accession or Name" [(ngModel)]="id">
 </mat-form-field>
+
+<span *ngIf="reportType == ReportType.runFiles || reportType == ReportType.analysisFiles">
+  or
+  <mat-form-field>
+    <mat-select placeholder="Archival status" [(ngModel)]="processStatus">
+      <mat-option value="completed">
+        completed
+      </mat-option>
+      <mat-option value="active">
+        active
+      </mat-option>
+      <mat-option value="failed">
+        failed
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</span>
 
 <span *ngIf="reportType == ReportType.runProcess || reportType == ReportType.analysisProcess">
   or

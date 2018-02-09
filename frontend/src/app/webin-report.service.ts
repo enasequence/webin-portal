@@ -44,12 +44,18 @@ export class WebinReportService {
   getRunFiles(id: string, rows: string): Observable<any> {
     return this.get('run-files', id, rows);
   }
+  getRunFilesStatus(status: string, rows: string): Observable<any> {
+    return this.get('run-files/process_status', status, rows);
+  }
 
   getAnalysisFilesAll(rows: string): Observable<any> {
     return this.getAll('analysis-files', rows);
   }
   getAnalysisFiles(id: string, rows: string): Observable<any> {
     return this.get('analysis-files', id, rows);
+  }
+  getAnalysisFilesStatus(status: string, rows: string): Observable<any> {
+    return this.get('analysis-files/process_status', status, rows);
   }
 
   getRunProcessAll(rows: string): Observable<any> {
@@ -59,7 +65,7 @@ export class WebinReportService {
     return this.get('run-process', id, rows);
   }
   getRunProcessStatus(status: string, rows: string): Observable<any> {
-    return this.get('run-process/process_status/', status, rows);
+    return this.get('run-process/process_status', status, rows);
   }
 
   getAnalysisProcessAll(rows: string): Observable<any> {
@@ -69,7 +75,7 @@ export class WebinReportService {
     return this.get('analysis-process', id, rows);
   }
   getAnalysisProcessStatus(status: string, rows: string): Observable<any> {
-    return this.get('analysis-process/process_status/', status, rows);
+    return this.get('analysis-process/process_status', status, rows);
   }
 
   getDacsAll(rows: string): Observable<any> {

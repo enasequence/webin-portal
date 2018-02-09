@@ -506,6 +506,9 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType === ReportType.runFiles) {
+      if (this._processStatus) {
+        return this.webinReportService.getRunFilesStatus(this._processStatus, this.rows);
+      }
       if (this.id) {
         return this.webinReportService.getRunFiles(this.id, this.rows);
       }
@@ -513,6 +516,9 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType === ReportType.analysisFiles) {
+      if (this._processStatus) {
+        return this.webinReportService.getAnalysisFilesStatus(this._processStatus, this.rows);
+      }
       if (this.id) {
         return this.webinReportService.getAnalysisFiles(this.id, this.rows);
       }
