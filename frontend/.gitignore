@@ -1,25 +1,38 @@
 .gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
+
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
 .project
+.classpath
 .settings
-.springBeans
-
-### IntelliJ IDEA ###
-.idea
 *.iws
 *.iml
 *.ipr
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+
+# System Files
+.DS_Store
+Thumbs.db
+

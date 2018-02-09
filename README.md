@@ -2,13 +2,23 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
+## Npm
+
+## Angular CLI first global install
+
+npm install -g @angular/cli
+
+## Angular CLI global update
+
+npm uninstall -g @angular/cli
+npm cache verify
+npm install -g @angular/cli@latest
+
+https://stackoverflow.com/questions/45416430/update-angular-cli-in-existing-project
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Npm
-
-npm install @angular/flex-layout@latest --save
 
 ## Code scaffolding
 
