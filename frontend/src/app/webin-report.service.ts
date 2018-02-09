@@ -58,12 +58,18 @@ export class WebinReportService {
   getRunProcess(id: string, rows: string): Observable<any> {
     return this.get('run-process', id, rows);
   }
+  getRunProcessStatus(status: string, rows: string): Observable<any> {
+    return this.get('run-process/process_status/', status, rows);
+  }
 
   getAnalysisProcessAll(rows: string): Observable<any> {
     return this.getAll('analysis-process', rows);
   }
   getAnalysisProcess(id: string, rows: string): Observable<any> {
     return this.get('analysis-process', id, rows);
+  }
+  getAnalysisProcessStatus(status: string, rows: string): Observable<any> {
+    return this.get('analysis-process/process_status/', status, rows);
   }
 
   getDacsAll(rows: string): Observable<any> {

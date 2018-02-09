@@ -2,13 +2,43 @@
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
+  <span *ngIf="reportType != ReportType.runProcess && reportType != ReportType.analysisProcess">
   Search by accession or unique name. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
+  </span>
+  <span *ngIf="reportType == ReportType.runProcess">
+  Search by accession, unique name or process status. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  in your submission account. During run processing, some submitted read data formats are transformed into standard Fastq products
+   while some run data is available only in the submitted format.
+  </span>
+  <span *ngIf="reportType == ReportType.analysisProcess">
+  Search by accession, unique name or process status. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  in your submission account. During analysis processing, some submitted analysis types are transformed into final products (e.g. genome assemblies or
+    transcriptome assemblies) while some analysis data is available only in the submitted format.
+  </span>
 </p>
 
 <mat-form-field>
   <input matInput placeholder="Accession or Name" [(ngModel)]="id">
 </mat-form-field>
+
+<span *ngIf="reportType == ReportType.runProcess || reportType == ReportType.analysisProcess">
+  or
+  <mat-form-field>
+    <mat-select placeholder="Process status" [(ngModel)]="processStatus">
+      <mat-option value="completed">
+        completed
+      </mat-option>
+      <mat-option value="active">
+        active
+      </mat-option>
+      <mat-option value="failed">
+        failed
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</span>
+
 
 <button mat-raised-button color="accent" (click)="report()">
   Search

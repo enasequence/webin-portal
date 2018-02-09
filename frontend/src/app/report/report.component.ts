@@ -25,14 +25,15 @@ export class ReportComponent implements OnInit {
   @Output() onReportChange = new EventEmitter<any>();
   @ViewChild(MatPaginator) dataPaginator: MatPaginator;
 
-  id: string;
   rows = '100';
   data;
   dataSource: MatTableDataSource<any>;
   displayedColumns;
   displayedColumnsCallback;
   dataError;
+  _id: string;
   _showAlias = false;
+  _processStatus: string;
   active: boolean;
 
   constructor(
@@ -43,6 +44,15 @@ export class ReportComponent implements OnInit {
   ngOnInit() {
   }
 
+  get id(): string {
+    return this._id;
+  }
+
+  set id(id: string) {
+    this._id = id;
+    this._processStatus = undefined;
+  }
+
   get showAlias(): boolean {
     return this._showAlias;
   }
@@ -50,6 +60,15 @@ export class ReportComponent implements OnInit {
   set showAlias(showAlias: boolean) {
     this._showAlias = showAlias;
     this.initReportColumns();
+  }
+
+  get processStatus(): string {
+    return this._processStatus;
+  }
+
+  set processStatus(processStatus: string) {
+    this._processStatus = processStatus;
+    this._id = undefined;
   }
 
   setStudyReportColumns() {
@@ -416,6 +435,8 @@ export class ReportComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource<any>(this.data);
           this.dataSource.paginator = this.dataPaginator;
+
+          this.dataError = undefined;
         },
         // Errors
         (err: HttpErrorResponse) => {
@@ -499,6 +520,9 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType === ReportType.runProcess) {
+      if (this._processStatus) {
+        return this.webinReportService.getRunProcessStatus(this._processStatus, this.rows);
+      }
       if (this.id) {
         return this.webinReportService.getRunProcess(this.id, this.rows);
       }
@@ -506,6 +530,9 @@ export class ReportComponent implements OnInit {
     }
 
     if (this.reportType === ReportType.analysisProcess) {
+      if (this._processStatus) {
+        return this.webinReportService.getAnalysisProcessStatus(this._processStatus, this.rows);
+      }
       if (this.id) {
         return this.webinReportService.getAnalysisProcess(this.id, this.rows);
       }
