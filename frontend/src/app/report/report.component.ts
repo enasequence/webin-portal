@@ -213,7 +213,8 @@ export class ReportComponent implements OnInit {
     this.displayedColumns = [
       'Accession',
       'Process status',
-      'Process error'
+      'Process error',
+      'Action', // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -228,7 +229,8 @@ export class ReportComponent implements OnInit {
       'Analysis type',
       'Process accession',
       'Process status',
-      'Process error'
+      'Process error',
+      'Action', // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
@@ -357,13 +359,27 @@ export class ReportComponent implements OnInit {
       actions.push(this.createChangeReportAction(ReportType.analyses, this.getId(result)));
     }
 
-    // Allow navigation to run files.
+    // Allow navigation to run files and run process.
     if (this.reportType === ReportType.runs) {
+      actions.push(this.createChangeReportAction(ReportType.runFiles, this.getId(result)));
+      actions.push(this.createChangeReportAction(ReportType.runProcess, this.getId(result)));
+    }
+
+    // Allow navigation to analysis files annd analysis process.
+    if (this.reportType === ReportType.analyses) {
+      actions.push(this.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
+      actions.push(this.createChangeReportAction(ReportType.analysisProcess, this.getId(result)));
+    }
+
+    // Allow navigation from run process.
+    if (this.reportType === ReportType.runProcess) {
+      actions.push(this.createChangeReportAction(ReportType.runs, this.getId(result)));
       actions.push(this.createChangeReportAction(ReportType.runFiles, this.getId(result)));
     }
 
-    // Allow navigation to analysis files.
-    if (this.reportType === ReportType.analyses) {
+    // Allow navigation from analysis process.
+    if (this.reportType === ReportType.analysisProcess) {
+      actions.push(this.createChangeReportAction(ReportType.analyses, this.getId(result)));
       actions.push(this.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
     }
 

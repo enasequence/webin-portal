@@ -91,10 +91,10 @@ export class ReportTypeUtils {
          return 'submitted analyses files';
        }
        case ReportType.runProcess: {
-         return 'run processing status';
+         return 'run processing statuses';
        }
        case ReportType.analysisProcess: {
-         return 'analysis processing status';
+         return 'analysis processing statuses';
        }
        case ReportType.dacs: {
          return 'dacs';

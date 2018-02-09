@@ -62,6 +62,15 @@
     <button mat-menu-item (click)="changeReportAction(ReportType.analysisFiles)">Show analysis files</button>
   </div>
 
+  <div *ngIf="isChangeReportAction(ReportType.runProcess)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.runProcess)">Show process status</button>
+  </div>
+
+  <div *ngIf="isChangeReportAction(ReportType.analysisProcess)">
+    <button mat-menu-item (click)="changeReportAction(ReportType.analysisProcess)">Show process status</button>
+  </div>
+
+
   <div *ngIf="isChangeReportAction(ReportType.dacs)">
     <button mat-menu-item (click)="changeReportAction(ReportType.dacs)">Show dac</button>
   </div>
