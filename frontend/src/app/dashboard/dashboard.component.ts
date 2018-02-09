@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild('analyses') analyses: ReportComponent;
   @ViewChild('runFiles') runFiles: ReportComponent;
   @ViewChild('analysisFiles') analysisFiles: ReportComponent;
+  @ViewChild('runProcess') runProcess: ReportComponent;
+  @ViewChild('analysisProcess') analysisProcess: ReportComponent;
   @ViewChild('dacs') dacs: ReportComponent;
   @ViewChild('policies') policies: ReportComponent;
   @ViewChild('datasets') datasets: ReportComponent;
@@ -71,6 +73,8 @@ export class DashboardComponent implements OnInit {
         case ReportType.analyses: return 4;
         case ReportType.runFiles: return 5;
         case ReportType.analysisFiles: return 6;
+        case ReportType.runProcess: return 7;
+        case ReportType.analysisProcess: return 8;
       }
     }
     return undefined;

@@ -52,6 +52,19 @@ export class WebinReportService {
     return this.get('analysis-files', id, rows);
   }
 
+  getRunProcessAll(rows: string): Observable<any> {
+    return this.getAll('run-process', rows);
+  }
+  getRunProcess(id: string, rows: string): Observable<any> {
+    return this.get('run-process', id, rows);
+  }
+
+  getAnalysisProcessAll(rows: string): Observable<any> {
+    return this.getAll('analysis-process', rows);
+  }
+  getAnalysisProcess(id: string, rows: string): Observable<any> {
+    return this.get('analysis-process', id, rows);
+  }
 
   getDacsAll(rows: string): Observable<any> {
     return this.getAll('dacs', rows);

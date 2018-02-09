@@ -7,6 +7,8 @@ export enum ReportType {
   analyses = 'analyses',
   runFiles = 'runFiles',
   analysisFiles = 'analysisFiles',
+  runProcess = 'runProcess',
+  analysisProcess = 'analysisProcess',
   dacs = 'dacs',
   policies = 'policies',
   datasets = 'datasets'
@@ -39,6 +41,12 @@ export class ReportTypeUtils {
        }
        case ReportType.analysisFiles: {
          return 'Submitted files for analysis';
+       }
+       case ReportType.runProcess: {
+         return 'Run processing status';
+       }
+       case ReportType.analysisProcess: {
+         return 'Analysis processing status';
        }
        case ReportType.dacs: {
          return 'Dac';
@@ -81,6 +89,12 @@ export class ReportTypeUtils {
        }
        case ReportType.analysisFiles: {
          return 'submitted analyses files';
+       }
+       case ReportType.runProcess: {
+         return 'run processing status';
+       }
+       case ReportType.analysisProcess: {
+         return 'analysis processing status';
        }
        case ReportType.dacs: {
          return 'dacs';

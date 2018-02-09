@@ -190,6 +190,36 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  setRunProcessReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Process status',
+      'Process error'
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      'Process status': this.processingStatusColumnCallback.bind(this),
+      'Process error': this.processingErrorColumnCallback.bind(this)
+    };
+  }
+
+  setAnalysisProcessReportColumns() {
+    this.displayedColumns = [
+      'Accession',
+      'Analysis type',
+      'Process accession',
+      'Process status',
+      'Process error'
+    ];
+    this.displayedColumnsCallback = {
+      Accession: this.accessionColumnCallback.bind(this),
+      'Analysis type': this.analysisTypeColumnCallback.bind(this),
+      'Process accession': this.processingAccessionColumnCallback.bind(this),
+      'Process status': this.processingStatusColumnCallback.bind(this),
+      'Process error': this.processingErrorColumnCallback.bind(this)
+    };
+  }
+
   setDacReportColumns() {
     this.displayedColumns = [
       this._showAlias ? 'Unique name' : 'Accession',
@@ -412,6 +442,10 @@ export class ReportComponent implements OnInit {
       this.setRunFileReportColumns();
     } else if (this.reportType === ReportType.analysisFiles) {
       this.setAnalysisFileReportColumns();
+    } else if (this.reportType === ReportType.runProcess) {
+      this.setRunProcessReportColumns();
+    } else if (this.reportType === ReportType.analysisProcess) {
+      this.setAnalysisProcessReportColumns();
     } else if (this.reportType === ReportType.dacs) {
       this.setDacReportColumns();
     } else if (this.reportType === ReportType.policies) {
@@ -463,6 +497,21 @@ export class ReportComponent implements OnInit {
       }
       return this.webinReportService.getAnalysisFilesAll(this.rows);
     }
+
+    if (this.reportType === ReportType.runProcess) {
+      if (this.id) {
+        return this.webinReportService.getRunProcess(this.id, this.rows);
+      }
+      return this.webinReportService.getRunProcessAll(this.rows);
+    }
+
+    if (this.reportType === ReportType.analysisProcess) {
+      if (this.id) {
+        return this.webinReportService.getAnalysisProcess(this.id, this.rows);
+      }
+      return this.webinReportService.getAnalysisProcessAll(this.rows);
+    }
+
 
     if (this.reportType === ReportType.dacs) {
       if (this.id) {
@@ -560,6 +609,18 @@ export class ReportComponent implements OnInit {
 
   analysisTypeColumnCallback(result) {
     return this.humanReadableFormat(result.report.analysisType);
+  }
+
+  processingStatusColumnCallback(result) {
+    return result.report.processingStatus;
+  }
+
+  processingErrorColumnCallback(result) {
+    return result.report.processingError;
+  }
+
+  processingAccessionColumnCallback(result) {
+    return result.report.acc;
   }
 
   dateFormat(date: Date) {
