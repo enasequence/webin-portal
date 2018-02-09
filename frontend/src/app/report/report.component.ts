@@ -646,13 +646,19 @@ export class ReportComponent implements OnInit {
   }
 
   submissionDateColumnCallback(result) {
-    const date: Date = new Date(result.report.firstCreated);
-    return this.dateFormat(date);
+    if (result.report.firstCreated) {
+      const date: Date = new Date(result.report.firstCreated);
+      return this.dateFormat(date);
+    }
+    return '';
   }
 
   releaseDateColumnCallback(result) {
-    const date: Date = new Date(result.report.holdDate);
-    return this.dateFormat(date);
+    if (result.report.holdDate) {
+      const date: Date = new Date(result.report.holdDate);
+      return this.dateFormat(date);
+    }
+    return '';
   }
 
   statusColumnCallback(result) {
