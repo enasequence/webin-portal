@@ -45,7 +45,7 @@ export class WebinReportService {
     return this.get('run-files', id, rows);
   }
   getRunFilesStatus(status: string, rows: string): Observable<any> {
-    return this.get('run-files/process_status', status, rows);
+    return this.get('run-files/archival_status', status, rows);
   }
 
   getAnalysisFilesAll(rows: string): Observable<any> {
@@ -55,7 +55,7 @@ export class WebinReportService {
     return this.get('analysis-files', id, rows);
   }
   getAnalysisFilesStatus(status: string, rows: string): Observable<any> {
-    return this.get('analysis-files/process_status', status, rows);
+    return this.get('analysis-files/archival_status', status, rows);
   }
 
   getRunProcessAll(rows: string): Observable<any> {
@@ -109,7 +109,7 @@ export class WebinReportService {
   }
 
   private get(reportType: string, id: string, rows: string): Observable<any> {
-    const url: string = this._baseUrl + '/' + reportType + '/' + id.trim() + '?max-results=' + rows;
+    const url: string = this._baseUrl + '/' + reportType + '/' + encodeURIComponent(id.trim()) + '?max-results=' + rows;
     console.log(url);
     return this.http.get(url);
   }

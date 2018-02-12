@@ -61,7 +61,7 @@
   Search
 </button>
 
-<button mat-button (click)="reset()">Reset</button>
+<button mat-raised-button (click)="reset()">Reset</button>
 
 <mat-form-field>
   <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
@@ -86,6 +86,12 @@
 <mat-checkbox [(ngModel)]="showAlias" *ngIf="this.reportType != ReportType.runFiles && this.reportType != ReportType.analysisFiles">
   Show unique name
 </mat-checkbox>
+
+<span *ngIf="this.data && this.data.length > 0">
+  <button mat-raised-button (click)="csv()">
+    Download {{this.data.length}} results
+  </button>
+</span>
 
 <div *ngIf="active" style="height:70px;">
     <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">

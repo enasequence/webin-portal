@@ -10,6 +10,8 @@ import { ReportActionType } from '../report-action-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
 
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -298,7 +300,7 @@ export class ReportComponent implements OnInit {
 
   getElementValue(result, col) {
     const callback = this.displayedColumnsCallback[col];
-    return this.displayedColumnsCallback[col](result);
+    return callback(result);
   }
 
   createChangeReportAction(reportType: ReportType, id: string) {
@@ -434,6 +436,8 @@ export class ReportComponent implements OnInit {
 
   report() {
     // console.log(" ** report **", this.reportType);
+
+    this.data = undefined;
 
     this.initReportColumns();
     const observable: Observable<any> = this.initReportObservable();
@@ -766,4 +770,34 @@ export class ReportComponent implements OnInit {
     return this.getPolicyId(result);
   }
 
+  csv() {
+    let cvsData = [];
+    if (this.data) {
+        let row = {};
+        for (let col of this.displayedColumns) {
+          if (col !== 'Action') {
+            row[col] = col;
+           }
+        }
+        cvsData.push(row);
+        for (let element of this.data) {
+          let row = {};
+          for (let col of this.displayedColumns) {
+            if (col !== 'Action') {
+              row[col] = this.getElementValue(element, col);
+             }
+          }
+          cvsData.push(row);
+        }
+      var options = {
+        fieldSeparator: ',',
+        quoteStrings: '"',
+        decimalseparator: '.',
+        showLabels: false,
+        showTitle: false,
+        useBom: true
+      };
+      new Angular2Csv(cvsData, ReportTypeUtils.getPluralName(this.reportType) + "_" + (new Date()).toISOString();, options);
+    }
+  }
 }
