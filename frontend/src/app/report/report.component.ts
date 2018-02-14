@@ -36,6 +36,7 @@ export class ReportComponent implements OnInit {
   _id: string;
   _showAlias = false;
   _processStatus: string;
+  _analysisType: string;
   active: boolean;
 
   constructor(
@@ -70,6 +71,15 @@ export class ReportComponent implements OnInit {
 
   set processStatus(processStatus: string) {
     this._processStatus = processStatus;
+    this._id = undefined;
+  }
+
+  get analysisType(): string {
+    return this._analysisType;
+  }
+
+  set analysisType(analysisType: string) {
+    this._analysisType = analysisType;
     this._id = undefined;
   }
 
@@ -522,47 +532,35 @@ export class ReportComponent implements OnInit {
       if (this.id) {
         return this.webinReportService.getAnalyses(this.id, this.rows);
       }
-      return this.webinReportService.getAnalysesAll(this.rows);
+      return this.webinReportService.getAnalysesAll(this._analysisType, this.rows);
     }
 
     if (this.reportType === ReportType.runFiles) {
-      if (this._processStatus) {
-        return this.webinReportService.getRunFilesStatus(this._processStatus, this.rows);
-      }
       if (this.id) {
         return this.webinReportService.getRunFiles(this.id, this.rows);
       }
-      return this.webinReportService.getRunFilesAll(this.rows);
+      return this.webinReportService.getRunFilesAll(this._processStatus, this.rows);
     }
 
     if (this.reportType === ReportType.analysisFiles) {
-      if (this._processStatus) {
-        return this.webinReportService.getAnalysisFilesStatus(this._processStatus, this.rows);
-      }
       if (this.id) {
         return this.webinReportService.getAnalysisFiles(this.id, this.rows);
       }
-      return this.webinReportService.getAnalysisFilesAll(this.rows);
+      return this.webinReportService.getAnalysisFilesAll(this._analysisType, this._processStatus, this.rows);
     }
 
     if (this.reportType === ReportType.runProcess) {
-      if (this._processStatus) {
-        return this.webinReportService.getRunProcessStatus(this._processStatus, this.rows);
-      }
       if (this.id) {
         return this.webinReportService.getRunProcess(this.id, this.rows);
       }
-      return this.webinReportService.getRunProcessAll(this.rows);
+      return this.webinReportService.getRunProcessAll(this._processStatus, this.rows);
     }
 
     if (this.reportType === ReportType.analysisProcess) {
-      if (this._processStatus) {
-        return this.webinReportService.getAnalysisProcessStatus(this._processStatus, this.rows);
-      }
       if (this.id) {
         return this.webinReportService.getAnalysisProcess(this.id, this.rows);
       }
-      return this.webinReportService.getAnalysisProcessAll(this.rows);
+      return this.webinReportService.getAnalysisProcessAll(this._analysisType, this._processStatus, this.rows);
     }
 
 

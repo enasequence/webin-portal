@@ -31,51 +31,67 @@ export class WebinReportService {
     return this.get('runs', id, rows);
   }
 
-  getAnalysesAll(rows: string): Observable<any> {
-    return this.getAll('analyses', rows);
+  getAnalysesAll(analysisType: string, rows: string): Observable<any> {
+    var params = {};
+    if (analysisType) {
+      params["analysis-type"] = analysisType;
+    }
+    return this.getAllParams('analyses', params, rows);
   }
   getAnalyses(id: string, rows: string): Observable<any> {
     return this.get('analyses', id, rows);
   }
 
-  getRunFilesAll(rows: string): Observable<any> {
-    return this.getAll('run-files', rows);
+  getRunFilesAll(archiveStatus: string, rows: string): Observable<any> {
+    var params = {};
+    if (archiveStatus) {
+      params["archive-status"] = archiveStatus;
+    }
+    return this.getAllParams('run-files', params, rows);
   }
   getRunFiles(id: string, rows: string): Observable<any> {
     return this.get('run-files', id, rows);
   }
-  getRunFilesStatus(status: string, rows: string): Observable<any> {
-    return this.get('run-files/archival_status', status, rows);
-  }
 
-  getAnalysisFilesAll(rows: string): Observable<any> {
-    return this.getAll('analysis-files', rows);
+  getAnalysisFilesAll(analysisType: string, archiveStatus: string, rows: string): Observable<any> {
+    var params = {};
+    if (analysisType) {
+      params["analysis-type"] = analysisType;
+    }
+    if (archiveStatus) {
+      params["archive-status"] = archiveStatus;
+    }
+    return this.getAllParams('analysis-files', params, rows);
   }
   getAnalysisFiles(id: string, rows: string): Observable<any> {
     return this.get('analysis-files', id, rows);
   }
-  getAnalysisFilesStatus(status: string, rows: string): Observable<any> {
-    return this.get('analysis-files/archival_status', status, rows);
+
+  getRunProcessAll(processStatus: string, rows: string): Observable<any> {
+    var params = {};
+    if (processStatus) {
+      params["process-status"] = processStatus;
+    }
+    return this.getAllParams('run-process', params, rows);
   }
 
-  getRunProcessAll(rows: string): Observable<any> {
-    return this.getAll('run-process', rows);
-  }
   getRunProcess(id: string, rows: string): Observable<any> {
     return this.get('run-process', id, rows);
   }
-  getRunProcessStatus(status: string, rows: string): Observable<any> {
-    return this.get('run-process/process_status', status, rows);
+
+  getAnalysisProcessAll(analysisType: string, processStatus: string, rows: string): Observable<any> {
+    var params = {};
+    if (analysisType) {
+      params["analysis-type"] = analysisType;
+    }
+    if (processStatus) {
+      params["process-status"] = processStatus;
+    }
+    return this.getAllParams('analysis-process', params, rows);
   }
 
-  getAnalysisProcessAll(rows: string): Observable<any> {
-    return this.getAll('analysis-process', rows);
-  }
   getAnalysisProcess(id: string, rows: string): Observable<any> {
     return this.get('analysis-process', id, rows);
-  }
-  getAnalysisProcessStatus(status: string, rows: string): Observable<any> {
-    return this.get('analysis-process/process_status', status, rows);
   }
 
   getDacsAll(rows: string): Observable<any> {
@@ -107,6 +123,21 @@ export class WebinReportService {
     console.log(url);
     return this.http.get(url);
   }
+
+  private getAllParams(reportType: string, params, rows: string): Observable<any> {
+    params["max-results"] = rows;
+    const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
+    console.log(url);
+    return this.http.get(url);
+  }
+
+  private getUrlParams(params) {
+    let ret = [];
+    for (let d in params)
+      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(params[d]));
+    return ret.join('&');
+  }
+
 
   private get(reportType: string, id: string, rows: string): Observable<any> {
     const url: string = this._baseUrl + '/' + reportType + '/' + encodeURIComponent(id.trim()) + '?max-results=' + rows;

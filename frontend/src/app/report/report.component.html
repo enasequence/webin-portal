@@ -26,6 +26,44 @@
   <input matInput placeholder="Accession or Name" [(ngModel)]="id">
 </mat-form-field>
 
+<span *ngIf="reportType == ReportType.analyses || reportType == ReportType.analysisFiles || reportType == ReportType.analysisProcess">
+  or
+  <mat-form-field>
+    <mat-select placeholder="Analysis type" [(ngModel)]="analysisType">
+      <mat-option value="SEQUENCE_ASSEMBLY">
+        Genome assembly
+      </mat-option>
+      <mat-option value="TRANSCRIPTOME_ASSEMBLY">
+        Transcriptome assembly
+      </mat-option>
+      <mat-option value="PATHOGEN_ANALYSIS">
+        Pathogen analysis
+      </mat-option>
+      <mat-option value="AMR_ANTIBIOGRAM">
+        AMR Antibiogram
+      </mat-option>
+      <mat-option value="SEQUENCE_ANNOTATION">
+        Sequence annotation
+      </mat-option>
+      <mat-option value="SEQUENCE_VARIATION">
+        Sequence variation
+      </mat-option>
+      <mat-option value="REFERENCE_ALIGNMENT">
+        Reference alignment
+      </mat-option>
+      <mat-option value="REFERENCE_SEQUENCE">
+        Reference sequence
+      </mat-option>
+      <mat-option value="PROCESSED_READS">
+        Processed reads
+      </mat-option>
+      <mat-option value="SEQUENCE_FLATFILE">
+        Sequence flatfile
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</span>
+
 <span *ngIf="reportType == ReportType.runFiles || reportType == ReportType.analysisFiles">
   or
   <mat-form-field>
