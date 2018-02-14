@@ -797,7 +797,7 @@ export class ReportComponent implements OnInit {
         showTitle: false,
         useBom: true
       };
-      new Angular2Csv(cvsData, ReportTypeUtils.getPluralName(this.reportType) + "_" + (new Date()).toISOString();, options);
+      new Angular2Csv(cvsData, ReportTypeUtils.getPluralName(this.reportType) + "_" + (new Date()).toISOString(), options);
     }
   }
 }
