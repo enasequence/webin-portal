@@ -3,28 +3,57 @@
   <i class="material-icons">info</i>
   </span>
 
-  <span *ngIf="reportType != ReportType.runFiles && reportType != ReportType.analysisFiles && reportType != ReportType.runProcess && reportType != ReportType.analysisProcess">
+  <span *ngIf="isMetadataReport()">
   Search by accession or unique name, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
 
-  <span *ngIf="reportType == ReportType.runFiles || reportType == ReportType.analysisFiles">
+  <span *ngIf="isFileReport()">
   Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
-  <span *ngIf="reportType == ReportType.runProcess || reportType == ReportType.analysisProcess">
+  <span *ngIf="isProcessReport()">
   Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account. During processing archived files are transformed into other products.
   </span>
 </p>
 
-<mat-form-field *ngIf="reportType == ReportType.runFiles || reportType == ReportType.analysisFiles || reportType == ReportType.runProcess || reportType == ReportType.analysisProcess">
+<mat-form-field *ngIf="!isMetadataReport()">
     <input matInput placeholder="Accession" [(ngModel)]="id">
 </mat-form-field>
 
-<mat-form-field *ngIf="reportType != ReportType.runFiles && reportType != ReportType.analysisFiles && reportType != ReportType.runProcess && reportType != ReportType.analysisProcess">
+<mat-form-field *ngIf="isMetadataReport()">
   <input matInput placeholder="Accession or Name" [(ngModel)]="id">
 </mat-form-field>
+
+<span *ngIf="isMetadataReport()">
+or
+  <mat-form-field>
+    <mat-select placeholder="Release status" [(ngModel)]="status">
+      <mat-option value="private">
+        Private
+      </mat-option>
+      <mat-option value="cancelled">
+        Cancelled
+      </mat-option>
+      <mat-option value="public">
+        Public
+      </mat-option>
+      <mat-option value="suppressed">
+        Suppressed
+      </mat-option>
+      <mat-option value="killed">
+        Killed
+      </mat-option>
+      <mat-option value="temporarily suppressed">
+        Temporarily suppressed
+      </mat-option>
+      <mat-option value="temporarily killed">
+        Temporarily killed
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</span>
 
 <span *ngIf="reportType == ReportType.analyses || reportType == ReportType.analysisFiles || reportType == ReportType.analysisProcess">
   or
@@ -64,7 +93,7 @@
   </mat-form-field>
 </span>
 
-<span *ngIf="reportType == ReportType.runFiles || reportType == ReportType.analysisFiles">
+<span *ngIf="isFileReport()">
   or
   <mat-form-field>
     <mat-select placeholder="Archival status" [(ngModel)]="processStatus">
@@ -81,7 +110,7 @@
   </mat-form-field>
 </span>
 
-<span *ngIf="reportType == ReportType.runProcess || reportType == ReportType.analysisProcess">
+<span *ngIf="isProcessReport()">
   or
   <mat-form-field>
     <mat-select placeholder="Process status" [(ngModel)]="processStatus">
@@ -125,7 +154,7 @@
   </mat-select>
 </mat-form-field>
 
-<mat-checkbox [(ngModel)]="showAlias" *ngIf="reportType != ReportType.runFiles && reportType != ReportType.analysisFiles && reportType != ReportType.runProcess && reportType != ReportType.analysisProcess">
+<mat-checkbox [(ngModel)]="showAlias" *ngIf="isMetadataReport()">
   Show unique name
 </mat-checkbox>
 

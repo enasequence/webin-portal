@@ -35,6 +35,7 @@ export class ReportComponent implements OnInit {
   dataError;
   _id: string;
   _showAlias = false;
+  _status: string;
   _processStatus: string;
   _analysisType: string;
   active: boolean;
@@ -65,6 +66,15 @@ export class ReportComponent implements OnInit {
     this.initReportColumns();
   }
 
+  get status(): string {
+    return this._status;
+  }
+
+  set status(status: string) {
+    this._status = status;
+    this._id = undefined;
+  }
+
   get processStatus(): string {
     return this._processStatus;
   }
@@ -81,6 +91,23 @@ export class ReportComponent implements OnInit {
   set analysisType(analysisType: string) {
     this._analysisType = analysisType;
     this._id = undefined;
+  }
+
+  isMetadataReport() {
+    return this.reportType !== ReportType.runFiles &&
+           this.reportType !== ReportType.analysisFiles &&
+           this.reportType !== ReportType.runProcess &&
+           this.reportType !== ReportType.analysisProcess;
+  }
+
+  isFileReport() {
+    return this.reportType === ReportType.runFiles ||
+           this.reportType === ReportType.analysisFiles;
+  }
+
+  isProcessReport() {
+    return this.reportType === ReportType.runProcess ||
+           this.reportType === ReportType.analysisProcess;
   }
 
   setStudyReportColumns() {
@@ -511,28 +538,28 @@ export class ReportComponent implements OnInit {
       if (this.id) {
         return this.webinReportService.getStudies(this.id, this.rows);
       }
-      return this.webinReportService.getStudiesAll(this.rows);
+      return this.webinReportService.getStudiesAll(this._status, this.rows);
     }
 
     if (this.reportType === ReportType.samples) {
       if (this.id) {
         return this.webinReportService.getSamples(this.id, this.rows);
       }
-      return this.webinReportService.getSamplesAll(this.rows);
+      return this.webinReportService.getSamplesAll(this._status, this.rows);
     }
 
     if (this.reportType === ReportType.runs) {
       if (this.id) {
         return this.webinReportService.getRuns(this.id, this.rows);
       }
-      return this.webinReportService.getRunsAll(this.rows);
+      return this.webinReportService.getRunsAll(this._status, this.rows);
     }
 
     if (this.reportType === ReportType.analyses) {
       if (this.id) {
         return this.webinReportService.getAnalyses(this.id, this.rows);
       }
-      return this.webinReportService.getAnalysesAll(this._analysisType, this.rows);
+      return this.webinReportService.getAnalysesAll(this._status, this._analysisType, this.rows);
     }
 
     if (this.reportType === ReportType.runFiles) {
@@ -568,21 +595,21 @@ export class ReportComponent implements OnInit {
       if (this.id) {
         return this.webinReportService.getDacs(this.id, this.rows);
       }
-      return this.webinReportService.getDacsAll(this.rows);
+      return this.webinReportService.getDacsAll(this._status, this.rows);
     }
 
     if (this.reportType === ReportType.policies) {
       if (this.id) {
         return this.webinReportService.getPolicies(this.id, this.rows);
       }
-      return this.webinReportService.getPoliciesAll(this.rows);
+      return this.webinReportService.getPoliciesAll(this._status, this.rows);
     }
 
     if (this.reportType === ReportType.datasets) {
       if (this.id) {
         return this.webinReportService.getDatasets(this.id, this.rows);
       }
-      return this.webinReportService.getDatasetsAll(this.rows);
+      return this.webinReportService.getDatasetsAll(this._status, this.rows);
     }
   }
 

@@ -10,29 +10,32 @@ export class WebinReportService {
 
   constructor(private http: HttpClient) { }
 
-  getStudiesAll(rows: string): Observable<any> {
-    return this.getAll('studies', rows);
+  getStudiesAll(status: string, rows: string): Observable<any> {
+    return this.getAll('studies', status, rows);
   }
   getStudies(id: string, rows: string): Observable<any> {
     return this.get('studies', id, rows);
   }
 
-  getSamplesAll(rows: string): Observable<any> {
-    return this.getAll('samples', rows);
+  getSamplesAll(status: string, rows: string): Observable<any> {
+    return this.getAll('samples', status, rows);
   }
   getSamples(id: string, rows: string): Observable<any> {
     return this.get('samples', id, rows);
   }
 
-  getRunsAll(rows: string): Observable<any> {
-    return this.getAll('runs', rows);
+  getRunsAll(status: string, rows: string): Observable<any> {
+    return this.getAll('runs', status, rows);
   }
   getRuns(id: string, rows: string): Observable<any> {
     return this.get('runs', id, rows);
   }
 
-  getAnalysesAll(analysisType: string, rows: string): Observable<any> {
+  getAnalysesAll(status: string, analysisType: string, rows: string): Observable<any> {
     var params = {};
+    if (status) {
+      params["status"] = status;
+    }
     if (analysisType) {
       params["analysis-type"] = analysisType;
     }
@@ -94,22 +97,22 @@ export class WebinReportService {
     return this.get('analysis-process', id, rows);
   }
 
-  getDacsAll(rows: string): Observable<any> {
-    return this.getAll('dacs', rows);
+  getDacsAll(status: string, rows: string): Observable<any> {
+    return this.getAll('dacs', status, rows);
   }
   getDacs(id: string, rows: string): Observable<any> {
     return this.get('dacs', id, rows);
   }
 
-  getPoliciesAll(rows: string): Observable<any> {
-    return this.getAll('policies', rows);
+  getPoliciesAll(status: string, rows: string): Observable<any> {
+    return this.getAll('policies', status, rows);
   }
   getPolicies(id: string, rows: string): Observable<any> {
     return this.get('policies', id, rows);
   }
 
-  getDatasetsAll(rows: string): Observable<any> {
-    return this.getAll('datasets', rows);
+  getDatasetsAll(status: string, rows: string): Observable<any> {
+    return this.getAll('datasets', status, rows);
   }
   getDatasets(id: string, rows: string): Observable<any> {
     return this.get('datasets', id, rows);
@@ -118,8 +121,13 @@ export class WebinReportService {
 
 
 
-  private getAll(reportType: string, rows: string): Observable<any> {
-    const url: string = this._baseUrl + '/' + reportType + '?max-results=' + rows;
+  private getAll(reportType: string, status: string, rows: string): Observable<any> {
+    var params = {};
+    if (status) {
+      params["status"] = status;
+    }
+    params["max-results"] = rows;
+    const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
     console.log(url);
     return this.http.get(url);
   }
