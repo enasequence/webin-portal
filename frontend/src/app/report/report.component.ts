@@ -808,19 +808,54 @@ export class ReportComponent implements OnInit {
   csv() {
     let cvsData = [];
     if (this.data) {
+
+        var hasAliasAndAccession: boolean = false;
+        for (let element of this.data) {
+          var alias = this.aliasColumnCallback(element);
+          var accession = this.accessionColumnCallback(element);
+          hasAliasAndAccession = alias && accession;
+          break;
+        }
+        var displayAlias: boolean = false;
+        for (let col of this.displayedColumns) {
+          if (col === 'Unique name') {
+             displayAlias = true;
+          }
+        }
+        var displayAccession: boolean = false;
+        for (let col of this.displayedColumns) {
+          if (col === 'Accession') {
+             displayAccession = true;
+          }
+        }
+        var displayAliasAndAccession: boolean = displayAlias && displayAccession;
+
         let row = {};
         for (let col of this.displayedColumns) {
-          if (col !== 'Action') {
+          if ( (col === 'Unique name' || col == 'Accession') &&
+            hasAliasAndAccession && !displayAliasAndAccession) {
+            // Download both accession and unique name even if only one of them is shown.
+            row['Accession'] = 'Accession';
+            row['Unique name'] = 'Unique name';
+          }
+          else if (col !== 'Action') {
             row[col] = col;
            }
         }
         cvsData.push(row);
+
         for (let element of this.data) {
           let row = {};
           for (let col of this.displayedColumns) {
-            if (col !== 'Action') {
+          if ( (col === 'Unique name' || col == 'Accession') &&
+            hasAliasAndAccession && !displayAliasAndAccession) {
+              // Download both accession and unique name even if only one of them is shown.
+              row['Accession'] = this.accessionColumnCallback(element);
+              row['Unique name'] = this.aliasColumnCallback(element);
+            }
+            else if (col !== 'Action') {
               row[col] = this.getElementValue(element, col);
-             }
+            }
           }
           cvsData.push(row);
         }
