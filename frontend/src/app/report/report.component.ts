@@ -467,8 +467,16 @@ export class ReportComponent implements OnInit {
   }
 
   reset() {
-    this.id = undefined;
-    this.report();
+    this.active = false;
+    this.data = undefined;
+    this.dataSource = undefined;
+    this.dataError = undefined;
+    this._id = undefined;
+    this._status = undefined;
+    this._processStatus = undefined;
+    this._analysisType = undefined;
+
+    // this.report();
   }
 
   report() {
