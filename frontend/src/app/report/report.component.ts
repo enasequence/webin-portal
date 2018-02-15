@@ -54,7 +54,9 @@ export class ReportComponent implements OnInit {
 
   set id(id: string) {
     this._id = id;
+    this._status = undefined;
     this._processStatus = undefined;
+    this._analysisType = undefined
   }
 
   get showAlias(): boolean {
