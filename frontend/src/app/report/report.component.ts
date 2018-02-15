@@ -9,6 +9,7 @@ import { ReportType, ReportTypeUtils } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
+import { WebinAuthenticationService } from '../webin-authentication.service';
 
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
@@ -42,10 +43,15 @@ export class ReportComponent implements OnInit {
 
   constructor(
     private webinReportService: WebinReportService,
+    private webinAuthenticationService: WebinAuthenticationService,
     private reportDialog: MatDialog) {
   }
 
   ngOnInit() {
+  }
+
+  isEga(): boolean {
+    return this.webinAuthenticationService.ega;
   }
 
   get id(): string {
@@ -401,13 +407,13 @@ export class ReportComponent implements OnInit {
     }
 
     // Allow navigation to run files and run process.
-    if (this.reportType === ReportType.runs) {
+    if (this.reportType === ReportType.runs && !this.isEga()) {
       actions.push(this.createChangeReportAction(ReportType.runFiles, this.getId(result)));
       actions.push(this.createChangeReportAction(ReportType.runProcess, this.getId(result)));
     }
 
     // Allow navigation to analysis files annd analysis process.
-    if (this.reportType === ReportType.analyses) {
+    if (this.reportType === ReportType.analyses && !this.isEga()) {
       actions.push(this.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
       actions.push(this.createChangeReportAction(ReportType.analysisProcess, this.getId(result)));
     }

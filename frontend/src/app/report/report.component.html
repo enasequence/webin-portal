@@ -4,16 +4,16 @@
   </span>
 
   <span *ngIf="isMetadataReport()">
-  Search by accession or unique name, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  Shows submitted {{ ReportTypeUtils.getPluralName(reportType) }} and their release status. Search by accession or unique name, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
 
   <span *ngIf="isFileReport()">
-  Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  Shows submitted files and their archival status. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
   <span *ngIf="isProcessReport()">
-  Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  Shows the processing status of archived submitted files. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account. During processing archived files are transformed into other products.
   </span>
 </p>
