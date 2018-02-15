@@ -4,18 +4,27 @@
   </span>
 
   <span *ngIf="isMetadataReport()">
-  Shows submitted {{ ReportTypeUtils.getPluralName(reportType) }} and their release status. Search by accession or unique name, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  Shows submitted {{ ReportTypeUtils.getPluralName(reportType) }} and their release statuses. Search by accession or unique name, or simply click search to show most recent submissions. The results will show the most recently submitted {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
 
   <span *ngIf="isFileReport()">
-  Shows submitted files and their archival status. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
+  Shows submitted {{ ReportTypeUtils.getPluralName(reportType) }} and their archival statuses. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show the most recently submitted {{ReportTypeUtils.getPluralName(reportType)}}
   in your submission account.
   </span>
+
   <span *ngIf="isProcessReport()">
-  Shows the processing status of archived submitted files. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show up to {{rows}} most recent {{ReportTypeUtils.getPluralName(reportType)}}
-  in your submission account. During processing archived files are transformed into other products.
+  Shows the {{ ReportTypeUtils.getPluralName(reportType) }}. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show the {{ReportTypeUtils.getPluralName(reportType)}} in your submission account.
   </span>
+
+  <span *ngIf="reportType == ReportType.runProcess">
+  </span>
+
+  <span *ngIf="reportType == ReportType.analysisProcess">
+  The primary use of this report is to retrieve sequence accessions assigned as part of
+  genome assembly, transcriptome assembly or sequence flat file submissions.
+  </span>
+
 </p>
 
 <mat-form-field *ngIf="!isMetadataReport()">
