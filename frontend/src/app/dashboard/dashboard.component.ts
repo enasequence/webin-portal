@@ -59,11 +59,9 @@ export class DashboardComponent implements OnInit {
         case ReportType.samples: return 2;
         case ReportType.runs: return 3;
         case ReportType.analyses: return 4;
-        case ReportType.runFiles: return 5;
-        case ReportType.analysisFiles: return 6;
-        case ReportType.dacs: return 7;
-        case ReportType.policies: return 8;
-        case ReportType.datasets: return 9;
+        case ReportType.dacs: return 5;
+        case ReportType.policies: return 6;
+        case ReportType.datasets: return 7;
       }
     } else {
       switch (reportType) {

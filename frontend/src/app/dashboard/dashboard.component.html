@@ -17,18 +17,23 @@
     <mat-tab label="Analyses">
       <app-report #analyses [reportType]="ReportType.analyses" (onReportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
-    <mat-tab label="Run files">
-      <app-report #runFiles [reportType]="ReportType.runFiles" (onReportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
-    <mat-tab label="Analysis files">
-      <app-report #analysisFiles [reportType]="ReportType.analysisFiles" (onReportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
-    <mat-tab label="Run process">
-      <app-report #runProcess [reportType]="ReportType.runProcess" (onReportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
-    <mat-tab label="Analysis process">
-      <app-report #analysisProcess [reportType]="ReportType.analysisProcess" (onReportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
+
+    <div *ngIf="!isEga()">
+
+      <mat-tab label="Run files">
+        <app-report #runFiles [reportType]="ReportType.runFiles" (onReportChange)="consumeReportChange($event)"></app-report>
+      </mat-tab>
+      <mat-tab label="Analysis files">
+        <app-report #analysisFiles [reportType]="ReportType.analysisFiles" (onReportChange)="consumeReportChange($event)"></app-report>
+      </mat-tab>
+      <mat-tab label="Run process">
+        <app-report #runProcess [reportType]="ReportType.runProcess" (onReportChange)="consumeReportChange($event)"></app-report>
+      </mat-tab>
+      <mat-tab label="Analysis process">
+        <app-report #analysisProcess [reportType]="ReportType.analysisProcess" (onReportChange)="consumeReportChange($event)"></app-report>
+      </mat-tab>
+
+    </div>
 
     <div *ngIf="isEga()">
 
