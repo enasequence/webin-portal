@@ -67,6 +67,7 @@ export class SubmissionResultComponent implements OnInit {
 
   submit(observable: Observable<any>) {
     if (observable != null) {
+    this.reset();
       this.active = true;
         observable.subscribe(
           // Success
