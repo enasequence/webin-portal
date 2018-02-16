@@ -22,7 +22,7 @@ enum Environment{
 }
 
 ext.version_base = '0.2'
-ext.environment =  project.hasProperty('env') ? env : Environment.localdev.toString();
+ext.environment =  project.hasProperty('env') ? env : Environment.dev.toString();
 version = version_base + "-$environment"
 ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_dsa")
 ext.envAngularBuildScriptMap = [
