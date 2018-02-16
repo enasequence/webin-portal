@@ -7,7 +7,7 @@
     {
       "root": "src",
       "outDir": "../src/main/resources/static",
-      "baseHref" : "/",
+      "baseHref" : "/ena/submit/webin/",
       "assets": [
         "assets",
         "favicon.ico"
