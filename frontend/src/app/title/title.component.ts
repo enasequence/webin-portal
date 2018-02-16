@@ -17,9 +17,9 @@ export class TitleComponent implements OnInit {
 
   getTitle() {
     if (environment.production) {
-      return 'Webin reports and programmatic submission portal';
+      return 'Webin XML and reports portal';
     } else {
-      return 'Webin reports and programmatic submission portal (TEST)';
+      return 'Webin XML and reports portal (TEST)';
     }
   }
 }
