@@ -21,7 +21,7 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.2.1'
+ext.version_base = '0.2.2'
 ext.environment =  project.hasProperty('env') ? env : Environment.dev.toString();
 version = version_base + "-$environment"
 ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_dsa")
@@ -182,6 +182,7 @@ sourceSets.main.resources.includes = [ "**/*.*" ]
 
 deploy.dependsOn(publish)
 publish.dependsOn(assemble)
-bootRun.dependsOn(buildClient)
+bootRepackage.dependsOn(buildClient)
+bootRun.dependsOn(bootRepackage)
 jar.dependsOn(buildClient)
 compileJava.dependsOn(clean)
