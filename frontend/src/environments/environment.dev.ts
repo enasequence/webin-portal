@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  title: 'Webin XML and reports portal (DEV)',
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
   webinReportServiceUrl: 'http://RASKO-W7D.windows.ebi.ac.uk:8221/ena/submit/report',
