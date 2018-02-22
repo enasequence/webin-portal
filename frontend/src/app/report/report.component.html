@@ -105,7 +105,7 @@ or
 <span *ngIf="isFileReport()">
   or
   <mat-form-field>
-    <mat-select placeholder="Archival status" [(ngModel)]="processStatus">
+    <mat-select placeholder="Archive status" [(ngModel)]="processStatus">
       <mat-option value="completed">
         completed
       </mat-option>
@@ -137,7 +137,7 @@ or
 </span>
 
 
-<button mat-raised-button color="accent" (click)="report()">
+<button mat-raised-button color="accent" (click)="report()" [disabled]="active">
   Search
 </button>
 
@@ -157,12 +157,6 @@ or
     <mat-option value="5000">
       5000
     </mat-option>
-    <mat-option value="10000">
-      10000
-    </mat-option>
-    <mat-option value="100000">
-      100000
-    </mat-option>
   </mat-select>
 </mat-form-field>
 
@@ -171,8 +165,8 @@ or
 </mat-checkbox>
 
 <span *ngIf="this.data && this.data.length > 0">
-  <button mat-raised-button (click)="csv()">
-    Download {{this.data.length}} results
+  <button mat-raised-button>
+  <a href="{{ csvDownloadAllLink() }}">Download all results</a>
   </button>
 </span>
 

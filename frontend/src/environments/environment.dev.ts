@@ -7,7 +7,8 @@ export const environment = {
   production: false,
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
-  webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
+  webinReportServiceUrl: 'http://RASKO-W7D.windows.ebi.ac.uk:8221/ena/submit/report',
+  //'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
 };
 

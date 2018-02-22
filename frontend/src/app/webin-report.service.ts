@@ -10,28 +10,28 @@ export class WebinReportService {
 
   constructor(private http: HttpClient) { }
 
-  getStudiesAll(status: string, rows: string): Observable<any> {
-    return this.getAll('studies', status, rows);
+  getStudiesAll(status: string, rows: string, format: string) {
+    return this.getAll('studies', status, rows, format);
   }
-  getStudies(id: string, rows: string): Observable<any> {
-    return this.get('studies', id, rows);
-  }
-
-  getSamplesAll(status: string, rows: string): Observable<any> {
-    return this.getAll('samples', status, rows);
-  }
-  getSamples(id: string, rows: string): Observable<any> {
-    return this.get('samples', id, rows);
+  getStudies(id: string, rows: string, format: string) {
+    return this.getById('studies', id, rows, format);
   }
 
-  getRunsAll(status: string, rows: string): Observable<any> {
-    return this.getAll('runs', status, rows);
+  getSamplesAll(status: string, rows: string, format: string) {
+    return this.getAll('samples', status, rows, format);
   }
-  getRuns(id: string, rows: string): Observable<any> {
-    return this.get('runs', id, rows);
+  getSamples(id: string, rows: string, format: string) {
+    return this.getById('samples', id, rows, format);
   }
 
-  getAnalysesAll(status: string, analysisType: string, rows: string): Observable<any> {
+  getRunsAll(status: string, rows: string, format: string) {
+    return this.getAll('runs', status, rows, format);
+  }
+  getRuns(id: string, rows: string, format: string) {
+    return this.getById('runs', id, rows, format);
+  }
+
+  getAnalysesAll(status: string, analysisType: string, rows: string, format: string) {
     var params = {};
     if (status) {
       params["status"] = status;
@@ -39,24 +39,24 @@ export class WebinReportService {
     if (analysisType) {
       params["analysis-type"] = analysisType;
     }
-    return this.getAllParams('analyses', params, rows);
+    return this.getAllParams('analyses', params, rows, format);
   }
-  getAnalyses(id: string, rows: string): Observable<any> {
-    return this.get('analyses', id, rows);
+  getAnalyses(id: string, rows: string, format: string) {
+    return this.getById('analyses', id, rows, format);
   }
 
-  getRunFilesAll(archiveStatus: string, rows: string): Observable<any> {
+  getRunFilesAll(archiveStatus: string, rows: string, format: string) {
     var params = {};
     if (archiveStatus) {
       params["archive-status"] = archiveStatus;
     }
-    return this.getAllParams('run-files', params, rows);
+    return this.getAllParams('run-files', params, rows, format);
   }
-  getRunFiles(id: string, rows: string): Observable<any> {
-    return this.get('run-files', id, rows);
+  getRunFiles(id: string, rows: string, format: string) {
+    return this.getById('run-files', id, rows, format);
   }
 
-  getAnalysisFilesAll(analysisType: string, archiveStatus: string, rows: string): Observable<any> {
+  getAnalysisFilesAll(analysisType: string, archiveStatus: string, rows: string, format: string) {
     var params = {};
     if (analysisType) {
       params["analysis-type"] = analysisType;
@@ -64,25 +64,25 @@ export class WebinReportService {
     if (archiveStatus) {
       params["archive-status"] = archiveStatus;
     }
-    return this.getAllParams('analysis-files', params, rows);
+    return this.getAllParams('analysis-files', params, rows, format);
   }
-  getAnalysisFiles(id: string, rows: string): Observable<any> {
-    return this.get('analysis-files', id, rows);
+  getAnalysisFiles(id: string, rows: string, format: string) {
+    return this.getById('analysis-files', id, rows, format);
   }
 
-  getRunProcessAll(processStatus: string, rows: string): Observable<any> {
+  getRunProcessAll(processStatus: string, rows: string, format: string) {
     var params = {};
     if (processStatus) {
       params["process-status"] = processStatus;
     }
-    return this.getAllParams('run-process', params, rows);
+    return this.getAllParams('run-process', params, rows, format);
   }
 
-  getRunProcess(id: string, rows: string): Observable<any> {
-    return this.get('run-process', id, rows);
+  getRunProcess(id: string, rows: string, format: string) {
+    return this.getById('run-process', id, rows, format);
   }
 
-  getAnalysisProcessAll(analysisType: string, processStatus: string, rows: string): Observable<any> {
+  getAnalysisProcessAll(analysisType: string, processStatus: string, rows: string, format: string) {
     var params = {};
     if (analysisType) {
       params["analysis-type"] = analysisType;
@@ -90,53 +90,69 @@ export class WebinReportService {
     if (processStatus) {
       params["process-status"] = processStatus;
     }
-    return this.getAllParams('analysis-process', params, rows);
+    return this.getAllParams('analysis-process', params, rows, format);
   }
 
-  getAnalysisProcess(id: string, rows: string): Observable<any> {
-    return this.get('analysis-process', id, rows);
+  getAnalysisProcess(id: string, rows: string, format: string) {
+    return this.getById('analysis-process', id, rows, format);
   }
 
-  getDacsAll(status: string, rows: string): Observable<any> {
-    return this.getAll('dacs', status, rows);
+  getDacsAll(status: string, rows: string, format: string) {
+    return this.getAll('dacs', status, rows, format);
   }
-  getDacs(id: string, rows: string): Observable<any> {
-    return this.get('dacs', id, rows);
-  }
-
-  getPoliciesAll(status: string, rows: string): Observable<any> {
-    return this.getAll('policies', status, rows);
-  }
-  getPolicies(id: string, rows: string): Observable<any> {
-    return this.get('policies', id, rows);
+  getDacs(id: string, rows: string, format: string) {
+    return this.getById('dacs', id, rows, format);
   }
 
-  getDatasetsAll(status: string, rows: string): Observable<any> {
-    return this.getAll('datasets', status, rows);
+  getPoliciesAll(status: string, rows: string, format: string) {
+    return this.getAll('policies', status, rows, format);
   }
-  getDatasets(id: string, rows: string): Observable<any> {
-    return this.get('datasets', id, rows);
+  getPolicies(id: string, rows: string, format: string) {
+    return this.getById('policies', id, rows, format);
+  }
+
+  getDatasetsAll(status: string, rows: string, format: string) {
+    return this.getAll('datasets', status, rows, format);
+  }
+  getDatasets(id: string, rows: string, format: string) {
+    return this.getById('datasets', id, rows, format);
   }
 
 
 
 
-  private getAll(reportType: string, status: string, rows: string): Observable<any> {
+
+
+  private getAll(reportType: string, status: string, rows: string, format: string) {
     var params = {};
     if (status) {
       params["status"] = status;
     }
     params["max-results"] = rows;
+    params["format"] = format;
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
-    console.log(url);
-    return this.http.get(url);
+
+    if (format === "json") {
+      console.log(url);
+      return this.http.get(url);
+    }
+    if (format === "csv") {
+      return url;
+    }
   }
 
-  private getAllParams(reportType: string, params, rows: string): Observable<any> {
+  private getAllParams(reportType: string, params, rows: string, format: string) {
     params["max-results"] = rows;
+    params["format"] = format;
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
-    console.log(url);
-    return this.http.get(url);
+
+    if (format === "json") {
+      console.log(url);
+      return this.http.get(url);
+    }
+    if (format === "csv") {
+      return url;
+    }
   }
 
   private getUrlParams(params) {
@@ -146,10 +162,18 @@ export class WebinReportService {
     return ret.join('&');
   }
 
+  private getById(reportType: string, id: string, rows: string, format: string) {
+    var params = {};
+    params["max-results"] = rows;
+    params["format"] = format;
+    const url: string = this._baseUrl + '/' + reportType + '/' + encodeURIComponent(id.trim()) + '?' + this.getUrlParams(params);
 
-  private get(reportType: string, id: string, rows: string): Observable<any> {
-    const url: string = this._baseUrl + '/' + reportType + '/' + encodeURIComponent(id.trim()) + '?max-results=' + rows;
-    console.log(url);
-    return this.http.get(url);
+    if (format === "json") {
+      console.log(url);
+      return this.http.get(url);
+    }
+    if (format === "csv") {
+      return url;
+    }
   }
 }

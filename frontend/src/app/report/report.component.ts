@@ -11,8 +11,6 @@ import { ReportActionType } from '../report-action-type.enum';
 import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 
-import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -274,7 +272,7 @@ export class ReportComponent implements OnInit {
     this.displayedColumns = [
       'Accession',
       'Analysis type',
-      'Process accession',
+      'Sequence accession',
       'Process status',
       'Process error',
       'Action', // No callback for Action column
@@ -282,7 +280,7 @@ export class ReportComponent implements OnInit {
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
       'Analysis type': this.analysisTypeColumnCallback.bind(this),
-      'Process accession': this.processingAccessionColumnCallback.bind(this),
+      'Sequence accession': this.processingAccessionColumnCallback.bind(this),
       'Process status': this.processingStatusColumnCallback.bind(this),
       'Process error': this.processingErrorColumnCallback.bind(this)
     };
@@ -483,7 +481,6 @@ export class ReportComponent implements OnInit {
     this._status = undefined;
     this._processStatus = undefined;
     this._analysisType = undefined;
-
     // this.report();
   }
 
@@ -493,7 +490,7 @@ export class ReportComponent implements OnInit {
     this.data = undefined;
 
     this.initReportColumns();
-    const observable: Observable<any> = this.initReportObservable();
+    const observable: Observable<any> = this.initReportObservable("json", this.rows) as Observable<any>;
 
     if (observable != null) {
       this.active = true;
@@ -513,6 +510,7 @@ export class ReportComponent implements OnInit {
         },
         // Errors
         (err: HttpErrorResponse) => {
+          this.active = false;
           console.log('** Webin reports service failed **', err);
           const msg = 'Webin reports service failed. Please try again later. If the problem persists please contact the helpdesk.';
           // if (err.message) {
@@ -549,83 +547,87 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  initReportObservable() {
+  initReportObservable(format: string, rows: string) {
+    if (!rows) {
+      rows = this.rows;
+    }
+
     if (this.reportType === ReportType.studies) {
       if (this.id) {
-        return this.webinReportService.getStudies(this.id, this.rows);
+        return this.webinReportService.getStudies(this.id, rows, format);
       }
-      return this.webinReportService.getStudiesAll(this._status, this.rows);
+      return this.webinReportService.getStudiesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.samples) {
       if (this.id) {
-        return this.webinReportService.getSamples(this.id, this.rows);
+        return this.webinReportService.getSamples(this.id, rows, format);
       }
-      return this.webinReportService.getSamplesAll(this._status, this.rows);
+      return this.webinReportService.getSamplesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.runs) {
       if (this.id) {
-        return this.webinReportService.getRuns(this.id, this.rows);
+        return this.webinReportService.getRuns(this.id, rows, format);
       }
-      return this.webinReportService.getRunsAll(this._status, this.rows);
+      return this.webinReportService.getRunsAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.analyses) {
       if (this.id) {
-        return this.webinReportService.getAnalyses(this.id, this.rows);
+        return this.webinReportService.getAnalyses(this.id, rows, format);
       }
-      return this.webinReportService.getAnalysesAll(this._status, this._analysisType, this.rows);
+      return this.webinReportService.getAnalysesAll(this._status, this._analysisType, rows, format);
     }
 
     if (this.reportType === ReportType.runFiles) {
       if (this.id) {
-        return this.webinReportService.getRunFiles(this.id, this.rows);
+        return this.webinReportService.getRunFiles(this.id, rows, format);
       }
-      return this.webinReportService.getRunFilesAll(this._processStatus, this.rows);
+      return this.webinReportService.getRunFilesAll(this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.analysisFiles) {
       if (this.id) {
-        return this.webinReportService.getAnalysisFiles(this.id, this.rows);
+        return this.webinReportService.getAnalysisFiles(this.id, rows, format);
       }
-      return this.webinReportService.getAnalysisFilesAll(this._analysisType, this._processStatus, this.rows);
+      return this.webinReportService.getAnalysisFilesAll(this._analysisType, this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.runProcess) {
       if (this.id) {
-        return this.webinReportService.getRunProcess(this.id, this.rows);
+        return this.webinReportService.getRunProcess(this.id, rows, format);
       }
-      return this.webinReportService.getRunProcessAll(this._processStatus, this.rows);
+      return this.webinReportService.getRunProcessAll(this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.analysisProcess) {
       if (this.id) {
-        return this.webinReportService.getAnalysisProcess(this.id, this.rows);
+        return this.webinReportService.getAnalysisProcess(this.id, rows, format);
       }
-      return this.webinReportService.getAnalysisProcessAll(this._analysisType, this._processStatus, this.rows);
+      return this.webinReportService.getAnalysisProcessAll(this._analysisType, this._processStatus, rows, format);
     }
 
 
     if (this.reportType === ReportType.dacs) {
       if (this.id) {
-        return this.webinReportService.getDacs(this.id, this.rows);
+        return this.webinReportService.getDacs(this.id, rows, format);
       }
-      return this.webinReportService.getDacsAll(this._status, this.rows);
+      return this.webinReportService.getDacsAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.policies) {
       if (this.id) {
-        return this.webinReportService.getPolicies(this.id, this.rows);
+        return this.webinReportService.getPolicies(this.id, rows, format);
       }
-      return this.webinReportService.getPoliciesAll(this._status, this.rows);
+      return this.webinReportService.getPoliciesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.datasets) {
       if (this.id) {
-        return this.webinReportService.getDatasets(this.id, this.rows);
+        return this.webinReportService.getDatasets(this.id, rows, format);
       }
-      return this.webinReportService.getDatasetsAll(this._status, this.rows);
+      return this.webinReportService.getDatasetsAll(this._status, rows, format);
     }
   }
 
@@ -811,69 +813,11 @@ export class ReportComponent implements OnInit {
     return this.getPolicyId(result);
   }
 
-  csv() {
-    let cvsData = [];
-    if (this.data) {
+  csvDownloadLink() {
+    return this.initReportObservable("csv", this.rows);
+  }
 
-        var hasAliasAndAccession: boolean = false;
-        for (let element of this.data) {
-          var alias = this.aliasColumnCallback(element);
-          var accession = this.accessionColumnCallback(element);
-          hasAliasAndAccession = alias && accession;
-          break;
-        }
-        var displayAlias: boolean = false;
-        for (let col of this.displayedColumns) {
-          if (col === 'Unique name') {
-             displayAlias = true;
-          }
-        }
-        var displayAccession: boolean = false;
-        for (let col of this.displayedColumns) {
-          if (col === 'Accession') {
-             displayAccession = true;
-          }
-        }
-        var displayAliasAndAccession: boolean = displayAlias && displayAccession;
-
-        let row = {};
-        for (let col of this.displayedColumns) {
-          if ( (col === 'Unique name' || col == 'Accession') &&
-            hasAliasAndAccession && !displayAliasAndAccession) {
-            // Download both accession and unique name even if only one of them is shown.
-            row['Accession'] = 'Accession';
-            row['Unique name'] = 'Unique name';
-          }
-          else if (col !== 'Action') {
-            row[col] = col;
-           }
-        }
-        cvsData.push(row);
-
-        for (let element of this.data) {
-          let row = {};
-          for (let col of this.displayedColumns) {
-          if ( (col === 'Unique name' || col == 'Accession') &&
-            hasAliasAndAccession && !displayAliasAndAccession) {
-              // Download both accession and unique name even if only one of them is shown.
-              row['Accession'] = this.accessionColumnCallback(element);
-              row['Unique name'] = this.aliasColumnCallback(element);
-            }
-            else if (col !== 'Action') {
-              row[col] = this.getElementValue(element, col);
-            }
-          }
-          cvsData.push(row);
-        }
-      var options = {
-        fieldSeparator: ',',
-        quoteStrings: '"',
-        decimalseparator: '.',
-        showLabels: false,
-        showTitle: false,
-        useBom: true
-      };
-      new Angular2Csv(cvsData, ReportTypeUtils.getPluralName(this.reportType) + "_" + (new Date()).toISOString(), options);
-    }
+  csvDownloadAllLink() {
+    return this.initReportObservable("csv", "10000000");
   }
 }
