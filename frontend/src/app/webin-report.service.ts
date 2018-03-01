@@ -17,6 +17,13 @@ export class WebinReportService {
     return this.getById('studies', id, rows, format);
   }
 
+  getProjectsAll(status: string, rows: string, format: string) {
+    return this.getAll('projects', status, rows, format);
+  }
+  getProjects(id: string, rows: string, format: string) {
+    return this.getById('projects', id, rows, format);
+  }
+
   getSamplesAll(status: string, rows: string, format: string) {
     return this.getAll('samples', status, rows, format);
   }

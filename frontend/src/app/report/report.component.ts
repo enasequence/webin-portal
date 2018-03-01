@@ -119,7 +119,7 @@ export class ReportComponent implements OnInit {
   setStudyReportColumns() {
     this.displayedColumns = [
       this._showAlias ? 'Unique name' : 'Accession',
-      'BioProject',
+      'Secondary Accession',
       'Title',
       'Submission date',
       'Release date',
@@ -129,7 +129,7 @@ export class ReportComponent implements OnInit {
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
       'Unique name': this.aliasColumnCallback.bind(this),
-      BioProject: this.secondaryIdColumnCallback.bind(this),
+      'Secondary Accession': this.secondaryIdColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
       'Submission date': this.submissionDateColumnCallback.bind(this),
       'Release date': this.releaseDateColumnCallback.bind(this),
@@ -355,7 +355,7 @@ export class ReportComponent implements OnInit {
   }
 
   createEditXmlAction(reportType: ReportType, id: string) {
-    return {
+  return {
       reportActionType: ReportActionType.editXml,
       reportType: reportType,
       id: id
@@ -370,11 +370,13 @@ export class ReportComponent implements OnInit {
       actions.push(this.createEditXmlAction(ReportType.runs, this.getId(result)));
     } else if (this.reportType === ReportType.analysisFiles) {
       actions.push(this.createEditXmlAction(ReportType.analyses, this.getId(result)));
-    } else {
+    } else if (this.reportType === ReportType.studies ||
+               this.reportType === ReportType.projects) {
+      actions.push(this.createEditXmlAction(ReportType.projects, this.getId(result)));
+      // actions.push(this.createEditXmlAction(ReportType.studies, this.getSecondaryId(result)));
+    }
+    else {
       actions.push(this.createEditXmlAction(this.reportType, this.getId(result)));
-      if (this.reportType === ReportType.studies) {
-        actions.push(this.createEditXmlAction(ReportType.projects, result.report.secondaryId));
-      }
       if (this.reportType === ReportType.runs) {
         actions.push(this.createEditXmlAction(ReportType.experiments, this.getExperimentId(result)));
       }
@@ -391,15 +393,19 @@ export class ReportComponent implements OnInit {
     }
 
     // Allow navigation to run report.
-    if (this.reportType === ReportType.studies ||
-        this.reportType === ReportType.samples ||
+    if (this.reportType === ReportType.studies) {
+      actions.push(this.createChangeReportAction(ReportType.runs, this.getSecondaryId(result)));
+    }
+    if (this.reportType === ReportType.samples ||
         this.reportType === ReportType.runFiles) {
       actions.push(this.createChangeReportAction(ReportType.runs, this.getId(result)));
     }
 
     // Allow navigation to analysis report.
-    if (this.reportType === ReportType.studies ||
-        this.reportType === ReportType.samples ||
+    if (this.reportType === ReportType.studies) {
+      actions.push(this.createChangeReportAction(ReportType.analyses, this.getSecondaryId(result)));
+    }
+    if (this.reportType === ReportType.samples ||
         this.reportType === ReportType.analysisFiles) {
       actions.push(this.createChangeReportAction(ReportType.analyses, this.getId(result)));
     }
@@ -552,11 +558,14 @@ export class ReportComponent implements OnInit {
       rows = this.rows;
     }
 
-    if (this.reportType === ReportType.studies) {
+    if (this.reportType === ReportType.studies ||
+        this.reportType === ReportType.projects) {
       if (this.id) {
-        return this.webinReportService.getStudies(this.id, rows, format);
+        return this.webinReportService.getProjects(this.id, rows, format);
+        // return this.webinReportService.getStudies(this.id, rows, format);
       }
-      return this.webinReportService.getStudiesAll(this._status, rows, format);
+      return this.webinReportService.getProjectsAll(this._status, rows, format);
+      // return this.webinReportService.getStudiesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.samples) {
@@ -669,6 +678,10 @@ export class ReportComponent implements OnInit {
 
   getPolicyId(result) {
     return result.report.egaPolicyId;
+  }
+
+  getSecondaryId(result) {
+    return result.report.secondaryId;
   }
 
   // Column callbacks
@@ -786,7 +799,7 @@ export class ReportComponent implements OnInit {
   }
 
   secondaryIdColumnCallback(result) {
-    return result.report.secondaryId;
+    return this.getSecondaryId(result);
   }
 
   titleColumnCallback(result) {
