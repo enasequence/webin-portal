@@ -21,9 +21,10 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.2.3'
-ext.environment =  project.hasProperty('env') ? env : Environment.dev.toString();
-version = version_base + "-$environment"
+ext.version_base = '0.2.5'
+ext.environment = project.hasProperty('env') ? env : Environment.prod.toString();
+version = version_base + "-$ext.environment"
+group = 'uk.ac.ebi.ena.sub-ang'
 ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_dsa")
 ext.envAngularBuildScriptMap = [
         'test'   : 'buildTest',
@@ -31,6 +32,9 @@ ext.envAngularBuildScriptMap = [
         'prod'   : 'buildProd',
         'default': 'build'
 ]
+printSetup()
+
+
 
 
 def props = new Properties()
@@ -47,7 +51,6 @@ apply plugin: 'com.moowork.node'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'maven-publish'
 
-group = 'uk.ac.ebi.ena.sub-ang'
 sourceCompatibility = 1.8
 
 
@@ -180,9 +183,35 @@ jar.manifest {
 
 sourceSets.main.resources.includes = [ "**/*.*" ]
 
+def printSetup(){
+    println()
+    println("ENVIRONMENT:" + ext.environment);
+    println("VERSION:" + version);
+    println("VERSION BASE:" + version_base);
+    println("GROUP:" + group);
+    println("KEY FILE::" + ext.sshKeyFile);
+    println()
+}
+
 deploy.dependsOn(publish)
 publish.dependsOn(assemble)
 bootRepackage.dependsOn(buildClient)
 bootRun.dependsOn(bootRepackage)
 jar.dependsOn(buildClient)
 compileJava.dependsOn(clean)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
