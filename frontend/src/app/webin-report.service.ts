@@ -104,6 +104,11 @@ export class WebinReportService {
     return this.getById('analysis-process', id, rows, format);
   }
 
+  getUnsubmittedFilesAll(status: string, rows: string, format: string) {
+    var params = {};
+    return this.getAllParams('unsubmitted-files', params, rows, format);
+  }
+
   getDacsAll(status: string, rows: string, format: string) {
     return this.getAll('dacs', status, rows, format);
   }

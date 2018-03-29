@@ -103,7 +103,8 @@ export class ReportComponent implements OnInit {
     return this.reportType !== ReportType.runFiles &&
            this.reportType !== ReportType.analysisFiles &&
            this.reportType !== ReportType.runProcess &&
-           this.reportType !== ReportType.analysisProcess;
+           this.reportType !== ReportType.analysisProcess &&
+           this.reportType !== ReportType.unsubmittedFiles;
   }
 
   isFileReport() {
@@ -283,6 +284,21 @@ export class ReportComponent implements OnInit {
       'Sequence accession': this.processingAccessionColumnCallback.bind(this),
       'Process status': this.processingStatusColumnCallback.bind(this),
       'Process error': this.processingErrorColumnCallback.bind(this)
+    };
+  }
+
+  setUnsubmittedFilesReportColumns() {
+    this.displayedColumns = [
+      'File name',
+      'File size',
+      'Upload date',
+      'Expiration date'
+    ];
+    this.displayedColumnsCallback = {
+      'File name': this.fileNameColumnCallback.bind(this),
+      'File size': this.fileSizeColumnCallback.bind(this),
+      'Upload date': this.uploadDateColumnCallback.bind(this),
+      'Expiration date': this.expirationDateColumnCallback.bind(this)
     };
   }
 
@@ -544,6 +560,8 @@ export class ReportComponent implements OnInit {
       this.setRunProcessReportColumns();
     } else if (this.reportType === ReportType.analysisProcess) {
       this.setAnalysisProcessReportColumns();
+    } else if (this.reportType === ReportType.unsubmittedFiles) {
+      this.setUnsubmittedFilesReportColumns()
     } else if (this.reportType === ReportType.dacs) {
       this.setDacReportColumns();
     } else if (this.reportType === ReportType.policies) {
@@ -617,6 +635,9 @@ export class ReportComponent implements OnInit {
       return this.webinReportService.getAnalysisProcessAll(this._analysisType, this._processStatus, rows, format);
     }
 
+    if (this.reportType === ReportType.unsubmittedFiles) {
+      return this.webinReportService.getUnsubmittedFilesAll(this.id, rows, format);
+    }
 
     if (this.reportType === ReportType.dacs) {
       if (this.id) {
@@ -765,6 +786,22 @@ export class ReportComponent implements OnInit {
   releaseDateColumnCallback(result) {
     if (result.report.holdDate) {
       const date: Date = new Date(result.report.holdDate);
+      return this.dateFormat(date);
+    }
+    return '';
+  }
+
+  uploadDateColumnCallback(result) {
+    if (result.report.uploadDate) {
+      const date: Date = new Date(result.report.uploadDate);
+      return this.dateFormat(date);
+    }
+    return '';
+  }
+
+  expirationDateColumnCallback(result) {
+    if (result.report.expirationDate) {
+      const date: Date = new Date(result.report.expirationDate);
       return this.dateFormat(date);
     }
     return '';
