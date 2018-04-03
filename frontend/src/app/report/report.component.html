@@ -27,8 +27,10 @@
 
   <span *ngIf="reportType == ReportType.unsubmittedFiles">
   Shows uploaded files scheduled to be removed unless submitted by the expiration date.
-  Note that uploaded files will only be included into the archive once they have been
-  submitted either as runs or analyses.
+  Uploaded files will only be included into the archive once they have been
+  submitted either as runs or analyses. <b>Note that unlike all other reports, the
+  contents of this report may not be fully up to date. This report
+  is refreshed at most once per day.</b>
   </span>
 
 </p>
