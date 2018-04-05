@@ -523,7 +523,7 @@ export class ReportComponent implements OnInit {
           this.active = false;
 
           this.data = data;
-          console.log('** Webin reports service **', this.data);
+          console.log('** Webin reports service **'); //, this.data);
 
           this.dataSource = new MatTableDataSource<any>(this.data);
           this.dataSource.paginator = this.dataPaginator;
@@ -861,10 +861,6 @@ export class ReportComponent implements OnInit {
 
   policyColumnCallback(result) {
     return this.getPolicyId(result);
-  }
-
-  csvDownloadLink() {
-    return this.initReportObservable("csv", this.rows);
   }
 
   csvDownloadAllLink() {

@@ -11,9 +11,12 @@ export class WebinAuthenticationService {
 
   private username: string;
   private password: string;
+  token: string;
   authenticated = false;
   account: string;
   ega: boolean;
+  loginDate;
+  logoutDate;
 
   constructor(private http: HttpClient) { }
 
@@ -22,12 +25,22 @@ export class WebinAuthenticationService {
       return 'Basic ' + btoa(this.username + ':' + this.password);
   }
 
+  /*
+  getAuthorizationTokenHeader() {
+      console.log('** Webin authorization token header **');
+      return 'Bearer ' + this.token;
+  }
+  */
+
   public logout() {
     this.username = undefined;
     this.password = undefined;
+    this.token = undefined;
     this.authenticated = false;
     this.account = undefined;
     this.ega = undefined;
+    this.loginDate = undefined;
+    this.logoutDate = undefined;
   }
 
   public login(username: string, password: string): Observable<any> {
@@ -36,6 +49,9 @@ export class WebinAuthenticationService {
 
     this.username = username;
     this.password = password;
+    this.loginDate = new Date();
+    this.logoutDate = new Date();
+    this.logoutDate.setDate(this.loginDate + 7);
 
     const body = { authRealms: [ 'SRA', 'EGA' ], password: this.password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
@@ -43,5 +59,23 @@ export class WebinAuthenticationService {
       .append('Accept', '*/*');
 
     return this.http.post(baseUrl, body, { headers, withCredentials: false });
+  }
+
+  public loginToken(username: string, password: string): Observable<any> {
+    const baseUrl: string = environment.webinAuthenticationTokenUrl;
+    console.log('** Webin authentication token **', baseUrl);
+
+    this.username = username;
+    this.password = password;
+    this.loginDate = new Date();
+    this.logoutDate = new Date();
+    this.logoutDate.setDate(this.loginDate + 7);
+
+    const body = { authRealms: [ 'SRA', 'EGA' ], password: this.password, username: this.username };
+    const headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json')
+      .append('Accept', '*/*');
+
+    return this.http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
   }
 }

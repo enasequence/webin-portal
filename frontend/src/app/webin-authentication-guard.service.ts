@@ -9,10 +9,19 @@ export class WebinAuthenticationGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     console.log('WebinAuthenticationGuardService');
-     // let url: string = state.url;
+
     if (this.webinAuthenticationService.authenticated) {
-      console.log('WebinAuthenticationGuardService: authenticated');
-      return true;
+      if (new Date() >=
+          this.webinAuthenticationService.logoutDate) {
+        console.log('WebinAuthenticationGuardService: authentication timeout');
+        this.webinAuthenticationService.logout();
+        this.router.navigate(['']);
+        return false;
+      }
+      else {
+        console.log('WebinAuthenticationGuardService: authenticated');
+        return true;
+      }
     }
 
     console.log('WebinAuthenticationGuardService: not authenticated');
