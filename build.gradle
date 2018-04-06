@@ -71,6 +71,10 @@ node {
 }
 
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
+
 
 task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall'){
             group = 'application'
