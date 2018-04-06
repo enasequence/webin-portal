@@ -66,6 +66,7 @@ dependencies {
 }
 
 node {
+    // version = "8.9.4"
     download = true
     nodeModulesDir = file("frontend")
 }
