@@ -8,8 +8,9 @@ export const environment = {
   title: 'Webin XML and reports portal (DEV)',
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
+  webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
   webinReportServiceUrl: 'http://RASKO-W7D.windows.ebi.ac.uk:8221/ena/submit/report',
-  //'https://wwwdev.ebi.ac.uk/ena/submit/report',
+  //webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
 };
 

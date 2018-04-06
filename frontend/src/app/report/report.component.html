@@ -25,13 +25,23 @@
   genome assembly, transcriptome assembly or sequence flat file submissions.
   </span>
 
+  <span *ngIf="reportType == ReportType.unsubmittedFiles">
+  Shows uploaded files scheduled to be removed unless submitted by the expiration date.
+  Uploaded files will only be included into the archive once they have been
+  submitted either as runs or analyses. <b>Note that unlike all other reports, the
+  contents of this report may not be fully up to date. This report
+  is refreshed at most once per day.</b>
+  </span>
+
 </p>
 
-<mat-form-field *ngIf="!isMetadataReport()">
+<p><b>Please click search to see the results.</b></p>
+
+<mat-form-field *ngIf="!isMetadataReport() && reportType != ReportType.unsubmittedFiles">
     <input matInput placeholder="Accession" [(ngModel)]="id">
 </mat-form-field>
 
-<mat-form-field *ngIf="isMetadataReport()">
+<mat-form-field *ngIf="isMetadataReport() && reportType != ReportType.unsubmittedFiles">
   <input matInput placeholder="Accession or Name" [(ngModel)]="id">
 </mat-form-field>
 

@@ -96,29 +96,33 @@
      </nav>
    </header>
 
-   <div id="content">
-      <div data-sticky-container>
-        <header id="masthead" class="masthead" data-sticky data-sticky-on="large" data-top-anchor="content:top" data-btm-anchor="content:bottom">
-          <div class="masthead-inner row">
-            <!-- local-title -->
-            <div class="columns medium-12" id="local-title">
-              <h1><app-title></app-title></h1>
-            </div>
-            <!-- /local-title -->
-            <!-- local-nav -->
-            <nav >
-              <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
-                <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
-                <li><a href="">Logout
-                  <app-login-account>
-                  </app-login-account>
-                </a></li>
-              </ul>
-            </nav>
-            <!-- /local-nav -->
-          </div>
-        </header>
+<div id="content">
+  <div xdata-sticky-container>
+    <header id="masthead" class="masthead compact-for-data" xdata-sticky data-sticky-on="large" xdata-top-anchor="content:top" xdata-btm-anchor="content:bottom">
+      <div class="masthead-inner row">
+        <!-- local-title -->
+        <div class="columns medium-8 large-8" id="local-title">
+          <h1><app-title></app-title></h1>
+        </div>
+        <!-- /local-title -->
+
+        <!-- local-nav -->
+        <nav class="column medium-4 large-4">
+          <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
+            <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
+            <li><a href="">Logout
+              <app-login-account>
+              </app-login-account>
+            </a></li>
+          </ul>
+        </nav>
+          <!-- /local-nav -->
       </div>
+    </header>
+  </div>
+
+
+
 
       <!-- Suggested layout containers -->
         <section id="main-content-area" class="row" role="main">

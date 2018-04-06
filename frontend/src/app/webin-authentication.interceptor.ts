@@ -15,8 +15,17 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
     if (!req.url.startsWith(environment.webinAuthenticationServiceUrl)) {
       console.log('** Webin authentication interceptor **');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
-      const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationHeader())});
-      return next.handle(authReq);
+
+      /*
+      if (req.url.startsWith(environment.webinReportServiceUrl)) {
+        const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationTokenHeader())});
+        return next.handle(authReq);
+      }
+      else {
+      */
+        const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationHeader())});
+        return next.handle(authReq);
+      // }
     } else {
        return next.handle(req);
     }

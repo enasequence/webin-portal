@@ -211,3 +211,32 @@ $accent: map-get($app-theme, accent);
 .mat-tab-label {
   min-width: 1px !important;
 }
+
+
+// EBI styles
+
+.masthead.compact-for-data {
+  .masthead-inner {
+    padding-top: .5rem;
+
+    div#local-title {
+      margin-bottom: 0;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0;
+      margin-top: -.5rem;
+    }
+    form {
+      margin-top: -1rem;
+    }
+    nav {
+      margin-top: .75rem;
+      clear: none;
+    }
+  }
+  &.compact-disabled .masthead-inner > nav.column {
+    width: 100%;
+    left: 0;
+  }
+}

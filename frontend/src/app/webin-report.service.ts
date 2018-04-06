@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angul
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../environments/environment';
 
+import { WebinAuthenticationService } from './webin-authentication.service';
+
 @Injectable()
 export class WebinReportService {
 
   private _baseUrl = environment.webinReportServiceUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private webinAuthenticationService: WebinAuthenticationService, private http: HttpClient) { }
 
   getStudiesAll(status: string, rows: string, format: string) {
     return this.getAll('studies', status, rows, format);
@@ -104,6 +106,11 @@ export class WebinReportService {
     return this.getById('analysis-process', id, rows, format);
   }
 
+  getUnsubmittedFilesAll(status: string, rows: string, format: string) {
+    var params = {};
+    return this.getAllParams('unsubmitted-files', params, rows, format);
+  }
+
   getDacsAll(status: string, rows: string, format: string) {
     return this.getAll('dacs', status, rows, format);
   }
@@ -140,11 +147,11 @@ export class WebinReportService {
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
 
     if (format === "json") {
-      console.log(url);
+      // console.log(url);
       return this.http.get(url);
     }
     if (format === "csv") {
-      return url;
+      return this.getCsvUrlWithToken(url);
     }
   }
 
@@ -154,11 +161,11 @@ export class WebinReportService {
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
 
     if (format === "json") {
-      console.log(url);
+      // console.log(url);
       return this.http.get(url);
     }
     if (format === "csv") {
-      return url;
+      return this.getCsvUrlWithToken(url);
     }
   }
 
@@ -176,11 +183,17 @@ export class WebinReportService {
     const url: string = this._baseUrl + '/' + reportType + '/' + encodeURIComponent(id.trim()) + '?' + this.getUrlParams(params);
 
     if (format === "json") {
-      console.log(url);
+      // console.log(url);
       return this.http.get(url);
     }
     if (format === "csv") {
-      return url;
+      return this.getCsvUrlWithToken(url);
     }
+  }
+
+  getCsvUrlWithToken(url: string) {
+    url = url + '&token=' + this.webinAuthenticationService.token;
+    // console.log(url);
+    return url;
   }
 }

@@ -32,6 +32,9 @@
       <mat-tab label="Analysis process">
         <app-report #analysisProcess [reportType]="ReportType.analysisProcess" (onReportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
+      <mat-tab label="Unsubmitted files">
+        <app-report #unsubmittedFiles [reportType]="ReportType.unsubmittedFiles" (onReportChange)="consumeReportChange($event)"></app-report>
+      </mat-tab>
 
     </div>
 
