@@ -224,8 +224,8 @@ or
                    matTooltip="The post-archival processing of the file has failed.">{{getElementValue(element, col)}}</span>
             </span>
             <span *ngIf="getElementValue(element, col)!='COMPLETED' && getElementValue(element, col)!='CANCELLED' && getElementValue(element, col)!='FAILED'">
-              <div class="action-active"
-                   matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element, col)}}</div>
+              <span class="action-active"
+                   matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element, col)}}</span>
             </span>
 
           </mat-cell>
