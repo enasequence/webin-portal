@@ -137,26 +137,28 @@ $accent: map-get($app-theme, accent);
 }
 
 
+
 .action-active {
     text-align: center;
     padding: 5px;
     color: #FFFFFF;
-    background-color: #46a7d8;
+    background-color: #006E6F;
 }
 
 .action-completed {
     text-align: center;
     padding: 5px;
     color: #FFFFFF;
-    background-color: #61ab3b;
+    background-color: #006C3B;
 }
 
 .action-failed {
     text-align: center;
     padding: 5px;
     color: #FFFFFF;
-    background-color: #ef5753;
+    background-color: #B71116;
 }
+
 
 .app-radio-group {
   display: inline-flex;
