@@ -21,8 +21,8 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.2.6'
-ext.environment = project.hasProperty('env') ? env : Environment.prod.toString();
+ext.version_base = '0.2.7'
+ext.environment = project.hasProperty('env') ? env : Environment.localdev.toString();
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.sub-ang'
 ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_dsa")
