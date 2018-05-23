@@ -12,5 +12,5 @@ export const environment = {
   webinReportServiceUrl: 'http://RASKO-W7D.windows.ebi.ac.uk:8221/ena/submit/report',
   //webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
+  webinGdprServiceUrl: 'TODO'
 };
-
