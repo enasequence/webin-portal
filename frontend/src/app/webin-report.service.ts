@@ -132,10 +132,16 @@ export class WebinReportService {
     return this.getById('datasets', id, rows, format);
   }
 
-
-
-
-
+  getChecklists() {
+      var params = {};
+      const url: string = this._baseUrl + '/checklists';
+      return this.http.get(url);
+  }
+  getChecklistXml(id: string) {
+      var params = {};
+      const url: string = this._baseUrl + '/checklists/xml/' + id;
+      return this.http.get(url, { responseType: 'text', observe: 'response' });
+  }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
     var params = {};
