@@ -109,7 +109,7 @@
               fxLayoutAlign="space-around start"
               fxLayoutGap="10px">
               <div style="width:40%">
-                <mat-checkbox [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]"><b>{{field.label}}</b></mat-checkbox>
+                <mat-checkbox class="checklist-checked-field" [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]"><b class="checklist-checked-field">{{field.label}}</b></mat-checkbox>
               </div>
               <div style="width:30%">
                 <i>{{field.mandatory}} {{getFieldTypeDisplayText(field)}}</i>
