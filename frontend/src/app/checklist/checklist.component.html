@@ -1,12 +1,47 @@
-<p>
-  Please use this submission option to create an empty spreadsheet template
-  for annotated sequences. Select a suitable checklist and checklist fields
-  and download the empty spreadsheet template. Fill the spreadsheet
-  with your sequences and sequence annotation and submit the spreadsheet
-  using the Webin command line interface.
-</p>
+<div *ngIf="!checklistGroupDataSource" >
 
-<mat-horizontal-stepper #stepper>
+  <p *ngIf="checklistType == ChecklistType.sample">
+    Please use this submission option to create an empty spreadsheet template
+    for samples.
+  </p>
+
+  <p *ngIf="checklistType == ChecklistType.sequence">
+    Please use this submission option to create an empty spreadsheet template
+    for annotated sequences.
+  </p>
+
+  <button mat-raised-button color="accent" (click)="initChecklists()">Start</button>
+</div>
+
+<div *ngIf="checklistGroupDataSource" >
+
+  <p *ngIf="checklistType == ChecklistType.sample">
+    Please select the most appropriate checklist group, checklist and checklist fields.
+    Download an empty spreadsheet template. Fill the spreadsheet and submit the spreadsheet using Webin.
+  </p>
+
+  <p *ngIf="checklistType == ChecklistType.sequence">
+    Please select the most appropriate checklist group, checklist and checklist fields.
+    Download an empty spreadsheet template. Fill the spreadsheet
+    and submit the spreadsheet using
+    <a href="http://ena-docs.readthedocs.io/en/latest/cli_04.html" target="_blank">Webin command line interface</a>.
+  </p>
+
+</div>
+
+<div *ngIf="active" style="height:70px;">
+  <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+  </mat-spinner>
+</div>
+
+<div *ngIf="dataError !== undefined">
+  <div class="app-error">
+    <i class="material-icons">error</i>
+    {{dataError}}
+  </div>
+</div>
+
+<mat-horizontal-stepper #stepper *ngIf="checklistGroupDataSource">
   <mat-step label="Select checklist group">
     <p>Please select a checklist group.</p>
 

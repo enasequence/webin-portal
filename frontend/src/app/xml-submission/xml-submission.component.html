@@ -57,14 +57,14 @@
     <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
   </mat-expansion-panel>
 
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngIf="!isEga()">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Download a spreadsheet template for annotated sequences
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <app-checklist [checklistType]="ChecklistType.sample"></app-checklist>
+    <app-checklist [checklistType]="ChecklistType.sequence"></app-checklist>
 
   </mat-expansion-panel>
 

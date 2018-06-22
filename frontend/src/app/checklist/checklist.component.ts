@@ -21,9 +21,11 @@ export class ChecklistComponent implements OnInit {
 
   @Input() checklistType: ChecklistType = ChecklistType.sample;
 
+  ChecklistType = ChecklistType;   // Allows use in template
+
   checklistGroups;
   checklistGroupDisplayedColumns = ['name'];
-  checklistGroupDataSource;
+  checklistGroupDataSource = undefined;
   checklistDataSource;
   checklistDisplayedColumns = ['name'];
   selectedChecklistGroup;
@@ -132,8 +134,8 @@ export class ChecklistComponent implements OnInit {
   }
 
   initChecklists() {
-    // this.active = true;
-    // this.dataError = undefined;
+    this.active = true;
+    this.dataError = undefined;
 
     this.checklistGroups = [];
 
@@ -149,7 +151,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   initChecklistsError(err: HttpErrorResponse) {
-      // this.active = false;
+      this.active = false;
       console.log('** initChecklists failed **', err);
       const msg = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
       // this.dataError = msg;
@@ -280,11 +282,11 @@ export class ChecklistComponent implements OnInit {
       checklistNode = checklistNodes.iterateNext();
     }
 
+    this.active = false;
+    this.dataError = undefined;
+
     console.log('** Sample checklists **', this.checklistGroups );
     this.checklistGroupDataSource = new MatTableDataSource<any>(this.checklistGroups);
-
-    // this.active = false;
-    // this.dataError = undefined;
   }
 
   constructor(
@@ -294,7 +296,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initChecklists();
+    // this.initChecklists();
   }
 
   isEga(): boolean {
