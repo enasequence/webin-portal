@@ -157,9 +157,35 @@
     </div>
   </mat-step>
   <mat-step label="Download spreadsheet template">
+
+    <p>
+        Please download the empty spreadsheet containing the fields you have selected.
+    </p>
+
+    <div *ngIf="checklistType == ChecklistType.sequence">
+      <p>
+        Please do not modify the header lines in the spreadsheet. They are required for the correct interpretation
+        of the spreadsheet at time of submission.
+      </p>
+
+      <p>
+        The first column in the spreadsheet is the ENTRYNUMBER. It must contain the sequence number starting from 1
+        followed by 2, 3 etc.
+      </p>
+
+      <p>
+        The other columns in the spreadsheet correspond to the checklist fields you have selected.
+        You can find more information about permitted values for each column from the checklist field
+        selection page.
+      </p>
+
+    </div>
+
+    <button mat-raised-button color="accent" (click)="download()">Download</button>
+
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext (click)="TODO_reset">Done</button>
+      <!-- <button mat-button matStepperNext (click)="">Done</button> -->
     </div>
   </mat-step>
 </mat-horizontal-stepper>

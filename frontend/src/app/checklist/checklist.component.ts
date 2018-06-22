@@ -10,6 +10,7 @@ import { ChecklistType } from '../checklist-type.enum';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
 
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-checklist',
@@ -33,6 +34,10 @@ export class ChecklistComponent implements OnInit {
 
   selectedFields;
   mandatoryFields;
+
+  active: boolean;
+  dataError: string;
+
 
   // field group restriction type (not supported for spreadsheets)
   // -----------------------------
@@ -302,5 +307,10 @@ export class ChecklistComponent implements OnInit {
 
   isEga(): boolean {
     return this.webinAuthenticationService.ega;
+  }
+
+  download() {
+      var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, "hello world.txt");
   }
 }
