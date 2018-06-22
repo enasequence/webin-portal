@@ -9,6 +9,8 @@ export class WebinGdprGuardService implements CanActivate {
   constructor(private webinGdprService: WebinGdprService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    return true;
+    /*
     console.log('WebinGdprGuardService');
 
     if (this.webinGdprService.consented) {
@@ -19,5 +21,6 @@ export class WebinGdprGuardService implements CanActivate {
       this.router.navigate(['consent']);
       return false;
     }
+    */
   }
 }

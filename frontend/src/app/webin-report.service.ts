@@ -132,14 +132,22 @@ export class WebinReportService {
     return this.getById('datasets', id, rows, format);
   }
 
-  getChecklists() {
+  getChecklistGroups(type: string) {
       var params = {};
-      const url: string = this._baseUrl + '/checklists';
+      params["type"] = type;
+      const url: string = this._baseUrl + '/checklist-groups' + '?' + this.getUrlParams(params);
       return this.http.get(url);
   }
-  getChecklistXml(id: string) {
+  getChecklists(type: string) {
       var params = {};
-      const url: string = this._baseUrl + '/checklists/xml/' + id;
+      params["type"] = type;
+      const url: string = this._baseUrl + '/checklists' + '?' + this.getUrlParams(params);
+      return this.http.get(url);
+  }
+  getChecklistXmls(type: string) {
+      var params = {};
+      params["type"] = type;
+      const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
       return this.http.get(url, { responseType: 'text', observe: 'response' });
   }
 

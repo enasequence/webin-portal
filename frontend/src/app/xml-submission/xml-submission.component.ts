@@ -36,7 +36,7 @@ export class XmlSubmissionComponent implements OnInit {
   // Checklists
   //
 
-  checklistType: ChecklistType = ChecklistType.sample; // 'sequence'
+  checklistType: ChecklistType = ChecklistType.sample;
 
   // Sample checklist
   //
@@ -142,183 +142,170 @@ export class XmlSubmissionComponent implements OnInit {
     return document.evaluate(xpath, xmlDoc, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
   }
 
+  getChecklistTypeParamValue() {
+    switch(this.checklistType) {
+      case ChecklistType.sample:
+        return 'sample';
+      case ChecklistType.sequence:
+        return 'sequence';
+    }
+  }
+
   initChecklists() {
+    // this.active = true;
+    // this.dataError = undefined;
 
     this.checklistGroups = [];
 
     console.log(" ** initChecklists **");
 
-    const observable: Observable<any> = this.webinReportService.getChecklists();
+    const observable: Observable<any> = this.webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
 
-    if (observable != null) {
-      // this.active = true;
+    observable.subscribe(
+      // Success
+      data => this.initChecklistGroups(data),
+      // Error
+      (err: HttpErrorResponse) => this.initChecklistsError(err));
+  }
 
-      observable.subscribe(
-        // Success
-        data => {
+  initChecklistsError(err: HttpErrorResponse) {
+      // this.active = false;
+      console.log('** initChecklists failed **', err);
+      const msg = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
+      // this.dataError = msg;
+  }
 
-          // TODO: filter checklists by type
+  initChecklistGroups(data) {
+    for (let i = 0; i < data.length; i++) {
+      this.checklistGroups.push({
+        name: data[i].report.name,
+        description: data[i].report.description,
+        checklistIds: data[i].report.checklist,
+        checklists: []
+      });
+    }
+
+    const observable: Observable<any> = this.webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+
+    observable.subscribe(
+      // Success
+      data => this.initChecklistXmls(data),
+      // Error
+      (err: HttpErrorResponse) => this.initChecklistsError(err));
+  }
+
+  initChecklistXmls(data) {
 
 
-          // Initialize checklist groups.
-          //
+    // console.log('** initChecklistXmls **', data);
 
-          let checklistGroupMap = {};
-          let checklistGroupIndex = 0;
-          let checklistToGroupMap = {};
-          for (let i = 0; i < data.length; i++) {
-            if (checklistGroupMap[ data[i].report.groupName ]) {
-              checklistToGroupMap[ data[i].report.id ] = checklistGroupMap[ data[i].report.groupName ];
-              continue;
-            }
-            checklistGroupMap[ data[i].report.groupName ] = checklistGroupIndex++;
-            checklistToGroupMap[ data[i].report.id ] = checklistGroupMap[ data[i].report.groupName ];
+    const xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
 
-            console.log('** add checklist group **', data[i].report.groupName);
-            this.checklistGroups.push({
-              name: data[i].report.groupName,
-              description: data[i].report.groupDescription,
-              checklists: []
-            });
-          }
+    const checklistNodes = this.getXmlNodes(xmlDoc, 'CHECKLIST_SET/CHECKLIST');
+    let checklistNode = checklistNodes.iterateNext();
+    while (checklistNode) {
+      let checklist = {
+          id: this.getXmlTextValue(checklistNode, '@accession'),
+          name: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/NAME/text()'),
+          description: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/DESCRIPTION/text()'),
+          type: this.getXmlTextValue(checklistNode, '@checklistType'),
+          fieldGroups: []
+      };
 
-          // Initialize checklists.
-          //
-
-          // this.active = false;
-
-          const id = data.map(checklist => checklist.report.id).join();
-          console.log('** initChecklists **', id);
-          const xmlObservable: Observable<any> = this.webinReportService.getChecklistXml(id);
-
-          if (xmlObservable != null) {
-            xmlObservable.subscribe(
-            // Success
-            xmlData => {
-              // this.active = false;
-              console.log('** initChecklists **', xmlData);
-
-              const xmlDoc = this.xmlParser.parseFromString(xmlData.body, 'text/xml');
-
-              const checklistNodes = this.getXmlNodes(xmlDoc, 'CHECKLIST_SET/CHECKLIST');
-              let checklistNode = checklistNodes.iterateNext();
-              while (checklistNode) {
-                let checklist = {
-                    id: this.getXmlTextValue(checklistNode, '@accession'),
-                    name: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/NAME/text()'),
-                    description: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/DESCRIPTION/text()'),
-                    type: this.getXmlTextValue(checklistNode, '@checklistType'),
-                    fieldGroups: []
-                };
-
-                const fieldGroupNodes = this.getXmlNodes(checklistNode, 'DESCRIPTOR/FIELD_GROUP');
-                let fieldGroupNode = fieldGroupNodes.iterateNext();
-                while (fieldGroupNode) {
-                  let fieldGroup = {
-                    name: this.getXmlTextValue(fieldGroupNode, 'NAME/text()'),
-                    fields : []
-                  };
-
-                  const fieldNodes = this.getXmlNodes(fieldGroupNode, 'FIELD');
-                  let fieldNode = fieldNodes.iterateNext();
-                  while (fieldNode) {
-                    let field = {
-                      name: this.getXmlTextValue(fieldNode, 'NAME/text()'),
-                      description: this.getXmlTextValue(fieldNode, 'DESCRIPTION/text()'),
-                      mandatory: this.getXmlTextValue(fieldNode, 'MANDATORY/text()'),
-                      type: this.getXmlTextValue(fieldNode, 'name(FIELD_TYPE/*[1])'),
-                      regexValue: undefined,
-                      ontologyId: undefined,
-                      units: [],
-                      textChoice: [],
-                    };
-
-                    // Regex
-                    //
-
-                    const regexNodes = this.getXmlNodes(fieldNode, 'FIELD_TYPE/*/REGEX_VALUE[1]');
-                    if (regexNodes) {
-                      let regexNode = regexNodes.iterateNext();
-                      while (regexNode) {
-                        field.regexValue = this.getXmlTextValue(regexNode, 'text()');
-                        regexNode = regexNodes.iterateNext();
-                      };
-                    }
-
-                    // CV
-                    //
-
-                    const cvNodes = this.getXmlNodes(fieldNode, 'FIELD_TYPE/TEXT_CHOICE_FIELD/TEXT_VALUE/VALUE');
-                    if (cvNodes) {
-                      let cvNode = cvNodes.iterateNext();
-                      while (cvNode) {
-                        field.textChoice.push(this.getXmlTextValue(cvNode, 'text()'));
-                        cvNode = cvNodes.iterateNext();
-                      };
-                    }
-
-                    // Ontology
-                    //
-
-                    const ontologyNodes = this.getXmlNodes(fieldNode, 'FIELD_TYPE/ONTOLOGY_FIELD/ONTOLOGY_ID');
-                    if (ontologyNodes) {
-                      let ontologyNode = ontologyNodes.iterateNext();
-                      while (ontologyNode) {
-                        field.ontologyId = this.getXmlTextValue(ontologyNode, 'text()');
-                        ontologyNode = ontologyNodes.iterateNext();
-                      };
-                    }
-
-                    // Units
-                    //
-
-                    const unitNodes = this.getXmlNodes(fieldNode, 'UNITS/UNIT');
-                    if (unitNodes) {
-                      let unitNode = unitNodes.iterateNext();
-                      while (unitNode) {
-                        field.units.push(this.getXmlTextValue(unitNode, 'text()'));
-                        unitNode = unitNodes.iterateNext();
-                      };
-                    }
-
-                    fieldGroup.fields.push(field);
-                    fieldNode = fieldNodes.iterateNext();
-
-                  }
-
-                  checklist.fieldGroups.push(fieldGroup);
-                  fieldGroupNode = fieldGroupNodes.iterateNext();
-                }
-
-                this.checklistGroups[ checklistToGroupMap[ checklist.id ] ].checklists.push(checklist);
-                checklistNode = checklistNodes.iterateNext();
-              }
-
-              console.log('** Sample checklists **', this.checklistGroups );
-              this.checklistGroupDataSource = new MatTableDataSource<any>(this.checklistGroups);
-
-              // this.dataError = undefined;
-            },
-
-            // Errors
-            (err: HttpErrorResponse) => {
-              // this.active = false;
-              console.log('** initChecklists failed **', err);
-              const msg = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
-              // this.dataError = msg;
-          });
+      const fieldGroupNodes = this.getXmlNodes(checklistNode, 'DESCRIPTOR/FIELD_GROUP');
+      let fieldGroupNode = fieldGroupNodes.iterateNext();
+      while (fieldGroupNode) {
+        let fieldGroup = {
+          name: this.getXmlTextValue(fieldGroupNode, 'NAME/text()'),
+          fields : []
         };
 
+        const fieldNodes = this.getXmlNodes(fieldGroupNode, 'FIELD');
+        let fieldNode = fieldNodes.iterateNext();
+        while (fieldNode) {
+          let field = {
+            name: this.getXmlTextValue(fieldNode, 'NAME/text()'),
+            description: this.getXmlTextValue(fieldNode, 'DESCRIPTION/text()'),
+            mandatory: this.getXmlTextValue(fieldNode, 'MANDATORY/text()'),
+            type: this.getXmlTextValue(fieldNode, 'name(FIELD_TYPE/*[1])'),
+            regexValue: undefined,
+            ontologyId: undefined,
+            units: [],
+            textChoice: [],
+          };
 
-        },
-        // Errors
-        (err: HttpErrorResponse) => {
-          // this.active = false;
-          console.log('** initChecklists failed **', err);
-          const msg = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
-          // this.dataError = msg;
-      });
-    };
+          // Regex
+          //
+
+          const regexNodes = this.getXmlNodes(fieldNode, 'FIELD_TYPE/*/REGEX_VALUE[1]');
+          if (regexNodes) {
+            let regexNode = regexNodes.iterateNext();
+            while (regexNode) {
+              field.regexValue = this.getXmlTextValue(regexNode, 'text()');
+              regexNode = regexNodes.iterateNext();
+            };
+          }
+
+          // CV
+          //
+
+          const cvNodes = this.getXmlNodes(fieldNode, 'FIELD_TYPE/TEXT_CHOICE_FIELD/TEXT_VALUE/VALUE');
+          if (cvNodes) {
+            let cvNode = cvNodes.iterateNext();
+            while (cvNode) {
+              field.textChoice.push(this.getXmlTextValue(cvNode, 'text()'));
+              cvNode = cvNodes.iterateNext();
+            };
+          }
+
+          // Ontology
+          //
+
+          const ontologyNodes = this.getXmlNodes(fieldNode, 'FIELD_TYPE/ONTOLOGY_FIELD/ONTOLOGY_ID');
+          if (ontologyNodes) {
+            let ontologyNode = ontologyNodes.iterateNext();
+            while (ontologyNode) {
+              field.ontologyId = this.getXmlTextValue(ontologyNode, 'text()');
+              ontologyNode = ontologyNodes.iterateNext();
+            };
+          }
+
+          // Units
+          //
+
+          const unitNodes = this.getXmlNodes(fieldNode, 'UNITS/UNIT');
+          if (unitNodes) {
+            let unitNode = unitNodes.iterateNext();
+            while (unitNode) {
+              field.units.push(this.getXmlTextValue(unitNode, 'text()'));
+              unitNode = unitNodes.iterateNext();
+            };
+          }
+
+          fieldGroup.fields.push(field);
+          fieldNode = fieldNodes.iterateNext();
+        }
+
+        checklist.fieldGroups.push(fieldGroup);
+        fieldGroupNode = fieldGroupNodes.iterateNext();
+      }
+
+      for (let i = 0; i < this.checklistGroups.length; i++) {
+        for (let j = 0; j < this.checklistGroups[i].checklistIds.length; j++) {
+          if (checklist.id == this.checklistGroups[i].checklistIds[j]) {
+            this.checklistGroups[i].checklists.push(checklist);
+          }
+        }
+      }
+
+      checklistNode = checklistNodes.iterateNext();
+    }
+
+    console.log('** Sample checklists **', this.checklistGroups );
+    this.checklistGroupDataSource = new MatTableDataSource<any>(this.checklistGroups);
+
+    // this.active = false;
+    // this.dataError = undefined;
   }
 
   constructor(
