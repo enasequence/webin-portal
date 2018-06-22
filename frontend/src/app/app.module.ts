@@ -52,6 +52,9 @@ import { XmlSubmissionComponent } from './xml-submission/xml-submission.componen
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
 import { ReportComponent } from './report/report.component';
 import { ReportActionComponent } from './report-action/report-action.component';
+import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
+import { GdprComponent } from './gdpr/gdpr.component';
+import { ChecklistComponent } from './checklist/checklist.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
@@ -64,8 +67,6 @@ import { WebinGdprGuardService } from './webin-gdpr-guard.service';
 import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
 
 import { RouterModule, Routes } from '@angular/router';
-import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
-import { GdprComponent } from './gdpr/gdpr.component';
 
 const appRoutes: Routes = [
   {
@@ -146,6 +147,7 @@ const appRoutes: Routes = [
     ReportEditDialogComponent,
     ReportActionComponent,
     GdprComponent,
+    ChecklistComponent,
   ],
   bootstrap: [
       AppComponent,
