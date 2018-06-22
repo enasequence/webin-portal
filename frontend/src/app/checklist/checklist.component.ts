@@ -106,8 +106,8 @@ export class ChecklistComponent implements OnInit {
     this.mandatoryFields = {};
     this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
       fieldGroup.fields.forEach( function(field) {
-        this.selectedFields[field.name] = (field.mandatory == 'mandatory');
-        this.mandatoryFields[field.name] = (field.mandatory == 'mandatory');
+        this.selectedFields[field.label] = (field.mandatory == 'mandatory');
+        this.mandatoryFields[field.label] = (field.mandatory == 'mandatory');
       }, this);
     }, this);
     stepper.next();
@@ -206,6 +206,7 @@ export class ChecklistComponent implements OnInit {
         while (fieldNode) {
           let field = {
             name: this.getXmlTextValue(fieldNode, 'NAME/text()'),
+            label: this.getXmlTextValue(fieldNode, 'LABEL/text()'),
             description: this.getXmlTextValue(fieldNode, 'DESCRIPTION/text()'),
             mandatory: this.getXmlTextValue(fieldNode, 'MANDATORY/text()'),
             type: this.getXmlTextValue(fieldNode, 'name(FIELD_TYPE/*[1])'),
