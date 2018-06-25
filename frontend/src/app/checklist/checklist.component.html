@@ -43,7 +43,7 @@
 
 <mat-horizontal-stepper #stepper *ngIf="checklistGroupDataSource">
   <mat-step label="Select checklist group">
-    <p>Please select a checklist group.</p>
+    <p>Please select a checklist group first.</p>
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="checklistGroupDataSource">
@@ -66,6 +66,10 @@
 
   </mat-step>
   <mat-step label="Select checklist">
+    <div *ngIf="selectedChecklistGroup == undefined">
+      <p>Please select a checklist group first.</p>
+    </div>
+
     <div *ngIf="selectedChecklistGroup != undefined">
       <p>You have selected <b>{{selectedChecklistGroup.name}}</b>. Please select the most appropriate checklist from the list below.</p>
       <div class="mat-elevation-z8">
@@ -90,6 +94,10 @@
 
   </mat-step>
   <mat-step label="Select checklist fields">
+    <div *ngIf="selectedChecklist == undefined">
+      <p>Please select a checklist first.</p>
+    </div>
+
     <div *ngIf="selectedChecklist != undefined">
       <p>You have selected <b>{{selectedChecklist.name}}</b>. Please select the checklist fields below.</p>
 
@@ -157,28 +165,36 @@
     </div>
   </mat-step>
   <mat-step label="Download spreadsheet template">
-
-    <p>
-        Please download an empty spreadsheet containing the fields you have selected by using the Download button below.
-    </p>
-
-    <div *ngIf="checklistType == ChecklistType.sequence">
-      <p>
-        Please do not modify the first two lines in the spreadsheet. The first line contains the checklist name and
-        the second line contains the field names in separate columns. The first column in the spreadsheet,
-        the ENTRYNUMBER, starts with 1 and is incremented by 1 for each sequence. For example, if the spreadsheet
-        has 10 sequences the first ENTRYNUMBER should be 1 and the last should be 10. The other columns in the
-        spreadsheet correspond to the checklist fields you have selected. You can find more information about
-        permitted values for each column from the checklist field selection page.
-      </p>
-
+    <div *ngIf="selectedChecklist == undefined">
+      <p>Please select a checklist first.</p>
     </div>
 
-    <button mat-raised-button color="accent" (click)="download()">Download</button>
+    <div *ngIf="selectedChecklist != undefined">
+
+      <p>
+          Please download an empty spreadsheet containing the fields you have selected by using the Download button below.
+      </p>
+
+      <div *ngIf="checklistType == ChecklistType.sequence">
+        <p>
+          Please do not modify the first two lines in the spreadsheet. The first line contains the checklist name and
+          the second line contains the field names in separate columns. The first column in the spreadsheet,
+          the ENTRYNUMBER, starts with 1 and is incremented by 1 for each sequence. For example, if the spreadsheet
+          has 10 sequences the first ENTRYNUMBER should be 1 and the last should be 10. The other columns in the
+          spreadsheet correspond to the checklist fields you have selected. You can find more information about
+          permitted values for each column from the checklist field selection page.
+        </p>
+
+      </div>
+
+      <button mat-raised-button color="accent" (click)="download()">Download</button>
+
+    </div>
 
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <!-- <button mat-button matStepperNext (click)="">Done</button> -->
     </div>
+
   </mat-step>
 </mat-horizontal-stepper>
