@@ -91,7 +91,7 @@ export class ChecklistComponent implements OnInit {
   getSelectedFieldsDisplayText(fieldGroup): string {
     let cnt = 0;
     fieldGroup.fields.forEach( function(field) {
-      if (this.selectedFields[field.name]) {
+      if (this.selectedFields[field.label]) {
         cnt++;
       }
     }, this);
