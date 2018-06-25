@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { ChecklistType } from '../checklist-type.enum';
 import { ChecklistComponent } from './checklist.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
@@ -47,5 +48,41 @@ describe('ChecklistComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('getSequenceSpreadsheetText()', () => {
+
+    component.selectedFields = {};
+    component.selectedFields['TEST_FIELD_1'] = true;
+    component.selectedFields['TEST_FIELD_2'] = true;
+    component.selectedFields['TEST_FIELD_3'] = false;
+
+    component.selectedChecklist = {
+      id: 'TEST_ID',
+      fieldGroups: [
+        {
+          fields: [
+            {
+              label: 'TEST_FIELD_1'
+            }
+          ]
+        },
+        {
+          fields: [
+            {
+              label: 'TEST_FIELD_2'
+            },
+            {
+              label: 'TEST_FIELD_3'
+            }
+          ]
+        }
+      ]
+    };
+
+    const spreadsheetText = '#template_accession TEST_ID\n';
+    spreadsheetText += 'ENTRYNUMBER\tTEST_FIELD_1\tTEST_FIELD_2\n';
+
+    expect(component.getSequenceSpreadsheetText()).toBe(spreadsheetText);
   });
 });

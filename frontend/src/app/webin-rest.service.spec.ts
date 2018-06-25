@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { WebinRestService } from './webin-rest-service.service';
+import { WebinRestService } from './webin-rest.service';
 
 describe('WebinRestService', () => {
   beforeEach(() => {

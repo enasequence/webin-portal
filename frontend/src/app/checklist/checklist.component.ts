@@ -159,8 +159,8 @@ export class ChecklistComponent implements OnInit {
       this.active = false;
       console.log('** initChecklists failed **', err);
       const msg = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
-      // this.dataError = msg;
-  }
+      this.dataError = msg;
+   }
 
   initChecklistGroups(data) {
     for (let i = 0; i < data.length; i++) {
@@ -289,9 +289,9 @@ export class ChecklistComponent implements OnInit {
     }
 
     this.active = false;
-    this.dataError = undefined;
+    // this.dataError = undefined;
 
-    console.log('** Sample checklists **', this.checklistGroups );
+    console.log('** Checklists **', this.checklistGroups );
     this.checklistGroupDataSource = new MatTableDataSource<any>(this.checklistGroups);
   }
 
@@ -309,7 +309,8 @@ export class ChecklistComponent implements OnInit {
     return this.webinAuthenticationService.ega;
   }
 
-  download() {
+
+  getSequenceSpreadsheetText(): string {
     let spreadsheetText = '#template_accession ' + this.selectedChecklist.id + '\n';
     spreadsheetText += 'ENTRYNUMBER\t';
 
@@ -337,10 +338,14 @@ export class ChecklistComponent implements OnInit {
     });
 
     spreadsheetText += '\n';
+    return spreadsheetText;
+  }
+
+  download() {
 
     let dateText = (new Date()).toISOString();
 
-    let blob = new Blob([spreadsheetText], {type: "text/plain;charset=utf-8"});
+    let blob = new Blob([this.getSequenceSpreadsheetText()], {type: "text/plain;charset=utf-8"});
     saveAs(blob, 'Sequence-' + this.selectedChecklist.id + '-' + dateText + '.tsv');
   }
 }
