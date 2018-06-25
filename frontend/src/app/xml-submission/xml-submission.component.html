@@ -9,13 +9,12 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Submit XML files
+      <b>Submit XML files</b>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
   <p>
-    Please use this submission option to make any type of Webin submission
-    using XML files.
+    Use this submission option to make any type of Webin submission using XML files.
   </p>
 
     <div class="container"
@@ -60,8 +59,9 @@
   <mat-expansion-panel *ngIf="!isEga()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Download a spreadsheet template for annotated sequences
+        <b>Download spreadsheet template for annotated sequences</b>
       </mat-panel-title>
+
     </mat-expansion-panel-header>
 
     <app-checklist [checklistType]="ChecklistType.sequence"></app-checklist>
