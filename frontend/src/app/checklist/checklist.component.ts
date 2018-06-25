@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 import { MatStepper } from '@angular/material';
 
 import { ChecklistType } from '../checklist-type.enum';
