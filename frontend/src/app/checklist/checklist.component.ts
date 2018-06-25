@@ -332,6 +332,7 @@ export class ChecklistComponent implements OnInit {
           if (++i < selectedFieldsCnt) {
             spreadsheetText += '\t';
           }
+        }
       });
     });
 
