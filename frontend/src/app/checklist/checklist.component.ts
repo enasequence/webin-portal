@@ -310,7 +310,36 @@ export class ChecklistComponent implements OnInit {
   }
 
   download() {
-      var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-      saveAs(blob, "hello world.txt");
+    let spreadsheetText = '#template_accession ' + this.selectedChecklist.id + '\n';
+    spreadsheetText += 'ENTRYNUMBER\t';
+
+    let _selectedFields = this.selectedFields;
+
+    let selectedFieldsCnt = 0;
+    this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
+      fieldGroup.fields.forEach( function(field) {
+        if (_selectedFields[field.label]) {
+          selectedFieldsCnt++;
+        }
+      });
+    });
+
+    let i = 0;
+    this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
+      fieldGroup.fields.forEach( function(field) {
+        if (_selectedFields[field.label]) {
+          spreadsheetText += field.label;
+          if (++i < selectedFieldsCnt) {
+            spreadsheetText += '\t';
+          }
+      });
+    });
+
+    spreadsheetText += '\n';
+
+    let dateText = (new Date()).toISOString();
+
+    let blob = new Blob([spreadsheetText], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, 'Sequence-' + this.selectedChecklist.id + '-' + dateText + '.tsv');
   }
 }
