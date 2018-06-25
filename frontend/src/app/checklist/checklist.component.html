@@ -159,24 +159,17 @@
   <mat-step label="Download spreadsheet template">
 
     <p>
-        Please download the empty spreadsheet containing the fields you have selected.
+        Please download an empty spreadsheet containing the fields you have selected by using the Download button below.
     </p>
 
     <div *ngIf="checklistType == ChecklistType.sequence">
       <p>
-        Please do not modify the header lines in the spreadsheet. They are required for the correct interpretation
-        of the spreadsheet at time of submission.
-      </p>
-
-      <p>
-        The first column in the spreadsheet is the ENTRYNUMBER. It must contain the sequence number starting from 1
-        followed by 2, 3 etc.
-      </p>
-
-      <p>
-        The other columns in the spreadsheet correspond to the checklist fields you have selected.
-        You can find more information about permitted values for each column from the checklist field
-        selection page.
+        Please do not modify the first two lines in the spreadsheet. The first line contains the checklist name and
+        the second line contains the field names in separate columns. The first column in the spreadsheet,
+        the ENTRYNUMBER, starts with 1 and is incremented by 1 for each sequence. For example, if the spreadsheet
+        has 10 sequences the first ENTRYNUMBER should be 1 and the last should be 10. The other columns in the
+        spreadsheet correspond to the checklist fields you have selected. You can find more information about
+        permitted values for each column from the checklist field selection page.
       </p>
 
     </div>
