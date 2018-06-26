@@ -9,7 +9,7 @@
     "buildWatch": "ng build --watch=true",
     "buildDev": "ng build --configuration=dev",
     "buildTest": "ng build --configuration=test",
-    "buildProd": "ng build --prod --configuration=prod",
+    "buildProd": "ng build --prod --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
