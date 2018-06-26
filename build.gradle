@@ -21,7 +21,7 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.2.9'
+ext.version_base = '0.3.0'
 ext.environment = project.hasProperty('env') ? env : Environment.dev.toString();
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.sub-ang'
@@ -66,7 +66,7 @@ dependencies {
 }
 
 node {
-    // version = "8.9.4"
+    version = "8.9.0"
     download = true
     nodeModulesDir = file("frontend")
 }

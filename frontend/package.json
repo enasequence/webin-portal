@@ -7,9 +7,9 @@
     "start": "ng serve",
     "build": "ng build",
     "buildWatch": "ng build --watch=true",
-    "buildDev": "ng build --env=dev",
-    "buildTest": "ng build --env=test",
-    "buildProd": "ng build --prod --env=prod",
+    "buildDev": "ng build --configuration=dev",
+    "buildTest": "ng build --configuration=test",
+    "buildProd": "ng build --prod --configuration=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
