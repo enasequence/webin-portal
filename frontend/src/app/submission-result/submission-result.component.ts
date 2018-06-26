@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { WebinRestService } from '../webin-rest.service';
 
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {saveAs as importedSaveAs} from 'file-saver';
 
 export interface WebinError {

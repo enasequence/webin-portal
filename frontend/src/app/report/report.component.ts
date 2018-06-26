@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, ViewEncapsulation, ViewChild, Input, O
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType, ReportTypeUtils } from '../report-type.enum';

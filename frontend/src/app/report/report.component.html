@@ -146,12 +146,14 @@ or
   </mat-form-field>
 </span>
 
-
+&nbsp;
 <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
   Search
 </button>
+&nbsp;
 
 <button mat-raised-button (click)="reset()">Reset</button>
+&nbsp;
 
 <mat-form-field>
   <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
@@ -169,10 +171,12 @@ or
     </mat-option>
   </mat-select>
 </mat-form-field>
+&nbsp;
 
 <mat-checkbox [(ngModel)]="showAlias" *ngIf="isMetadataReport()">
   Show unique name
 </mat-checkbox>
+&nbsp;
 
 <span *ngIf="this.data && this.data.length > 0">
   <a href="{{ csvDownloadAllLink() }}">Download all results</a>

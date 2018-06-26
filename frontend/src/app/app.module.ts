@@ -52,17 +52,21 @@ import { XmlSubmissionComponent } from './xml-submission/xml-submission.componen
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
 import { ReportComponent } from './report/report.component';
 import { ReportActionComponent } from './report-action/report-action.component';
+import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
+import { GdprComponent } from './gdpr/gdpr.component';
+import { ChecklistComponent } from './checklist/checklist.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
 import { WebinXmlReportService } from './webin-xml-report.service';
 import { WebinAuthenticationService } from './webin-authentication.service';
+import { WebinGdprService } from './webin-gdpr.service';
 import { WebinAuthenticationGuardService } from './webin-authentication-guard.service';
+import { WebinGdprGuardService } from './webin-gdpr-guard.service';
 
 import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
 
 import { RouterModule, Routes } from '@angular/router';
-import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
 
 const appRoutes: Routes = [
   {
@@ -70,9 +74,14 @@ const appRoutes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'consent',
+    component: GdprComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
     path: '**',
     component: DashboardComponent,
-    canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
   }
 ];
 
@@ -137,6 +146,8 @@ const appRoutes: Routes = [
     ReportComponent,
     ReportEditDialogComponent,
     ReportActionComponent,
+    GdprComponent,
+    ChecklistComponent,
   ],
   bootstrap: [
       AppComponent,
@@ -148,7 +159,10 @@ const appRoutes: Routes = [
     WebinReportService,
     WebinXmlReportService,
     WebinAuthenticationService,
+    WebinGdprService,
     WebinAuthenticationGuardService,
+    WebinGdprGuardService,
+
     {
         provide: HTTP_INTERCEPTORS,
         useClass: WebinAuthenticationInterceptor,

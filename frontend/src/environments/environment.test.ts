@@ -5,10 +5,11 @@
 
 export const environment = {
   production: false,
-  title: 'Webin XML and reports portal (TEST)',
+  title: 'Webin submissions portal (TEST)',
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
   webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
-  webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
+  webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box',
+  webinGdprServiceUrl: 'TODO'
 };

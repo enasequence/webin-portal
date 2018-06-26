@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 import { WebinAuthenticationService } from './webin-authentication.service';
@@ -132,10 +132,24 @@ export class WebinReportService {
     return this.getById('datasets', id, rows, format);
   }
 
-
-
-
-
+  getChecklistGroups(type: string) {
+      var params = {};
+      params["type"] = type;
+      const url: string = this._baseUrl + '/checklist-groups' + '?' + this.getUrlParams(params);
+      return this.http.get(url);
+  }
+  getChecklists(type: string) {
+      var params = {};
+      params["type"] = type;
+      const url: string = this._baseUrl + '/checklists' + '?' + this.getUrlParams(params);
+      return this.http.get(url);
+  }
+  getChecklistXmls(type: string) {
+      var params = {};
+      params["type"] = type;
+      const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
+      return this.http.get(url, { responseType: 'text', observe: 'response' });
+  }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
     var params = {};

@@ -5,10 +5,12 @@
 
 export const environment = {
   production: false,
-  title: 'Webin XML and reports portal (DEFAULT)',
+  title: 'Webin submissions portal (DEFAULT)',
   webinServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
   webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
-  webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
-  webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box', // TODO
+  // webinReportServiceUrl: 'http://RASKO-W7D.windows.ebi.ac.uk:8221/ena/submit/report',
+  webinReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/report',
+  webinXmlReportServiceUrl: 'https://www-test.ebi.ac.uk/ena/submit/drop-box',
+  webinGdprServiceUrl: 'TODO'
 };

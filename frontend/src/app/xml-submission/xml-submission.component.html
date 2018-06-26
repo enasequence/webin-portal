@@ -1,14 +1,23 @@
 <div>
+  <p>
       <span class = "app-primary-color">
         <i class="material-icons">info</i>
       </span>
-  This page is used for Webin XML submissions. To access Webin reports please select one of the other pages above.
+    This page is used for making new submissions. To access reports please select one of the other pages above.
+  </p>
 </div>
 
-<mat-horizontal-stepper>
+<mat-accordion>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <b>Submit XML files</b>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
-  <mat-step>
-    <ng-template matStepLabel>Select XML files</ng-template>
+  <p>
+    Use this submission option to make any type of Webin submission using XML files.
+  </p>
 
     <div class="container"
          fxLayout
@@ -47,9 +56,20 @@
     </div>
 
     <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
+  </mat-expansion-panel>
 
-    <app-submission-result #submissionResult></app-submission-result>
+  <mat-expansion-panel *ngIf="!isEga()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>Download spreadsheet template for annotated sequences</b>
+      </mat-panel-title>
 
-  </mat-step>
+    </mat-expansion-panel-header>
 
-</mat-horizontal-stepper>
+    <app-checklist [checklistType]="ChecklistType.sequence"></app-checklist>
+
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+<app-submission-result #submissionResult></app-submission-result>
