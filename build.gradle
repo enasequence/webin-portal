@@ -16,16 +16,15 @@ buildscript {
 	}
 }
 
-
 enum Environment{
     localdev, localtest, dev , test , prod
 }
 
 ext.version_base = '0.3.0'
-ext.environment = project.hasProperty('env') ? env : Environment.test.toString();
+ext.environment = project.hasProperty('env') ? env : Environment.dev.toString();
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.sub-ang'
-ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_dsa")
+ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_rsa")
 ext.envAngularBuildScriptMap = [
         'test'   : 'buildTest',
         'dev'    : 'buildDev',
@@ -35,14 +34,12 @@ ext.envAngularBuildScriptMap = [
 printSetup()
 
 
-
-
 def props = new Properties()
 file('src/main/resources/application.properties').withInputStream {
     props.load(it)
 }
-def serverContextPath = props['server.contextPath']
-def serverPort = props['server.port']
+ext.serverContextPath = removeLeadingSlash(props['server.contextPath'])
+ext.serverPort = props['server.port']
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -52,7 +49,7 @@ apply plugin: 'org.hidetake.ssh'
 apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
-
+sourceSets.main.resources.includes = [ "**/*.*" ]
 
 repositories {
 	mavenLocal()
@@ -62,6 +59,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
@@ -69,6 +67,19 @@ node {
     version = "8.9.0"
     download = true
     nodeModulesDir = file("frontend")
+}
+
+processResources {
+    filesMatching('application*.properties') {
+        expand(project.properties)
+    }
+}
+
+jar.manifest {
+    attributes('Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Source-Compatibility': project.sourceCompatibility
+    )
 }
 
 
@@ -138,6 +149,15 @@ publishing {
 }
 
 
+
+jar.manifest {
+    attributes('Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Source-Compatibility': project.sourceCompatibility
+    )
+}
+
+
 def getEnvRemotes() {
     def hosts = [] ;
     switch (environment){
@@ -165,11 +185,90 @@ task deploy << {
         for (remote in getEnvRemotes()){
             println("Deploying into: " + remote)
             session(remote) {
-                execute "~/ena/generic-deploy.sh $project.name $version $environment $serverPort " +  removeLeadingSlash(serverContextPath)
+                execute "~/ena/generic-deploy.sh $project.name $version $environment $serverPort $serverContextPath}"
             }
         }
     }
 }
+
+
+
+task restartDev(){
+    doLast{
+        restart(remotes.dev)
+    }
+}
+
+task restartTest(){
+    doLast{
+        restart(remotes.test)
+    }
+}
+
+task restartProd(){
+    doLast{
+        restart(remotes.prodA)
+        restart(remotes.prodB)
+    }
+}
+
+
+
+def restart(remote){
+    ssh.run {
+        session(remote) {
+            println "Restarting app"
+            def result = execute "monit restart $project.name"
+            println result
+        }
+    }
+}
+
+
+
+task displayInfo(){
+    doLast{
+        displayInfo(remotes.dev)
+        displayInfo(remotes.test)
+        displayInfo(remotes.prodA)
+        displayInfo(remotes.prodB)
+    }
+}
+
+def displayInfo(remote){
+    println ""
+    println "Remote:$remote, host:$remote.host"
+    println "Info and health status"
+    doGet(getInfoURL(remote))
+    doGet(getHealthURL(remote))
+    println ""
+}
+
+
+def doGet(url){
+    try {
+        println url;
+        println(new URL(url).text)
+    }
+    catch(all){
+        print all.getMessage()
+    }
+}
+
+def getInfoURL(remote){
+    return getBaseURL(remote) + "/info"
+}
+
+def getHealthURL(remote){
+    return getBaseURL(remote) + "/health"
+}
+
+
+def getBaseURL(remote){
+    return "http://${remote.host}:${serverPort}/${serverContextPath}"
+}
+
+
 
 
 def removeLeadingSlash(url){
@@ -177,16 +276,6 @@ def removeLeadingSlash(url){
     return url
 }
 
-
-
-jar.manifest {
-    attributes('Implementation-Title': project.name,
-            'Implementation-Version': project.version,
-            'Source-Compatibility': project.sourceCompatibility
-    )
-}
-
-sourceSets.main.resources.includes = [ "**/*.*" ]
 
 def printSetup(){
     println()
@@ -204,6 +293,8 @@ bootRepackage.dependsOn(buildClient)
 bootRun.dependsOn(bootRepackage)
 jar.dependsOn(buildClient)
 compileJava.dependsOn(clean)
+
+
 
 
 
