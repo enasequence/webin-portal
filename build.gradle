@@ -20,7 +20,7 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.3.0'
+ext.version_base = '0.3.1'
 ext.environment = project.hasProperty('env') ? env : Environment.dev.toString();
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.sub-ang'
@@ -185,7 +185,7 @@ task deploy << {
         for (remote in getEnvRemotes()){
             println("Deploying into: " + remote)
             session(remote) {
-                execute "~/ena/generic-deploy.sh $project.name $version $environment $serverPort $serverContextPath}"
+                execute "~/ena/generic-deploy.sh $project.name $version $environment $serverPort $serverContextPath"
             }
         }
     }
