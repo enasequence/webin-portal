@@ -9,7 +9,6 @@ export class WebinAuthenticationGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     console.log('WebinAuthenticationGuardService');
-
     if (this.webinAuthenticationService.authenticated) {
       if (new Date() >=
           this.webinAuthenticationService.logoutDate) {
