@@ -45,6 +45,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { LoginAccountComponent } from './login-account/login-account.component';
 import { TitleComponent } from './title/title.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -72,6 +73,10 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LoginComponent,
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
   },
   {
     path: 'consent',
@@ -140,6 +145,7 @@ const appRoutes: Routes = [
     XmlSubmissionComponent,
     SubmissionResultComponent,
     LoginComponent,
+    LogoutComponent,
     LoginAccountComponent,
     DashboardComponent,
     TitleComponent,

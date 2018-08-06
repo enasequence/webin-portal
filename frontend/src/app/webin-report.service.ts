@@ -207,6 +207,7 @@ export class WebinReportService {
 
   getCsvUrlWithToken(url: string) {
     url = url + '&token=' + this.webinAuthenticationService.token;
+      // this.webinAuthenticationService.token;
     // console.log(url);
     return url;
   }

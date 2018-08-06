@@ -9,14 +9,57 @@ import { environment } from '../environments/environment';
 @Injectable()
 export class WebinAuthenticationService {
 
-  private username: string;
-  // private password: string;
-  token: string;
-  authenticated = false;
-  account: string;
-  ega: boolean;
-  loginDate;
-  logoutDate;
+  get username(): string {
+    return sessionStorage.getItem('username');
+  }
+  set username(username: string) {
+    sessionStorage.setItem('username', username);
+  }
+
+  get token(): string {
+    return sessionStorage.getItem('token');
+  }
+  set token(token: string) {
+    sessionStorage.setItem('token', token);
+  }
+
+  get authenticated(): boolean {
+    if (sessionStorage['authenticated']) {
+      return JSON.parse(sessionStorage.getItem('authenticated'));
+    }
+    return false;
+  }
+  set authenticated(authenticated: boolean) {
+    sessionStorage.setItem('authenticated', JSON.stringify(authenticated));
+  }
+
+  get account(): string {
+    return sessionStorage.getItem('account');
+  }
+  set account(account: string) {
+    sessionStorage.setItem('account', account);
+  }
+
+  get ega(): boolean {
+    return JSON.parse(sessionStorage.getItem('ega'));
+  }
+  set ega(ega: boolean) {
+    sessionStorage.setItem('ega', JSON.stringify(ega));
+  }
+
+  get loginDate() {
+    return JSON.parse(sessionStorage.getItem('loginDate'));
+  }
+  set loginDate(loginDate) {
+    sessionStorage.setItem('loginDate', JSON.stringify(loginDate));
+  }
+
+  get logoutDate() {
+    return JSON.parse(sessionStorage.getItem('logoutDate'));
+  }
+  set logoutDate(logoutDate) {
+    sessionStorage.setItem('logoutDate', JSON.stringify(logoutDate));
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -33,14 +76,15 @@ export class WebinAuthenticationService {
   }
 
   public logout() {
-    this.username = undefined;
-    // this.password = undefined;
-    this.token = undefined;
-    this.authenticated = false;
-    this.account = undefined;
-    this.ega = undefined;
-    this.loginDate = undefined;
-    this.logoutDate = undefined;
+    console.log('** logout **');
+
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('authenticated');
+    sessionStorage.removeItem('account');
+    sessionStorage.removeItem('ega');
+    sessionStorage.removeItem('loginDate');
+    sessionStorage.removeItem('logoutDate');
   }
 
   public login(username: string, password: string): Observable<any> {
@@ -48,10 +92,9 @@ export class WebinAuthenticationService {
     console.log('** Webin authentication login **', baseUrl);
 
     this.username = username;
-    // this.password = password;
-    this.loginDate = new Date();
-    this.logoutDate = new Date();
-    this.logoutDate.setDate(this.loginDate + 7);
+    var today = new Date();
+    this.loginDate = today;
+    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
 
     const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
@@ -66,10 +109,9 @@ export class WebinAuthenticationService {
     console.log('** Webin authentication token **', baseUrl);
 
     this.username = username;
-    // this.password = password;
-    this.loginDate = new Date();
-    this.logoutDate = new Date();
-    this.logoutDate.setDate(this.loginDate + 7);
+    var today = new Date();
+    this.loginDate = today;
+    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
 
     const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
