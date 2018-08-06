@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+
+import {MatTableDataSource} from '@angular/material';
+import { MatStepper } from '@angular/material';
 
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
+import { ChecklistComponent } from '../checklist/checklist.component';
+import { ChecklistType } from '../checklist-type.enum';
 
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinRestService } from '../webin-rest.service';
@@ -16,6 +22,8 @@ export class XmlSubmissionComponent implements OnInit {
 
   @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
 
+  ChecklistType = ChecklistType;   // Allows use in template
+
   submissionFile: File;
   studyFile: File;
   projectFile: File;
@@ -29,7 +37,8 @@ export class XmlSubmissionComponent implements OnInit {
 
   constructor(
     private webinAuthenticationService: WebinAuthenticationService,
-    private webinRestService: WebinRestService) {
+    private webinRestService: WebinRestService
+    ) {
   }
 
   ngOnInit() {

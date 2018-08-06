@@ -1,0 +1,26 @@
+<mat-grid-list cols="3">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="gdpr-card">
+      <mat-card-header>
+        <!-- <mat-card-title>Privacy Notice</mat-card-title> -->
+          <mat-card-subtitle>
+            <div *ngIf="!isEga()">
+            This service requires limited processing of your personal data in order to function.
+            By using the service you are agreeing to this as outlined in our
+            <a href="https://www.ebi.ac.uk/data-protection/privacy-notice/ena-submission" rel="noopener noreferrer" target="_blank">Privacy Notice</a>
+            and
+            <a href="https://www.ebi.ac.uk/about/terms-of-use" rel="noopener noreferrer" target="_blank">Terms of Use</a>.
+            </div>
+            <div *ngIf="isEga()">
+            TODO
+            </div>
+          </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <button mat-raised-button color="accent" type="submit" name="consent" (click)="consent()">I agree</button>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

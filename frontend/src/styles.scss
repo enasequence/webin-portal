@@ -242,3 +242,13 @@ $accent: map-get($app-theme, accent);
     left: 0;
   }
 }
+
+// Override foundation styles.
+
+table tbody tr:nth-child(even) {
+    background-color: white;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: white;
+}

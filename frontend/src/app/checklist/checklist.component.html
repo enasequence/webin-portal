@@ -1,0 +1,199 @@
+<div *ngIf="!checklistGroupDataSource" >
+
+  <p *ngIf="checklistType == ChecklistType.sample">
+    Use this submission option to create and download a spreadsheet template for samples.
+  </p>
+
+  <p *ngIf="checklistType == ChecklistType.sequence">
+    Use this submission option to create and download a spreadsheet template for sequences.
+  </p>
+
+  <button mat-raised-button color="accent" (click)="initChecklists()">Start</button>
+</div>
+
+<div *ngIf="checklistGroupDataSource" >
+
+  <p *ngIf="checklistType == ChecklistType.sample">
+    Please select the most appropriate checklist group, checklist and checklist fields.
+    Download an empty spreadsheet template, fill in the spreadsheet and submit the spreadsheet
+    using Webin.
+  </p>
+
+  <p *ngIf="checklistType == ChecklistType.sequence">
+    Please select the most appropriate checklist group, checklist and checklist fields.
+    Download an empty spreadsheet template, Fill in the spreadsheet
+    and submit the spreadsheet using
+    <a href="http://ena-docs.readthedocs.io/en/latest/cli_04.html" target="_blank">Webin command line interface</a>.
+  </p>
+
+</div>
+
+<div *ngIf="active" style="height:70px;">
+  <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+  </mat-spinner>
+</div>
+
+<div *ngIf="dataError !== undefined">
+  <div class="app-error">
+    <i class="material-icons">error</i>
+    {{dataError}}
+  </div>
+</div>
+
+<mat-horizontal-stepper #stepper *ngIf="checklistGroupDataSource">
+  <mat-step label="Select checklist group">
+    <p>Please select a checklist group first.</p>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="checklistGroupDataSource">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let checklistGroup">
+            <p style="font-weight:bold;"> {{ checklistGroup.name }} </p>
+            <p style="margin-left:10px;"> {{ checklistGroup.description }} </p>
+          </td>
+        </ng-container>
+
+        <tr mat-row *matRowDef="let row; columns: checklistGroupDisplayedColumns;" (click)="setChecklistGroup(row, stepper)"></tr>
+      </table>
+    </div>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext [disabled]="this.selectedChecklistGroup == undefined">Next</button>
+    </div>
+
+  </mat-step>
+  <mat-step label="Select checklist">
+    <div *ngIf="selectedChecklistGroup == undefined">
+      <p>Please select a checklist group first.</p>
+    </div>
+
+    <div *ngIf="selectedChecklistGroup != undefined">
+      <p>You have selected <b>{{selectedChecklistGroup.name}}</b>. Please select the most appropriate checklist from the list below.</p>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="checklistDataSource">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let checklist">
+              <p style="font-weight:bold;"> {{ checklist.name }} </p>
+              <p style="margin-left:10px;"> {{ checklist.description }} </p>
+            </td>
+          </ng-container>
+
+          <tr mat-row *matRowDef="let row; columns: checklistDisplayedColumns;" (click)="setChecklist(row, stepper)"></tr>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext [disabled]="this.selectedChecklist == undefined">Next</button>
+    </div>
+
+  </mat-step>
+  <mat-step label="Select checklist fields">
+    <div *ngIf="selectedChecklist == undefined">
+      <p>Please select a checklist first.</p>
+    </div>
+
+    <div *ngIf="selectedChecklist != undefined">
+      <p>You have selected <b>{{selectedChecklist.name}}</b>. Please select the checklist fields below.</p>
+
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let fieldGroup of selectedChecklist.fieldGroups">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{fieldGroup.name}} {{getSelectedFieldsDisplayText(fieldGroup)}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div *ngFor="let field of fieldGroup.fields">
+            <div
+              class="container"
+              fxLayout
+              fxLayout.xs="row wrap"
+              fxLayoutAlign="space-around start"
+              fxLayoutGap="10px">
+              <div style="width:40%">
+                <mat-checkbox class="checklist-checked-field" [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]"><b class="checklist-checked-field">{{field.label}}</b></mat-checkbox>
+              </div>
+              <div style="width:30%">
+                <i>{{field.mandatory}} {{getFieldTypeDisplayText(field)}}</i>
+              </div>
+              <div style="width:30%">
+                <p *ngIf="field.units.length > 0">
+                  <mat-select class="checklist-restriction" placeholder="Permitted units">
+                    <mat-option *ngFor="let unit of field.units" [value]="unit" disabled>
+                      {{ unit }}
+                    </mat-option>
+                  </mat-select>
+                </p>
+                <p *ngIf="field.regexValue" class="checklist-restriction">
+                  <mat-select class="checklist-restriction" placeholder="Permitted regular expression">
+                    <mat-option disabled>
+                      {{ field.regexValue }}
+                    </mat-option>
+                  </mat-select>
+                </p>
+                <p *ngIf="field.textChoice && field.textChoice.length > 0">
+                  <mat-select class="checklist-restriction" placeholder="Permitted values">
+                    <mat-option *ngFor="let textChoice of field.textChoice" [value]="textChoice" disabled>
+                      {{ textChoice }}
+                    </mat-option>
+                  </mat-select>
+                </p>
+                <p *ngIf="field.ontologyId" class="checklist-restriction">
+                  Permitted ontology: {{ field.ontologyId }}
+                </p>
+              </div>
+            </div>
+            <p style="margin-left:10px;" *ngIf="checklistType == ChecklistType.sequence">
+              {{field.name}}
+            </p>
+            <p style="margin-left:10px;">
+              {{field.description}}
+            </p>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Download spreadsheet template">
+    <div *ngIf="selectedChecklist == undefined">
+      <p>Please select a checklist first.</p>
+    </div>
+
+    <div *ngIf="selectedChecklist != undefined">
+
+      <p>
+          Please download the spreadsheet template containing the fields you have selected by using the 'Download' button below.
+      </p>
+
+      <div *ngIf="checklistType == ChecklistType.sequence">
+        <p>
+          Please do not modify the first two lines of the spreadsheet. The first line contains the checklist name and
+          the second line contains the field names in separate columns. The first column in the spreadsheet,
+          the ENTRYNUMBER, starts with 1 and is incremented by 1 for each sequence. For example, if the spreadsheet
+          has 10 sequences the first ENTRYNUMBER should be 1 and the last should be 10. The other columns in the
+          spreadsheet correspond to the checklist fields you have selected. You can find more information about
+          permitted values for each column from the 'Select checklist fields' page.
+        </p>
+
+      </div>
+
+      <button mat-raised-button color="accent" (click)="download()">Download</button>
+
+    </div>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <!-- <button mat-button matStepperNext (click)="">Done</button> -->
+    </div>
+
+  </mat-step>
+</mat-horizontal-stepper>

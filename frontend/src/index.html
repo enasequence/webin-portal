@@ -3,16 +3,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-34537522-7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-34537522-7');
-  </script>
-
+  <!-- For Angular -->
+  <base href="/ena/submit/webin/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!-- For Angular -->
@@ -51,8 +43,8 @@
 
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
   <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/css/foundation.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/ebi-global.css" type="text/css" media="all" />
   <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all" />
 
   <!-- Use this CSS file for any custom styling -->
@@ -156,7 +148,7 @@
        <!-- End suggested layout containers / #content -->
 
        <footer>
-         <div id="elixir-banner" data-color="grey" data-name="This service" data-description="I am a super cool service" data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi" data-use-basic-styles="true"></div>
+         <div id="elixir-banner" data-color="grey" data-name="This service" data-description="" data-more-information-link="https://www.elixir-europe.org/about-us/who-we-are/nodes/embl-ebi" data-use-basic-styles="true"></div>
          <script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/elixirBanner.js"></script>
          <div id="global-footer" class="global-footer">
            <nav id="global-nav-expanded" class="global-nav-expanded row">
@@ -167,36 +159,20 @@
            </section>
          </div>
        </footer>
+        <!-- GDPR banner configuration -->
+       <div id="data-protection-message-configuration"
+         data-message="This website requires cookies, and the limited processing of your personal data in order to function. By using the site you are agreeing to this as outlined in our &lt;a target='_blank' href='https://www.ebi.ac.uk/data-protection/privacy-notice/ena-submission' class='white-color'&gt;Privacy Notice&lt;/a&gt; and &lt;a target='_blank' href='https://www.ebi.ac.uk/about/terms-of-use' class='white-color'&gt;Terms of Use&lt;/a&gt;."
+         data-service-id="ena-submission" data-data-protection-version="0.1"></div>
 
-       <!-- JavaScript -->
-        <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-        <!--
-        <script>window.jQuery || document.write('<script src="../js/libs/jquery-1.10.2.min.js"><\/script>')</script>
-        -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <!-- Your custom JavaScript file scan go here... change names accordingly -->
-        <!--
-        <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
-        <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
-        -->
+      <!-- JavaScript -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script defer="defer" src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js"></script>
 
-        <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
+      <!-- The Foundation theme JavaScript -->
+      <script src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/libraries/foundation-6/js/foundation.js"></script>
+      <script src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/foundationExtendEBI.js"></script>
+      <script type="text/JavaScript">$(document).foundation();</script>
+      <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 
-        <!-- The Foundation theme JavaScript -->
-        <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
-        <script src="//www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
-        <script type="text/JavaScript">$(document).foundation();</script>
-        <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
-
-        <!-- Google Analytics details... -->
-        <!-- Change UA-XXXXX-X to be your site's ID -->
-        <!--
-        <script>
-          window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-          Modernizr.load({
-            load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-          });
-        </script>
-        -->
       </body>
       </html>
