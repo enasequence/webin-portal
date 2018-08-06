@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 export class WebinAuthenticationService {
 
   private username: string;
-  private password: string;
+  // private password: string;
   token: string;
   authenticated = false;
   account: string;
@@ -20,21 +20,21 @@ export class WebinAuthenticationService {
 
   constructor(private http: HttpClient) { }
 
+  /*
   getAuthorizationHeader() {
       console.log('** Webin authorization header **');
       return 'Basic ' + btoa(this.username + ':' + this.password);
   }
+  */
 
-  /*
   getAuthorizationTokenHeader() {
       console.log('** Webin authorization token header **');
       return 'Bearer ' + this.token;
   }
-  */
 
   public logout() {
     this.username = undefined;
-    this.password = undefined;
+    // this.password = undefined;
     this.token = undefined;
     this.authenticated = false;
     this.account = undefined;
@@ -48,12 +48,12 @@ export class WebinAuthenticationService {
     console.log('** Webin authentication login **', baseUrl);
 
     this.username = username;
-    this.password = password;
+    // this.password = password;
     this.loginDate = new Date();
     this.logoutDate = new Date();
     this.logoutDate.setDate(this.loginDate + 7);
 
-    const body = { authRealms: [ 'SRA', 'EGA' ], password: this.password, username: this.username };
+    const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
@@ -66,12 +66,12 @@ export class WebinAuthenticationService {
     console.log('** Webin authentication token **', baseUrl);
 
     this.username = username;
-    this.password = password;
+    // this.password = password;
     this.loginDate = new Date();
     this.logoutDate = new Date();
     this.logoutDate.setDate(this.loginDate + 7);
 
-    const body = { authRealms: [ 'SRA', 'EGA' ], password: this.password, username: this.username };
+    const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
