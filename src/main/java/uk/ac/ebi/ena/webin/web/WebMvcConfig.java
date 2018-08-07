@@ -1,4 +1,4 @@
-package uk.ac.ebi.ena.ang.web;
+package uk.ac.ebi.ena.webin.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
