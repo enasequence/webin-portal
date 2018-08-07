@@ -1,4 +1,4 @@
-# Webin REST Portal
+# Webin Submissions Portal
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0 and has been later upgraded to version 1.6.8.
 
