@@ -18,7 +18,7 @@ https://stackoverflow.com/questions/45416430/update-angular-cli-in-existing-proj
 
 ## Development server
 
-Run `ng serve --base-href="/"` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/ena/submit/webin`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

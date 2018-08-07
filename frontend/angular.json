@@ -11,6 +11,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref" : "/ena/submit/webin/",
+            "deployUrl": "/ena/submit/webin/",
             "outputPath": "../src/main/resources/static",
             "index": "src/index.html",
             "main": "src/main.ts",
