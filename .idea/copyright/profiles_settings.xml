@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="EBI">
+    <module2copyright>
+      <element module="All" copyright="EBI" />
+    </module2copyright>
+  </settings>
+</component>
