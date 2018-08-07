@@ -1,6 +1,3 @@
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1d5ea8dcc7ed4cf0b3e12ac362177022)](https://www.codacy.com/app/josue_2/webin-portal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=enasequence/webin-portal&amp;utm_campaign=Badge_Grade)
-
 # Webin Submissions Portal
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9c6974943bbf4e769096fa325c818353)](https://app.codacy.com/app/josue_2/webin-portal?utm_source=github.com&utm_medium=referral&utm_content=enasequence/webin-portal&utm_campaign=badger)
