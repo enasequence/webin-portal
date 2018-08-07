@@ -1,3 +1,6 @@
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1d5ea8dcc7ed4cf0b3e12ac362177022)](https://www.codacy.com/app/josue_2/webin-portal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=enasequence/webin-portal&amp;utm_campaign=Badge_Grade)
+
 # Webin Submissions Portal
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0 and has been later upgraded to version 1.6.8.
