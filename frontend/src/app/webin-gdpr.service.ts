@@ -21,11 +21,11 @@ export class WebinGdprService {
   private _baseUrl = environment.webinGdprServiceUrl;
 
   // TODO check consent
-  consented = false;
+  consented: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  public consent() {
+  consent() {
     console.log('** Webin consent **', this._baseUrl);
 
     this.consented = true;

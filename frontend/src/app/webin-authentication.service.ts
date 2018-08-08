@@ -86,7 +86,7 @@ export class WebinAuthenticationService {
       return 'Bearer ' + this.token;
   }
 
-  public logout() {
+  logout() {
     console.log('** logout **');
 
     sessionStorage.removeItem('username');
@@ -98,12 +98,12 @@ export class WebinAuthenticationService {
     sessionStorage.removeItem('logoutDate');
   }
 
-  public login(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<any> {
     const baseUrl: string = environment.webinAuthenticationServiceUrl;
     console.log('** Webin authentication login **', baseUrl);
 
     this.username = username;
-    var today = new Date();
+    let today = new Date();
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
 
@@ -115,12 +115,12 @@ export class WebinAuthenticationService {
     return this.http.post(baseUrl, body, { headers, withCredentials: false });
   }
 
-  public loginToken(username: string, password: string): Observable<any> {
+  loginToken(username: string, password: string): Observable<any> {
     const baseUrl: string = environment.webinAuthenticationTokenUrl;
     console.log('** Webin authentication token **', baseUrl);
 
     this.username = username;
-    var today = new Date();
+    let today = new Date();
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
 

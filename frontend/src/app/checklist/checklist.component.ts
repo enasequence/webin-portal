@@ -9,19 +9,14 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { MatStepper } from '@angular/material';
-
+import { saveAs } from 'file-saver';
+import { Observable } from 'rxjs';
 import { ChecklistType } from '../checklist-type.enum';
-
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
-
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-checklist',

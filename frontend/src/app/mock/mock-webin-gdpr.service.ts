@@ -9,26 +9,15 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+export class MockWebinGdprService {
 
-describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-      imports: [ 
-        RouterTestingModule 
-      ],
-    }).compileComponents();
-  }));
+    get consented(): boolean {
+        return true;
+    }
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+    set consented(consented: boolean) {
+    }
   
-});
+    consent() {
+  }
+}

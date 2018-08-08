@@ -9,7 +9,28 @@
  * specific language governing permissions and limitations under the License.
  */
 
+import { ReportType } from './report-type.enum';
+
 export enum ReportActionType {
   changeReport = 'changeReport',
   editXml = 'editXml',
 }
+
+export class ReportActionUtils {
+
+  static createChangeReportAction(reportType: ReportType, id: string) {
+    return {
+      reportActionType: ReportActionType.changeReport,
+      reportType: reportType,
+      id: id
+    };
+  }
+
+  static createEditXmlAction(reportType: ReportType, id: string) {
+  return {
+      reportActionType: ReportActionType.editXml,
+      reportType: reportType,
+      id: id
+    };
+  }
+};
