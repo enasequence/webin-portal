@@ -32,7 +32,7 @@ describe('ChecklistComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChecklistComponent ]
+      declarations: [ ChecklistComponent ],
       imports: [
         HttpClientModule,
         MatProgressSpinnerModule,
@@ -91,8 +91,7 @@ describe('ChecklistComponent', () => {
       ]
     };
 
-    const spreadsheetText = '#template_accession TEST_ID\n';
-    spreadsheetText += 'ENTRYNUMBER\tTEST_FIELD_1\tTEST_FIELD_2\n';
+    const spreadsheetText = '#template_accession TEST_ID\nENTRYNUMBER\tTEST_FIELD_1\tTEST_FIELD_2\n';
 
     expect(component.getSequenceSpreadsheetText()).toBe(spreadsheetText);
   });
