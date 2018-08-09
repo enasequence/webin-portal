@@ -11,11 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {
-  MatButtonModule,
-  MatMenuModule,
-} from '@angular/material';
-
+import { UiModule } from '../ui/ui.module';
 import { ReportType } from '../report-type.enum';
 import { ReportActionUtils } from '../report-action-type.enum';
 import { ReportActionComponent } from './report-action.component';
@@ -28,8 +24,7 @@ describe('ReportActionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ReportActionComponent ],
       imports: [
-        MatButtonModule,
-        MatMenuModule,
+        UiModule,
       ]
     })
     .compileComponents();
@@ -42,13 +37,13 @@ describe('ReportActionComponent', () => {
   });
 
   it('should create', () => {
-    // Set one XML and report change action.   
+    // Set one XML and report change action.
     let actions = [];
     actions.push(ReportActionUtils.createEditXmlAction(ReportType.runs, "Mock"));
     actions.push(ReportActionUtils.createChangeReportAction(ReportType.studies, "Mock"));
     component.actions = actions;
 
-    fixture.detectChanges();    
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

@@ -11,16 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {FormsModule} from '@angular/forms';
-import {
-  MatCheckboxModule,
-  MatExpansionModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatTableModule,
-  MatStepperModule,
-} from '@angular/material';
-
+import { UiModule } from '../ui/ui.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ChecklistComponent } from './checklist.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
@@ -35,16 +26,10 @@ describe('ChecklistComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ChecklistComponent ],
       imports: [
+        UiModule,
         HttpClientModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MatStepperModule,
-        MatExpansionModule,
-        FormsModule,
-        MatSelectModule,
-        MatCheckboxModule
       ],
-      providers: [        
+      providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService

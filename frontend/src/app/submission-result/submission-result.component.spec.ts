@@ -11,6 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { UiModule } from '../ui/ui.module';
 import { SubmissionResultComponent } from './submission-result.component';
 
 describe('SubmissionResultComponent', () => {
@@ -19,7 +20,10 @@ describe('SubmissionResultComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubmissionResultComponent ]
+      declarations: [ SubmissionResultComponent ],
+      imports: [
+        UiModule,
+      ]
     })
     .compileComponents();
   }));

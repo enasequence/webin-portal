@@ -11,17 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {FormsModule} from '@angular/forms';
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatDialogModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatTableModule,
-  MatTabsModule,
-} from '@angular/material';
-
+import { UiModule } from '../ui/ui.module';
 import { ReportEditDialogComponent } from './report-edit-dialog.component';
 
 describe('ReportEditDialogComponent', () => {
@@ -31,15 +21,10 @@ describe('ReportEditDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ReportEditDialogComponent ],
-      imports: [ 
-        FormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatDialogModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MatTabsModule,
+      imports: [
+        UiModule,
+      ],
+      providers: [
       ]
     })
     .compileComponents();

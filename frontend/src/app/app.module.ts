@@ -8,47 +8,11 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+import { NgModule } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {FlexLayoutModule } from '@angular/flex-layout';
-import {CdkTableModule} from '@angular/cdk/table';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-  MatStepperModule,
-} from '@angular/material';
+import { UiModule } from './ui/ui.module';
 
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -103,52 +67,13 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
       BrowserModule,
-      BrowserAnimationsModule,
-      FlexLayoutModule,
-      FormsModule,
+      UiModule,
       HttpClientModule,
-      ReactiveFormsModule,
-
-      // Material
-      CdkTableModule,
-      MatAutocompleteModule,
-      MatButtonModule,
-      MatButtonToggleModule,
-      MatCardModule,
-      MatCheckboxModule,
-      MatChipsModule,
-      MatStepperModule,
-      MatDatepickerModule,
-      MatDialogModule,
-      MatExpansionModule,
-      MatGridListModule,
-      MatIconModule,
-      MatInputModule,
-      MatListModule,
-      MatMenuModule,
-      MatNativeDateModule,
-      MatPaginatorModule,
-      MatProgressBarModule,
-      MatProgressSpinnerModule,
-      MatRadioModule,
-      MatRippleModule,
-      MatSelectModule,
-      MatSidenavModule,
-      MatSliderModule,
-      MatSlideToggleModule,
-      MatSnackBarModule,
-      MatSortModule,
-      MatTableModule,
-      MatTabsModule,
-      MatToolbarModule,
-      MatTooltipModule,
-
       // Router
       RouterModule.forRoot(
         appRoutes,
         { enableTracing: true } // <-- debugging purposes only
       ),
-
   ],
   declarations: [
     AppComponent,

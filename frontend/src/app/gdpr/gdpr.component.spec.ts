@@ -11,11 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {
-  MatCardModule,
-  MatGridListModule,
-} from '@angular/material';
-
+import { UiModule } from '../ui/ui.module';
 import { GdprComponent } from './gdpr.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
@@ -31,11 +27,10 @@ describe('GdprComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ GdprComponent ],
       imports: [
-        MatCardModule,
-        MatGridListModule,
-        RouterTestingModule 
+        UiModule,
+        RouterTestingModule
       ],
-      providers: [        
+      providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService

@@ -11,6 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { UiModule } from '../ui/ui.module';
 import { LogoutComponent } from './logout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WebinAuthenticationService } from '../webin-authentication.service';
@@ -24,10 +25,10 @@ describe('LogoutComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LogoutComponent ],
-      imports: [ 
-        BrowserAnimationsModule,
+      imports: [
+        UiModule,
         RouterTestingModule ],
-      providers: [        
+      providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService

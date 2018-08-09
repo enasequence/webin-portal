@@ -11,6 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { UiModule } from '../ui/ui.module';
 import { TitleComponent } from './title.component';
 
 describe('TitleComponent', () => {
@@ -19,7 +20,10 @@ describe('TitleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TitleComponent ]
+      declarations: [ TitleComponent ],
+      imports: [
+        UiModule,
+      ]
     })
     .compileComponents();
   }));

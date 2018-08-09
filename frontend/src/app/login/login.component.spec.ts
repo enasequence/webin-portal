@@ -11,14 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {FormsModule} from '@angular/forms';
-import { 
-  MatFormFieldModule,
-  MatCardModule,
-  MatGridListModule,
-  MatInputModule,
-} from '@angular/material';
-
+import { UiModule } from '../ui/ui.module';
 import { LoginComponent } from './login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WebinAuthenticationService } from '../webin-authentication.service';
@@ -32,20 +25,15 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [ 
-        BrowserAnimationsModule,
-        FormsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatGridListModule,
-        MatInputModule,
+      imports: [
+        UiModule,
         RouterTestingModule ],
-      providers: [        
+      providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService
         },
-      ]      
+      ]
     })
     .compileComponents();
   }));

@@ -11,6 +11,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { UiModule } from '../ui/ui.module';
 import { ReportComponent } from './report.component';
 
 describe('ReportComponent', () => {
@@ -19,7 +20,10 @@ describe('ReportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportComponent ]
+      declarations: [ ReportComponent ],
+      imports: [
+        UiModule,
+      ]
     })
     .compileComponents();
   }));
