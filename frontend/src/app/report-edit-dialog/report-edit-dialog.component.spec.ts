@@ -12,6 +12,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { WebinRestService } from '../webin-rest.service';
+import { WebinXmlReportService } from '../webin-xml-report.service';
+import { SubmissionResultComponent } from '../submission-result/submission-result.component';
+import { MockWebinRestService } from '../mock/mock-webin-rest.service';
+import { MockWebinXmlReportService } from '../mock/mock-webin-xml-report.service';
 import { ReportEditDialogComponent } from './report-edit-dialog.component';
 
 describe('ReportEditDialogComponent', () => {
@@ -20,11 +26,30 @@ describe('ReportEditDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportEditDialogComponent ],
+      declarations: [
+        ReportEditDialogComponent,
+        SubmissionResultComponent ],
       imports: [
         UiModule,
       ],
       providers: [
+        {
+          provide: WebinRestService,
+          useClass: MockWebinRestService
+        },
+        {
+          provide: WebinXmlReportService,
+          useClass: MockWebinXmlReportService
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: (dialogResult: any) => { }
+          }
+        },
+        { provide: MAT_DIALOG_DATA,
+          useValue: []
+        },
       ]
     })
     .compileComponents();

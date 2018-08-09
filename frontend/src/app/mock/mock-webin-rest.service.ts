@@ -9,15 +9,40 @@
  * specific language governing permissions and limitations under the License.
  */
 
-export class MockWebinGdprService {
+import { ReportType } from '../report-type.enum';
 
-    get consented(): boolean {
-        return true;
+export class MockWebinRestService {
+
+  updateXml(
+    reportType: ReportType,
+    xml: Blob) {
+    return null;
+  }
+
+  submitXml(
+    submissionXml: Blob,
+    studyXml: Blob,
+    projectXml: Blob,
+    sampleXml: Blob,
+    experimentXml: Blob,
+    runXml: Blob,
+    analysisXml: Blob,
+    dacXml: Blob,
+    policyXml: Blob,
+    datasetXml: Blob) {
+    return null;
     }
 
-    set consented(consented: boolean) {
-    }
 
-   consent() {
-   }
+  parseResult(data) {
+    const receipt = {
+      isError: false,
+      xml: 'Mock',
+      date: 'Mock',
+      accessions: [],
+      errors: []
+    };
+
+    return receipt;
+  }
 }

@@ -37,6 +37,7 @@ describe('SubmissionResultComponent', () => {
           provide: WebinRestService,
           useClass: MockWebinRestService
         },
+      ]
     })
     .compileComponents();
   }));

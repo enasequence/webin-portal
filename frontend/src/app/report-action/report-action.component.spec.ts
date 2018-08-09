@@ -33,14 +33,13 @@ describe('ReportActionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportActionComponent);
     component = fixture.componentInstance;
-    //fixture.detectChanges();
   });
 
   it('should create', () => {
     // Set one XML and report change action.
-    let actions = [];
-    actions.push(ReportActionUtils.createEditXmlAction(ReportType.runs, "Mock"));
-    actions.push(ReportActionUtils.createChangeReportAction(ReportType.studies, "Mock"));
+    const actions = [];
+    actions.push(ReportActionUtils.createEditXmlAction(ReportType.runs, 'Mock'));
+    actions.push(ReportActionUtils.createChangeReportAction(ReportType.studies, 'Mock'));
     component.actions = actions;
 
     fixture.detectChanges();

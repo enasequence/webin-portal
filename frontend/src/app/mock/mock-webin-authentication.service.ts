@@ -14,13 +14,13 @@ import { Observable } from 'rxjs';
 export class MockWebinAuthenticationService {
 
   get username(): string {
-    return "Mock";
+    return 'Mock';
   }
   set username(username: string) {
   }
 
   get token(): string {
-    return "Mock";
+    return 'Mock';
   }
   set token(token: string) {
   }
@@ -32,8 +32,8 @@ export class MockWebinAuthenticationService {
   }
 
   get account(): string {
-    return "Mock";
-  }  
+    return 'Mock';
+  }
   set account(account: string) {
   }
 
@@ -44,14 +44,14 @@ export class MockWebinAuthenticationService {
   }
 
   get loginDate() {
-    let today = new Date();
+    const today = new Date();
     return today;
   }
   set loginDate(loginDate) {
   }
 
   get logoutDate() {
-    let today = new Date();
+    const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
 
   }
@@ -70,6 +70,6 @@ export class MockWebinAuthenticationService {
   }
 
   loginToken(username: string, password: string): Observable<any> {
-    return null;    
+    return null;
   }
 }
