@@ -11,11 +11,15 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
 import { WebinAuthenticationService } from './webin-authentication.service';
 
 describe('WebinAuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+      ],
       providers: [WebinAuthenticationService]
     });
   });
