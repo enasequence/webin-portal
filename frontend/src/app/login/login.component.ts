@@ -10,7 +10,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -28,8 +28,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _webinAuthenticationService: WebinAuthenticationService) {
-  }
+    private _webinAuthenticationService: WebinAuthenticationService) { }
 
   ngOnInit() {
     if (this._webinAuthenticationService.authenticated) {

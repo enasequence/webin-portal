@@ -28,8 +28,7 @@ export class ReportActionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   isChangeReportAction(reportType: ReportType): boolean {
       for (let i = 0; i < this.actions.length; i++) {

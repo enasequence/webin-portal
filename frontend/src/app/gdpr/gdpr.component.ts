@@ -10,7 +10,6 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinGdprService } from '../webin-gdpr.service';
 
@@ -23,16 +22,16 @@ import { WebinGdprService } from '../webin-gdpr.service';
 export class GdprComponent implements OnInit {
 
  constructor(
-    private webinAuthenticationService: WebinAuthenticationService,
-    private webinGdprServer: WebinGdprService) { }
-      ngOnInit() {
-  }
+    private _webinAuthenticationService: WebinAuthenticationService,
+    private _webinGdprServer: WebinGdprService) { }
+
+  ngOnInit() { }
 
   isEga(): boolean {
-    return this.webinAuthenticationService.ega;
+    return this._webinAuthenticationService.ega;
   }
 
   consent() {
-      this.webinGdprServer.consent();
+      this._webinGdprServer.consent();
     }
 }

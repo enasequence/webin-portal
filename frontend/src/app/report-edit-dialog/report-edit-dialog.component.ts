@@ -31,8 +31,8 @@ export class ReportEditDialogComponent implements OnInit {
   @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
 
   constructor(
-    private webinXmlReportService: WebinXmlReportService,
-    private webinRestService: WebinRestService,
+    private _webinXmlReportService: WebinXmlReportService,
+    private _webinRestService: WebinRestService,
     public dialogRef: MatDialogRef<ReportEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -73,39 +73,39 @@ export class ReportEditDialogComponent implements OnInit {
 
     switch (reportType) {
        case ReportType.studies: {
-         observable = this.webinXmlReportService.getStudyXml(id);
+         observable = this._webinXmlReportService.getStudyXml(id);
          break;
        }
        case ReportType.projects: {
-         observable = this.webinXmlReportService.getProjectXml(id);
+         observable = this._webinXmlReportService.getProjectXml(id);
          break;
        }
        case ReportType.samples: {
-         observable = this.webinXmlReportService.getSampleXml(id);
+         observable = this._webinXmlReportService.getSampleXml(id);
          break;
        }
        case ReportType.runs: {
-         observable = this.webinXmlReportService.getRunXml(id);
+         observable = this._webinXmlReportService.getRunXml(id);
          break;
        }
        case ReportType.experiments: {
-        observable = this.webinXmlReportService.getExperimentXml(id);
+        observable = this._webinXmlReportService.getExperimentXml(id);
          break;
        }
        case ReportType.analyses: {
-         observable = this.webinXmlReportService.getAnalysisXml(id);
+         observable = this._webinXmlReportService.getAnalysisXml(id);
          break;
        }
        case ReportType.dacs: {
-         observable = this.webinXmlReportService.getDacXml(id);
+         observable = this._webinXmlReportService.getDacXml(id);
          break;
        }
        case ReportType.policies: {
-         observable = this.webinXmlReportService.getPolicyXml(id);
+         observable = this._webinXmlReportService.getPolicyXml(id);
          break;
        }
        case ReportType.datasets: {
-         observable = this.webinXmlReportService.getDatasetXml(id);
+         observable = this._webinXmlReportService.getDatasetXml(id);
          break;
        }
     }
@@ -134,7 +134,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   save() {
-    const observable: Observable<any> = this.webinRestService.updateXml(
+    const observable: Observable<any> = this._webinRestService.updateXml(
       this.data.reportType, new Blob([ this.xml ]));
 
     this.submissionResult.submit(observable);

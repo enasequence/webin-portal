@@ -23,8 +23,7 @@ export class TitleComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   getTitle() {
     return environment.title;

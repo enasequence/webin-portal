@@ -9,8 +9,8 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
@@ -32,19 +32,22 @@ export class ChecklistComponent implements OnInit {
 
   private _checklistGroups;
   private _xmlParser = new DOMParser();
-
   checklistGroupDisplayedColumns = ['name'];
   checklistGroupDataSource = undefined;
   checklistDataSource;
   checklistDisplayedColumns = ['name'];
   selectedChecklistGroup;
   selectedChecklist;
-
   selectedFields;
   mandatoryFields;
-
   active: boolean;
   dataError: string;
+
+  constructor(
+    private _webinAuthenticationService: WebinAuthenticationService,
+    private _webinReportService: WebinReportService) { }
+
+  ngOnInit() { }
 
   // field group restriction type (not supported for spreadsheets)
   // -----------------------------
@@ -150,7 +153,7 @@ export class ChecklistComponent implements OnInit {
 
     console.log(' ** initChecklists **');
 
-    const observable: Observable<any> = this.webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
+    const observable: Observable<any> = this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
 
     observable.subscribe(
       // Success
@@ -176,7 +179,7 @@ export class ChecklistComponent implements OnInit {
       });
     }
 
-    const observable: Observable<any> = this.webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+    const observable: Observable<any> = this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
 
     observable.subscribe(
       // Success
@@ -299,18 +302,8 @@ export class ChecklistComponent implements OnInit {
     this.checklistGroupDataSource = new MatTableDataSource<any>(this._checklistGroups);
   }
 
-  constructor(
-    private webinAuthenticationService: WebinAuthenticationService,
-    private webinReportService: WebinReportService
-    ) {
-  }
-
-  ngOnInit() {
-    // this.initChecklists();
-  }
-
   isEga(): boolean {
-    return this.webinAuthenticationService.ega;
+    return this._webinAuthenticationService.ega;
   }
 
 

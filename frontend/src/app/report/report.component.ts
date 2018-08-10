@@ -12,7 +12,7 @@
 import { Component, EventEmitter, OnInit, ViewEncapsulation, ViewChild, Input, Output } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
@@ -37,30 +37,28 @@ export class ReportComponent implements OnInit {
   @Output() onReportChange = new EventEmitter<any>();
   @ViewChild(MatPaginator) dataPaginator: MatPaginator;
 
+  private _id: string;
+  private _showAlias = false;
+  private _status: string;
+  private _processStatus: string;
+  private _analysisType: string;
   rows = '100';
   data;
   dataSource: MatTableDataSource<any>;
   displayedColumns;
   displayedColumnsCallback;
   dataError;
-  _id: string;
-  _showAlias = false;
-  _status: string;
-  _processStatus: string;
-  _analysisType: string;
   active: boolean;
 
   constructor(
-    private webinReportService: WebinReportService,
-    private webinAuthenticationService: WebinAuthenticationService,
-    private reportDialog: MatDialog) {
-  }
+    private _webinReportService: WebinReportService,
+    private _webinAuthenticationService: WebinAuthenticationService,
+    private _reportDialog: MatDialog) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   isEga(): boolean {
-    return this.webinAuthenticationService.ega;
+    return this._webinAuthenticationService.ega;
   }
 
   get id(): string {
@@ -480,7 +478,7 @@ export class ReportComponent implements OnInit {
       id: action.id
     };
 
-    const reportDialogRef = this.reportDialog.open(ReportEditDialogComponent, {
+    const reportDialogRef = this._reportDialog.open(ReportEditDialogComponent, {
         // height: '500px',
         width: '600px',
         data: dialogData
@@ -573,85 +571,85 @@ export class ReportComponent implements OnInit {
     if (this.reportType === ReportType.studies ||
         this.reportType === ReportType.projects) {
       if (this.id) {
-        return this.webinReportService.getProjects(this.id, rows, format);
-        // return this.webinReportService.getStudies(this.id, rows, format);
+        return this._webinReportService.getProjects(this.id, rows, format);
+        // return this._webinReportService.getStudies(this.id, rows, format);
       }
-      return this.webinReportService.getProjectsAll(this._status, rows, format);
-      // return this.webinReportService.getStudiesAll(this._status, rows, format);
+      return this._webinReportService.getProjectsAll(this._status, rows, format);
+      // return this._webinReportService.getStudiesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.samples) {
       if (this.id) {
-        return this.webinReportService.getSamples(this.id, rows, format);
+        return this._webinReportService.getSamples(this.id, rows, format);
       }
-      return this.webinReportService.getSamplesAll(this._status, rows, format);
+      return this._webinReportService.getSamplesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.runs) {
       if (this.id) {
-        return this.webinReportService.getRuns(this.id, rows, format);
+        return this._webinReportService.getRuns(this.id, rows, format);
       }
-      return this.webinReportService.getRunsAll(this._status, rows, format);
+      return this._webinReportService.getRunsAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.analyses) {
       if (this.id) {
-        return this.webinReportService.getAnalyses(this.id, rows, format);
+        return this._webinReportService.getAnalyses(this.id, rows, format);
       }
-      return this.webinReportService.getAnalysesAll(this._status, this._analysisType, rows, format);
+      return this._webinReportService.getAnalysesAll(this._status, this._analysisType, rows, format);
     }
 
     if (this.reportType === ReportType.runFiles) {
       if (this.id) {
-        return this.webinReportService.getRunFiles(this.id, rows, format);
+        return this._webinReportService.getRunFiles(this.id, rows, format);
       }
-      return this.webinReportService.getRunFilesAll(this._processStatus, rows, format);
+      return this._webinReportService.getRunFilesAll(this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.analysisFiles) {
       if (this.id) {
-        return this.webinReportService.getAnalysisFiles(this.id, rows, format);
+        return this._webinReportService.getAnalysisFiles(this.id, rows, format);
       }
-      return this.webinReportService.getAnalysisFilesAll(this._analysisType, this._processStatus, rows, format);
+      return this._webinReportService.getAnalysisFilesAll(this._analysisType, this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.runProcess) {
       if (this.id) {
-        return this.webinReportService.getRunProcess(this.id, rows, format);
+        return this._webinReportService.getRunProcess(this.id, rows, format);
       }
-      return this.webinReportService.getRunProcessAll(this._processStatus, rows, format);
+      return this._webinReportService.getRunProcessAll(this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.analysisProcess) {
       if (this.id) {
-        return this.webinReportService.getAnalysisProcess(this.id, rows, format);
+        return this._webinReportService.getAnalysisProcess(this.id, rows, format);
       }
-      return this.webinReportService.getAnalysisProcessAll(this._analysisType, this._processStatus, rows, format);
+      return this._webinReportService.getAnalysisProcessAll(this._analysisType, this._processStatus, rows, format);
     }
 
     if (this.reportType === ReportType.unsubmittedFiles) {
-      return this.webinReportService.getUnsubmittedFilesAll(this.id, rows, format);
+      return this._webinReportService.getUnsubmittedFilesAll(this.id, rows, format);
     }
 
     if (this.reportType === ReportType.dacs) {
       if (this.id) {
-        return this.webinReportService.getDacs(this.id, rows, format);
+        return this._webinReportService.getDacs(this.id, rows, format);
       }
-      return this.webinReportService.getDacsAll(this._status, rows, format);
+      return this._webinReportService.getDacsAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.policies) {
       if (this.id) {
-        return this.webinReportService.getPolicies(this.id, rows, format);
+        return this._webinReportService.getPolicies(this.id, rows, format);
       }
-      return this.webinReportService.getPoliciesAll(this._status, rows, format);
+      return this._webinReportService.getPoliciesAll(this._status, rows, format);
     }
 
     if (this.reportType === ReportType.datasets) {
       if (this.id) {
-        return this.webinReportService.getDatasets(this.id, rows, format);
+        return this._webinReportService.getDatasets(this.id, rows, format);
       }
-      return this.webinReportService.getDatasetsAll(this._status, rows, format);
+      return this._webinReportService.getDatasetsAll(this._status, rows, format);
     }
   }
 

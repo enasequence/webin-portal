@@ -40,16 +40,14 @@ export class XmlSubmissionComponent implements OnInit {
   datasetFile: File;
 
   constructor(
-    private webinAuthenticationService: WebinAuthenticationService,
-    private webinRestService: WebinRestService
-    ) {
-  }
+    private _webinAuthenticationService: WebinAuthenticationService,
+    private _webinRestService: WebinRestService
+    ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   isEga(): boolean {
-    return this.webinAuthenticationService.ega;
+    return this._webinAuthenticationService.ega;
   }
 
   onChangeSubmissionFile(files) {
@@ -110,7 +108,7 @@ export class XmlSubmissionComponent implements OnInit {
     console.log('** Webin XML submission **');
 
     const observable: Observable<any> =
-      this.webinRestService.submitXml(
+      this._webinRestService.submitXml(
         this.submissionFile,
         this.studyFile,
         this.projectFile,

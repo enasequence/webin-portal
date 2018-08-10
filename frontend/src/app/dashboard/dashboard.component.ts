@@ -11,11 +11,8 @@
 
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
-
 import { ReportComponent } from '../report/report.component';
-
 import { WebinAuthenticationService } from '../webin-authentication.service';
-
 import { ReportType } from '../report-type.enum';
 
 @Component({
@@ -30,6 +27,7 @@ import { ReportType } from '../report-type.enum';
 export class DashboardComponent implements OnInit {
 
   ReportType = ReportType;   // Allows use in template
+
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
   @ViewChild('studies') studies: ReportComponent;
   @ViewChild('samples') samples: ReportComponent;
@@ -45,13 +43,12 @@ export class DashboardComponent implements OnInit {
   @ViewChild('datasets') datasets: ReportComponent;
 
   constructor(
-    private webinAuthenticationService: WebinAuthenticationService) { }
+    private _webinAuthenticationService: WebinAuthenticationService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   isEga(): boolean {
-    return this.webinAuthenticationService.ega;
+    return this._webinAuthenticationService.ega;
   }
 
   consumeReportChange(event) {

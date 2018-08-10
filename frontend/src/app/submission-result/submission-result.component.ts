@@ -45,15 +45,13 @@ export class SubmissionResultComponent implements OnInit {
   resultError;
   showReceiptXml = false;
   @Input() showReceiptSuccess = true;
-
   active: boolean;
 
   constructor(
-    private webinRestService: WebinRestService) {
+    private _webinRestService: WebinRestService) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   isResult(): boolean {
     return this.result !== undefined;
@@ -86,7 +84,7 @@ export class SubmissionResultComponent implements OnInit {
             this.active = false;
 
               // HttpResponse when using {observe: 'response'}
-              this.result = this.webinRestService.parseResult(data);
+              this.result = this._webinRestService.parseResult(data);
               console.log('** Webin submission **', this.result);
 
               if (this.result.isError) {
