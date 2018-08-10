@@ -21,6 +21,8 @@ import { LoginComponent } from './login.component';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  const mockWebinAuthenticationService: MockWebinAuthenticationService = new MockWebinAuthenticationService();
+  mockWebinAuthenticationService.authenticated = false;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,7 +31,7 @@ describe('LoginComponent', () => {
       providers: [
         {
           provide: WebinAuthenticationService,
-          useClass: MockWebinAuthenticationService
+          useValue: mockWebinAuthenticationService
         },
       ]
     })
