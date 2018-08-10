@@ -12,7 +12,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
-
+import { MockReportActionComponent } from '../mock/mock-report-action.component';
+import { WebinReportService } from '../webin-report.service';
+import { MockWebinReportService } from '../mock/mock-webin-report.service';
+import { WebinAuthenticationService } from '../webin-authentication.service';
+import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 import { ReportComponent } from './report.component';
 
 describe('ReportComponent', () => {
@@ -21,8 +25,21 @@ describe('ReportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportComponent ],
-      imports: [ UiModule ]
+      declarations: [
+        ReportComponent,
+        MockReportActionComponent
+     ],
+      imports: [ UiModule ],
+      providers: [
+        {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
+        {
+          provide: WebinReportService,
+          useClass: MockWebinReportService
+        },
+      ]
     })
     .compileComponents();
   }));
