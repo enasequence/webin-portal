@@ -30,7 +30,9 @@ export class ChecklistComponent implements OnInit {
 
   ChecklistType = ChecklistType;   // Allows use in template
 
-  checklistGroups;
+  private _checklistGroups;
+  private _xmlParser = new DOMParser();
+
   checklistGroupDisplayedColumns = ['name'];
   checklistGroupDataSource = undefined;
   checklistDataSource;
@@ -43,7 +45,6 @@ export class ChecklistComponent implements OnInit {
 
   active: boolean;
   dataError: string;
-
 
   // field group restriction type (not supported for spreadsheets)
   // -----------------------------
@@ -73,7 +74,7 @@ export class ChecklistComponent implements OnInit {
   // multiple
 
   getFieldTypeDisplayText(field): string {
-    switch(field.type) {
+    switch (field.type) {
       case 'TEXT_FIELD':
       case 'TEXT_AREA_FIELD':
       case 'TEXT_CHOICE_FIELD': {
@@ -89,7 +90,7 @@ export class ChecklistComponent implements OnInit {
          return 'ontology field';
       }
       default: {
-        return "field";
+        return 'field';
       }
     }
   }
@@ -112,20 +113,17 @@ export class ChecklistComponent implements OnInit {
 
   setChecklist(checklist, stepper) {
     this.selectedChecklist = checklist;
-    console.log('DEBUG:',this.selectedChecklist);
+    console.log('DEBUG:', this.selectedChecklist);
     this.selectedFields = {};
     this.mandatoryFields = {};
     this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
       fieldGroup.fields.forEach( function(field) {
-        this.selectedFields[field.label] = (field.mandatory == 'mandatory');
-        this.mandatoryFields[field.label] = (field.mandatory == 'mandatory');
+        this.selectedFields[field.label] = (field.mandatory === 'mandatory');
+        this.mandatoryFields[field.label] = (field.mandatory === 'mandatory');
       }, this);
     }, this);
     stepper.next();
   }
-
-  private xmlParser = new DOMParser();
-
 
   getXmlTextValue(xmlDoc, xpath: string) {
     return document.evaluate(xpath, xmlDoc, null, XPathResult.STRING_TYPE, null).stringValue;
@@ -136,7 +134,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   getChecklistTypeParamValue() {
-    switch(this.checklistType) {
+    switch (this.checklistType) {
       case ChecklistType.sample:
         return 'sample';
       case ChecklistType.sequence:
@@ -148,9 +146,9 @@ export class ChecklistComponent implements OnInit {
     this.active = true;
     this.dataError = undefined;
 
-    this.checklistGroups = [];
+    this._checklistGroups = [];
 
-    console.log(" ** initChecklists **");
+    console.log(' ** initChecklists **');
 
     const observable: Observable<any> = this.webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
 
@@ -170,7 +168,7 @@ export class ChecklistComponent implements OnInit {
 
   initChecklistGroups(data) {
     for (let i = 0; i < data.length; i++) {
-      this.checklistGroups.push({
+      this._checklistGroups.push({
         name: data[i].report.name,
         description: data[i].report.description,
         checklistIds: data[i].report.checklist,
@@ -191,12 +189,12 @@ export class ChecklistComponent implements OnInit {
 
     // console.log('** initChecklistXmls **', data);
 
-    const xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
+    const xmlDoc = this._xmlParser.parseFromString(data.body, 'text/xml');
 
     const checklistNodes = this.getXmlNodes(xmlDoc, 'CHECKLIST_SET/CHECKLIST');
     let checklistNode = checklistNodes.iterateNext();
     while (checklistNode) {
-      let checklist = {
+      const checklist = {
           id: this.getXmlTextValue(checklistNode, '@accession'),
           name: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/NAME/text()'),
           description: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/DESCRIPTION/text()'),
@@ -207,7 +205,7 @@ export class ChecklistComponent implements OnInit {
       const fieldGroupNodes = this.getXmlNodes(checklistNode, 'DESCRIPTOR/FIELD_GROUP');
       let fieldGroupNode = fieldGroupNodes.iterateNext();
       while (fieldGroupNode) {
-        let fieldGroup = {
+        const fieldGroup = {
           name: this.getXmlTextValue(fieldGroupNode, 'NAME/text()'),
           fields : []
         };
@@ -215,7 +213,7 @@ export class ChecklistComponent implements OnInit {
         const fieldNodes = this.getXmlNodes(fieldGroupNode, 'FIELD');
         let fieldNode = fieldNodes.iterateNext();
         while (fieldNode) {
-          let field = {
+          const field = {
             name: this.getXmlTextValue(fieldNode, 'NAME/text()'),
             label: this.getXmlTextValue(fieldNode, 'LABEL/text()'),
             description: this.getXmlTextValue(fieldNode, 'DESCRIPTION/text()'),
@@ -236,7 +234,7 @@ export class ChecklistComponent implements OnInit {
             while (regexNode) {
               field.regexValue = this.getXmlTextValue(regexNode, 'text()');
               regexNode = regexNodes.iterateNext();
-            };
+            }
           }
 
           // CV
@@ -248,7 +246,7 @@ export class ChecklistComponent implements OnInit {
             while (cvNode) {
               field.textChoice.push(this.getXmlTextValue(cvNode, 'text()'));
               cvNode = cvNodes.iterateNext();
-            };
+            }
           }
 
           // Ontology
@@ -260,7 +258,7 @@ export class ChecklistComponent implements OnInit {
             while (ontologyNode) {
               field.ontologyId = this.getXmlTextValue(ontologyNode, 'text()');
               ontologyNode = ontologyNodes.iterateNext();
-            };
+            }
           }
 
           // Units
@@ -272,7 +270,7 @@ export class ChecklistComponent implements OnInit {
             while (unitNode) {
               field.units.push(this.getXmlTextValue(unitNode, 'text()'));
               unitNode = unitNodes.iterateNext();
-            };
+            }
           }
 
           fieldGroup.fields.push(field);
@@ -283,10 +281,10 @@ export class ChecklistComponent implements OnInit {
         fieldGroupNode = fieldGroupNodes.iterateNext();
       }
 
-      for (let i = 0; i < this.checklistGroups.length; i++) {
-        for (let j = 0; j < this.checklistGroups[i].checklistIds.length; j++) {
-          if (checklist.id == this.checklistGroups[i].checklistIds[j]) {
-            this.checklistGroups[i].checklists.push(checklist);
+      for (let i = 0; i < this._checklistGroups.length; i++) {
+        for (let j = 0; j < this._checklistGroups[i].checklistIds.length; j++) {
+          if (checklist.id === this._checklistGroups[i].checklistIds[j]) {
+            this._checklistGroups[i].checklists.push(checklist);
           }
         }
       }
@@ -297,8 +295,8 @@ export class ChecklistComponent implements OnInit {
     this.active = false;
     // this.dataError = undefined;
 
-    console.log('** Checklists **', this.checklistGroups );
-    this.checklistGroupDataSource = new MatTableDataSource<any>(this.checklistGroups);
+    console.log('** Checklists **', this._checklistGroups );
+    this.checklistGroupDataSource = new MatTableDataSource<any>(this._checklistGroups);
   }
 
   constructor(
@@ -320,12 +318,12 @@ export class ChecklistComponent implements OnInit {
     let spreadsheetText = '#template_accession ' + this.selectedChecklist.id + '\n';
     spreadsheetText += 'ENTRYNUMBER\t';
 
-    let _selectedFields = this.selectedFields;
+    const selectedFieldsLocal = this.selectedFields;
 
     let selectedFieldsCnt = 0;
     this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
       fieldGroup.fields.forEach( function(field) {
-        if (_selectedFields[field.label]) {
+        if (selectedFieldsLocal[field.label]) {
           selectedFieldsCnt++;
         }
       });
@@ -334,7 +332,7 @@ export class ChecklistComponent implements OnInit {
     let i = 0;
     this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
       fieldGroup.fields.forEach( function(field) {
-        if (_selectedFields[field.label]) {
+        if (selectedFieldsLocal[field.label]) {
           spreadsheetText += field.label;
           if (++i < selectedFieldsCnt) {
             spreadsheetText += '\t';
@@ -349,9 +347,9 @@ export class ChecklistComponent implements OnInit {
 
   download() {
 
-    let dateText = (new Date()).toISOString();
+    const dateText = (new Date()).toISOString();
 
-    let blob = new Blob([this.getSequenceSpreadsheetText()], {type: "text/plain;charset=utf-8"});
+    const blob = new Blob([this.getSequenceSpreadsheetText()], {type: 'text/plain;charset=utf-8'});
     saveAs(blob, 'Sequence-' + this.selectedChecklist.id + '-' + dateText + '.tsv');
   }
 }
