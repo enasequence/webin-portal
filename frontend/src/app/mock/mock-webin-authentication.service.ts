@@ -14,62 +14,29 @@ import { WebinAuthenticationServiceInterface } from '../webin-authentication.ser
 
 export class MockWebinAuthenticationService implements WebinAuthenticationServiceInterface {
 
-  get username(): string {
-    return 'Mock';
-  }
-  set username(username: string) {
-  }
-
-  get token(): string {
-    return 'Mock';
-  }
-  set token(token: string) {
-  }
-
-  get authenticated(): boolean {
-      return true;
-  }
-  set authenticated(authenticated: boolean) {
-  }
-
-  get account(): string {
-    return 'Mock';
-  }
-  set account(account: string) {
-  }
-
-  get ega(): boolean {
-    return false;
-  }
-  set ega(ega: boolean) {
-  }
-
-  get loginDate(): Date {
-    const today = new Date();
-    return today;
-  }
-  set loginDate(loginDate: Date) {
-  }
-
-  get logoutDate(): Date {
-    const today = new Date();
-    return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
-  }
-  set logoutDate(logoutDate: Date) {
-  }
+  username = 'Mock';
+  token = 'Mock';
+  authenticated = true;
+  account = 'Mock';
+  ega = false;
+  loginDate = new Date();
+  logoutDate = new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate() + 7);
 
   getAuthorizationTokenHeader() {
       return 'Bearer ' + this.token;
   }
 
   logout() {
+    this.authenticated = false;
   }
 
   login(username: string, password: string): Observable<any> {
+    this.authenticated = true;
     return null;
   }
 
   loginToken(username: string, password: string): Observable<any> {
+    this.authenticated = true;
     return null;
   }
 }

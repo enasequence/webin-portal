@@ -22,65 +22,63 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-     username: string;
-     password: string;
-     error = false;
+  username: string;
+  password: string;
+  error = false;
 
-    onSuccessfulLogin(data) {
-      console.log(`Webin login succeeded`);
-      this.error = false;
-      this.webinAuthenticationService.authenticated = true;
-      this.webinAuthenticationService.ega = data.roles.EGA;
-      this.webinAuthenticationService.account = data.principle;
+  constructor(
+    private _router: Router,
+    private _webinAuthenticationService: WebinAuthenticationService) {
+  }
 
-      this.webinAuthenticationService.loginToken(this.username, this.password)
-        .subscribe(
-          data => {
-            this.onSuccessfulLoginToken(data);
-          },
-          // Errors.
-          (err: HttpErrorResponse) => {
-            this.onFailedLogin();
-            console.error(err);
+  ngOnInit() {
+    if (this._webinAuthenticationService.authenticated) {
+      this._router.navigateByUrl('dashboard', { skipLocationChange: true });
+    }
+  }
+
+  onSuccessfulLogin(data) {
+    console.log(`Webin login succeeded`);
+    this.error = false;
+    this._webinAuthenticationService.authenticated = true;
+    this._webinAuthenticationService.ega = data.roles.EGA;
+    this._webinAuthenticationService.account = data.principle;
+
+    this._webinAuthenticationService.loginToken(this.username, this.password)
+      .subscribe(
+        data => {
+          this.onSuccessfulLoginToken(data);
+        },
+        // Errors.
+        (err: HttpErrorResponse) => {
+          this.onFailedLogin();
+          console.error(err);
         });
-    }
+  }
 
-    onSuccessfulLoginToken(data) {
-      console.log('Webin token succeeded');
-      this.webinAuthenticationService.token = data;
-      this.router.navigateByUrl('dashboard', { skipLocationChange: true });
-    }
+  onSuccessfulLoginToken(data) {
+    console.log('Webin token succeeded');
+    this._webinAuthenticationService.token = data;
+    this._router.navigateByUrl('dashboard', { skipLocationChange: true });
+  }
 
-    onFailedLogin() {
-      this.error = true;
-      this.webinAuthenticationService.authenticated = false;
-    }
+  onFailedLogin() {
+    this.error = true;
+    this._webinAuthenticationService.authenticated = false;
+  }
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private webinAuthenticationService: WebinAuthenticationService) { }
+  login() {
+    this._webinAuthenticationService.logout();
 
-    ngOnInit() {
-        // this.webinAuthenticationService.logout();
-
-        if (this.webinAuthenticationService.authenticated) {
-          this.router.navigateByUrl('dashboard', { skipLocationChange: true });
-        }
-    }
-
-    login() {
-      this.webinAuthenticationService.logout();
-
-      this.webinAuthenticationService.login(this.username, this.password)
-        .subscribe(
-          data => {
-            this.onSuccessfulLogin(data);
-          },
-          // Errors.
-          (err: HttpErrorResponse) => {
-            this.onFailedLogin();
-            console.error(err);
+    this._webinAuthenticationService.login(this.username, this.password)
+      .subscribe(
+        data => {
+          this.onSuccessfulLogin(data);
+        },
+        // Errors.
+        (err: HttpErrorResponse) => {
+          this.onFailedLogin();
+          console.error(err);
         });
-    }
+  }
 }

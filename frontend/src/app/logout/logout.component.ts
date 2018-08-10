@@ -10,7 +10,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 
 @Component({
@@ -22,12 +22,11 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 export class LogoutComponent implements OnInit {
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private webinAuthenticationService: WebinAuthenticationService) { }
+        private _router: Router,
+        private _webinAuthenticationService: WebinAuthenticationService) { }
 
     ngOnInit() {
-        this.webinAuthenticationService.logout();
-        this.router.navigateByUrl('', { skipLocationChange: false });
+        this._webinAuthenticationService.logout();
+        this._router.navigateByUrl('', { skipLocationChange: false });
     }
 }
