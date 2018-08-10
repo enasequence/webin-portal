@@ -33,4 +33,4 @@ export class ReportActionUtils {
       id: id
     };
   }
-};
+}

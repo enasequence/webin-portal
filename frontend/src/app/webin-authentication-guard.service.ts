@@ -27,8 +27,7 @@ export class WebinAuthenticationGuardService implements CanActivate {
         this.webinAuthenticationService.logout();
         this.router.navigate(['']);
         return false;
-      }
-      else {
+      } else {
         console.log('WebinAuthenticationGuardService: authenticated');
         return true;
       }

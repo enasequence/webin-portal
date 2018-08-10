@@ -19,8 +19,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      imports: [ 
-        RouterTestingModule 
+      imports: [
+        RouterTestingModule
       ],
     }).compileComponents();
   }));
@@ -30,5 +30,4 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  
 });

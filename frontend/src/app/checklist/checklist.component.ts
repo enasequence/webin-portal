@@ -166,12 +166,12 @@ export class ChecklistComponent implements OnInit {
       this.dataError = msg;
    }
 
-  initChecklistGroups(data) {
-    for (let i = 0; i < data.length; i++) {
+  initChecklistGroups(checklistGroupData) {
+    for (let i = 0; i < checklistGroupData.length; i++) {
       this._checklistGroups.push({
-        name: data[i].report.name,
-        description: data[i].report.description,
-        checklistIds: data[i].report.checklist,
+        name: checklistGroupData[i].report.name,
+        description: checklistGroupData[i].report.description,
+        checklistIds: checklistGroupData[i].report.checklist,
         checklists: []
       });
     }

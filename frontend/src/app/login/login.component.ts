@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSuccessfulLogin(data) {
+  onSuccessfulLogin(loginData) {
     console.log(`Webin login succeeded`);
     this.error = false;
     this._webinAuthenticationService.authenticated = true;
-    this._webinAuthenticationService.ega = data.roles.EGA;
-    this._webinAuthenticationService.account = data.principle;
+    this._webinAuthenticationService.ega = loginData.roles.EGA;
+    this._webinAuthenticationService.account = loginData.principle;
 
     this._webinAuthenticationService.loginToken(this.username, this.password)
       .subscribe(

@@ -71,7 +71,7 @@ export class ReportComponent implements OnInit {
     this._id = id;
     this._status = undefined;
     this._processStatus = undefined;
-    this._analysisType = undefined
+    this._analysisType = undefined;
   }
 
   get showAlias(): boolean {
@@ -385,8 +385,7 @@ export class ReportComponent implements OnInit {
                this.reportType === ReportType.projects) {
       actions.push(ReportActionUtils.createEditXmlAction(ReportType.projects, this.getId(result)));
       // actions.push(this.createEditXmlAction(ReportType.studies, this.getSecondaryId(result)));
-    }
-    else {
+    } else {
       actions.push(ReportActionUtils.createEditXmlAction(this.reportType, this.getId(result)));
       if (this.reportType === ReportType.runs) {
         actions.push(ReportActionUtils.createEditXmlAction(ReportType.experiments, this.getExperimentId(result)));
@@ -507,7 +506,7 @@ export class ReportComponent implements OnInit {
     this.data = undefined;
 
     this.initReportColumns();
-    const observable: Observable<any> = this.initReportObservable("json", this.rows) as Observable<any>;
+    const observable: Observable<any> = this.initReportObservable('json', this.rows) as Observable<any>;
 
     if (observable != null) {
       this.active = true;
@@ -518,7 +517,7 @@ export class ReportComponent implements OnInit {
           this.active = false;
 
           this.data = data;
-          console.log('** Webin reports service **'); //, this.data);
+          console.log('** Webin reports service **'); // , this.data);
 
           this.dataSource = new MatTableDataSource<any>(this.data);
           this.dataSource.paginator = this.dataPaginator;
@@ -556,7 +555,7 @@ export class ReportComponent implements OnInit {
     } else if (this.reportType === ReportType.analysisProcess) {
       this.setAnalysisProcessReportColumns();
     } else if (this.reportType === ReportType.unsubmittedFiles) {
-      this.setUnsubmittedFilesReportColumns()
+      this.setUnsubmittedFilesReportColumns();
     } else if (this.reportType === ReportType.dacs) {
       this.setDacReportColumns();
     } else if (this.reportType === ReportType.policies) {
@@ -859,6 +858,6 @@ export class ReportComponent implements OnInit {
   }
 
   csvDownloadAllLink() {
-    return this.initReportObservable("csv", "10000000");
+    return this.initReportObservable('csv', '10000000');
   }
 }
