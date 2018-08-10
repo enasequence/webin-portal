@@ -11,7 +11,9 @@
 
 import { Observable } from 'rxjs';
 
-export class MockWebinXmlReportService {
+import { WebinXmlReportServiceInterface } from '../webin-xml-report.service.interface';
+
+export class MockWebinXmlReportService implements WebinXmlReportServiceInterface {
 
   getStudyXml(id: string): Observable<any> {
     return null;

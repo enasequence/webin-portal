@@ -10,8 +10,9 @@
  */
 
 import { Observable } from 'rxjs';
+import { WebinAuthenticationServiceInterface } from '../webin-authentication.service.interface';
 
-export class MockWebinAuthenticationService {
+export class MockWebinAuthenticationService implements WebinAuthenticationServiceInterface {
 
   get username(): string {
     return 'Mock';
@@ -43,18 +44,18 @@ export class MockWebinAuthenticationService {
   set ega(ega: boolean) {
   }
 
-  get loginDate() {
+  get loginDate(): Date {
     const today = new Date();
     return today;
   }
-  set loginDate(loginDate) {
+  set loginDate(loginDate: Date) {
   }
 
-  get logoutDate() {
+  get logoutDate(): Date {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
   }
-  set logoutDate(logoutDate) {
+  set logoutDate(logoutDate: Date) {
   }
 
   getAuthorizationTokenHeader() {

@@ -14,13 +14,14 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
 import { WebinAuthenticationService } from './webin-authentication.service';
+import { WebinReportServiceInterface } from './webin-report.service.interface';
 
 @Injectable()
-export class WebinReportService {
+export class WebinReportService implements WebinReportServiceInterface {
 
   private _baseUrl = environment.webinReportServiceUrl;
 
-  constructor(private webinAuthenticationService: WebinAuthenticationService, private http: HttpClient) { }
+  constructor(private _webinAuthenticationService: WebinAuthenticationService, private http: HttpClient) { }
 
   getStudiesAll(status: string, rows: string, format: string) {
     return this.getAll('studies', status, rows, format);
@@ -216,9 +217,8 @@ export class WebinReportService {
     }
   }
 
-  getCsvUrlWithToken(url: string) {
-    url = url + '&token=' + this.webinAuthenticationService.token;
-      // this.webinAuthenticationService.token;
+  private getCsvUrlWithToken(url: string) {
+    url = url + '&token=' + this._webinAuthenticationService.token;
     // console.log(url);
     return url;
   }

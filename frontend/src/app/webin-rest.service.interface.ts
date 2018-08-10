@@ -9,11 +9,25 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { WebinGdprServiceInterface } from '../webin-gdpr.service.interface';
+import { ReportType } from './report-type.enum';
 
-export class MockWebinGdprService implements WebinGdprServiceInterface {
+export interface WebinRestServiceInterface {
 
-    consented = true;
+    updateXml(
+        reportType: ReportType,
+        xml: Blob);
 
-    consent() { }
+    submitXml(
+        submissionXml: Blob,
+        studyXml: Blob,
+        projectXml: Blob,
+        sampleXml: Blob,
+        experimentXml: Blob,
+        runXml: Blob,
+        analysisXml: Blob,
+        dacXml: Blob,
+        policyXml: Blob,
+        datasetXml: Blob);
+
+    parseResult(data);
 }

@@ -10,12 +10,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
+import { WebinXmlReportServiceInterface } from './webin-xml-report.service.interface';
 
 @Injectable()
-export class WebinXmlReportService {
+export class WebinXmlReportService implements WebinXmlReportServiceInterface {
 
   private _baseUrl = environment.webinXmlReportServiceUrl;
 

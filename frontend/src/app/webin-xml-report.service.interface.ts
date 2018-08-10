@@ -9,11 +9,16 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { WebinGdprServiceInterface } from '../webin-gdpr.service.interface';
+import { Observable } from 'rxjs';
 
-export class MockWebinGdprService implements WebinGdprServiceInterface {
-
-    consented = true;
-
-    consent() { }
+export interface WebinXmlReportServiceInterface {
+  getStudyXml(id: string): Observable<any>;
+  getProjectXml(id: string): Observable<any>;
+  getSampleXml(id: string): Observable<any>;
+  getRunXml(id: string): Observable<any>;
+  getExperimentXml(id: string): Observable<any>;
+  getAnalysisXml(id: string): Observable<any>;
+  getDacXml(id: string): Observable<any>;
+  getPolicyXml(id: string): Observable<any>;
+  getDatasetXml(id: string): Observable<any>;
 }

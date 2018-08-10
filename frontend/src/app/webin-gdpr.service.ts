@@ -13,16 +13,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
+import { WebinGdprServiceInterface } from './webin-gdpr.service.interface';
 
 @Injectable()
-export class WebinGdprService {
+export class WebinGdprService implements WebinGdprServiceInterface {
 
   private _baseUrl = environment.webinGdprServiceUrl;
 
   // TODO check consent
   consented = false;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private _http: HttpClient, private _router: Router) { }
 
   consent() {
     console.log('** Webin consent **', this._baseUrl);
@@ -31,6 +32,6 @@ export class WebinGdprService {
 
     // TODO set consent
 
-    this.router.navigateByUrl('dashboard', { skipLocationChange: true });
+    this._router.navigateByUrl('dashboard', { skipLocationChange: true });
   }
 }

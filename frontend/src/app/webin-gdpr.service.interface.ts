@@ -9,11 +9,9 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { WebinGdprServiceInterface } from '../webin-gdpr.service.interface';
+export interface WebinGdprServiceInterface {
 
-export class MockWebinGdprService implements WebinGdprServiceInterface {
+    consented: boolean;
 
-    consented = true;
-
-    consent() { }
+    consent();
 }

@@ -10,31 +10,26 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 
 import { ReportType } from './report-type.enum';
+import { WebinRestServiceInterface } from './webin-rest.service.interface';
 
 @Injectable()
-export class WebinRestService {
+export class WebinRestService implements WebinRestServiceInterface {
 
   private _baseUrl = environment.webinServiceUrl;
-  private xmlParser = new DOMParser();
+  private _xmlParser = new DOMParser();
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
-  headers() {
+  private headers() {
     return new HttpHeaders();
   }
 
-  appendFile(formData: FormData, name: string, file: File) {
-    if (file !== undefined) {
-      formData.append(name, file);
-    }
-  }
-
-  appendXml(formData: FormData, name: string, blob: Blob) {
+  private appendXml(formData: FormData, name: string, blob: Blob) {
     if (blob !== undefined) {
       let fileName: string = (blob as File).name;
       if (fileName === undefined) {
@@ -44,9 +39,9 @@ export class WebinRestService {
     }
   }
 
-  post(formData: FormData): Observable<any> {
+  private post(formData: FormData): Observable<any> {
     const headers = this.headers();
-    return this.http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
+    return this._http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
   }
 
   updateXml(
@@ -138,10 +133,9 @@ export class WebinRestService {
     return this.post(formData);
   }
 
-
   parseResult(data) {
 
-    const xmlDoc = this.xmlParser.parseFromString(data.body, 'text/xml');
+    const xmlDoc = this._xmlParser.parseFromString(data.body, 'text/xml');
     const rootNode: any = xmlDoc.getElementsByTagName('RECEIPT')[0];
     const isError: boolean = (rootNode.getAttribute('success') !== 'true');
     const date: string = rootNode.getAttribute('receiptDate');

@@ -10,8 +10,9 @@
  */
 
 import { ReportType } from '../report-type.enum';
+import { WebinRestServiceInterface } from '../webin-rest.service.interface';
 
-export class MockWebinRestService {
+export class MockWebinRestService implements WebinRestServiceInterface {
 
   updateXml(
     reportType: ReportType,

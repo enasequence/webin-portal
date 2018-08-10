@@ -12,13 +12,13 @@
 // https://medium.com/@ryanchenkie_40935/angular-webin-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 import { environment } from '../environments/environment';
+import { WebinAuthenticationServiceInterface } from './webin-authentication.service.interface';
 
 @Injectable()
-export class WebinAuthenticationService {
+export class WebinAuthenticationService implements WebinAuthenticationServiceInterface {
 
   get username(): string {
     return sessionStorage.getItem('username');
@@ -58,21 +58,21 @@ export class WebinAuthenticationService {
     sessionStorage.setItem('ega', JSON.stringify(ega));
   }
 
-  get loginDate() {
+  get loginDate(): Date {
     return JSON.parse(sessionStorage.getItem('loginDate'));
   }
-  set loginDate(loginDate) {
+  set loginDate(loginDate: Date) {
     sessionStorage.setItem('loginDate', JSON.stringify(loginDate));
   }
 
-  get logoutDate() {
+  get logoutDate(): Date {
     return JSON.parse(sessionStorage.getItem('logoutDate'));
   }
-  set logoutDate(logoutDate) {
+  set logoutDate(logoutDate: Date) {
     sessionStorage.setItem('logoutDate', JSON.stringify(logoutDate));
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   /*
   getAuthorizationHeader() {
@@ -112,7 +112,7 @@ export class WebinAuthenticationService {
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
 
-    return this.http.post(baseUrl, body, { headers, withCredentials: false });
+    return this._http.post(baseUrl, body, { headers, withCredentials: false });
   }
 
   loginToken(username: string, password: string): Observable<any> {
@@ -129,6 +129,6 @@ export class WebinAuthenticationService {
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
 
-    return this.http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+    return this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
   }
 }
