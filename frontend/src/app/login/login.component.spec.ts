@@ -12,10 +12,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
-import { LoginComponent } from './login.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -24,9 +25,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [
-        UiModule,
-        RouterTestingModule ],
+      imports: [ UiModule, RouterTestingModule ],
       providers: [
         {
           provide: WebinAuthenticationService,

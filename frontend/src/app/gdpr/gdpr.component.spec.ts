@@ -12,12 +12,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
-import { GdprComponent } from './gdpr.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 import { WebinGdprService } from '../webin-gdpr.service';
 import { MockWebinGdprService } from '../mock/mock-webin-gdpr.service';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { GdprComponent } from './gdpr.component';
 
 describe('GdprComponent', () => {
   let component: GdprComponent;
@@ -26,10 +27,7 @@ describe('GdprComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GdprComponent ],
-      imports: [
-        UiModule,
-        RouterTestingModule
-      ],
+      imports: [ UiModule, RouterTestingModule ],
       providers: [
         {
           provide: WebinAuthenticationService,

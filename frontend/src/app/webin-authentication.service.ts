@@ -103,9 +103,9 @@ export class WebinAuthenticationService {
     console.log('** Webin authentication login **', baseUrl);
 
     this.username = username;
-    let today = new Date();
+    const today = new Date();
     this.loginDate = today;
-    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
     const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
@@ -120,9 +120,9 @@ export class WebinAuthenticationService {
     console.log('** Webin authentication token **', baseUrl);
 
     this.username = username;
-    let today = new Date();
+    const today = new Date();
     this.loginDate = today;
-    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
     const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()

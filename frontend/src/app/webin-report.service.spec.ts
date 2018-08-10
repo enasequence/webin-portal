@@ -11,12 +11,23 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
+import { WebinAuthenticationService } from './webin-authentication.service';
+import { MockWebinAuthenticationService } from './mock/mock-webin-authentication.service';
+
 import { WebinReportService } from './webin-report.service';
 
 describe('WebinReportService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WebinReportService]
+      imports: [ HttpClientModule ],
+      providers: [
+        WebinReportService,
+        {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
+      ]
     });
   });
 

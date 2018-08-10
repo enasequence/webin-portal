@@ -11,12 +11,15 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { WebinXmlReportService } from './webin-xml-report.service';
 
 describe('WebinXmlReportService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WebinXmlReportService]
+      imports: [ HttpClientModule ],
+      providers: [ WebinXmlReportService ]
     });
   });
 

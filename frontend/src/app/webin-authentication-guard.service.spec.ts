@@ -11,12 +11,23 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { WebinAuthenticationService } from './webin-authentication.service';
+import { MockWebinAuthenticationService } from './mock/mock-webin-authentication.service';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { WebinAuthenticationGuardService } from './webin-authentication-guard.service';
 
 describe('WebinAuthenticationGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WebinAuthenticationGuardService]
+      imports: [ RouterTestingModule ],
+      providers: [
+        WebinAuthenticationGuardService,
+        {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
+      ]
     });
   });
 

@@ -12,11 +12,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
-import { HttpClientModule } from '@angular/common/http';
-import { ChecklistComponent } from './checklist.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
+import { MockWebinReportService } from '../mock/mock-webin-report.service';
+
+import { ChecklistComponent } from './checklist.component';
 
 describe('ChecklistComponent', () => {
   let component: ChecklistComponent;
@@ -25,16 +26,16 @@ describe('ChecklistComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ChecklistComponent ],
-      imports: [
-        UiModule,
-        HttpClientModule,
-      ],
+      imports: [ UiModule ],
       providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService
         },
-        WebinReportService
+        {
+          provide: WebinReportService,
+          useClass: MockWebinReportService
+        },
       ]
     })
     .compileComponents();

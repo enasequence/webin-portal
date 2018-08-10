@@ -11,12 +11,15 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { WebinRestService } from './webin-rest.service';
 
 describe('WebinRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WebinRestService]
+      imports: [ HttpClientModule ],
+      providers: [ WebinRestService ]
     });
   });
 

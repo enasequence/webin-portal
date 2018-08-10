@@ -10,8 +10,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
 import { WebinAuthenticationService } from './webin-authentication.service';
@@ -52,12 +51,12 @@ export class WebinReportService {
   }
 
   getAnalysesAll(status: string, analysisType: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     if (status) {
-      params["status"] = status;
+      params['status'] = status;
     }
     if (analysisType) {
-      params["analysis-type"] = analysisType;
+      params['analysis-type'] = analysisType;
     }
     return this.getAllParams('analyses', params, rows, format);
   }
@@ -66,9 +65,9 @@ export class WebinReportService {
   }
 
   getRunFilesAll(archiveStatus: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     if (archiveStatus) {
-      params["archive-status"] = archiveStatus;
+      params['archive-status'] = archiveStatus;
     }
     return this.getAllParams('run-files', params, rows, format);
   }
@@ -77,12 +76,12 @@ export class WebinReportService {
   }
 
   getAnalysisFilesAll(analysisType: string, archiveStatus: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     if (analysisType) {
-      params["analysis-type"] = analysisType;
+      params['analysis-type'] = analysisType;
     }
     if (archiveStatus) {
-      params["archive-status"] = archiveStatus;
+      params['archive-status'] = archiveStatus;
     }
     return this.getAllParams('analysis-files', params, rows, format);
   }
@@ -91,9 +90,9 @@ export class WebinReportService {
   }
 
   getRunProcessAll(processStatus: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     if (processStatus) {
-      params["process-status"] = processStatus;
+      params['process-status'] = processStatus;
     }
     return this.getAllParams('run-process', params, rows, format);
   }
@@ -103,12 +102,12 @@ export class WebinReportService {
   }
 
   getAnalysisProcessAll(analysisType: string, processStatus: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     if (analysisType) {
-      params["analysis-type"] = analysisType;
+      params['analysis-type'] = analysisType;
     }
     if (processStatus) {
-      params["process-status"] = processStatus;
+      params['process-status'] = processStatus;
     }
     return this.getAllParams('analysis-process', params, rows, format);
   }
@@ -118,7 +117,7 @@ export class WebinReportService {
   }
 
   getUnsubmittedFilesAll(status: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     return this.getAllParams('unsubmitted-files', params, rows, format);
   }
 
@@ -144,74 +143,75 @@ export class WebinReportService {
   }
 
   getChecklistGroups(type: string) {
-      var params = {};
-      params["type"] = type;
+      const params = {};
+      params['type'] = type;
       const url: string = this._baseUrl + '/checklist-groups' + '?' + this.getUrlParams(params);
       return this.http.get(url);
   }
   getChecklists(type: string) {
-      var params = {};
-      params["type"] = type;
+      const params = {};
+      params['type'] = type;
       const url: string = this._baseUrl + '/checklists' + '?' + this.getUrlParams(params);
       return this.http.get(url);
   }
   getChecklistXmls(type: string) {
-      var params = {};
-      params["type"] = type;
+      const params = {};
+      params['type'] = type;
       const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
       return this.http.get(url, { responseType: 'text', observe: 'response' });
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
-    var params = {};
+    const params = {};
     if (status) {
-      params["status"] = status;
+      params['status'] = status;
     }
-    params["max-results"] = rows;
-    params["format"] = format;
+    params['max-results'] = rows;
+    params['format'] = format;
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
 
-    if (format === "json") {
+    if (format === 'json') {
       // console.log(url);
       return this.http.get(url);
     }
-    if (format === "csv") {
+    if (format === 'csv') {
       return this.getCsvUrlWithToken(url);
     }
   }
 
   private getAllParams(reportType: string, params, rows: string, format: string) {
-    params["max-results"] = rows;
-    params["format"] = format;
+    params['max-results'] = rows;
+    params['format'] = format;
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
 
-    if (format === "json") {
+    if (format === 'json') {
       // console.log(url);
       return this.http.get(url);
     }
-    if (format === "csv") {
+    if (format === 'csv') {
       return this.getCsvUrlWithToken(url);
     }
   }
 
   private getUrlParams(params) {
-    let ret = [];
-    for (let d in params)
+    const ret = [];
+    for (const d in params) {
       ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(params[d]));
+    }
     return ret.join('&');
   }
 
   private getById(reportType: string, id: string, rows: string, format: string) {
-    var params = {};
-    params["max-results"] = rows;
-    params["format"] = format;
+    const params = {};
+    params['max-results'] = rows;
+    params['format'] = format;
     const url: string = this._baseUrl + '/' + reportType + '/' + encodeURIComponent(id.trim()) + '?' + this.getUrlParams(params);
 
-    if (format === "json") {
+    if (format === 'json') {
       // console.log(url);
       return this.http.get(url);
     }
-    if (format === "csv") {
+    if (format === 'csv') {
       return this.getCsvUrlWithToken(url);
     }
   }

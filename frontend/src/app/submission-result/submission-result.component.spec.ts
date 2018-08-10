@@ -13,9 +13,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
 import { WebinAuthenticationService } from '../webin-authentication.service';
-import { WebinRestService } from '../webin-rest.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
+import { WebinRestService } from '../webin-rest.service';
 import { MockWebinRestService } from '../mock/mock-webin-rest.service';
+
 import { SubmissionResultComponent } from './submission-result.component';
 
 describe('SubmissionResultComponent', () => {
@@ -25,9 +26,7 @@ describe('SubmissionResultComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SubmissionResultComponent ],
-      imports: [
-        UiModule,
-      ],
+      imports: [ UiModule ],
       providers: [
         {
           provide: WebinAuthenticationService,

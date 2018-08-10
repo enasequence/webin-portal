@@ -14,6 +14,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UiModule } from '../ui/ui.module';
 import { ReportType } from '../report-type.enum';
 import { ReportActionUtils } from '../report-action-type.enum';
+
 import { ReportActionComponent } from './report-action.component';
 
 describe('ReportActionComponent', () => {
@@ -23,9 +24,7 @@ describe('ReportActionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ReportActionComponent ],
-      imports: [
-        UiModule,
-      ]
+      imports: [ UiModule ]
     })
     .compileComponents();
   }));

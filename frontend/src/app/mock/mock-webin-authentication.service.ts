@@ -52,8 +52,7 @@ export class MockWebinAuthenticationService {
 
   get logoutDate() {
     const today = new Date();
-    return new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
-
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
   }
   set logoutDate(logoutDate) {
   }

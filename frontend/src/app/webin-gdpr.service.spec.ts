@@ -11,21 +11,16 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { WebinGdprService } from './webin-gdpr.service';
-import { MockWebinGdprService } from './mock/mock-webin-gdpr.service';
 
 describe('WebinGdprService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        WebinGdprService,
-        {
-          provide: WebinGdprService,
-          useClass: MockWebinGdprService
-        },
-      ]
-
-
+      imports: [ HttpClientModule, RouterTestingModule ],
+      providers: [ WebinGdprService ]
     });
   });
 
