@@ -10,8 +10,12 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UiModule } from '../ui/ui.module';
+import { WebinAuthenticationService } from '../webin-authentication.service';
+import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
+import { MockReportComponent } from '../mock/mock-report.component';
+import { MockXmlSubmissionComponent } from '../mock/mock-xml-submission.component';
+
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
@@ -20,9 +24,19 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ],
+      declarations: [
+        DashboardComponent,
+        MockReportComponent,
+        MockXmlSubmissionComponent,
+      ],
       imports: [
         UiModule,
+      ],
+      providers: [
+        {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
       ]
     })
     .compileComponents();

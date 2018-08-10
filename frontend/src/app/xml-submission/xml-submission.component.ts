@@ -11,15 +11,8 @@
 
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
-import {MatTableDataSource} from '@angular/material';
-import { MatStepper } from '@angular/material';
-
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
-import { ChecklistComponent } from '../checklist/checklist.component';
 import { ChecklistType } from '../checklist-type.enum';
-
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinRestService } from '../webin-rest.service';
 
