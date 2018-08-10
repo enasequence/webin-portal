@@ -1,0 +1,3 @@
+exclude_paths:
+  - frontend/protractor.conf.js
+  - frontend/karma.conf.js
