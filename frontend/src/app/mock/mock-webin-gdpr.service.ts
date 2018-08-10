@@ -11,13 +11,8 @@
 
 export class MockWebinGdprService {
 
-    get consented(): boolean {
-        return true;
-    }
+    consented = true;
 
-    set consented(consented: boolean) {
+    consent() {
     }
-
-   consent() {
-   }
 }

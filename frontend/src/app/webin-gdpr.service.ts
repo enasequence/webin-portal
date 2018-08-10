@@ -10,9 +10,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable()
@@ -21,7 +20,7 @@ export class WebinGdprService {
   private _baseUrl = environment.webinGdprServiceUrl;
 
   // TODO check consent
-  consented: boolean = false;
+  consented = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
