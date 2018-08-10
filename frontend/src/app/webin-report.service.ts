@@ -21,7 +21,7 @@ export class WebinReportService implements WebinReportServiceInterface {
 
   private _baseUrl = environment.webinReportServiceUrl;
 
-  constructor(private _webinAuthenticationService: WebinAuthenticationService, private http: HttpClient) { }
+  constructor(private _webinAuthenticationService: WebinAuthenticationService, private _http: HttpClient) { }
 
   getStudiesAll(status: string, rows: string, format: string) {
     return this.getAll('studies', status, rows, format);
@@ -147,19 +147,19 @@ export class WebinReportService implements WebinReportServiceInterface {
       const params = {};
       params['type'] = type;
       const url: string = this._baseUrl + '/checklist-groups' + '?' + this.getUrlParams(params);
-      return this.http.get(url);
+      return this._http.get(url);
   }
   getChecklists(type: string) {
       const params = {};
       params['type'] = type;
       const url: string = this._baseUrl + '/checklists' + '?' + this.getUrlParams(params);
-      return this.http.get(url);
+      return this._http.get(url);
   }
   getChecklistXmls(type: string) {
       const params = {};
       params['type'] = type;
       const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
-      return this.http.get(url, { responseType: 'text', observe: 'response' });
+      return this._http.get(url, { responseType: 'text', observe: 'response' });
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
@@ -173,7 +173,7 @@ export class WebinReportService implements WebinReportServiceInterface {
 
     if (format === 'json') {
       // console.log(url);
-      return this.http.get(url);
+      return this._http.get(url);
     }
     if (format === 'csv') {
       return this.getCsvUrlWithToken(url);
@@ -187,7 +187,7 @@ export class WebinReportService implements WebinReportServiceInterface {
 
     if (format === 'json') {
       // console.log(url);
-      return this.http.get(url);
+      return this._http.get(url);
     }
     if (format === 'csv') {
       return this.getCsvUrlWithToken(url);
@@ -197,7 +197,9 @@ export class WebinReportService implements WebinReportServiceInterface {
   private getUrlParams(params) {
     const ret = [];
     for (const d in params) {
-      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(params[d]));
+      if (params.hasOwnProperty(d)) {
+        ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(params[d]));
+      }
     }
     return ret.join('&');
   }
@@ -210,7 +212,7 @@ export class WebinReportService implements WebinReportServiceInterface {
 
     if (format === 'json') {
       // console.log(url);
-      return this.http.get(url);
+      return this._http.get(url);
     }
     if (format === 'csv') {
       return this.getCsvUrlWithToken(url);
