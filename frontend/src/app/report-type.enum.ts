@@ -26,9 +26,9 @@ export enum ReportType {
   datasets = 'datasets'
 }
 
-export class ReportTypeUtils {
+export namespace ReportType {
 
-  static getCapitalisedSingularName(reportType: ReportType): string {
+  export function getCapitalisedSingularName(reportType: ReportType): string {
     switch (reportType) {
        case ReportType.studies: {
          return 'Study';
@@ -79,7 +79,7 @@ export class ReportTypeUtils {
   }
 
 
-  static getPluralName(reportType: ReportType): string {
+  export function getPluralName(reportType: ReportType): string {
     switch (reportType) {
        case ReportType.studies: {
          return 'studies';

@@ -18,7 +18,7 @@ import { WebinXmlReportService } from '../webin-xml-report.service';
 import { WebinRestService } from '../webin-rest.service';
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 
-import { ReportType, ReportTypeUtils } from '../report-type.enum';
+import { ReportType } from '../report-type.enum';
 
 @Component({
   selector: 'app-report-edit-dialog',
@@ -60,7 +60,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   getTitle(): string {
-    return ReportTypeUtils.getCapitalisedSingularName(this.data.reportType) + ': ' + this.data.id;
+    return ReportType.getCapitalisedSingularName(this.data.reportType) + ': ' + this.data.id;
   }
 
   load() {

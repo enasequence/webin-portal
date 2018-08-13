@@ -13,7 +13,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
 import { ReportType } from '../report-type.enum';
-import { ReportActionUtils } from '../report-action-type.enum';
+import { ReportActionType } from '../report-action-type.enum';
 
 import { ReportActionComponent } from './report-action.component';
 
@@ -37,8 +37,8 @@ describe('ReportActionComponent', () => {
   it('should create', () => {
     // Set one XML and report change action.
     const actions = [];
-    actions.push(ReportActionUtils.createEditXmlAction(ReportType.runs, 'Mock'));
-    actions.push(ReportActionUtils.createChangeReportAction(ReportType.studies, 'Mock'));
+    actions.push(ReportActionType.createEditXmlAction(ReportType.runs, 'Mock'));
+    actions.push(ReportActionType.createChangeReportAction(ReportType.studies, 'Mock'));
     component.actions = actions;
 
     fixture.detectChanges();

@@ -16,9 +16,9 @@ export enum ReportActionType {
   editXml = 'editXml',
 }
 
-export class ReportActionUtils {
+export namespace ReportActionType {
 
-  static createChangeReportAction(reportType: ReportType, id: string) {
+  export function createChangeReportAction(reportType: ReportType, id: string) {
     return {
       reportActionType: ReportActionType.changeReport,
       reportType: reportType,
@@ -26,7 +26,7 @@ export class ReportActionUtils {
     };
   }
 
-  static createEditXmlAction(reportType: ReportType, id: string) {
+  export function createEditXmlAction(reportType: ReportType, id: string) {
   return {
       reportActionType: ReportActionType.editXml,
       reportType: reportType,

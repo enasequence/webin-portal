@@ -16,8 +16,8 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
-import { ReportType, ReportTypeUtils } from '../report-type.enum';
-import { ReportActionType, ReportActionUtils } from '../report-action-type.enum';
+import { ReportType } from '../report-type.enum';
+import { ReportActionType } from '../report-action-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
@@ -31,7 +31,7 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 export class ReportComponent implements OnInit {
 
   ReportType = ReportType;   // Allows use in template
-  ReportTypeUtils = ReportTypeUtils;   // Allows use in template
+
 
   @Input() reportType: ReportType;
   @Output() onReportChange = new EventEmitter<any>();
@@ -376,82 +376,82 @@ export class ReportComponent implements OnInit {
 
     // Allow edit XML.
     if (this.reportType === ReportType.runFiles) {
-      actions.push(ReportActionUtils.createEditXmlAction(ReportType.runs, this.getId(result)));
+      actions.push(ReportActionType.createEditXmlAction(ReportType.runs, this.getId(result)));
     } else if (this.reportType === ReportType.analysisFiles) {
-      actions.push(ReportActionUtils.createEditXmlAction(ReportType.analyses, this.getId(result)));
+      actions.push(ReportActionType.createEditXmlAction(ReportType.analyses, this.getId(result)));
     } else if (this.reportType === ReportType.studies ||
                this.reportType === ReportType.projects) {
-      actions.push(ReportActionUtils.createEditXmlAction(ReportType.projects, this.getId(result)));
+      actions.push(ReportActionType.createEditXmlAction(ReportType.projects, this.getId(result)));
       // actions.push(this.createEditXmlAction(ReportType.studies, this.getSecondaryId(result)));
     } else {
-      actions.push(ReportActionUtils.createEditXmlAction(this.reportType, this.getId(result)));
+      actions.push(ReportActionType.createEditXmlAction(this.reportType, this.getId(result)));
       if (this.reportType === ReportType.runs) {
-        actions.push(ReportActionUtils.createEditXmlAction(ReportType.experiments, this.getExperimentId(result)));
+        actions.push(ReportActionType.createEditXmlAction(ReportType.experiments, this.getExperimentId(result)));
       }
     }
 
     // Allow navigation to studies report.
     if (this.getStudyId(result)) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.studies, this.getStudyId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.studies, this.getStudyId(result)));
     }
 
     // Allow navigation to samples report.
     if (this.getSampleId(result)) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.samples, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.samples, this.getId(result)));
     }
 
     // Allow navigation to run report.
     if (this.reportType === ReportType.studies) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.runs, this.getSecondaryId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getSecondaryId(result)));
     }
     if (this.reportType === ReportType.samples ||
         this.reportType === ReportType.runFiles) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.runs, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getId(result)));
     }
 
     // Allow navigation to analysis report.
     if (this.reportType === ReportType.studies) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.analyses, this.getSecondaryId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getSecondaryId(result)));
     }
     if (this.reportType === ReportType.samples ||
         this.reportType === ReportType.analysisFiles) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.analyses, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getId(result)));
     }
 
     // Allow navigation to run files and run process.
     if (this.reportType === ReportType.runs && !this.isEga()) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.runFiles, this.getId(result)));
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.runProcess, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.runFiles, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.runProcess, this.getId(result)));
     }
 
     // Allow navigation to analysis files annd analysis process.
     if (this.reportType === ReportType.analyses && !this.isEga()) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.analysisProcess, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analysisProcess, this.getId(result)));
     }
 
     // Allow navigation from run process.
     if (this.reportType === ReportType.runProcess) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.runs, this.getId(result)));
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.runFiles, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.runFiles, this.getId(result)));
     }
 
     // Allow navigation from analysis process.
     if (this.reportType === ReportType.analysisProcess) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.analyses, this.getId(result)));
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analysisFiles, this.getId(result)));
     }
 
     if (this.reportType === ReportType.dacs) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.policies, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.policies, this.getId(result)));
     }
 
     if (this.reportType === ReportType.policies) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.dacs, this.getDacId(result)));
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.datasets, this.getId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.dacs, this.getDacId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.datasets, this.getId(result)));
     }
     if (this.reportType === ReportType.datasets) {
-      actions.push(ReportActionUtils.createChangeReportAction(ReportType.policies, this.getPolicyId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.policies, this.getPolicyId(result)));
     }
 
     return actions;
