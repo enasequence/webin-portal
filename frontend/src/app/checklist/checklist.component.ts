@@ -100,11 +100,11 @@ export class ChecklistComponent implements OnInit {
 
   getSelectedFieldsDisplayText(fieldGroup): string {
     let cnt = 0;
-    fieldGroup.fields.forEach( function(field) {
+    fieldGroup.fields.forEach( (field) => {
       if (this.selectedFields[field.label]) {
         cnt++;
       }
-    }, this);
+    });
     return '(' + cnt + ' of ' + fieldGroup.fields.length + ' fields selected)';
   }
 
@@ -119,12 +119,12 @@ export class ChecklistComponent implements OnInit {
     console.log('DEBUG:', this.selectedChecklist);
     this.selectedFields = {};
     this.mandatoryFields = {};
-    this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
-      fieldGroup.fields.forEach( function(field) {
+    this.selectedChecklist.fieldGroups.forEach( (fieldGroup) => {
+      fieldGroup.fields.forEach( (field) => {
         this.selectedFields[field.label] = (field.mandatory === 'mandatory');
         this.mandatoryFields[field.label] = (field.mandatory === 'mandatory');
-      }, this);
-    }, this);
+      });
+    });
     stepper.next();
   }
 
@@ -311,21 +311,21 @@ export class ChecklistComponent implements OnInit {
     let spreadsheetText = '#template_accession ' + this.selectedChecklist.id + '\n';
     spreadsheetText += 'ENTRYNUMBER\t';
 
-    const selectedFieldsLocal = this.selectedFields;
+    const { fieldGroups } = this.selectedChecklist;
 
     let selectedFieldsCnt = 0;
-    this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
-      fieldGroup.fields.forEach( function(field) {
-        if (selectedFieldsLocal[field.label]) {
+    fieldGroups.forEach( (fieldGroup) => {
+      fieldGroup.fields.forEach( (field) => {
+        if (this.selectedFields[field.label]) {
           selectedFieldsCnt++;
         }
       });
     });
 
     let i = 0;
-    this.selectedChecklist.fieldGroups.forEach( function(fieldGroup) {
-      fieldGroup.fields.forEach( function(field) {
-        if (selectedFieldsLocal[field.label]) {
+    fieldGroups.forEach( (fieldGroup) => {
+      fieldGroup.fields.forEach( (field) => {
+        if (this.selectedFields[field.label]) {
           spreadsheetText += field.label;
           if (++i < selectedFieldsCnt) {
             spreadsheetText += '\t';
