@@ -152,6 +152,7 @@ export class WebinRestService implements WebinRestServiceInterface {
 
     if (!isError) {
       const nodes = rootNode.childNodes;
+      // Safer not use forEach for NodeList.
       for (i = 0; i < nodes.length; i++) {
         const childNode = nodes[i];
         if (childNode.tagName === 'ANALYSIS' ||
@@ -175,6 +176,7 @@ export class WebinRestService implements WebinRestServiceInterface {
     } else {
       const messageRootNode = rootNode.getElementsByTagName('MESSAGES')[0];
       const nodes = messageRootNode.getElementsByTagName('ERROR');
+      // Safer not use forEach for NodeList.
       for (i = 0; i < nodes.length; i++) {
         receipt.errors.push(
           {

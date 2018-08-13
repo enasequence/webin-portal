@@ -196,9 +196,9 @@ export class WebinReportService implements WebinReportServiceInterface {
 
   private getUrlParams(params) {
     const ret = [];
-    for (const d in params) {
-      if (params.hasOwnProperty(d)) {
-        ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(params[d]));
+    for (const param in params) {
+      if (params.hasOwnProperty(param)) {
+        ret.push(encodeURIComponent(param) + '=' + encodeURIComponent(params[param]));
       }
     }
     return ret.join('&');

@@ -30,42 +30,24 @@ export class ReportActionComponent implements OnInit {
 
   ngOnInit() { }
 
+  private isAction(reportType: ReportType, reportActionType: ReportActionType, action ): boolean {
+    return action.reportActionType === reportActionType && action.reportType === reportType;
+  }
+
   isChangeReportAction(reportType: ReportType): boolean {
-      for (let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType === ReportActionType.changeReport &&
-              this.actions[i].reportType === reportType) {
-            return true;
-          }
-      }
-      return false;
+      return this.actions.some( action => this.isAction(reportType, ReportActionType.changeReport, action) );
   }
 
   isEditXmlAction(reportType: ReportType): boolean {
-      for (let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType === ReportActionType.editXml &&
-              this.actions[i].reportType === reportType) {
-            return true;
-          }
-      }
-      return false;
+    return this.actions.some( action => this.isAction(reportType, ReportActionType.editXml, action) );
   }
 
   getChangeReportAction(reportType: ReportType) {
-      for (let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType === ReportActionType.changeReport &&
-              this.actions[i].reportType === reportType) {
-            return this.actions[i];
-          }
-      }
+    return this.actions.find( action => this.isAction(reportType, ReportActionType.changeReport, action) );
   }
 
   getEditXmlAction(reportType: ReportType) {
-      for (let i = 0; i < this.actions.length; i++) {
-          if (this.actions[i].reportActionType === ReportActionType.editXml &&
-              this.actions[i].reportType === reportType) {
-            return this.actions[i];
-          }
-      }
+    return this.actions.find( action => this.isAction(reportType, ReportActionType.editXml, action) );
   }
 
   changeReportAction(reportType: ReportType) {

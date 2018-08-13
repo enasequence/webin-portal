@@ -118,14 +118,9 @@ export class SubmissionResultComponent implements OnInit {
     }
 
     const arr = [];
-    arr.push(
-      'ERROR');
-    const len = this.result.errors.length;
-    for (let i = 0; i < len; i++) {
-      arr.push(
-        this.result.errors[i].error
-      );
-    }
+    arr.push('ERROR');
+    this.result.errors.forEach( error => arr.push( error.error ));
+
     const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
     importedSaveAs(blob, 'Webin-errors-' + this.result.date + '.txt');
   }
@@ -140,14 +135,12 @@ export class SubmissionResultComponent implements OnInit {
       'TYPE\t' +
       'ACCESSION\t' +
       'ALIAS');
-    const len = this.result.accessions.length;
-    for (let i = 0; i < len; i++) {
-      arr.push(
-        this.result.accessions[i].type + '\t' +
-        this.result.accessions[i].accession + '\t' +
-        this.result.accessions[i].alias
-      );
-    }
+    this.result.accessions.forEach( accession => arr.push(
+        accession.type + '\t' +
+        accession.accession + '\t' +
+        accession.accession.alias
+    ));
+
     const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
     importedSaveAs(blob, 'Webin-accessions-' + this.result.date + '.txt');
   }

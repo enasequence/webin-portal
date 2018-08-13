@@ -170,14 +170,15 @@ export class ChecklistComponent implements OnInit {
    }
 
   initChecklistGroups(checklistGroupData) {
-    for (let i = 0; i < checklistGroupData.length; i++) {
+    checklistGroupData.forEach( (checklistData) => {
+      const report = checklistData.report;
       this._checklistGroups.push({
-        name: checklistGroupData[i].report.name,
-        description: checklistGroupData[i].report.description,
-        checklistIds: checklistGroupData[i].report.checklist,
+        name: report.name,
+        description: report.description,
+        checklistIds: report.checklist,
         checklists: []
       });
-    }
+    });
 
     const observable: Observable<any> = this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
 
@@ -284,13 +285,13 @@ export class ChecklistComponent implements OnInit {
         fieldGroupNode = fieldGroupNodes.iterateNext();
       }
 
-      for (let i = 0; i < this._checklistGroups.length; i++) {
-        for (let j = 0; j < this._checklistGroups[i].checklistIds.length; j++) {
-          if (checklist.id === this._checklistGroups[i].checklistIds[j]) {
-            this._checklistGroups[i].checklists.push(checklist);
+      this._checklistGroups.forEach( checklistGroup => {
+        checklistGroup.checklistIds.forEach ( id => {
+          if (checklist.id === id) {
+            checklistGroup.checklists.push(checklist);
           }
-        }
-      }
+        });
+      });
 
       checklistNode = checklistNodes.iterateNext();
     }
@@ -314,8 +315,8 @@ export class ChecklistComponent implements OnInit {
     const { fieldGroups } = this.selectedChecklist;
 
     let selectedFieldsCnt = 0;
-    fieldGroups.forEach( (fieldGroup) => {
-      fieldGroup.fields.forEach( (field) => {
+    fieldGroups.forEach( fieldGroup => {
+      fieldGroup.fields.forEach( field => {
         if (this.selectedFields[field.label]) {
           selectedFieldsCnt++;
         }
@@ -323,8 +324,8 @@ export class ChecklistComponent implements OnInit {
     });
 
     let i = 0;
-    fieldGroups.forEach( (fieldGroup) => {
-      fieldGroup.fields.forEach( (field) => {
+    fieldGroups.forEach( fieldGroup => {
+      fieldGroup.fields.forEach( field => {
         if (this.selectedFields[field.label]) {
           spreadsheetText += field.label;
           if (++i < selectedFieldsCnt) {
