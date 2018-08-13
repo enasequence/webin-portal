@@ -1,3 +1,4 @@
 exclude_paths:
   - frontend/protractor.conf.js
   - frontend/karma.conf.js
+base_sub_dir: frontend
