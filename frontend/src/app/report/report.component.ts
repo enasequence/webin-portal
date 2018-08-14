@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType } from '../report-type.enum';
@@ -501,37 +502,32 @@ export class ReportComponent implements OnInit {
   report() {
     // console.log(" ** report **", this.reportType);
 
-    this.data = undefined;
-
     this.initReportColumns();
     const observable: Observable<any> = this.initReportObservable('json', this.rows) as Observable<any>;
 
     if (observable != null) {
       this.active = true;
+      this.data = undefined;
+      this.dataError = undefined;
 
-      observable.subscribe(
-        // Success
+      observable.pipe(
+        retry(3)
+      ).subscribe(
         data => {
-          this.active = false;
-
+          // console.log('** Webin reports service **', data);
           this.data = data;
-          console.log('** Webin reports service **'); // , this.data);
-
           this.dataSource = new MatTableDataSource<any>(this.data);
           this.dataSource.paginator = this.dataPaginator;
-
-          this.dataError = undefined;
         },
-        // Errors
         (err: HttpErrorResponse) => {
-          this.active = false;
           console.log('** Webin reports service failed **', err);
           const msg = 'Webin reports service failed. Please try again later. If the problem persists please contact the helpdesk.';
-          // if (err.message) {
-          //   msg += " " + err.message;
-          // }
           this.dataError = msg;
-      });
+        },
+        () => {
+          this.active = false;
+        }
+      );
     }
   }
 

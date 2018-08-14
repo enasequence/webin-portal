@@ -121,9 +121,6 @@ export class ReportEditDialogComponent implements OnInit {
         (err: HttpErrorResponse) => {
           console.error('** webin xml retrieval service failed **', err);
           const msg = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact the helpdesk.';
-          // if (err.message) {
-          //   msg += " " + err.message;
-          // }
           this.retrieveXmlError = msg;
       });
     }
