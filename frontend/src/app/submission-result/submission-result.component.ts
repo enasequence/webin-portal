@@ -131,14 +131,9 @@ export class SubmissionResultComponent implements OnInit {
     }
 
     const arr = [];
-    arr.push(
-      'TYPE\t' +
-      'ACCESSION\t' +
-      'ALIAS');
+    arr.push('TYPE\tACCESSION\tALIAS');
     this.result.accessions.forEach( accession => arr.push(
-        accession.type + '\t' +
-        accession.accession + '\t' +
-        accession.accession.alias
+        `${accession.type}\t${accession.accession}\t${accession.alias}`
     ));
 
     const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
