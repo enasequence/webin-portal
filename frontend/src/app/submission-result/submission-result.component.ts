@@ -16,6 +16,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WebinRestService } from '../webin-rest.service';
 
 import {Observable} from 'rxjs';
+import { retry } from 'rxjs/operators';
+
 import {saveAs as importedSaveAs} from 'file-saver';
 
 export interface WebinError {
@@ -76,35 +78,34 @@ export class SubmissionResultComponent implements OnInit {
 
   submit(observable: Observable<any>) {
     if (observable != null) {
-    this.reset();
+      this.reset();
       this.active = true;
-        observable.subscribe(
-          // Success
-          data => {
-            this.active = false;
 
-              // HttpResponse when using {observe: 'response'}
-              this.result = this._webinRestService.parseResult(data);
-              console.log('** Webin submission **', this.result);
+      observable.pipe(
+        retry(3)
+      ).subscribe(
+        data => {
+            // HttpResponse when using {observe: 'response'}
+            this.result = this._webinRestService.parseResult(data);
+            // console.log('** Webin submission **', this.result);
 
-              if (this.result.isError) {
-                this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
-                this.webinErrorDataSource.paginator = this.webinErrorPaginator;
-              } else {
-                this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(this.result.accessions);
-                this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
-              }
-          },
-          // Errors
-          (err: HttpErrorResponse) => {
-            console.error('** Webin submission service failed **', err);
-            const msg = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
-            // if (err.message) {
-            //   msg += " " + err.message;
-            // }
-            this.resultError = msg;
-        });
-      }
+            if (this.result.isError) {
+              this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
+              this.webinErrorDataSource.paginator = this.webinErrorPaginator;
+            } else {
+              this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(this.result.accessions);
+              this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
+            }
+        },
+        (err: HttpErrorResponse) => {
+          console.error('** Webin submission service failed **', err);
+          const msg = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          this.resultError = msg;
+      },
+    () => {
+      this.active = false;
+    });
+    }
   }
 
   downloadReceiptXml() {

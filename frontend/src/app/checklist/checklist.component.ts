@@ -13,7 +13,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
-import { Observable } from 'rxjs';
 import { retry, mergeMap } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
 import { WebinAuthenticationService } from '../webin-authentication.service';
@@ -164,7 +163,7 @@ export class ChecklistComponent implements OnInit {
     subscribe(
       data => this.setChecklistXmls(data),
       (err: HttpErrorResponse) => {
-        console.log('** dataError **', err);
+        console.log('** Webin checklist service failed **', err);
         this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
       },
       () => {
