@@ -30,9 +30,9 @@ export class WebinRestService implements WebinRestServiceInterface {
   }
 
   private appendXml(formData: FormData, name: string, blob: Blob) {
-    if (blob !== undefined) {
+    if (blob) {
       let fileName: string = (blob as File).name;
-      if (fileName === undefined) {
+      if (!fileName) {
         fileName = name.toLowerCase() + '.xml';
       }
       formData.append(name, blob, fileName);

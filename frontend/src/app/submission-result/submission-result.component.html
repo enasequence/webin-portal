@@ -3,7 +3,7 @@
     </mat-spinner>
 </div>
 
-<div *ngIf="resultError !== undefined">
+<div *ngIf="resultError">
   <div class="app-error">
       <i class="material-icons">error</i>
       {{resultError}}
@@ -14,13 +14,13 @@
 
   <!-- Show success or failure message -->
 
-  <div *ngIf="webinErrorDataSource !== undefined">
+  <div *ngIf="webinErrorDataSource">
     <div class="app-error">
         <i class="material-icons">error</i>
         Submission failed.
     </div>
   </div>
-  <div *ngIf="webinAccessionDataSource !== undefined">
+  <div *ngIf="webinAccessionDataSource">
     <div class="app-success">
         <i class="material-icons">done</i>
         The submission was successful.
@@ -46,13 +46,13 @@
     <div fxFlex>
    </div>
 
-   <div *ngIf="webinErrorDataSource !== undefined">
+   <div *ngIf="webinErrorDataSource">
      <button mat-raised-button color="accent" (click)="downloadErrorTable()">
        Download errors
      </button>
    </div>
 
-   <div *ngIf="webinAccessionDataSource !== undefined">
+   <div *ngIf="webinAccessionDataSource">
      <button mat-raised-button color="accent" (click)="downloadAccessionTable()">
        Download accessions
      </button>
@@ -67,7 +67,7 @@
 
   <!-- Show errors -->
 
-  <div *ngIf="webinErrorDataSource !== undefined">
+  <div *ngIf="webinErrorDataSource">
 
     <div *ngIf="!showReceiptXml" class="app-table-container">
 
@@ -90,11 +90,11 @@
       </div>
     </div>
 
-  </div> <!-- <div *ngIf="webinErrorDataSource !== undefined"> -->
+  </div> <!-- <div *ngIf="webinErrorDataSource"> -->
 
   <!-- Show accessions -->
 
-  <div *ngIf="webinAccessionDataSource !== undefined">
+  <div *ngIf="webinAccessionDataSource">
 
     <div *ngIf="!showReceiptXml" class="app-table-container">
 
@@ -128,9 +128,9 @@
       </div>
     </div>
 
-  </div> <!-- <div *ngIf="webinErrorDataSource !== undefined"> -->
+  </div> <!-- <div *ngIf="webinErrorDataSource"> -->
 
-  <div [hidden]="webinErrorDataSource == undefined">
+  <div [hidden]="!webinErrorDataSource">
     <!-- the paginator must be created before the dataSource has been defined -->
     <div *ngIf="!showReceiptXml">
 
@@ -143,7 +143,7 @@
 
   </div>
 
-  <div [hidden]="webinAccessionDataSource == undefined">
+  <div [hidden]="!webinAccessionDataSource">
 
     <mat-paginator #webinAccessionPaginator
                    [pageSize]="10"

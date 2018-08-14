@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
   consumeReportChange(event) {
     const newTabIndex = this.getTabIndex(event.reportType);
     console.log('** change dashboard report **', event);
-    if (newTabIndex !== undefined) {
+    if (newTabIndex) {
       this.tabGroup.selectedIndex = newTabIndex;
       this[event.reportType].id = event.id;
       this[event.reportType].report();

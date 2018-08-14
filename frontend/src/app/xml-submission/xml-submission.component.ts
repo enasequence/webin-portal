@@ -101,7 +101,7 @@ export class XmlSubmissionComponent implements OnInit {
   }
 
   canSubmit() {
-    return this.submissionFile !== undefined;
+    return this.submissionFile ? true : false;
   }
 
   submit() {

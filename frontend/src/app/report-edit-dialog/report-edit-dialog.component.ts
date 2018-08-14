@@ -56,7 +56,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   isRetrieveXmlError(): boolean {
-    return this.retrieveXmlError !== undefined;
+    return this.retrieveXmlError ? true : false;
   }
 
   getTitle(): string {
@@ -110,7 +110,7 @@ export class ReportEditDialogComponent implements OnInit {
        }
     }
 
-    if (observable != null) {
+    if (observable) {
       observable.subscribe(
         // Success
         data => {

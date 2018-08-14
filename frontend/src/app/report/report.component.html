@@ -17,15 +17,15 @@
   Shows the {{ ReportType.getPluralName(reportType) }}. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show the {{ReportType.getPluralName(reportType)}} in your submission account.
   </span>
 
-  <span *ngIf="reportType == ReportType.runProcess">
+  <span *ngIf="reportType === ReportType.runProcess">
   </span>
 
-  <span *ngIf="reportType == ReportType.analysisProcess">
+  <span *ngIf="reportType === ReportType.analysisProcess">
   The primary use of this report is to retrieve sequence accessions assigned as part of
   genome assembly, transcriptome assembly or sequence flat file submissions.
   </span>
 
-  <span *ngIf="reportType == ReportType.unsubmittedFiles">
+  <span *ngIf="reportType === ReportType.unsubmittedFiles">
   Shows uploaded files scheduled to be removed unless submitted by the expiration date.
   Uploaded files will only be included into the archive once they have been
   submitted either as runs or analyses. <b>Note that unlike all other reports, the
@@ -37,11 +37,11 @@
 
 <p><b>Please click search to see the results.</b></p>
 
-<mat-form-field *ngIf="!isMetadataReport() && reportType != ReportType.unsubmittedFiles">
+<mat-form-field *ngIf="!isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
     <input matInput placeholder="Accession" [(ngModel)]="id">
 </mat-form-field>
 
-<mat-form-field *ngIf="isMetadataReport() && reportType != ReportType.unsubmittedFiles">
+<mat-form-field *ngIf="isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
   <input matInput placeholder="Accession or Name" [(ngModel)]="id">
 </mat-form-field>
 
@@ -74,7 +74,7 @@ or
   </mat-form-field>
 </span>
 
-<span *ngIf="reportType == ReportType.analyses || reportType == ReportType.analysisFiles || reportType == ReportType.analysisProcess">
+<span *ngIf="reportType === ReportType.analyses || reportType === ReportType.analysisFiles || reportType === ReportType.analysisProcess">
   or
   <mat-form-field>
     <mat-select placeholder="Analysis type" [(ngModel)]="analysisType">
@@ -187,7 +187,7 @@ or
     </mat-spinner>
 </div>
 
-<div *ngIf="dataSource !== undefined">
+<div *ngIf="dataSource">
 
   <mat-table [dataSource]="dataSource">
       <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
@@ -257,7 +257,7 @@ or
 
 </div>
 
-<div [hidden]="dataSource == undefined">
+<div [hidden]="!dataSource">
   <!-- the paginator must be created before the dataSource has been defined -->
   <mat-paginator #dataPaginator
                  [pageSize]="10"
@@ -266,7 +266,7 @@ or
 
 </div>
 
-<div *ngIf="dataError !== undefined">
+<div *ngIf="dataError">
   <div class="app-error">
       <i class="material-icons">error</i>
       {{dataError}}

@@ -33,7 +33,7 @@ export class ChecklistComponent implements OnInit {
   private _checklistGroups;
   private _xmlParser = new DOMParser();
   checklistGroupDisplayedColumns = ['name'];
-  checklistGroupDataSource = undefined;
+  checklistGroupDataSource;
   checklistDataSource;
   checklistDisplayedColumns = ['name'];
   selectedChecklistGroup;

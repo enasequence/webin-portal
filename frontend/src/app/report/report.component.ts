@@ -505,7 +505,7 @@ export class ReportComponent implements OnInit {
     this.initReportColumns();
     const observable: Observable<any> = this.initReportObservable('json', this.rows) as Observable<any>;
 
-    if (observable != null) {
+    if (observable) {
       this.active = true;
       this.data = undefined;
       this.dataError = undefined;

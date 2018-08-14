@@ -56,7 +56,7 @@ export class SubmissionResultComponent implements OnInit {
   ngOnInit() { }
 
   isResult(): boolean {
-    return this.result !== undefined;
+    return this.result ? true : false;
   }
 
   isError(): boolean {
@@ -77,7 +77,7 @@ export class SubmissionResultComponent implements OnInit {
   }
 
   submit(observable: Observable<any>) {
-    if (observable != null) {
+    if (observable) {
       this.reset();
       this.active = true;
 
@@ -114,31 +114,27 @@ export class SubmissionResultComponent implements OnInit {
   }
 
   downloadErrorTable() {
-    if (this.result.errors == null) {
-      return;
+    if (this.result.errors) {
+      const arr = [];
+      arr.push('ERROR');
+      this.result.errors.forEach( error => arr.push( error.error ));
+
+      const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
+      importedSaveAs(blob, 'Webin-errors-' + this.result.date + '.txt');
     }
-
-    const arr = [];
-    arr.push('ERROR');
-    this.result.errors.forEach( error => arr.push( error.error ));
-
-    const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
-    importedSaveAs(blob, 'Webin-errors-' + this.result.date + '.txt');
   }
 
   downloadAccessionTable() {
-    if (this.result.accessions == null) {
-      return;
+    if (this.result.accessions) {
+      const arr = [];
+      arr.push('TYPE\tACCESSION\tALIAS');
+      this.result.accessions.forEach( accession => arr.push(
+          `${accession.type}\t${accession.accession}\t${accession.alias}`
+      ));
+
+      const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
+      importedSaveAs(blob, 'Webin-accessions-' + this.result.date + '.txt');
     }
-
-    const arr = [];
-    arr.push('TYPE\tACCESSION\tALIAS');
-    this.result.accessions.forEach( accession => arr.push(
-        `${accession.type}\t${accession.accession}\t${accession.alias}`
-    ));
-
-    const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
-    importedSaveAs(blob, 'Webin-accessions-' + this.result.date + '.txt');
   }
 
   humanReadableFormat(token: string) {

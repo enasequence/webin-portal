@@ -1,10 +1,10 @@
 <div *ngIf="!checklistGroupDataSource" >
 
-  <p *ngIf="checklistType == ChecklistType.sample">
+  <p *ngIf="checklistType === ChecklistType.sample">
     Use this submission option to create and download a spreadsheet template for samples.
   </p>
 
-  <p *ngIf="checklistType == ChecklistType.sequence">
+  <p *ngIf="checklistType === ChecklistType.sequence">
     Use this submission option to create and download a spreadsheet template for sequences.
   </p>
 
@@ -13,13 +13,13 @@
 
 <div *ngIf="checklistGroupDataSource" >
 
-  <p *ngIf="checklistType == ChecklistType.sample">
+  <p *ngIf="checklistType === ChecklistType.sample">
     Please select the most appropriate checklist group, checklist and checklist fields.
     Download an empty spreadsheet template, fill in the spreadsheet and submit the spreadsheet
     using Webin.
   </p>
 
-  <p *ngIf="checklistType == ChecklistType.sequence">
+  <p *ngIf="checklistType === ChecklistType.sequence">
     Please select the most appropriate checklist group, checklist and checklist fields.
     Download an empty spreadsheet template, Fill in the spreadsheet
     and submit the spreadsheet using
@@ -33,7 +33,7 @@
   </mat-spinner>
 </div>
 
-<div *ngIf="dataError !== undefined">
+<div *ngIf="dataError">
   <div class="app-error">
     <i class="material-icons">error</i>
     {{dataError}}
@@ -60,16 +60,16 @@
 
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext [disabled]="this.selectedChecklistGroup == undefined">Next</button>
+      <button mat-button matStepperNext [disabled]="!this.selectedChecklistGroup">Next</button>
     </div>
 
   </mat-step>
   <mat-step label="Select checklist">
-    <div *ngIf="selectedChecklistGroup == undefined">
+    <div *ngIf="!selectedChecklistGroup">
       <p>Please select a checklist group first.</p>
     </div>
 
-    <div *ngIf="selectedChecklistGroup != undefined">
+    <div *ngIf="selectedChecklistGroup">
       <p>You have selected <b>{{selectedChecklistGroup.name}}</b>. Please select the most appropriate checklist from the list below.</p>
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="checklistDataSource">
@@ -88,16 +88,16 @@
 
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext [disabled]="this.selectedChecklist == undefined">Next</button>
+      <button mat-button matStepperNext [disabled]="!this.selectedChecklist">Next</button>
     </div>
 
   </mat-step>
   <mat-step label="Select checklist fields">
-    <div *ngIf="selectedChecklist == undefined">
+    <div *ngIf="!selectedChecklist">
       <p>Please select a checklist first.</p>
     </div>
 
-    <div *ngIf="selectedChecklist != undefined">
+    <div *ngIf="selectedChecklist">
       <p>You have selected <b>{{selectedChecklist.name}}</b>. Please select the checklist fields below.</p>
 
       <mat-accordion>
@@ -148,7 +148,7 @@
                 </p>
               </div>
             </div>
-            <p style="margin-left:10px;" *ngIf="checklistType == ChecklistType.sequence">
+            <p style="margin-left:10px;" *ngIf="checklistType === ChecklistType.sequence">
               {{field.name}}
             </p>
             <p style="margin-left:10px;">
@@ -164,17 +164,17 @@
     </div>
   </mat-step>
   <mat-step label="Download spreadsheet template">
-    <div *ngIf="selectedChecklist == undefined">
+    <div *ngIf="!selectedChecklist">
       <p>Please select a checklist first.</p>
     </div>
 
-    <div *ngIf="selectedChecklist != undefined">
+    <div *ngIf="selectedChecklist">
 
       <p>
           Please download the spreadsheet template containing the fields you have selected by using the 'Download' button below.
       </p>
 
-      <div *ngIf="checklistType == ChecklistType.sequence">
+      <div *ngIf="checklistType === ChecklistType.sequence">
         <p>
           Please do not modify the first two lines of the spreadsheet. The first line contains the checklist name and
           the second line contains the field names in separate columns. The first column in the spreadsheet,
