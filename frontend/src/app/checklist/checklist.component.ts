@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
+import { retry, mergeMap } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
@@ -146,31 +147,36 @@ export class ChecklistComponent implements OnInit {
   }
 
   initChecklists() {
+    // console.log(' ** initChecklists **');
+
     this.active = true;
     this.dataError = undefined;
-
     this._checklistGroups = [];
 
-    console.log(' ** initChecklists **');
-
-    const observable: Observable<any> = this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
-
-    observable.subscribe(
-      // Success
-      data => this.initChecklistGroups(data),
-      // Error
-      (err: HttpErrorResponse) => this.initChecklistsError(err));
+    this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue()).
+    pipe(
+      retry(3),
+      mergeMap(data => {
+        this.setChecklistGroups(data);
+        return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+      })
+    ).
+    subscribe(
+      data => this.setChecklistXmls(data),
+      (err: HttpErrorResponse) => {
+        console.log('** dataError **', err);
+        this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
+      },
+      () => {
+        this.active = false;
+      }
+    );
   }
 
-  initChecklistsError(err: HttpErrorResponse) {
-      this.active = false;
-      console.log('** initChecklists failed **', err);
-      const msg = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
-      this.dataError = msg;
-   }
+  private setChecklistGroups(data) {
+     // console.log('** checklistGroupData **', data);
 
-  initChecklistGroups(checklistGroupData) {
-    checklistGroupData.forEach( (checklistData) => {
+    data.forEach( (checklistData) => {
       const report = checklistData.report;
       this._checklistGroups.push({
         name: report.name,
@@ -179,19 +185,10 @@ export class ChecklistComponent implements OnInit {
         checklists: []
       });
     });
-
-    const observable: Observable<any> = this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
-
-    observable.subscribe(
-      // Success
-      data => this.initChecklistXmls(data),
-      // Error
-      (err: HttpErrorResponse) => this.initChecklistsError(err));
   }
 
-  initChecklistXmls(data) {
-
-    // console.log('** initChecklistXmls **', data);
+  setChecklistXmls(data) {
+    // console.log('** setChecklistXmls **', data);
 
     const xmlDoc = this._xmlParser.parseFromString(data.body, 'text/xml');
 
@@ -296,10 +293,7 @@ export class ChecklistComponent implements OnInit {
       checklistNode = checklistNodes.iterateNext();
     }
 
-    this.active = false;
-    // this.dataError = undefined;
-
-    console.log('** Checklists **', this._checklistGroups );
+    // console.log('** Checklists **', this._checklistGroups );
     this.checklistGroupDataSource = new MatTableDataSource<any>(this._checklistGroups);
   }
 
