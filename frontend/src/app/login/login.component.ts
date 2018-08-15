@@ -13,6 +13,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { mergeMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-login',
@@ -36,48 +38,34 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSuccessfulLogin(loginData) {
-    console.log(`Webin login succeeded`);
-    this.error = false;
-    this._webinAuthenticationService.authenticated = true;
-    this._webinAuthenticationService.ega = loginData.roles.EGA;
-    this._webinAuthenticationService.account = loginData.principle;
-
-    this._webinAuthenticationService.loginToken(this.username, this.password)
-      .subscribe(
-        data => {
-          this.onSuccessfulLoginToken(data);
-        },
-        // Errors.
-        (err: HttpErrorResponse) => {
-          this.onFailedLogin();
-          console.error(err);
-        });
-  }
-
-  onSuccessfulLoginToken(data) {
-    console.log('Webin token succeeded');
-    this._webinAuthenticationService.token = data;
-    this._router.navigateByUrl('dashboard', { skipLocationChange: true });
-  }
-
-  onFailedLogin() {
-    this.error = true;
-    this._webinAuthenticationService.authenticated = false;
-  }
-
   login() {
     this._webinAuthenticationService.logout();
 
-    this._webinAuthenticationService.login(this.username, this.password)
-      .subscribe(
+    this._webinAuthenticationService.login(this.username, this.password).
+    pipe(
+      mergeMap(data => {
+        console.log('WebinAuthenticationService.login succeeded');
+        this._webinAuthenticationService.ega = data.roles.EGA;
+        this._webinAuthenticationService.account = data.principle;
+        return this._webinAuthenticationService.loginToken(this.username, this.password);
+      })
+    ).
+    subscribe(
         data => {
-          this.onSuccessfulLogin(data);
+          console.log('WebinAuthenticationService.loginToken succeeded');
+          this._webinAuthenticationService.token = data;
+          this._router.navigateByUrl('dashboard', { skipLocationChange: true });
         },
         // Errors.
         (err: HttpErrorResponse) => {
-          this.onFailedLogin();
+          this.error = true;
+          this._webinAuthenticationService.authenticated = false;
           console.error(err);
-        });
+        },
+        () => {
+          this.error = false;
+          this._webinAuthenticationService.authenticated = true;
+        }
+      );
   }
 }
