@@ -15,6 +15,10 @@ import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { retry, mergeMap } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
+import { ChecklistInterface } from '../checklist.interface';
+import { ChecklistGroupInterface } from '../checklist-group.interface';
+import { ChecklistFieldGroupInterface } from '../checklist-field-group.interface';
+import { ChecklistFieldInterface } from '../checklist-field.interface';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
 
@@ -30,7 +34,7 @@ export class ChecklistComponent implements OnInit {
 
   ChecklistType = ChecklistType;   // Allows use in template
 
-  private _checklistGroups;
+  private _checklistGroups: Array<ChecklistGroupInterface>;
   private _xmlParser = new DOMParser();
   checklistGroupDisplayedColumns = ['name'];
   checklistGroupDataSource;
@@ -116,7 +120,6 @@ export class ChecklistComponent implements OnInit {
 
   setChecklist(checklist, stepper) {
     this.selectedChecklist = checklist;
-    console.log('DEBUG:', this.selectedChecklist);
     this.selectedFields = {};
     this.mandatoryFields = {};
     this.selectedChecklist.fieldGroups.forEach( (fieldGroup) => {
@@ -150,7 +153,7 @@ export class ChecklistComponent implements OnInit {
 
     this.active = true;
     this.dataError = undefined;
-    this._checklistGroups = [];
+    this._checklistGroups = new Array<ChecklistGroupInterface>();
 
     this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue()).
     pipe(
@@ -181,7 +184,7 @@ export class ChecklistComponent implements OnInit {
         name: report.name,
         description: report.description,
         checklistIds: report.checklist,
-        checklists: []
+        checklists: new Array<ChecklistInterface>()
       });
     });
   }
@@ -194,35 +197,33 @@ export class ChecklistComponent implements OnInit {
     const checklistNodes = this.getXmlNodes(xmlDoc, 'CHECKLIST_SET/CHECKLIST');
     let checklistNode = checklistNodes.iterateNext();
     while (checklistNode) {
-      const checklist = {
+      const checklist: ChecklistInterface = {
           id: this.getXmlTextValue(checklistNode, '@accession'),
           name: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/NAME/text()'),
           description: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/DESCRIPTION/text()'),
           type: this.getXmlTextValue(checklistNode, '@checklistType'),
-          fieldGroups: []
+          fieldGroups: new Array<ChecklistFieldGroupInterface>()
       };
 
       const fieldGroupNodes = this.getXmlNodes(checklistNode, 'DESCRIPTOR/FIELD_GROUP');
       let fieldGroupNode = fieldGroupNodes.iterateNext();
       while (fieldGroupNode) {
-        const fieldGroup = {
+        const fieldGroup: ChecklistFieldGroupInterface = {
           name: this.getXmlTextValue(fieldGroupNode, 'NAME/text()'),
-          fields : []
+          fields : new Array<ChecklistFieldInterface>()
         };
 
         const fieldNodes = this.getXmlNodes(fieldGroupNode, 'FIELD');
         let fieldNode = fieldNodes.iterateNext();
         while (fieldNode) {
-          const field = {
+          const field: ChecklistFieldInterface = {
             name: this.getXmlTextValue(fieldNode, 'NAME/text()'),
             label: this.getXmlTextValue(fieldNode, 'LABEL/text()'),
             description: this.getXmlTextValue(fieldNode, 'DESCRIPTION/text()'),
             mandatory: this.getXmlTextValue(fieldNode, 'MANDATORY/text()'),
             type: this.getXmlTextValue(fieldNode, 'name(FIELD_TYPE/*[1])'),
-            regexValue: undefined,
-            ontologyId: undefined,
-            units: [],
-            textChoice: [],
+            units: new Array<string>(),
+            textChoice: new Array<string>(),
           };
 
           // Regex
