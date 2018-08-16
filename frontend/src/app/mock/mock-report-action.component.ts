@@ -10,13 +10,13 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ReportActionInterface } from '../report-action.interface';
 
 @Component({
   selector: 'app-report-action',
   template: ' '
 })
 export class MockReportActionComponent {
-  @Input() actions;
-
-  @Output() onAction = new EventEmitter<any>();
+  @Input() actions: Array<ReportActionInterface>;
+  @Output() actionChange = new EventEmitter<ReportActionInterface>();
 }

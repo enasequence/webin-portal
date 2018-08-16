@@ -9,9 +9,10 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
+import { ReportActionInterface } from '../report-action.interface';
 
 @Component({
   selector: 'app-report-action',
@@ -19,16 +20,13 @@ import { ReportActionType } from '../report-action-type.enum';
   styleUrls: ['./report-action.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReportActionComponent implements OnInit {
-  @Input() actions;
-
-  @Output() onAction = new EventEmitter<any>();
+export class ReportActionComponent {
+  @Input() actions: Array<ReportActionInterface>;
+  @Output() actionChange = new EventEmitter<ReportActionInterface>();
 
   ReportType = ReportType;   // Allows use in template
 
   constructor() { }
-
-  ngOnInit() { }
 
   private isAction(reportType: ReportType, reportActionType: ReportActionType, action ): boolean {
     return action.reportActionType === reportActionType && action.reportType === reportType;
@@ -42,21 +40,21 @@ export class ReportActionComponent implements OnInit {
     return this.actions.some( action => this.isAction(reportType, ReportActionType.editXml, action) );
   }
 
-  getChangeReportAction(reportType: ReportType) {
+  getChangeReportAction(reportType: ReportType): ReportActionInterface {
     return this.actions.find( action => this.isAction(reportType, ReportActionType.changeReport, action) );
   }
 
-  getEditXmlAction(reportType: ReportType) {
+  getEditXmlAction(reportType: ReportType): ReportActionInterface {
     return this.actions.find( action => this.isAction(reportType, ReportActionType.editXml, action) );
   }
 
-  changeReportAction(reportType: ReportType) {
+  changeReportAction(reportType: ReportType): void {
     console.log('** change report action **', reportType);
-     this.onAction.emit(this.getChangeReportAction(reportType));
+    this.actionChange.emit(this.getChangeReportAction(reportType));
   }
 
-  editXmlAction(reportType: ReportType) {
-     console.log('** edit xml action **', reportType);
-      this.onAction.emit(this.getEditXmlAction(reportType));
+  editXmlAction(reportType: ReportType): void {
+    console.log('** edit xml action **', reportType);
+    this.actionChange.emit(this.getEditXmlAction(reportType));
   }
 }
