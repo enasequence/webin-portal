@@ -189,72 +189,71 @@ or
 
 <div *ngIf="dataSource">
 
-  <mat-table [dataSource]="dataSource">
-      <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
-  	    <mat-header-cell *matHeaderCellDef>{{ col }}</mat-header-cell>
-        <div *ngIf="col!='Action' && col!='Archive status' && col!='Process status'">
-  	         <mat-cell *matCellDef="let element">{{getElementValue(element, col)}}</mat-cell>
-        </div>
+  <table cdk-table [dataSource]="dataSource">
+      <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
+  	    <th cdk-header-cell *cdkHeaderCellDef>{{ col }}</th>
+        <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status'">
+  	         <td cdk-cell *cdkCellDef="let element">{{getElementValue(element, col)}}</td>
+        </ng-container>
 
-        <span *ngIf="col=='Archive status'">
+        <ng-container *ngIf="col=='Archive status'">
 
-          <mat-cell *matCellDef="let element">
-            <span *ngIf="getElementValue(element, col)=='File archived'">
+          <td cdk-cell *cdkCellDef="let element">
+            <ng-container *ngIf="getElementValue(element, col)=='File archived'">
               <span class="action-completed"
                     matTooltip="The file has been included in the permanent archive.">{{getElementValue(element, col)}}</span>
-            </span>
-            <span *ngIf="getElementValue(element, col)=='Processing file' || getElementValue(element, col)=='File submitted'">
+            </ng-container>
+            <ng-container *ngIf="getElementValue(element, col)=='Processing file' || getElementValue(element, col)=='File submitted'">
               <span class="action-active"
               matTooltip="The file is waiting to be included in the permanent archive.">{{getElementValue(element, col)}}</span>
-            </span>
-            <span *ngIf="getElementValue(element, col)!='File archived' && getElementValue(element, col)!='Processing file' && getElementValue(element, col)!='File submitted'">
+            </ng-container>
+            <ng-container *ngIf="getElementValue(element, col)!='File archived' && getElementValue(element, col)!='Processing file' && getElementValue(element, col)!='File submitted'">
               <span class="action-failed"
               matTooltip="The file has failed to be included in the permanent archived.">{{getElementValue(element, col)}}</span>
-            </span>
-          </mat-cell>
+            </ng-container>
+          </td>
 
-        </span>
+        </ng-container>
 
-        <span *ngIf="col=='Process status'">
+        <ng-container *ngIf="col=='Process status'">
 
-          <mat-cell *matCellDef="let element">
+          <td cdk-cell *cdkCellDef="let element">
 
-            <span *ngIf="getElementValue(element, col)=='COMPLETED' || getElementValue(element, col)=='CANCELLED'">
+            <ng-container *ngIf="getElementValue(element, col)=='COMPLETED' || getElementValue(element, col)=='CANCELLED'">
               <span class="action-completed"
                    matTooltip="The post-archival processing of the file has finished.">{{getElementValue(element, col)}}</span>
-            </span>
-            <span *ngIf="getElementValue(element, col)=='FAILED'">
+            </ng-container>
+            <ng-container *ngIf="getElementValue(element, col)=='FAILED'">
               <span class="action-failed"
                    matTooltip="The post-archival processing of the file has failed.">{{getElementValue(element, col)}}</span>
-            </span>
-            <span *ngIf="getElementValue(element, col)!='COMPLETED' && getElementValue(element, col)!='CANCELLED' && getElementValue(element, col)!='FAILED'">
+            </ng-container>
+            <ng-container *ngIf="getElementValue(element, col)!='COMPLETED' && getElementValue(element, col)!='CANCELLED' && getElementValue(element, col)!='FAILED'">
               <span class="action-active"
                    matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element, col)}}</span>
-            </span>
+            </ng-container>
 
-          </mat-cell>
+          </td>
 
-        </span>
+        </ng-container>
 
 
-        <div *ngIf="col=='Action'">
+        <ng-container *ngIf="col=='Action'">
 
-          <mat-cell *matCellDef="let element">
+          <td cdk-cell *cdkCellDef="let element">
 
             <app-report-action [actions]="getActions(element)" (actionChange)="action($event)">
             </app-report-action>
 
-          </mat-cell>
+          </td>
 
-        </div>
+        </ng-container>
 
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> <!-- (click)="clickRow(row)" -->
+      <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr> <!-- (click)="clickRow(row)" -->
 
-  </mat-table>
-
+  </table>
 </div>
 
 <div [hidden]="!dataSource">
