@@ -14,6 +14,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { ReportComponent } from '../report/report.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
+import { ReportActionInterface } from '../report-action.interface';
 
 @Component({
   selector: 'app-main',
@@ -51,13 +52,13 @@ export class DashboardComponent implements OnInit {
     return this._webinAuthenticationService.ega;
   }
 
-  consumeReportChange(event) {
-    const newTabIndex = this.getTabIndex(event.reportType);
-    console.log('** change dashboard report **', event);
+  consumeReportChange(reportAction: ReportActionInterface): void {
+    const newTabIndex = this.getTabIndex(reportAction.reportType);
+    console.log('** change dashboard report **', reportAction);
     if (newTabIndex) {
       this.tabGroup.selectedIndex = newTabIndex;
-      this[event.reportType].id = event.id;
-      this[event.reportType].report();
+      this[reportAction.reportType].id = reportAction.id;
+      this[reportAction.reportType].report();
     }
   }
 

@@ -10,6 +10,7 @@
  */
 
 import { ReportType } from './report-type.enum';
+import { ReportActionInterface } from './report-action.interface';
 
 export enum ReportActionType {
   changeReport = 'changeReport',
@@ -18,7 +19,7 @@ export enum ReportActionType {
 
 export namespace ReportActionType {
 
-  export function createChangeReportAction(reportType: ReportType, id: string) {
+  export function createChangeReportAction(reportType: ReportType, id: string): ReportActionInterface {
     return {
       reportActionType: ReportActionType.changeReport,
       reportType: reportType,
@@ -26,7 +27,7 @@ export namespace ReportActionType {
     };
   }
 
-  export function createEditXmlAction(reportType: ReportType, id: string) {
+  export function createEditXmlAction(reportType: ReportType, id: string): ReportActionInterface {
   return {
       reportActionType: ReportActionType.editXml,
       reportType: reportType,

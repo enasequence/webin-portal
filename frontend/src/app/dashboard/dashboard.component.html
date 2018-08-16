@@ -6,34 +6,34 @@
       <app-xml-submission></app-xml-submission>
     </mat-tab>
     <mat-tab label="Studies">
-      <app-report #studies [reportType]="ReportType.studies" (onReportChange)="consumeReportChange($event)"></app-report>
+      <app-report #studies [reportType]="ReportType.studies" (reportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
     <mat-tab label="Samples">
-      <app-report #samples [reportType]="ReportType.samples" (onReportChange)="consumeReportChange($event)"></app-report>
+      <app-report #samples [reportType]="ReportType.samples" (reportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
     <mat-tab label="Runs">
-      <app-report #runs [reportType]="ReportType.runs" (onReportChange)="consumeReportChange($event)"></app-report>
+      <app-report #runs [reportType]="ReportType.runs" (reportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
     <mat-tab label="Analyses">
-      <app-report #analyses [reportType]="ReportType.analyses" (onReportChange)="consumeReportChange($event)"></app-report>
+      <app-report #analyses [reportType]="ReportType.analyses" (reportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
 
     <div *ngIf="!isEga()">
 
       <mat-tab label="Run files">
-        <app-report #runFiles [reportType]="ReportType.runFiles" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #runFiles [reportType]="ReportType.runFiles" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
       <mat-tab label="Analysis files">
-        <app-report #analysisFiles [reportType]="ReportType.analysisFiles" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #analysisFiles [reportType]="ReportType.analysisFiles" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
       <mat-tab label="Run process">
-        <app-report #runProcess [reportType]="ReportType.runProcess" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #runProcess [reportType]="ReportType.runProcess" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
       <mat-tab label="Analysis process">
-        <app-report #analysisProcess [reportType]="ReportType.analysisProcess" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #analysisProcess [reportType]="ReportType.analysisProcess" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
       <mat-tab label="Unsubmitted files">
-        <app-report #unsubmittedFiles [reportType]="ReportType.unsubmittedFiles" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #unsubmittedFiles [reportType]="ReportType.unsubmittedFiles" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
 
     </div>
@@ -41,13 +41,13 @@
     <div *ngIf="isEga()">
 
       <mat-tab label="Dacs">
-        <app-report #dacs [reportType]="ReportType.dacs" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #dacs [reportType]="ReportType.dacs" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
       <mat-tab label="Policies">
-        <app-report #policies [reportType]="ReportType.policies" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #policies [reportType]="ReportType.policies" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
       <mat-tab label="Datasets">
-        <app-report #datasets [reportType]="ReportType.datasets" (onReportChange)="consumeReportChange($event)"></app-report>
+        <app-report #datasets [reportType]="ReportType.datasets" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
 
     </div>

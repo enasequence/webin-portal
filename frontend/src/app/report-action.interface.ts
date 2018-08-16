@@ -9,15 +9,11 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ReportType } from '../report-type.enum';
-import { ReportActionInterface } from '../report-action.interface';
+import { ReportType } from './report-type.enum';
+import { ReportActionType } from './report-action-type.enum';
 
-@Component({
-    selector: 'app-report',
-    template: ' '
-  })
-export class MockReportComponent {
-    @Input() reportType: ReportType;
-    @Output() reportChange = new EventEmitter<ReportActionInterface>();
+export interface ReportActionInterface {
+    reportActionType: ReportActionType;
+    reportType: ReportType;
+    id: string;
 }

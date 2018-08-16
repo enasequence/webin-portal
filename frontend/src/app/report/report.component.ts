@@ -22,6 +22,7 @@ import { ReportActionType } from '../report-action-type.enum';
 
 import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
+import { ReportActionInterface } from '../report-action.interface';
 
 @Component({
   selector: 'app-report',
@@ -35,7 +36,7 @@ export class ReportComponent implements OnInit {
 
 
   @Input() reportType: ReportType;
-  @Output() onReportChange = new EventEmitter<any>();
+  @Output() reportChange = new EventEmitter<ReportActionInterface>();
   @ViewChild(MatPaginator) dataPaginator: MatPaginator;
 
   private _id: string;
@@ -372,8 +373,8 @@ export class ReportComponent implements OnInit {
     return callback(result);
   }
 
-  getActions(result) {
-    const actions = [];
+  getActions(result): Array<ReportActionInterface> {
+    const actions = new Array<ReportActionInterface>();
 
     // Allow edit XML.
     if (this.reportType === ReportType.runFiles) {
@@ -458,12 +459,12 @@ export class ReportComponent implements OnInit {
     return actions;
   }
 
-  action(action) {
+  action(action: ReportActionInterface): void {
     console.log('** action **', action);
 
     if (action && action.reportActionType === ReportActionType.changeReport) {
       console.log('** change report action **' , action);
-      this.onReportChange.emit(action);
+      this.reportChange.emit(action);
     }
 
     if (action && action.reportActionType === ReportActionType.editXml) {
@@ -473,7 +474,7 @@ export class ReportComponent implements OnInit {
 
   }
 
-  editXml(action) {
+  editXml(action: ReportActionInterface): void {
     const dialogData = {
       reportType: action.reportType,
       id: action.id
