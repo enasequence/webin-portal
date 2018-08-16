@@ -12,13 +12,13 @@
 import { Observable } from 'rxjs';
 
 export interface WebinXmlReportServiceInterface {
-  getStudyXml(id: string): Observable<any>;
-  getProjectXml(id: string): Observable<any>;
-  getSampleXml(id: string): Observable<any>;
-  getRunXml(id: string): Observable<any>;
-  getExperimentXml(id: string): Observable<any>;
-  getAnalysisXml(id: string): Observable<any>;
-  getDacXml(id: string): Observable<any>;
-  getPolicyXml(id: string): Observable<any>;
-  getDatasetXml(id: string): Observable<any>;
+  getStudyXml(id: string): Observable<string>;
+  getProjectXml(id: string): Observable<string>;
+  getSampleXml(id: string): Observable<string>;
+  getRunXml(id: string): Observable<string>;
+  getExperimentXml(id: string): Observable<string>;
+  getAnalysisXml(id: string): Observable<string>;
+  getDacXml(id: string): Observable<string>;
+  getPolicyXml(id: string): Observable<string>;
+  getDatasetXml(id: string): Observable<string>;
 }

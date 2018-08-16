@@ -15,31 +15,31 @@ import { WebinXmlReportServiceInterface } from '../webin-xml-report.service.inte
 
 export class MockWebinXmlReportService implements WebinXmlReportServiceInterface {
 
-  getStudyXml(id: string): Observable<any> {
+  getStudyXml(id: string): Observable<string> {
     return null;
   }
-  getProjectXml(id: string): Observable<any> {
+  getProjectXml(id: string): Observable<string> {
     return null;
   }
-  getSampleXml(id: string): Observable<any> {
+  getSampleXml(id: string): Observable<string> {
     return null;
   }
-  getRunXml(id: string): Observable<any> {
+  getRunXml(id: string): Observable<string> {
     return null;
   }
-  getExperimentXml(id: string): Observable<any> {
+  getExperimentXml(id: string): Observable<string> {
     return null;
   }
-  getAnalysisXml(id: string): Observable<any> {
+  getAnalysisXml(id: string): Observable<string> {
     return null;
   }
-  getDacXml(id: string): Observable<any> {
+  getDacXml(id: string): Observable<string> {
     return null;
   }
-  getPolicyXml(id: string): Observable<any> {
+  getPolicyXml(id: string): Observable<string> {
     return null;
   }
-  getDatasetXml(id: string): Observable<any> {
+  getDatasetXml(id: string): Observable<string> {
     return null;
   }
 }

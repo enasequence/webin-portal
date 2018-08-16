@@ -64,7 +64,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   load() {
-    let observable: Observable<any>;
+    let observable: Observable<string>;
 
     const id: string = this.data.id;
     const reportType: ReportType = this.data.reportType;
