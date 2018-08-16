@@ -13,5 +13,5 @@ import { ChecklistFieldInterface } from './checklist-field.interface';
 
 export interface ChecklistFieldGroupInterface {
   name: string;
-  fields : Array<ChecklistFieldInterface>;
+  fields: Array<ChecklistFieldInterface>;
 }

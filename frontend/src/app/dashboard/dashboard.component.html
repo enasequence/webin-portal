@@ -18,7 +18,7 @@
       <app-report #analyses [reportType]="ReportType.analyses" (reportChange)="consumeReportChange($event)"></app-report>
     </mat-tab>
 
-    <div *ngIf="!isEga()">
+    <ng-container *ngIf="!isEga()">
 
       <mat-tab label="Run files">
         <app-report #runFiles [reportType]="ReportType.runFiles" (reportChange)="consumeReportChange($event)"></app-report>
@@ -36,9 +36,9 @@
         <app-report #unsubmittedFiles [reportType]="ReportType.unsubmittedFiles" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
 
-    </div>
+    </ng-container>
 
-    <div *ngIf="isEga()">
+    <ng-container *ngIf="isEga()">
 
       <mat-tab label="Dacs">
         <app-report #dacs [reportType]="ReportType.dacs" (reportChange)="consumeReportChange($event)"></app-report>
@@ -50,7 +50,7 @@
         <app-report #datasets [reportType]="ReportType.datasets" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
 
-    </div>
+    </ng-container>
 
   </mat-tab-group>
 </div>

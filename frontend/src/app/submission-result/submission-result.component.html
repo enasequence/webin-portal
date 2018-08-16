@@ -144,7 +144,7 @@
   </div>
 
   <div [hidden]="!webinAccessionDataSource">
-
+    <!-- the paginator must be created before the dataSource has been defined -->    
     <mat-paginator #webinAccessionPaginator
                    [pageSize]="10"
                    [pageSizeOptions]="[10, 25, 50]">
