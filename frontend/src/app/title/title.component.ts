@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 
@@ -19,11 +19,9 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./title.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class TitleComponent implements OnInit {
+export class TitleComponent {
 
   constructor() { }
-
-  ngOnInit() { }
 
   getTitle() {
     return environment.title;

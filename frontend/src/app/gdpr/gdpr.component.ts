@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinGdprService } from '../webin-gdpr.service';
 
@@ -19,13 +19,11 @@ import { WebinGdprService } from '../webin-gdpr.service';
   styleUrls: ['./gdpr.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class GdprComponent implements OnInit {
+export class GdprComponent {
 
  constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinGdprServer: WebinGdprService) { }
-
-  ngOnInit() { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

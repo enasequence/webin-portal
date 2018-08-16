@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ReportComponent } from '../report/report.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
@@ -25,7 +25,7 @@ import { ReportActionInterface } from '../report-action.interface';
     ReportComponent
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   ReportType = ReportType;   // Allows use in template
 
@@ -45,8 +45,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService) { }
-
-  ngOnInit() { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

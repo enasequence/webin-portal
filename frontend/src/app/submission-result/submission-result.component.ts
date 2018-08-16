@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -35,7 +35,7 @@ export interface WebinAccession {
   styleUrls: ['./submission-result.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class SubmissionResultComponent implements OnInit {
+export class SubmissionResultComponent {
 
   webinErrorTableColumns = ['error'];
   webinAccessionTableColumns = ['type', 'accession', 'alias'];
@@ -52,8 +52,6 @@ export class SubmissionResultComponent implements OnInit {
   constructor(
     private _webinRestService: WebinRestService) {
   }
-
-  ngOnInit() { }
 
   isResult(): boolean {
     return this.result ? true : false;

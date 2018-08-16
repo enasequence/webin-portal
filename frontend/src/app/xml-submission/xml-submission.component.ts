@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 import { ChecklistType } from '../checklist-type.enum';
@@ -22,7 +22,7 @@ import { WebinRestService } from '../webin-rest.service';
   styleUrls: ['./xml-submission.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class XmlSubmissionComponent implements OnInit {
+export class XmlSubmissionComponent {
 
   @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
 
@@ -43,8 +43,6 @@ export class XmlSubmissionComponent implements OnInit {
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinRestService: WebinRestService
     ) { }
-
-  ngOnInit() { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

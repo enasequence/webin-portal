@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
@@ -28,7 +28,7 @@ import { WebinReportService } from '../webin-report.service';
   styleUrls: ['./checklist.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ChecklistComponent implements OnInit {
+export class ChecklistComponent {
 
   @Input() checklistType: ChecklistType = ChecklistType.sample;
 
@@ -50,8 +50,6 @@ export class ChecklistComponent implements OnInit {
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinReportService: WebinReportService) { }
-
-  ngOnInit() { }
 
   // field group restriction type (not supported for spreadsheets)
   // -----------------------------

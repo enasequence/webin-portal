@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, ViewEncapsulation, ViewChild, Input, Output } from '@angular/core';
+import { Component, EventEmitter, ViewEncapsulation, ViewChild, Input, Output } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
@@ -30,7 +30,7 @@ import { ReportActionInterface } from '../report-action.interface';
   styleUrls: ['./report.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent {
 
   ReportType = ReportType;   // Allows use in template
 
@@ -56,8 +56,6 @@ export class ReportComponent implements OnInit {
     private _webinReportService: WebinReportService,
     private _webinAuthenticationService: WebinAuthenticationService,
     private _reportDialog: MatDialog) { }
-
-  ngOnInit() { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

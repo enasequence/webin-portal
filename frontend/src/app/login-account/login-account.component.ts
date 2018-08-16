@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { WebinAuthenticationService } from '../webin-authentication.service';
 
@@ -19,12 +19,9 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
   styleUrls: ['./login-account.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginAccountComponent implements OnInit {
+export class LoginAccountComponent {
 
   constructor(private _webinAuthenticationService: WebinAuthenticationService) { }
-
-  ngOnInit() {
-  }
 
   isAuthenticated() {
     return this._webinAuthenticationService.authenticated;
