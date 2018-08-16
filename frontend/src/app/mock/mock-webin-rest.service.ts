@@ -11,12 +11,13 @@
 
 import { ReportType } from '../report-type.enum';
 import { WebinRestServiceInterface } from '../webin-rest.service.interface';
+import { Observable } from '../../../node_modules/rxjs';
 
 export class MockWebinRestService implements WebinRestServiceInterface {
 
   updateXml(
     reportType: ReportType,
-    xml: Blob) {
+    xml: Blob): Observable<string> {
     return null;
   }
 
@@ -30,7 +31,7 @@ export class MockWebinRestService implements WebinRestServiceInterface {
     analysisXml: Blob,
     dacXml: Blob,
     policyXml: Blob,
-    datasetXml: Blob) {
+    datasetXml: Blob): Observable<string> {
     return null;
     }
 

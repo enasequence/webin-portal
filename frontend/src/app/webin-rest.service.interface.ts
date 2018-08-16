@@ -10,12 +10,13 @@
  */
 
 import { ReportType } from './report-type.enum';
+import { Observable } from '../../node_modules/rxjs';
 
 export interface WebinRestServiceInterface {
 
     updateXml(
         reportType: ReportType,
-        xml: Blob);
+        xml: Blob): Observable<string>;
 
     submitXml(
         submissionXml: Blob,
@@ -27,7 +28,7 @@ export interface WebinRestServiceInterface {
         analysisXml: Blob,
         dacXml: Blob,
         policyXml: Blob,
-        datasetXml: Blob);
+        datasetXml: Blob): Observable<string>;
 
     parseResult(data);
 }

@@ -105,7 +105,7 @@ export class XmlSubmissionComponent {
   submit() {
     console.log('** Webin XML submission **');
 
-    const observable: Observable<any> =
+    const observable: Observable<string> =
       this._webinRestService.submitXml(
         this.submissionFile,
         this.studyFile,

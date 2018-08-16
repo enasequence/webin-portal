@@ -39,14 +39,14 @@ export class WebinRestService implements WebinRestServiceInterface {
     }
   }
 
-  private post(formData: FormData): Observable<any> {
+  private post(formData: FormData): Observable<string> {
     const headers = this.headers();
-    return this._http.post(this._baseUrl, formData, { headers, responseType: 'text', observe: 'response' });
+    return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' });
   }
 
   updateXml(
     reportType: ReportType,
-    xml: Blob) {
+    xml: Blob): Observable<string> {
      console.log('** Update XML **');
      const formData: FormData = new FormData();
 
@@ -116,7 +116,7 @@ export class WebinRestService implements WebinRestServiceInterface {
     analysisXml: Blob,
     dacXml: Blob,
     policyXml: Blob,
-    datasetXml: Blob) {
+    datasetXml: Blob): Observable<string> {
 
     console.log('** Submit XML **');
     const formData: FormData = new FormData();
@@ -133,16 +133,16 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this.post(formData);
   }
 
-  parseResult(data) {
+  parseResult(data: string) {
 
-    const xmlDoc = this._xmlParser.parseFromString(data.body, 'text/xml');
+    const xmlDoc = this._xmlParser.parseFromString(data, 'text/xml');
     const rootNode: any = xmlDoc.getElementsByTagName('RECEIPT')[0];
     const isError: boolean = (rootNode.getAttribute('success') !== 'true');
     const date: string = rootNode.getAttribute('receiptDate');
 
     const receipt = {
       isError: isError,
-      xml: data.body,
+      xml: data,
       date: date,
       accessions: [],
       errors: []

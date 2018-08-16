@@ -74,7 +74,7 @@ export class SubmissionResultComponent {
     this.resultError = undefined;
   }
 
-  submit(observable: Observable<any>) {
+  submit(observable: Observable<string>) {
     if (observable) {
       this.reset();
       this.active = true;
