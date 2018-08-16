@@ -22,6 +22,10 @@ import { ChecklistFieldInterface } from '../checklist-field.interface';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
 
+interface BooleanFieldInterface {
+  [key: string]: boolean;
+}
+
 @Component({
   selector: 'app-checklist',
   templateUrl: './checklist.component.html',
@@ -37,13 +41,13 @@ export class ChecklistComponent {
   private _checklistGroups: Array<ChecklistGroupInterface>;
   private _xmlParser = new DOMParser();
   checklistGroupDisplayedColumns = ['name'];
-  checklistGroupDataSource;
-  checklistDataSource;
+  checklistGroupDataSource: MatTableDataSource<ChecklistGroupInterface>;
+  checklistDataSource: MatTableDataSource<ChecklistInterface>;
   checklistDisplayedColumns = ['name'];
-  selectedChecklistGroup;
-  selectedChecklist;
-  selectedFields;
-  mandatoryFields;
+  selectedChecklistGroup: ChecklistGroupInterface;
+  selectedChecklist: ChecklistInterface;
+  selectedFields: BooleanFieldInterface;
+  mandatoryFields: BooleanFieldInterface;
   active: boolean;
   dataError: string;
 
@@ -78,7 +82,7 @@ export class ChecklistComponent {
   // single
   // multiple
 
-  getFieldTypeDisplayText(field): string {
+  getFieldTypeDisplayText(field: ChecklistFieldInterface): string {
     switch (field.type) {
       case 'TEXT_FIELD':
       case 'TEXT_AREA_FIELD':
@@ -100,7 +104,7 @@ export class ChecklistComponent {
     }
   }
 
-  getSelectedFieldsDisplayText(fieldGroup): string {
+  getSelectedFieldsDisplayText(fieldGroup: ChecklistFieldGroupInterface): string {
     let cnt = 0;
     fieldGroup.fields.forEach( (field) => {
       if (this.selectedFields[field.label]) {
@@ -110,13 +114,13 @@ export class ChecklistComponent {
     return '(' + cnt + ' of ' + fieldGroup.fields.length + ' fields selected)';
   }
 
-  setChecklistGroup(checklistGroup, stepper) {
+  setChecklistGroup(checklistGroup: ChecklistGroupInterface, stepper): void {
       this.selectedChecklistGroup = checklistGroup;
-      this.checklistDataSource = new MatTableDataSource<any>(this.selectedChecklistGroup.checklists);
+      this.checklistDataSource = new MatTableDataSource<ChecklistInterface>(this.selectedChecklistGroup.checklists);
     stepper.next();
   }
 
-  setChecklist(checklist, stepper) {
+  setChecklist(checklist: ChecklistInterface, stepper): void {
     this.selectedChecklist = checklist;
     this.selectedFields = {};
     this.mandatoryFields = {};
@@ -129,7 +133,7 @@ export class ChecklistComponent {
     stepper.next();
   }
 
-  getXmlTextValue(xmlDoc, xpath: string) {
+  getXmlTextValue(xmlDoc, xpath: string): string {
     return document.evaluate(xpath, xmlDoc, null, XPathResult.STRING_TYPE, null).stringValue;
   }
 
@@ -137,7 +141,7 @@ export class ChecklistComponent {
     return document.evaluate(xpath, xmlDoc, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
   }
 
-  getChecklistTypeParamValue() {
+  getChecklistTypeParamValue(): string {
     switch (this.checklistType) {
       case ChecklistType.sample:
         return 'sample';
@@ -146,7 +150,7 @@ export class ChecklistComponent {
     }
   }
 
-  initChecklists() {
+  initChecklists(): void {
     // console.log(' ** initChecklists **');
 
     this.active = true;
@@ -173,11 +177,11 @@ export class ChecklistComponent {
     );
   }
 
-  private setChecklistGroups(data) {
+  private setChecklistGroups(data): void {
      // console.log('** checklistGroupData **', data);
 
-    data.forEach( (checklistData) => {
-      const report = checklistData.report;
+    data.forEach( (checklistGroupData) => {
+      const report = checklistGroupData.report;
       this._checklistGroups.push({
         name: report.name,
         description: report.description,
@@ -187,7 +191,7 @@ export class ChecklistComponent {
     });
   }
 
-  setChecklistXmls(data) {
+  setChecklistXmls(data): void {
     // console.log('** setChecklistXmls **', data);
 
     const xmlDoc = this._xmlParser.parseFromString(data.body, 'text/xml');
@@ -292,7 +296,7 @@ export class ChecklistComponent {
     }
 
     // console.log('** Checklists **', this._checklistGroups );
-    this.checklistGroupDataSource = new MatTableDataSource<any>(this._checklistGroups);
+    this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
   }
 
   isEga(): boolean {

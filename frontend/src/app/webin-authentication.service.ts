@@ -115,7 +115,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     return this._http.post(baseUrl, body, { headers, withCredentials: false });
   }
 
-  loginToken(username: string, password: string): Observable<any> {
+  loginToken(username: string, password: string): Observable<string> {
     const baseUrl: string = environment.webinAuthenticationTokenUrl;
     console.log('** Webin authentication token **', baseUrl);
 

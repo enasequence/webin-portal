@@ -60,21 +60,44 @@ describe('ChecklistComponent', () => {
 
     component.selectedChecklist = {
       id: 'TEST_ID',
+      name: 'Test',
+      description: 'Test',
+      type: 'Test',
       fieldGroups: [
         {
+          name: 'Test',
           fields: [
             {
-              label: 'TEST_FIELD_1'
+              name: 'TEST_FIELD_1',
+              label: 'TEST_FIELD_1',
+              description: 'TEST_FIELD_1',
+              mandatory: 'Y',
+              type: 'TEXT_FIELD',
+              units: [],
+              textChoice: []
             }
           ]
         },
         {
+          name: 'Test',
           fields: [
             {
-              label: 'TEST_FIELD_2'
+              name: 'TEST_FIELD_2',
+              label: 'TEST_FIELD_2',
+              description: 'TEST_FIELD_2',
+              mandatory: 'Y',
+              type: 'TEXT_FIELD',
+              units: [],
+              textChoice: []
             },
             {
-              label: 'TEST_FIELD_3'
+              name: 'TEST_FIELD_3',
+              label: 'TEST_FIELD_3',
+              description: 'TEST_FIELD_3',
+              mandatory: 'Y',
+              type: 'TEXT_FIELD',
+              units: [],
+              textChoice: []
             }
           ]
         }

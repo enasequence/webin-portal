@@ -35,7 +35,7 @@ export class MockWebinAuthenticationService implements WebinAuthenticationServic
     return null;
   }
 
-  loginToken(username: string, password: string): Observable<any> {
+  loginToken(username: string, password: string): Observable<string> {
     this.authenticated = true;
     return null;
   }

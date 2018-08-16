@@ -26,5 +26,5 @@ export interface WebinAuthenticationServiceInterface {
     logout();
 
     login(username: string, password: string): Observable<any>;
-    loginToken(username: string, password: string): Observable<any>;
+    loginToken(username: string, password: string): Observable<string>;
 }
