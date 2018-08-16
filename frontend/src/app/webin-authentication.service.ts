@@ -16,6 +16,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { WebinAuthenticationServiceInterface } from './webin-authentication.service.interface';
+import { WebinAuthenticationResultInterface } from './webin-authentication-result.interface';
 
 @Injectable()
 export class WebinAuthenticationService implements WebinAuthenticationServiceInterface {
@@ -98,7 +99,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.removeItem('logoutDate');
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<WebinAuthenticationResultInterface> {
     const baseUrl: string = environment.webinAuthenticationServiceUrl;
     console.log('** Webin authentication login **', baseUrl);
 
@@ -112,7 +113,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
 
-    return this._http.post(baseUrl, body, { headers, withCredentials: false });
+    return this._http.post<WebinAuthenticationResultInterface>(baseUrl, body, { headers, withCredentials: false });
   }
 
   loginToken(username: string, password: string): Observable<string> {

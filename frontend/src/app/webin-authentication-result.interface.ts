@@ -9,23 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-import { WebinAuthenticationResultInterface } from './webin-authentication-result.interface';
-
-export interface WebinAuthenticationServiceInterface {
-
-    username: string;
-    token: string;
-    authenticated: boolean;
-    account: string;
-    ega: boolean;
-    loginDate: Date;
-    logoutDate: Date;
-
-    getAuthorizationTokenHeader(): string;
-
-    logout();
-
-    login(username: string, password: string): Observable<WebinAuthenticationResultInterface>;
-    loginToken(username: string, password: string): Observable<string>;
+export interface WebinAuthenticationResultInterface {
+    principle: string;
+    roles: { EGA? };
 }

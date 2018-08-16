@@ -19,6 +19,7 @@ import { WebinRestService } from '../webin-rest.service';
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 
 import { ReportType } from '../report-type.enum';
+import { ReportActionInterface } from '../report-action.interface';
 
 @Component({
   selector: 'app-report-edit-dialog',
@@ -34,7 +35,7 @@ export class ReportEditDialogComponent implements OnInit {
     private _webinXmlReportService: WebinXmlReportService,
     private _webinRestService: WebinRestService,
     public dialogRef: MatDialogRef<ReportEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: ReportActionInterface) { }
 
   retrieveXmlError: string;
   xml: string;
@@ -63,7 +64,7 @@ export class ReportEditDialogComponent implements OnInit {
     return ReportType.getCapitalisedSingularName(this.data.reportType) + ': ' + this.data.id;
   }
 
-  load() {
+  load(): void {
     let observable: Observable<string>;
 
     const id: string = this.data.id;
@@ -126,7 +127,7 @@ export class ReportEditDialogComponent implements OnInit {
     }
   }
 
-  back() {
+  back(): void {
     this.submissionResult.reset();
   }
 

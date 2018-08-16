@@ -473,17 +473,13 @@ export class ReportComponent {
   }
 
   editXml(action: ReportActionInterface): void {
-    const dialogData = {
-      reportType: action.reportType,
-      id: action.id
-    };
 
     const reportDialogRef = this._reportDialog.open(ReportEditDialogComponent, {
         // height: '500px',
         width: '600px',
-        data: dialogData
+        data: action
     });
-    reportDialogRef.afterClosed().subscribe(data => {});
+    reportDialogRef.afterClosed().subscribe();
   }
 
   reset() {

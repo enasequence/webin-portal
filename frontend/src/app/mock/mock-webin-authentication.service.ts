@@ -11,6 +11,7 @@
 
 import { Observable } from 'rxjs';
 import { WebinAuthenticationServiceInterface } from '../webin-authentication.service.interface';
+import { WebinAuthenticationResultInterface } from '../webin-authentication-result.interface';
 
 export class MockWebinAuthenticationService implements WebinAuthenticationServiceInterface {
 
@@ -30,7 +31,7 @@ export class MockWebinAuthenticationService implements WebinAuthenticationServic
     this.authenticated = false;
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<WebinAuthenticationResultInterface> {
     this.authenticated = true;
     return null;
   }
