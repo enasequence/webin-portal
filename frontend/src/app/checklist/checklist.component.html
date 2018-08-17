@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<mat-horizontal-stepper #stepper *ngIf="checklistGroupDataSource">
+  <mat-vertical-stepper #stepper *ngIf="checklistGroupDataSource">
   <mat-step label="Select checklist group">
     <p>Please select a checklist group first.</p>
 
@@ -196,4 +196,4 @@
     </div>
 
   </mat-step>
-</mat-horizontal-stepper>
+</mat-vertical-stepper>
