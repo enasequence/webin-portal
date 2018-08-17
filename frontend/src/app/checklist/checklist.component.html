@@ -77,7 +77,7 @@
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let checklist">
               <p style="font-weight:bold;"> {{ checklist.name }} </p>
-              <p style="margin-left:10px;"> {{ checklist.description }} </p>
+              <p> {{ checklist.description }} </p>
             </td>
           </ng-container>
 
@@ -104,56 +104,51 @@
         <mat-expansion-panel *ngFor="let fieldGroup of selectedChecklist.fieldGroups">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{fieldGroup.name}} {{getSelectedFieldsDisplayText(fieldGroup)}}
+              {{fieldGroup.name}}<span fxHide fxShow.gt-sm> {{getSelectedFieldsDisplayText(fieldGroup)}}</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
           <div *ngFor="let field of fieldGroup.fields">
-            <div
-              class="container"
-              fxLayout
-              fxLayout.xs="row wrap"
-              fxLayoutAlign="space-around start"
-              fxLayoutGap="10px">
-              <div style="width:40%">
-                <mat-checkbox class="checklist-checked-field" [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]"><b class="checklist-checked-field">{{field.label}}</b></mat-checkbox>
-              </div>
-              <div style="width:30%">
-                <i>{{field.mandatory}} {{getFieldTypeDisplayText(field)}}</i>
-              </div>
-              <div style="width:30%">
-                <p *ngIf="field.units.length > 0">
-                  <mat-select class="checklist-restriction" placeholder="Permitted units">
-                    <mat-option *ngFor="let unit of field.units" [value]="unit" disabled>
-                      {{ unit }}
-                    </mat-option>
-                  </mat-select>
-                </p>
-                <p *ngIf="field.regexValue" class="checklist-restriction">
-                  <mat-select class="checklist-restriction" placeholder="Permitted regular expression">
-                    <mat-option disabled>
-                      {{ field.regexValue }}
-                    </mat-option>
-                  </mat-select>
-                </p>
-                <p *ngIf="field.textChoice && field.textChoice.length > 0">
-                  <mat-select class="checklist-restriction" placeholder="Permitted values">
-                    <mat-option *ngFor="let textChoice of field.textChoice" [value]="textChoice" disabled>
-                      {{ textChoice }}
-                    </mat-option>
-                  </mat-select>
-                </p>
-                <p *ngIf="field.ontologyId" class="checklist-restriction">
-                  Permitted ontology: {{ field.ontologyId }}
-                </p>
-              </div>
-            </div>
-            <p style="margin-left:10px;" *ngIf="checklistType === ChecklistType.sequence">
+            <mat-checkbox class="checklist-checked-field" [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]"><b class="checklist-checked-field">{{field.label}}</b></mat-checkbox>
+            <p fxHide fxShow.gt-sm><i>{{field.mandatory}} {{getFieldTypeDisplayText(field)}}</i></p>
+            <!--
+            <p *ngIf="checklistType === ChecklistType.sequence">
               {{field.name}}
             </p>
-            <p style="margin-left:10px;">
+            -->
+            <p>
               {{field.description}}
             </p>
+            <div fxLayout="row">
+                <div fxFlex = "200px">
+                  <p *ngIf="field.units.length > 0">
+                    <mat-select class="checklist-restriction" placeholder="Permitted units">
+                      <mat-option *ngFor="let unit of field.units" [value]="unit" disabled>
+                        {{ unit }}
+                      </mat-option>
+                    </mat-select>
+                  </p>
+                  <p *ngIf="field.regexValue" class="checklist-restriction">
+                    <mat-select class="checklist-restriction" placeholder="Regular expression">
+                      <mat-option disabled>
+                        {{ field.regexValue }}
+                      </mat-option>
+                    </mat-select>
+                  </p>
+                  <p *ngIf="field.textChoice && field.textChoice.length > 0">
+                    <mat-select class="checklist-restriction" placeholder="Permitted values">
+                      <mat-option *ngFor="let textChoice of field.textChoice" [value]="textChoice" disabled>
+                        {{ textChoice }}
+                      </mat-option>
+                    </mat-select>
+                  </p>
+                  <p *ngIf="field.ontologyId" class="checklist-restriction">
+                    Permitted ontology: {{ field.ontologyId }}
+                  </p>
+                </div>
+              <div fxFlex>
+              </div>
+            </div>
           </div>
         </mat-expansion-panel>
       </mat-accordion>

@@ -3,7 +3,6 @@
   background-color:	#F5F5F5;
 }
 
-
 /* Checklist field selection checkbox always green and text always black. */
 
 .checklist-checked-field {
@@ -16,4 +15,12 @@
 
 .mat-ripple-element {
   background: #38983e !important;
+}
+
+.mat-expansion-panel-header,
+.mat-expansion-panel-body {
+  padding-top: 0px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
 }
