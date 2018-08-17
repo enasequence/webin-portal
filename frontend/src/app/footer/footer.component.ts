@@ -9,21 +9,18 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-
-import { environment } from '../../environments/environment';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-title',
-  templateUrl: './title.component.html',
-  styleUrls: ['./title.component.css'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css']
 })
-export class TitleComponent {
+export class FooterComponent implements OnInit {
 
   constructor() { }
 
-  getTitle() {
-    return environment.title;
+  ngOnInit() {
   }
+
 }

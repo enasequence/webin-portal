@@ -12,23 +12,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiModule } from '../ui/ui.module';
+import { WebinAuthenticationService } from '../webin-authentication.service';
+import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 
-import { TitleComponent } from './title.component';
+import { HeaderComponent } from './header.component';
 
-describe('TitleComponent', () => {
-  let component: TitleComponent;
-  let fixture: ComponentFixture<TitleComponent>;
+describe('HeaderComponent', () => {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TitleComponent ],
-      imports: [ UiModule ]
+      declarations: [ HeaderComponent ],
+      imports: [ UiModule ],
+      providers: [
+        {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TitleComponent);
+    fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit {
     private _webinAuthenticationService: WebinAuthenticationService) { }
 
   ngOnInit() {
+    console.log('** LoginComponent.ngOnInit **');
     if (this._webinAuthenticationService.authenticated) {
-      this._router.navigateByUrl('dashboard', { skipLocationChange: true });
+      this._router.navigateByUrl('');
     }
   }
 
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
         data => {
           console.log('WebinAuthenticationService.loginToken succeeded');
           this._webinAuthenticationService.token = data;
-          this._router.navigateByUrl('dashboard', { skipLocationChange: true });
+          this._router.navigateByUrl('');
         },
         // Errors.
         (err: HttpErrorResponse) => {
