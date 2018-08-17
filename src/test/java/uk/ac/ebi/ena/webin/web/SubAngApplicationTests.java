@@ -9,10 +9,11 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package uk.ac.ebi.ena.ang.web;
+package uk.ac.ebi.ena.webin.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

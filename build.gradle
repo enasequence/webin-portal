@@ -20,8 +20,8 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.3.3'
-ext.environment = project.hasProperty('env') ? env : Environment.dev.toString();
+ext.version_base = '0.3.4'
+ext.environment = project.hasProperty('env') ? env : Environment.prod.toString();
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.webin-portal'
 ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_rsa")
@@ -64,7 +64,7 @@ dependencies {
 }
 
 node {
-    version = "8.9.0"
+    version = "10.5.0"
     download = true
     nodeModulesDir = file("frontend")
 }
@@ -181,7 +181,7 @@ def getAngularBuildScript(){
 
 task deploy << {
     ssh.run {
-        println("deployTo task" + "~/ena/generic-deploy.sh $project.name $version environment")
+        println("execute" + "~/ena/generic-deploy.sh $project.name $version $environment $serverPort $serverContextPath")
         for (remote in getEnvRemotes()){
             println("Deploying into: " + remote)
             session(remote) {
