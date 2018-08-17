@@ -32,6 +32,6 @@ export class WebinGdprService implements WebinGdprServiceInterface {
 
     // TODO set consent
 
-    this._router.navigateByUrl('dashboard', { skipLocationChange: true });
+    this._router.navigateByUrl('');
   }
 }

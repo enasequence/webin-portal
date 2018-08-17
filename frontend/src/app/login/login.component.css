@@ -1,3 +1,7 @@
+.login-card-container {
+  min-height: 400px;
+}
+
 .login-card {
-  width: 400px;
+  width: 325px;
 }

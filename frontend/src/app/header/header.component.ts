@@ -11,17 +11,22 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { environment } from '../../environments/environment';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 
 @Component({
-  selector: 'app-login-account',
-  templateUrl: './login-account.component.html',
-  styleUrls: ['./login-account.component.css'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginAccountComponent {
+export class HeaderComponent {
 
   constructor(private _webinAuthenticationService: WebinAuthenticationService) { }
+
+  getTitle() {
+    return environment.title;
+  }
 
   isAuthenticated() {
     return this._webinAuthenticationService.authenticated;

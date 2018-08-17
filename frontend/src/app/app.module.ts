@@ -9,7 +9,6 @@
  * specific language governing permissions and limitations under the License.
  */
 import { NgModule } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { UiModule } from './ui/ui.module';
@@ -20,8 +19,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
-import { LoginAccountComponent } from './login-account/login-account.component';
-import { TitleComponent } from './title/title.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
@@ -45,7 +44,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent,
   },
   {
@@ -81,9 +80,9 @@ const appRoutes: Routes = [
     SubmissionResultComponent,
     LoginComponent,
     LogoutComponent,
-    LoginAccountComponent,
     DashboardComponent,
-    TitleComponent,
+    HeaderComponent,
+    FooterComponent,
     ReportComponent,
     ReportEditDialogComponent,
     ReportActionComponent,
@@ -92,8 +91,8 @@ const appRoutes: Routes = [
   ],
   bootstrap: [
       AppComponent,
-      TitleComponent,
-      LoginAccountComponent
+      HeaderComponent,
+      FooterComponent,
   ],
   providers: [
     WebinRestService,

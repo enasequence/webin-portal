@@ -1,0 +1,22 @@
+<div xdata-sticky-container fxHide fxShow.gt-sm> <!-- ** Application specific content: fxHide fxShow.gt-sm ** -->
+    <header id="masthead" class="masthead compact-for-data" xdata-sticky data-sticky-on="large" xdata-top-anchor="content:top" xdata-btm-anchor="content:bottom">
+    <div class="masthead-inner row">
+        <!-- local-title -->
+        <div class="columns medium-8 large-8" id="local-title">
+        <h1>{{getTitle()}}</h1> <!-- ** Application specific content ** -->
+        </div>
+        <!-- /local-title -->
+
+        <!-- local-nav -->
+        <nav class="column medium-4 large-4">
+        <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
+            <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
+            <li><a href="logout">Logout
+            <span *ngIf="isAuthenticated()">({{getAccount()}})</span> <!-- ** Application specific content ** -->                              
+            </a></li>
+        </ul>
+        </nav>
+        <!-- /local-nav -->
+    </div>
+    </header>
+</div>

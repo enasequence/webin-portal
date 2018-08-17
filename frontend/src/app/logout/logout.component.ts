@@ -27,6 +27,6 @@ export class LogoutComponent implements OnInit {
 
     ngOnInit() {
         this._webinAuthenticationService.logout();
-        this._router.navigateByUrl('', { skipLocationChange: false });
+        this._router.navigateByUrl('login');
     }
 }

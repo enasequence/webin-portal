@@ -11,31 +11,21 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UiModule } from '../ui/ui.module';
-import { WebinAuthenticationService } from '../webin-authentication.service';
-import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
-import { LoginAccountComponent } from './login-account.component';
+import { FooterComponent } from './footer.component';
 
-describe('LoginAccountComponent', () => {
-  let component: LoginAccountComponent;
-  let fixture: ComponentFixture<LoginAccountComponent>;
+describe('FooterComponent', () => {
+  let component: FooterComponent;
+  let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginAccountComponent ],
-      imports: [ UiModule ],
-      providers: [
-        {
-          provide: WebinAuthenticationService,
-          useClass: MockWebinAuthenticationService
-        },
-      ]
+      declarations: [ FooterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginAccountComponent);
+    fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
