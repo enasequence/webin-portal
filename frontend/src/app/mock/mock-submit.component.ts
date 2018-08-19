@@ -12,8 +12,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-xml-submission',
+    selector: 'app-submit',
     template: ' '
   })
-export class MockXmlSubmissionComponent {
+export class MockSubmitComponent {
 }

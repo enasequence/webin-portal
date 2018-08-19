@@ -11,7 +11,7 @@
 
 import { ReportType } from '../report-type.enum';
 import { WebinRestServiceInterface } from '../webin-rest.service.interface';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 
 export class MockWebinRestService implements WebinRestServiceInterface {
 

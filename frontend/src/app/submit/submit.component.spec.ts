@@ -10,32 +10,43 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { UiModule } from '../ui/ui.module';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
-import { MockReportComponent } from '../mock/mock-report.component';
-import { MockSubmitComponent } from '../mock/mock-submit.component';
+import { WebinRestService } from '../webin-rest.service';
+import { MockWebinRestService } from '../mock/mock-webin-rest.service';
+import { WebinReportService } from '../webin-report.service';
+import { MockWebinReportService } from '../mock/mock-webin-report.service';
+import { MockSubmissionResultComponent } from '../mock/mock-submission-result.component';
+import { MockChecklistComponent } from '../mock/mock-checklist.component';
 
-import { DashboardComponent } from './dashboard.component';
+import { SubmitComponent } from './submit.component';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('SubmitComponent', () => {
+  let component: SubmitComponent;
+  let fixture: ComponentFixture<SubmitComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        DashboardComponent,
-        MockReportComponent,
-        MockSubmitComponent,
+        MockChecklistComponent,
+        MockSubmissionResultComponent,
+        SubmitComponent,
       ],
-      imports: [
-        UiModule,
-      ],
+      imports: [ UiModule ],
       providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService
+        },
+        {
+          provide: WebinRestService,
+          useClass: MockWebinRestService
+        },
+        {
+          provide: WebinReportService,
+          useClass: MockWebinReportService
         },
       ]
     })
@@ -43,7 +54,7 @@ describe('DashboardComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(SubmitComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

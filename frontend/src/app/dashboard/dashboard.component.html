@@ -2,7 +2,7 @@
   <mat-tab-group #tabGroup class="app-daskboard-tab">
 
     <mat-tab label="Submit">
-      <app-xml-submission></app-xml-submission>
+      <app-submit></app-submit>
     </mat-tab>
     <mat-tab label="Studies">
       <app-report #studies [reportType]="ReportType.studies" (reportChange)="consumeReportChange($event)"></app-report>

@@ -10,7 +10,7 @@
  */
 
 import { ReportType } from './report-type.enum';
-import { Observable } from '../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 
 export interface WebinRestServiceInterface {
 

@@ -475,7 +475,6 @@ export class ReportComponent {
   editXml(action: ReportActionInterface): void {
 
     const reportDialogRef = this._reportDialog.open(ReportEditDialogComponent, {
-        // height: '500px',
         width: '600px',
         data: action
     });

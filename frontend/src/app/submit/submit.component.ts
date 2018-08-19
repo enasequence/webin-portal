@@ -9,22 +9,21 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SubmissionResultComponent } from '../submission-result/submission-result.component';
 import { ChecklistType } from '../checklist-type.enum';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinRestService } from '../webin-rest.service';
+import { MatDialog } from '@angular/material';
+import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
 
 @Component({
-  selector: 'app-xml-submission',
-  templateUrl: './xml-submission.component.html',
-  styleUrls: ['./xml-submission.component.css'],
+  selector: 'app-submit',
+  templateUrl: './submit.component.html',
+  styleUrls: ['./submit.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class XmlSubmissionComponent {
-
-  @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
+export class SubmitComponent {
 
   ChecklistType = ChecklistType;   // Allows use in template
 
@@ -41,8 +40,8 @@ export class XmlSubmissionComponent {
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
-    private _webinRestService: WebinRestService
-    ) { }
+    private _webinRestService: WebinRestService,
+    public dialog: MatDialog) { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
@@ -118,6 +117,9 @@ export class XmlSubmissionComponent {
         this.policyFile,
         this.datasetFile);
 
-    this.submissionResult.submit(observable);
+    this.dialog.open(SubmissionResultDialogComponent, {
+      width: '600px',
+      data: observable
+    });
   }
 }

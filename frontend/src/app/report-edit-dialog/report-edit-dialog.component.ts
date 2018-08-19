@@ -44,10 +44,6 @@ export class ReportEditDialogComponent implements OnInit {
     this.load();
   }
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
   isUpdateXmlResult(): boolean {
     return this.submissionResult.isResult();
   }

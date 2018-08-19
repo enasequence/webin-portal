@@ -22,8 +22,9 @@ import { LogoutComponent } from './logout/logout.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { XmlSubmissionComponent } from './xml-submission/xml-submission.component';
+import { SubmitComponent } from './submit/submit.component';
 import { SubmissionResultComponent } from './submission-result/submission-result.component';
+import { SubmissionResultDialogComponent } from './submission-result-dialog/submission-result-dialog.component';
 import { ReportComponent } from './report/report.component';
 import { ReportActionComponent } from './report-action/report-action.component';
 import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
@@ -76,8 +77,9 @@ const appRoutes: Routes = [
   ],
   declarations: [
     AppComponent,
-    XmlSubmissionComponent,
+    SubmitComponent,
     SubmissionResultComponent,
+    SubmissionResultDialogComponent,
     LoginComponent,
     LogoutComponent,
     DashboardComponent,
@@ -111,6 +113,7 @@ const appRoutes: Routes = [
   ],
   entryComponents: [
     ReportEditDialogComponent,
+    SubmissionResultDialogComponent,
   ]
 })
 export class AppModule { }
