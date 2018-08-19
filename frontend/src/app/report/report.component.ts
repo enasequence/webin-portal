@@ -15,6 +15,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
+import { ObservableMedia } from '@angular/flex-layout';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType } from '../report-type.enum';
@@ -55,7 +56,8 @@ export class ReportComponent {
   constructor(
     private _webinReportService: WebinReportService,
     private _webinAuthenticationService: WebinAuthenticationService,
-    private _reportDialog: MatDialog) { }
+    private _reportDialog: MatDialog,
+    public media: ObservableMedia) { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
@@ -367,8 +369,13 @@ export class ReportComponent {
   }
 
   getElementValue(result, col) {
+    let columnName = '';
+    if (this.media.isActive('xs')) {
+      columnName = `${col}: `;
+    }
+
     const callback = this.displayedColumnsCallback[col];
-    return callback(result);
+    return columnName + callback(result);
   }
 
   getActions(result): Array<ReportActionInterface> {

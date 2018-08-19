@@ -1,6 +1,6 @@
 <div class="component-margin">
 
-<p>
+<p>  
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
@@ -39,150 +39,158 @@
 
 <p><b>Please click search to see the results.</b></p>
 
-<mat-form-field *ngIf="!isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
-    <input matInput placeholder="Accession" [(ngModel)]="id">
-</mat-form-field>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
 
-<mat-form-field *ngIf="isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
-  <input matInput placeholder="Accession or Name" [(ngModel)]="id">
-</mat-form-field>
+  <div *ngIf="!isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
+    <mat-form-field class="app-field-padding">
+        <input matInput placeholder="Accession" [(ngModel)]="id">
+    </mat-form-field>
+  </div>
+  <div *ngIf="isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
+    <mat-form-field class="app-field-padding">
+      <input matInput placeholder="Accession or Name" [(ngModel)]="id">
+    </mat-form-field>
+  </div>
+  <div *ngIf="isMetadataReport()">
+    <mat-form-field class="app-field-padding">
+      <mat-select placeholder="Release status" [(ngModel)]="status">
+        <mat-option value="private">
+          Private
+        </mat-option>
+        <mat-option value="cancelled">
+          Cancelled
+        </mat-option>
+        <mat-option value="public">
+          Public
+        </mat-option>
+        <mat-option value="suppressed">
+          Suppressed
+        </mat-option>
+        <mat-option value="killed">
+          Killed
+        </mat-option>
+        <mat-option value="temporarily suppressed">
+          Temporarily suppressed
+        </mat-option>
+        <mat-option value="temporarily killed">
+          Temporarily killed
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-<span *ngIf="isMetadataReport()">
-or
-  <mat-form-field>
-    <mat-select placeholder="Release status" [(ngModel)]="status">
-      <mat-option value="private">
-        Private
-      </mat-option>
-      <mat-option value="cancelled">
-        Cancelled
-      </mat-option>
-      <mat-option value="public">
-        Public
-      </mat-option>
-      <mat-option value="suppressed">
-        Suppressed
-      </mat-option>
-      <mat-option value="killed">
-        Killed
-      </mat-option>
-      <mat-option value="temporarily suppressed">
-        Temporarily suppressed
-      </mat-option>
-      <mat-option value="temporarily killed">
-        Temporarily killed
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</span>
+  <div *ngIf="reportType === ReportType.analyses || reportType === ReportType.analysisFiles || reportType === ReportType.analysisProcess">
+    <mat-form-field class="app-field-padding">
+      <mat-select placeholder="Analysis type" [(ngModel)]="analysisType">
+        <mat-option value="SEQUENCE_ASSEMBLY">
+          Genome assembly
+        </mat-option>
+        <mat-option value="TRANSCRIPTOME_ASSEMBLY">
+          Transcriptome assembly
+        </mat-option>
+        <mat-option value="PATHOGEN_ANALYSIS">
+          Pathogen analysis
+        </mat-option>
+        <mat-option value="AMR_ANTIBIOGRAM">
+          AMR Antibiogram
+        </mat-option>
+        <mat-option value="SEQUENCE_ANNOTATION">
+          Sequence annotation
+        </mat-option>
+        <mat-option value="SEQUENCE_VARIATION">
+          Sequence variation
+        </mat-option>
+        <mat-option value="REFERENCE_ALIGNMENT">
+          Reference alignment
+        </mat-option>
+        <mat-option value="REFERENCE_SEQUENCE">
+          Reference sequence
+        </mat-option>
+        <mat-option value="PROCESSED_READS">
+          Processed reads
+        </mat-option>
+        <mat-option value="SEQUENCE_FLATFILE">
+          Sequence flatfile
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-<span *ngIf="reportType === ReportType.analyses || reportType === ReportType.analysisFiles || reportType === ReportType.analysisProcess">
-  or
-  <mat-form-field>
-    <mat-select placeholder="Analysis type" [(ngModel)]="analysisType">
-      <mat-option value="SEQUENCE_ASSEMBLY">
-        Genome assembly
-      </mat-option>
-      <mat-option value="TRANSCRIPTOME_ASSEMBLY">
-        Transcriptome assembly
-      </mat-option>
-      <mat-option value="PATHOGEN_ANALYSIS">
-        Pathogen analysis
-      </mat-option>
-      <mat-option value="AMR_ANTIBIOGRAM">
-        AMR Antibiogram
-      </mat-option>
-      <mat-option value="SEQUENCE_ANNOTATION">
-        Sequence annotation
-      </mat-option>
-      <mat-option value="SEQUENCE_VARIATION">
-        Sequence variation
-      </mat-option>
-      <mat-option value="REFERENCE_ALIGNMENT">
-        Reference alignment
-      </mat-option>
-      <mat-option value="REFERENCE_SEQUENCE">
-        Reference sequence
-      </mat-option>
-      <mat-option value="PROCESSED_READS">
-        Processed reads
-      </mat-option>
-      <mat-option value="SEQUENCE_FLATFILE">
-        Sequence flatfile
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</span>
+  <div *ngIf="isFileReport()">
+    <mat-form-field class="app-field-padding">
+      <mat-select placeholder="Archive status" [(ngModel)]="processStatus">
+        <mat-option value="active">
+          active
+        </mat-option>
+        <mat-option value="completed">
+          completed
+        </mat-option>
+        <mat-option value="failed">
+          failed
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-<span *ngIf="isFileReport()">
-  or
-  <mat-form-field>
-    <mat-select placeholder="Archive status" [(ngModel)]="processStatus">
-      <mat-option value="active">
-        active
-      </mat-option>
-      <mat-option value="completed">
-        completed
-      </mat-option>
-      <mat-option value="failed">
-        failed
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</span>
+  <div *ngIf="isProcessReport()">
+    or
+    <mat-form-field class="app-field-padding">
+      <mat-select placeholder="Process status" [(ngModel)]="processStatus">
+        <mat-option value="active">
+          active
+        </mat-option>
+        <mat-option value="completed">
+          completed
+        </mat-option>
+        <mat-option value="failed">
+          failed
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-<span *ngIf="isProcessReport()">
-  or
-  <mat-form-field>
-    <mat-select placeholder="Process status" [(ngModel)]="processStatus">
-      <mat-option value="active">
-        active
-      </mat-option>
-      <mat-option value="completed">
-        completed
-      </mat-option>
-      <mat-option value="failed">
-        failed
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</span>
+  <div class="app-field-padding">
+    <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
+      Search
+    </button>
+  </div>  
 
-&nbsp;
-<button mat-raised-button color="accent" (click)="report()" [disabled]="active">
-  Search
-</button>
-&nbsp;
+  <div class="app-field-padding">
+    <button mat-raised-button (click)="reset()">
+      Reset
+    </button>
+  </div>
+    
+  <div>
+    <mat-form-field class="app-field-padding">
+      <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
+        <mat-option value="100">
+          100
+        </mat-option>
+        <mat-option value="500">
+          500
+        </mat-option>
+        <mat-option value="1000">
+          1000
+        </mat-option>
+        <mat-option value="5000">
+          5000
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div *ngIf="isMetadataReport()">
+    <mat-checkbox class="app-field-padding" [(ngModel)]="showAlias">
+      Show unique name
+    </mat-checkbox>
+  </div>
+</div>
 
-<button mat-raised-button (click)="reset()">Reset</button>
-&nbsp;
-
-<mat-form-field>
-  <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
-    <mat-option value="100">
-      100
-    </mat-option>
-    <mat-option value="500">
-      500
-    </mat-option>
-    <mat-option value="1000">
-      1000
-    </mat-option>
-    <mat-option value="5000">
-      5000
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-&nbsp;
-
-<mat-checkbox [(ngModel)]="showAlias" *ngIf="isMetadataReport()">
-  Show unique name
-</mat-checkbox>
-&nbsp;
-
-<span *ngIf="this.data && this.data.length > 0">
-  <a href="{{ csvDownloadAllLink() }}">Download all results</a>
-</span>
+<div *ngIf="this.data && this.data.length > 0">
+  <p><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
+</div>
 
 <div *ngIf="active" style="height:70px;">
     <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">

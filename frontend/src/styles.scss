@@ -244,3 +244,37 @@ table tbody tr:nth-child(even) {
 table tbody tr:nth-child(odd) {
     background-color: white;
 }
+
+// Responsive design: field padding for forms.
+// 
+
+.app-field-padding {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+// Responsive design: collapse tables vertically for small screen sizes.
+//
+
+@media all and (max-width: 599px)  {
+
+table {
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+}
+  table, thead, tbody, th, td, tr {
+		display: block;
+	}
+
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	tr { 
+    border: 1px solid #ccc; 
+  }
+}
