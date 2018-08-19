@@ -238,10 +238,12 @@ $accent: map-get($app-theme, accent);
 
 table tbody tr:nth-child(even) {
     background-color: white;
+    border-bottom: 1px solid #f1f1f1;
 }
 
 table tbody tr:nth-child(odd) {
     background-color: white;
+    border-bottom: 1px solid #f1f1f1;
 }
 
 // Responsive design: field padding for forms.
@@ -266,8 +268,4 @@ table tbody tr:nth-child(odd) {
   thead, th {
 		display: none;
 	}
-
-	tr {
-    border-bottom: 1px solid #f1f1f1;
-  }
 }
