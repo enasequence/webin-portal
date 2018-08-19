@@ -34,31 +34,29 @@
   <!-- Show receipt -->
 
   <div class="container"
-       fxLayout
-       fxLayout.xs="column"
-       fxLayoutAlign="space-around start"
-       fxLayoutGap="10px">
-    <div>
+       fxLayout="row wrap">
+    <div class="app-field-padding">
         <mat-checkbox [(ngModel)]="showReceiptXml">
           Show receipt XML
         </mat-checkbox>
     </div>
+
     <div fxFlex>
    </div>
 
-   <div *ngIf="webinErrorDataSource">
+   <div *ngIf="webinErrorDataSource" class="app-field-padding">
      <button mat-raised-button color="accent" (click)="downloadErrorTable()">
        Download errors
      </button>
    </div>
 
-   <div *ngIf="webinAccessionDataSource">
+   <div *ngIf="webinAccessionDataSource" class="app-field-padding">
      <button mat-raised-button color="accent" (click)="downloadAccessionTable()">
        Download accessions
      </button>
    </div>
 
-    <div>
+    <div class="app-field-padding">
       <button mat-raised-button color="accent" (click)="downloadReceiptXml()">
         Download receipt XML
       </button>
@@ -69,23 +67,23 @@
 
   <div *ngIf="webinErrorDataSource">
 
-    <div *ngIf="!showReceiptXml" class="app-table-container">
+    <div *ngIf="!showReceiptXml" class="app-submission-result-container">
 
-      <mat-table #webinErrorTable [dataSource]="webinErrorDataSource" >
+      <table cdk-table #webinErrorTable [dataSource]="webinErrorDataSource" >
 
-        <ng-container matColumnDef="error">
-          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Error message</span></mat-header-cell>
-          <mat-cell *matCellDef="let element">{{element.error}}</mat-cell>
+        <ng-container cdkColumnDef="error">
+          <th cdk-header-cell *cdkHeaderCellDef><span class="app-table-header">Error message</span></th>
+          <td cdk-cell *cdkCellDef="let element">{{element.error}}</td>
         </ng-container>
-        <mat-header-row *matHeaderRowDef="webinErrorTableColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: webinErrorTableColumns;"></mat-row>
+        <tr cdk-header-row *cdkHeaderRowDef="webinErrorTableColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: webinErrorTableColumns;"></tr>
 
-      </mat-table>
+      </table>
 
     </div>
 
     <div *ngIf="showReceiptXml">
-      <div class="app-receipt app-table-container">
+      <div class="app-receipt app-submission-result-container">
         <pre>{{result.xml}}</pre>
       </div>
     </div>
@@ -96,34 +94,43 @@
 
   <div *ngIf="webinAccessionDataSource">
 
-    <div *ngIf="!showReceiptXml" class="app-table-container">
+    <div *ngIf="!showReceiptXml" class="app-submission-result-container">
 
-      <mat-table #webinAccessionTable [dataSource]="webinAccessionDataSource" >
+      <table cdk-table #webinAccessionTable [dataSource]="webinAccessionDataSource" >
 
-        <ng-container matColumnDef="type">
-          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Type</span></mat-header-cell>
-          <mat-cell *matCellDef="let element">{{humanReadableFormat(element.type)}}</mat-cell>
+        <ng-container cdkColumnDef="type">
+          <th cdk-header-cell  *cdkHeaderCellDef><span class="app-table-header">Type</span></th>
+          <td cdk-cell *cdkCellDef="let element">
+            <span *ngIf="media.isActive('xs')">Type:</span>
+            {{humanReadableFormat(element.type)}}
+          </td>
         </ng-container>
 
-        <ng-container matColumnDef="accession">
-          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Accession</span></mat-header-cell>
-          <mat-cell *matCellDef="let element">{{element.accession}}</mat-cell>
+        <ng-container cdkColumnDef="accession">
+          <th cdk-header-cell  *cdkHeaderCellDef><span class="app-table-header">Accession</span></th>
+          <td cdk-cell *cdkCellDef="let element">
+            <span *ngIf="media.isActive('xs')">Accession:</span>
+            {{element.accession}}
+          </td>
         </ng-container>
 
-        <ng-container matColumnDef="alias">
-          <mat-header-cell *matHeaderCellDef><span class="app-table-header">Unique name (alias)</span></mat-header-cell>
-          <mat-cell *matCellDef="let element">{{element.alias}}</mat-cell>
+        <ng-container cdkColumnDef="alias">
+          <th cdk-header-cell  *cdkHeaderCellDef><span class="app-table-header">Unique name (alias)</span></th>
+          <td cdk-cell *cdkCellDef="let element">
+            <span *ngIf="media.isActive('xs')">Unique name (Alias):</span>
+            {{element.alias}}
+          </td>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="webinAccessionTableColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: webinAccessionTableColumns;"></mat-row>
+        <tr cdk-header-row *cdkHeaderRowDef="webinAccessionTableColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: webinAccessionTableColumns;"></tr>
 
-      </mat-table>
+      </table>
 
     </div>
 
     <div *ngIf="showReceiptXml">
-      <div class="app-receipt app-table-container">
+      <div class="app-receipt app-submission-result-container">
         <pre>{{result.xml}}</pre>
       </div>
     </div>
@@ -144,7 +151,7 @@
   </div>
 
   <div [hidden]="!webinAccessionDataSource">
-    <!-- the paginator must be created before the dataSource has been defined -->    
+    <!-- the paginator must be created before the dataSource has been defined -->
     <mat-paginator #webinAccessionPaginator
                    [pageSize]="10"
                    [pageSizeOptions]="[10, 25, 50]">

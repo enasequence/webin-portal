@@ -12,6 +12,7 @@
 import { Component, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ObservableMedia } from '@angular/flex-layout';
 
 import { WebinRestService } from '../webin-rest.service';
 
@@ -50,8 +51,8 @@ export class SubmissionResultComponent {
   active: boolean;
 
   constructor(
-    private _webinRestService: WebinRestService) {
-  }
+    private _webinRestService: WebinRestService,
+    public media: ObservableMedia) { }
 
   isResult(): boolean {
     return this.result ? true : false;

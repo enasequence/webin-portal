@@ -1,6 +1,6 @@
 <div class="component-margin">
 
-<p>  
+<p>
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
@@ -154,14 +154,14 @@
     <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
       Search
     </button>
-  </div>  
+  </div>
 
   <div class="app-field-padding">
     <button mat-raised-button (click)="reset()">
       Reset
     </button>
   </div>
-    
+
   <div>
     <mat-form-field class="app-field-padding">
       <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
@@ -180,7 +180,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  
+
   <div *ngIf="isMetadataReport()">
     <mat-checkbox class="app-field-padding" [(ngModel)]="showAlias">
       Show unique name
@@ -250,7 +250,7 @@
         <ng-container *ngIf="col=='Action'">
 
           <td cdk-cell *cdkCellDef="let element">
-
+            <span *ngIf="media.isActive('xs')">Action:</span>
             <app-report-action [actions]="getActions(element)" (actionChange)="action($event)">
             </app-report-action>
 
