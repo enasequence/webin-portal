@@ -1,22 +1,23 @@
-<div xdata-sticky-container fxHide fxShow.gt-sm> <!-- ** Application specific content: fxHide fxShow.gt-sm ** -->
-    <header id="masthead" class="masthead compact-for-data" xdata-sticky data-sticky-on="large" xdata-top-anchor="content:top" xdata-btm-anchor="content:bottom">
-    <div class="masthead-inner row">
-        <!-- local-title -->
-        <div class="columns medium-8 large-8" id="local-title">
-        <h1>{{getTitle()}}</h1> <!-- ** Application specific content ** -->
-        </div>
-        <!-- /local-title -->
-
-        <!-- local-nav -->
-        <nav class="column medium-4 large-4">
+<header id="masthead-black-bar" class="clearfix masthead-black-bar">
+</header>
+<div> <!-- fxHide fxShow.gt-xs> <!-- ** Application specific content: fxHide fxShow.gt-xs ** -->
+  <header id="masthead" class="masthead compact-for-data">
+    <div class="masthead-inner row expanded">
+      <!-- local-title -->
+      <div class="float-left inline-block padding-left-large" id="local-title">
+        <h4 style="color:white">{{getTitle()}}</h4> <!-- ** Application specific content ** -->
+      </div>
+      <!-- /local-title -->
+      <!-- local-nav -->
+      <nav class="float-left columns medium-6 large-6" style="margin-top: 0;">
         <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
-            <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li>
-            <li><a href="logout">Logout
-            <span *ngIf="isAuthenticated()">({{getAccount()}})</span> <!-- ** Application specific content ** -->                              
-            </a></li>
+          <li><a href="mailto:datasubs@ebi.ac.uk">Support <i class="icon icon-generic" data-icon="x"></i></a></li> <!-- ** Application specific content ** -->
+          <li><a href="logout">Logout
+            <span *ngIf="isAuthenticated()">({{getAccount()}})</span> <!-- ** Application specific content ** -->
+          </a></li>
         </ul>
-        </nav>
-        <!-- /local-nav -->
+      </nav>
+      <!-- /local-nav -->
     </div>
-    </header>
+  </header>
 </div>
