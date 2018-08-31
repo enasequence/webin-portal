@@ -20,7 +20,7 @@ enum Environment{
     localdev, localtest, dev , test , prod
 }
 
-ext.version_base = '0.3.4'
+ext.version_base = '0.3.5'
 ext.environment = project.hasProperty('env') ? env : Environment.prod.toString();
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.webin-portal'
