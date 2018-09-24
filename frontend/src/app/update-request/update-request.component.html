@@ -11,21 +11,96 @@
 
 <div class="component-margin">
 
-  <div>
-    <p>
-      <span class = "app-primary-color">
-        <i class="material-icons">info</i>
-      </span>
-      This page can be used to request changes to records that can't be updated by the submitters themselves.
-    </p>
-  </div>
-  <p>
-    Keeping records up to date is the sole responsibility of their <b>owners</b>.
-    Record owners are the <b>original submitter</b> and all the <b>co-authors</b> of the associated citation(s).
-  </p>
-  <p>
-    You can request updates to your own records or report errors in other submitters' records.
-  </p>
+  <div fxFlex>
+    <div fxLayout="row">
+      <div fxFlex="100%">
+        <p>
+          Use this page to request changes to records that can't be updated in any other way.
+        </p>
+        <p>
+          Keeping records up to date is the sole responsibility of their owners.
+          Record owners are the original submitters and all the co-authors of the associated citation(s).
+          You can request updates to your own records or report errors in other submitters' records.
+        </p>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="35%">
+        <div fxLayout="column">
 
+          <mat-form-field class="app-field-padding">
+              <input matInput placeholder="Accession numbers(s)" [(ngModel)]="id" required>
+          </mat-form-field>
+          
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Confidentiality status" [(ngModel)]="status" required>
+              <mat-option value="public">
+                Records are public
+              </mat-option>
+              <mat-option value="private">
+                Records are private
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Editorial authority" [(ngModel)]="authority" required>
+              <mat-option value="original submitter">
+                I am the original submitter of the records
+              </mat-option>
+              <mat-option value="co-author">
+                I am a co-author cited in the records
+              </mat-option>
+              <mat-option value="third party">
+                I am a third party suggesting an update to someone else's records
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Update refers to" [(ngModel)]="affects" required>
+              <mat-option value="organism">
+                Sample organism
+              </mat-option>
+              <mat-option value="source">
+                Sample source
+              </mat-option>
+              <mat-option value="cittion">
+                Citation
+              </mat-option>
+              <mat-option value="sequence">
+                Sequence
+              </mat-option>
+              <mat-option value="sequence annotation">
+                Sequence annotation
+              </mat-option>
+              <mat-option value="sequence keyword">
+                Sequence keyword
+              </mat-option>
+              <mat-option value="sequence comment">
+                Sequence comment
+              </mat-option>
+              <mat-option value="other">
+                Other
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea matInput placeholder="Reason for change" [(ngModel)]="reason" required></textarea>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <textarea matInput placeholder="Current field value" [(ngModel)]="currentValue" required></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea matInput placeholder="Proposed field value" [(ngModel)]="newValue" required></textarea>
+          </mat-form-field>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div> <!-- component-margin -->
