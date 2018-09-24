@@ -30,6 +30,7 @@ import { ReportActionComponent } from './report-action/report-action.component';
 import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
 import { GdprComponent } from './gdpr/gdpr.component';
 import { ChecklistComponent } from './checklist/checklist.component';
+import { UpdateRequestComponent } from './update-request/update-request.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
@@ -42,6 +43,7 @@ import { WebinGdprGuardService } from './webin-gdpr-guard.service';
 import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
 
 import { RouterModule, Routes } from '@angular/router';
+
 
 const appRoutes: Routes = [
   {
@@ -90,6 +92,7 @@ const appRoutes: Routes = [
     ReportActionComponent,
     GdprComponent,
     ChecklistComponent,
+    UpdateRequestComponent,
   ],
   bootstrap: [
       AppComponent,
