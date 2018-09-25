@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { UiModule } from '../ui/ui.module';
 import { UpdateRequestComponent } from './update-request.component';
 
 describe('UpdateRequestComponent', () => {
@@ -8,7 +8,8 @@ describe('UpdateRequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateRequestComponent ]
+      declarations: [ UpdateRequestComponent ],
+      imports: [ UiModule ],
     })
     .compileComponents();
   }));
