@@ -19,4 +19,23 @@ export class UpdateRequestComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  canSubmit() {
+  return (
+      this.id &&
+      this.status &&
+      this.authority &&
+      this.affects &&
+      this.reason &&
+      this.currentValue &&
+      this.newValue);
+  }
+
+  submit() {
+    console.log("Submit");
+    if (canSubmit()) {
+      // TODO: call a service to create and send the e-mail
+      console.log("Send email");
+      }
+  }
 }

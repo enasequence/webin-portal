@@ -15,12 +15,15 @@
     <div fxLayout="row">
       <div fxFlex="100%">
         <p>
-          Use this page to request changes to records that can't be updated in any other way.
+          Use this page to request changes to records that can't be updated by any other means.
         </p>
         <p>
+          You can request updates to your own records or report errors in other submitters' records.
           Keeping records up to date is the sole responsibility of their owners.
           Record owners are the original submitters and all the co-authors of the associated citation(s).
-          You can request updates to your own records or report errors in other submitters' records.
+        </p>
+        <p>
+          Please fill all of the fields below and then click the Submit button.
         </p>
       </div>
     </div>
@@ -30,6 +33,7 @@
 
           <mat-form-field class="app-field-padding">
               <input matInput placeholder="Accession numbers(s)" [(ngModel)]="id" required>
+-            <mat-error *ngIf="!id">Please provide one or more accession numbers</mat-error>
           </mat-form-field>
 
           <mat-form-field class="app-field-padding">
@@ -41,6 +45,7 @@
                 Records are private
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="!status">Please select a value from the drop down</mat-error>
           </mat-form-field>
 
           <mat-form-field class="app-field-padding">
@@ -55,6 +60,7 @@
                 I am a third party suggesting an update to someone else's records
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="!authority">Please select a value from the drop down</mat-error>
           </mat-form-field>
 
           <mat-form-field class="app-field-padding">
@@ -65,7 +71,7 @@
               <mat-option value="source">
                 Sample source
               </mat-option>
-              <mat-option value="cittion">
+              <mat-option value="citation">
                 Citation
               </mat-option>
               <mat-option value="sequence">
@@ -84,22 +90,28 @@
                 Other
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="!affects">Please select a value from the drop down</mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <textarea matInput placeholder="Reason for change" [(ngModel)]="reason" required></textarea>
+            <mat-error *ngIf="!reason">Please provide reason for change</mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <textarea matInput placeholder="Current field value" [(ngModel)]="currentValue" required></textarea>
+            <mat-error *ngIf="!currentValue">Please provide current field value</mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <textarea matInput placeholder="Proposed field value" [(ngModel)]="newValue" required></textarea>
+            <mat-error *ngIf="!newValue">Please provide proposed field value</mat-error>
           </mat-form-field>
-
         </div>
       </div>
+    </div>
+    <div fxLayout="row">
+      <button mat-raised-button color="accent" (click)="submit()" [disabled]="!canSubmit()" >Submit</button>
     </div>
   </div>
 
