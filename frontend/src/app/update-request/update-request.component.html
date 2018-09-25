@@ -25,13 +25,13 @@
       </div>
     </div>
     <div fxLayout="row">
-      <div fxFlex="35%">
+      <div fxFlex.gt-xs="600px">
         <div fxLayout="column">
 
           <mat-form-field class="app-field-padding">
               <input matInput placeholder="Accession numbers(s)" [(ngModel)]="id" required>
           </mat-form-field>
-          
+
           <mat-form-field class="app-field-padding">
             <mat-select placeholder="Confidentiality status" [(ngModel)]="status" required>
               <mat-option value="public">
@@ -89,7 +89,7 @@
           <mat-form-field>
             <textarea matInput placeholder="Reason for change" [(ngModel)]="reason" required></textarea>
           </mat-form-field>
-          
+
           <mat-form-field>
             <textarea matInput placeholder="Current field value" [(ngModel)]="currentValue" required></textarea>
           </mat-form-field>
