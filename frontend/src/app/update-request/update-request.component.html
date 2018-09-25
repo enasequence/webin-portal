@@ -32,6 +32,11 @@
         <div fxLayout="column">
 
           <mat-form-field class="app-field-padding">
+            <input matInput placeholder="Enter your email" [formControl]="email" required>
+            <mat-error *ngIf="email.invalid">Please enter a valid e-mail address</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="app-field-padding">
               <input matInput placeholder="Accession numbers(s)" [(ngModel)]="id" required>
 -            <mat-error *ngIf="!id">Please provide one or more accession numbers</mat-error>
           </mat-form-field>
