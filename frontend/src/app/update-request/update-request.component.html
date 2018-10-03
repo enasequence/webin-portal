@@ -37,8 +37,8 @@
           </mat-form-field>
 
           <mat-form-field class="app-field-padding">
-              <input matInput placeholder="Accession numbers(s)" [(ngModel)]="id" required>
--            <mat-error *ngIf="!id">Please provide one or more accession numbers</mat-error>
+              <input matInput placeholder="Accession numbers(s)" [(ngModel)]="accession" required>
+             <mat-error *ngIf="!accession">Please provide one or more accession numbers</mat-error>
           </mat-form-field>
 
           <mat-form-field class="app-field-padding">
@@ -118,6 +118,19 @@
     <div fxLayout="row">
       <button mat-raised-button color="accent" (click)="submit()" [disabled]="!canSubmit()" >Submit</button>
     </div>
+    <div fxLayout="row">
+      <div *ngIf="dataSuccess">
+        <div class="app-success">
+          <i class="material-icons">done</i>
+          The update request was send successfully.
+        </div>
+      </div>
+      <div *ngIf="dataError">
+        <div class="app-error">
+          <i class="material-icons">error</i>
+          {{dataError}}
+        </div>
+      </div>
+    </div>
   </div>
-
 </div> <!-- component-margin -->

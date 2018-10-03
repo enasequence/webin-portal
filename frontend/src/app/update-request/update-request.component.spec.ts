@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UiModule } from '../ui/ui.module';
+import { WebinRestService } from '../webin-rest.service';
+import { MockWebinRestService } from '../mock/mock-webin-rest.service';
 import { UpdateRequestComponent } from './update-request.component';
 
 describe('UpdateRequestComponent', () => {
@@ -10,6 +12,13 @@ describe('UpdateRequestComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UpdateRequestComponent ],
       imports: [ UiModule ],
+      providers: [
+        {
+          provide: WebinRestService,
+          useClass: MockWebinRestService
+        },
+      ]
+
     })
     .compileComponents();
   }));

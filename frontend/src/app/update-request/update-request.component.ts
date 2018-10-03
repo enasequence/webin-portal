@@ -11,6 +11,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { WebinRestService } from '../webin-rest.service';
 
 @Component({
   selector: 'app-update-request',
@@ -19,7 +23,7 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class UpdateRequestComponent implements OnInit {
 
-  id: string;
+  accession: string;
   email = new FormControl('', [Validators.required, Validators.email]);
   status: string;
   authority: string;
@@ -27,15 +31,19 @@ export class UpdateRequestComponent implements OnInit {
   reason: string;
   currentValue: string;
   newValue: string;
+  dataSuccess = false;
+  dataError: string;
 
-  constructor() { }
+
+  constructor(
+    private _webinRestService: WebinRestService) { }
 
   ngOnInit() {
   }
 
   canSubmit() {
   return (
-      this.id &&
+      this.accession &&
       this.email.valid &&
       this.status &&
       this.authority &&
@@ -46,11 +54,41 @@ export class UpdateRequestComponent implements OnInit {
   }
 
   submit() {
+    this.dataSuccess = false;
+    this.dataError = undefined;
     console.log('Submit update request');
-    if (this.canSubmit()) {
-      // TODO: call a service to create and send the e-mail
-      // this.email.value
-      console.log('Send update request email');
-      }
+    if (!this.canSubmit()) {
+      return;
+    }
+
+    // console.log('Send update request email');
+
+    const request = {
+       email: this.email.value,
+       accession: this.accession,
+       status: this.status,
+       authority: this.authority,
+       affects: this.affects,
+       reason: this.reason,
+       currentValue: this.currentValue,
+       newValue: this.newValue
+    };
+
+    const observable = this._webinRestService.updateRequest( request );
+
+    observable.pipe(
+        retry(3)
+    ).subscribe(
+        data => {
+        this.dataSuccess = true;
+        },
+        (err: HttpErrorResponse) => {
+          console.log('** Webin update request failed **', err);
+          const msg = 'Webin update request service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          this.dataError = msg;
+        },
+        () => {
+        }
+    );
   }
 }
