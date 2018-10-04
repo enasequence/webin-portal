@@ -16,7 +16,7 @@
       <span class = "app-primary-color">
         <i class="material-icons">info</i>
       </span>
-    This page is used for making new submissions. To access reports please select one of the other pages above.
+    This page is used for making new submissions. To access other functionality please select one of the other pages above.
   </p>
 </div>
 
@@ -70,19 +70,6 @@
 
     <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
   </mat-expansion-panel>
-
-  <mat-expansion-panel *ngIf="!isEga()">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <b>Request an update</b>
-      </mat-panel-title>
-
-    </mat-expansion-panel-header>
-
-    <app-update-request></app-update-request>
-
-  </mat-expansion-panel>
-
 
   <mat-expansion-panel *ngIf="!isEga()">
     <mat-expansion-panel-header>

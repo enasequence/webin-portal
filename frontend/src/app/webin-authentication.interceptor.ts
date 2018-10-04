@@ -24,7 +24,7 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (!req.url.startsWith(environment.webinAuthenticationServiceUrl)) {
-      console.log('** Webin authentication interceptor **');
+      // console.log('Webin authentication interceptor');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
 
       /* if (req.url.startsWith(environment.webinReportServiceUrl)) {
