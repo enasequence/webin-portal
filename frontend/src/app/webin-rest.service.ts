@@ -21,7 +21,6 @@ import { WebinRestServiceInterface } from './webin-rest.service.interface';
 export class WebinRestService implements WebinRestServiceInterface {
 
   private _baseUrl = environment.webinServiceUrl;
-  private _updateRequestUrl = environment.webinUpdateRequestUrl;
 
   private _xmlParser = new DOMParser();
 
@@ -133,11 +132,6 @@ export class WebinRestService implements WebinRestServiceInterface {
     this.appendXml(formData, 'POLICY', policyXml);
     this.appendXml(formData, 'DATASET', datasetXml);
     return this.post(formData);
-  }
-
-  updateRequest(request) {
-    const headers = this.headers();
-    return this._http.post(this._updateRequestUrl, request, { headers });
   }
 
   parseResult(data: string) {

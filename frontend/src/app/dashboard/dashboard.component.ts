@@ -11,7 +11,6 @@
 
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
-import { Router, ActivatedRoute} from '@angular/router';
 import { ReportComponent } from '../report/report.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
@@ -45,25 +44,12 @@ export class DashboardComponent {
   @ViewChild('datasets') datasets: ReportComponent;
 
   constructor(
-    private _router: Router,
-    private _route: ActivatedRoute,
     private _webinAuthenticationService: WebinAuthenticationService) { }
 
-    private _sub;
-
   ngOnInit() {
-    this._sub = this._route
-      .queryParams
-      .subscribe(params => {
-        if(params.page === 'update-request' && !this.isEga()) {
-          this.tabGroup.selectedIndex = 10;
-          this._router.navigateByUrl(''); // Remove query parameters.
-        }
-      });
   }
 
   ngOnDestroy() {
-      this._sub.unsubscribe();
   }
 
   isEga(): boolean {

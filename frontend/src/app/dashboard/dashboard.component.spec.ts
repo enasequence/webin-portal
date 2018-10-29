@@ -13,12 +13,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UiModule } from '../ui/ui.module';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
-import { UpdateRequestComponent } from '../update-request/update-request.component';
 import { MockReportComponent } from '../mock/mock-report.component';
 import { MockSubmitComponent } from '../mock/mock-submit.component';
-import { WebinRestService } from '../webin-rest.service';
-import { MockWebinRestService } from '../mock/mock-webin-rest.service';
-import { RouterTestingModule } from '@angular/router/testing';
 
 import { DashboardComponent } from './dashboard.component';
 
@@ -30,19 +26,14 @@ describe('DashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
-        UpdateRequestComponent,
         MockReportComponent,
         MockSubmitComponent,
       ],
-      imports: [ UiModule, RouterTestingModule ],
+      imports: [ UiModule ],
       providers: [
         {
           provide: WebinAuthenticationService,
           useClass: MockWebinAuthenticationService
-        },
-        {
-          provide: WebinRestService,
-          useClass: MockWebinRestService
         },
       ]
     })

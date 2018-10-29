@@ -35,10 +35,6 @@
         <app-report #unsubmittedFiles [reportType]="ReportType.unsubmittedFiles" (reportChange)="consumeReportChange($event)"></app-report>
       </mat-tab>
 
-      <mat-tab label="Update request">
-        <app-update-request></app-update-request>
-      </mat-tab>
-
     </ng-container>
 
     <ng-container *ngIf="isEga()">

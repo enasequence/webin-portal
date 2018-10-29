@@ -17,7 +17,6 @@ import { MockWebinAuthenticationService } from '../mock/mock-webin-authenticatio
 import { WebinRestService } from '../webin-rest.service';
 import { MockWebinRestService } from '../mock/mock-webin-rest.service';
 import { WebinReportService } from '../webin-report.service';
-import { UpdateRequestComponent } from '../update-request/update-request.component';
 import { MockWebinReportService } from '../mock/mock-webin-report.service';
 import { MockSubmissionResultComponent } from '../mock/mock-submission-result.component';
 import { MockChecklistComponent } from '../mock/mock-checklist.component';
@@ -34,7 +33,6 @@ describe('SubmitComponent', () => {
         MockChecklistComponent,
         MockSubmissionResultComponent,
         SubmitComponent,
-        UpdateRequestComponent,
       ],
       imports: [ UiModule ],
       providers: [

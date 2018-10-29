@@ -30,7 +30,6 @@ import { ReportActionComponent } from './report-action/report-action.component';
 import { ReportEditDialogComponent } from './report-edit-dialog/report-edit-dialog.component';
 import { GdprComponent } from './gdpr/gdpr.component';
 import { ChecklistComponent } from './checklist/checklist.component';
-import { UpdateRequestComponent } from './update-request/update-request.component';
 
 import { WebinRestService } from './webin-rest.service';
 import { WebinReportService } from './webin-report.service';
@@ -92,7 +91,6 @@ const appRoutes: Routes = [
     ReportActionComponent,
     GdprComponent,
     ChecklistComponent,
-    UpdateRequestComponent,
   ],
   bootstrap: [
       AppComponent,
