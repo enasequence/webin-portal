@@ -43,6 +43,7 @@ import { WebinAuthenticationInterceptor } from './webin-authentication.intercept
 
 import { RouterModule, Routes } from '@angular/router';
 
+
 const appRoutes: Routes = [
   {
     path: 'login',
@@ -72,7 +73,7 @@ const appRoutes: Routes = [
       // Router
       RouterModule.forRoot(
         appRoutes,
-        { enableTracing: true } // <-- debugging purposes only
+        { enableTracing: false } // <-- debugging purposes only
       ),
   ],
   declarations: [

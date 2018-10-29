@@ -21,6 +21,7 @@ import { WebinRestServiceInterface } from './webin-rest.service.interface';
 export class WebinRestService implements WebinRestServiceInterface {
 
   private _baseUrl = environment.webinServiceUrl;
+
   private _xmlParser = new DOMParser();
 
   constructor(private _http: HttpClient) { }

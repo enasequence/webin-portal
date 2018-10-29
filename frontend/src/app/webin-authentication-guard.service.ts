@@ -19,21 +19,27 @@ export class WebinAuthenticationGuardService implements CanActivate {
   constructor(private webinAuthenticationService: WebinAuthenticationService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log('** WebinAuthenticationGuardService.canActivate **');
+    // console.log('WebinAuthenticationGuardService.canActivate');
     if (this.webinAuthenticationService.authenticated) {
       if (new Date() >=
           this.webinAuthenticationService.logoutDate) {
-        console.log('** WebinAuthenticationGuardService: authentication timeout **');
+        // console.log('WebinAuthenticationGuardService: authentication timeout');
         this.webinAuthenticationService.logout();
         this.router.navigate(['login']);
         return false;
       } else {
-        console.log('** WebinAuthenticationGuardService: authenticated **');
+        // console.log('WebinAuthenticationGuardService: authenticated');
         return true;
       }
     }
 
-    console.log('** WebinAuthenticationGuardService: not authenticated **');
+    // console.log('WebinAuthenticationGuardService: not authenticated');
+
+    const url = state.url;
+    if (url.startsWith("/?page=")) {
+    // console.log('WebinAuthenticationGuardService: set redirectUrl', url);
+      this.webinAuthenticationService.redirectUrl = url;
+    }
     this.router.navigate(['login']);
     return false;
   }

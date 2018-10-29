@@ -21,6 +21,8 @@ import { WebinAuthenticationResultInterface } from './webin-authentication-resul
 @Injectable()
 export class WebinAuthenticationService implements WebinAuthenticationServiceInterface {
 
+  redirectUrl: string;
+
   get username(): string {
     return sessionStorage.getItem('username');
   }
@@ -88,7 +90,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   }
 
   logout() {
-    console.log('** logout **');
+    // console.log('logout');
 
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
@@ -101,7 +103,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
 
   login(username: string, password: string): Observable<WebinAuthenticationResultInterface> {
     const baseUrl: string = environment.webinAuthenticationServiceUrl;
-    console.log('** Webin authentication login **', baseUrl);
+    // console.log('Webin authentication login', baseUrl);
 
     this.username = username;
     const today = new Date();
@@ -118,7 +120,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
 
   loginToken(username: string, password: string): Observable<string> {
     const baseUrl: string = environment.webinAuthenticationTokenUrl;
-    console.log('** Webin authentication token **', baseUrl);
+    // console.log('Webin authentication token', baseUrl);
 
     this.username = username;
     const today = new Date();

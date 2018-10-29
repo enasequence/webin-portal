@@ -46,6 +46,12 @@ export class DashboardComponent {
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService) { }
 
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+  }
+
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
   }

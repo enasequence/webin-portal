@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     private _webinAuthenticationService: WebinAuthenticationService) { }
 
   ngOnInit() {
-    console.log('** LoginComponent.ngOnInit **');
+    //  console.log('LoginComponent.ngOnInit');
     if (this._webinAuthenticationService.authenticated) {
       this._router.navigateByUrl('');
     }
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     this._webinAuthenticationService.login(this.username, this.password).
     pipe(
       mergeMap(data => {
-        console.log('WebinAuthenticationService.login succeeded');
+        // console.log('WebinAuthenticationService.login succeeded');
         this._webinAuthenticationService.ega = data.roles.EGA;
         this._webinAuthenticationService.account = data.principle;
         return this._webinAuthenticationService.loginToken(this.username, this.password);
@@ -53,9 +53,16 @@ export class LoginComponent implements OnInit {
     ).
     subscribe(
         data => {
-          console.log('WebinAuthenticationService.loginToken succeeded');
+          // console.log('WebinAuthenticationService.loginToken succeeded');
           this._webinAuthenticationService.token = data;
-          this._router.navigateByUrl('');
+          const redirectUrl = this._webinAuthenticationService.redirectUrl;
+          if (redirectUrl) {
+            this._router.navigateByUrl(redirectUrl);
+            this._webinAuthenticationService.redirectUrl = null;
+          }
+          else {
+            this._router.navigateByUrl('');
+          }
         },
         // Errors.
         (err: HttpErrorResponse) => {

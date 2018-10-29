@@ -29,9 +29,7 @@ describe('DashboardComponent', () => {
         MockReportComponent,
         MockSubmitComponent,
       ],
-      imports: [
-        UiModule,
-      ],
+      imports: [ UiModule ],
       providers: [
         {
           provide: WebinAuthenticationService,
