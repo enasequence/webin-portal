@@ -379,7 +379,7 @@ export class ReportComponent {
   }
 
   getActions(result): Array<ReportActionInterface> {
-    const actions = new Array<ReportActionInterface>();
+    const actions = [];
 
     // Allow edit XML.
     if (this.reportType === ReportType.runFiles) {
