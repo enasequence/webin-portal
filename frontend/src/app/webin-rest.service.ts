@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 
 import { ReportType } from './report-type.enum';
 import { WebinRestServiceInterface } from './webin-rest.service.interface';
+import { WebinAuthenticationService } from './webin-authentication.service';
 
 @Injectable()
 export class WebinRestService implements WebinRestServiceInterface {
@@ -24,7 +25,8 @@ export class WebinRestService implements WebinRestServiceInterface {
 
   private _xmlParser = new DOMParser();
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient,
+  private _webinAuthenticationService:WebinAuthenticationService) { }
 
   private headers() {
     return new HttpHeaders();
@@ -51,7 +53,7 @@ export class WebinRestService implements WebinRestServiceInterface {
      console.log('** Update XML **');
      const formData: FormData = new FormData();
 
-     const submissionXml: Blob = new Blob([
+     let submissionXml: Blob = new Blob([
        '<SUBMISSION_SET>' +
        '  <SUBMISSION>' +
        '	<ACTIONS>' +
@@ -61,7 +63,22 @@ export class WebinRestService implements WebinRestServiceInterface {
        '    	</ACTIONS>' +
        '    </SUBMISSION>' +
        '</SUBMISSION_SET>']);
-
+    if(this._webinAuthenticationService.ega) {
+      submissionXml=new Blob([
+       '<SUBMISSION_SET>' +
+       '  <SUBMISSION broker_name="EGA">' +
+       '	<ACTIONS>' +
+       '    		<ACTION>' +
+       '    			<MODIFY/>' +
+       '    		</ACTION>' +
+       '    		<ACTION>' +
+       '    			<PROTECT/>' +
+       '    		</ACTION>' +
+       '    	</ACTIONS>' +
+       '    </SUBMISSION>' +
+       '</SUBMISSION_SET>']);
+      console.log(submissionXml);
+    }
      this.appendXml(formData, 'SUBMISSION', submissionXml);
 
      switch (reportType) {

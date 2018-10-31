@@ -15,11 +15,20 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { WebinRestService } from './webin-rest.service';
 
+import { WebinAuthenticationService } from './webin-authentication.service';
+
+import { MockWebinAuthenticationService } from './mock/mock-webin-authentication.service';
+
 describe('WebinRestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientModule ],
-      providers: [ WebinRestService ]
+      providers: [ WebinRestService,
+       {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
+       ]
     });
   });
 
