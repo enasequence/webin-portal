@@ -181,11 +181,11 @@ def getAngularBuildScript(){
 
 task deploy << {
     ssh.run {
-        println("execute" + "~/ena/generic-deploy.sh $project.name $version $environment $serverPort $serverContextPath")
+        println("execute" + "~/ena/generic-deploy.sh $project.group $project.name $version $environment $serverPort $serverContextPath")
         for (remote in getEnvRemotes()){
             println("Deploying into: " + remote)
             session(remote) {
-                execute "~/ena/generic-deploy.sh $project.name $version $environment $serverPort $serverContextPath"
+                execute "~/ena/generic-deploy.sh $project.group $project.name $version $environment $serverPort $serverContextPath"
             }
         }
     }
