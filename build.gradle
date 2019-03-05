@@ -33,7 +33,6 @@ ext.envAngularBuildScriptMap = [
         'prod'   : 'buildProd',
         'default': 'build'
 ]
-
 printSetup()
 
 

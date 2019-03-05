@@ -1,3 +1,4 @@
+<form (ngSubmit)="login()">
 <div fxLayout="row" fxLayoutAlign="center center" class="login-card-container">
   <mat-card class="login-card">
     <mat-card-header>
@@ -7,15 +8,15 @@
     <mat-card-content>
       <p>
       <mat-form-field>
-        <input matInput placeholder="Webin submission account" required [(ngModel)]="username">
+        <input matInput placeholder="Webin submission account" required [(ngModel)]="username" name="username">
       </mat-form-field>
       </p>
       <p>
       <mat-form-field>
-        <input type="password" matInput placeholder="Password" required [(ngModel)]="password">
+        <input type="password" matInput placeholder="Password" required [(ngModel)]="password" name="password">
       </mat-form-field>
       </p>
-      <button mat-raised-button color="accent" type="submit" name="action" (click)="login()">Login</button>
+      <button mat-raised-button color="accent" type="submit" name="action" >Login</button>
 
       <p class="app-error" *ngIf="error">
         <i class="material-icons">error</i>
@@ -24,3 +25,4 @@
     </mat-card-content>
   </mat-card>
 </div>
+</form>

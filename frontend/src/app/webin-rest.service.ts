@@ -77,7 +77,6 @@ export class WebinRestService implements WebinRestServiceInterface {
        '    	</ACTIONS>' +
        '    </SUBMISSION>' +
        '</SUBMISSION_SET>']);
-      console.log(submissionXml);
     }
      this.appendXml(formData, 'SUBMISSION', submissionXml);
 
