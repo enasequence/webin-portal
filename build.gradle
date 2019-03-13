@@ -132,7 +132,7 @@ publishing {
     repositories {
         maven {
             // Project specific maven repository in Gitlab.
-            url "https://gitlab.ebi.ac.uk/api/v4/projects/${ext.gitlab_project_id}/packages/maven"
+            url "https://gitlab.ebi.ac.uk/api/v4/projects/${gitlab_project_id}/packages/maven"
             // Developer token in Gitlab.
             credentials(HttpHeaderCredentials) {
                 name = "Private-Token"
