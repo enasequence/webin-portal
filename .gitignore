@@ -62,3 +62,11 @@ fabric.properties
 .idea/httpRequests
 
 /.idea/modules/
+
+.gradle/
+.idea/modules.xml
+.idea/vcs.xml
+.idea/misc.xml
+.idea/google-java-format.xml
+.idea/encodings.xml
+frontend/.vscode/settings.json

@@ -34,7 +34,7 @@ describe('SubmitComponent', () => {
         MockSubmissionResultComponent,
         SubmitComponent,
       ],
-      imports: [ UiModule ],
+      imports: [UiModule],
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -50,7 +50,7 @@ describe('SubmitComponent', () => {
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -17,5 +17,6 @@ import { ChecklistType } from '../checklist-type.enum';
   template: ' '
 })
 export class MockChecklistComponent {
-    @Input() checklistType: ChecklistType = ChecklistType.sample;
+  @Input() checklistType: ChecklistType = ChecklistType.sample;
+  @Input() init = true;
 }

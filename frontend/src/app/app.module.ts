@@ -13,8 +13,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { UiModule } from './ui/ui.module';
 
-import {HttpClientModule} from '@angular/common/http';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -43,7 +43,6 @@ import { WebinAuthenticationInterceptor } from './webin-authentication.intercept
 
 import { RouterModule, Routes } from '@angular/router';
 
-
 const appRoutes: Routes = [
   {
     path: 'login',
@@ -52,6 +51,16 @@ const appRoutes: Routes = [
   {
     path: 'logout',
     component: LogoutComponent,
+  },
+  {
+    path: 'sample-checklist',
+    component: ChecklistComponent,
+    data: { checklistType: 'sample' }
+  },
+  {
+    path: 'sequence-checklist',
+    component: ChecklistComponent,
+    data: { checklistType: 'sequence' }
   },
   {
     path: 'consent',
@@ -67,14 +76,14 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-      BrowserModule,
-      UiModule,
-      HttpClientModule,
-      // Router
-      RouterModule.forRoot(
-        appRoutes,
-        { enableTracing: false } // <-- debugging purposes only
-      ),
+    BrowserModule,
+    UiModule,
+    HttpClientModule,
+    // Router
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+    ),
   ],
   declarations: [
     AppComponent,
@@ -93,9 +102,9 @@ const appRoutes: Routes = [
     ChecklistComponent,
   ],
   bootstrap: [
-      AppComponent,
-      HeaderComponent,
-      FooterComponent,
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   providers: [
     WebinRestService,
@@ -107,9 +116,9 @@ const appRoutes: Routes = [
     WebinGdprGuardService,
 
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: WebinAuthenticationInterceptor,
-        multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: WebinAuthenticationInterceptor,
+      multi: true,
     }
   ],
   entryComponents: [

@@ -11,78 +11,69 @@
 
 <div class="component-margin">
 
-<div>
-  <p>
-      <span class = "app-primary-color">
+  <div>
+    <p>
+      <span class="app-primary-color">
         <i class="material-icons">info</i>
       </span>
-    This page is used for making new submissions. To access other functionality please select one of the other pages above.
-  </p>
-</div>
+      This page is used for making new submissions. To access other functionality please select one of the other pages
+      above.
+    </p>
+  </div>
 
-<mat-accordion>
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <b>Submit XML files</b>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>Submit XML files</b>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
 
-  <p>
-    Use this submission option to make any type of Webin submission using XML files.
-  </p>
+      <p>
+        Use this submission option to make any type of Webin submission using XML files.
+      </p>
 
-    <div class="container"
-         fxLayout
-         fxLayout.xs="column"
-         fxLayoutAlign="space-around start"
-         fxLayoutGap="10px">
-      <div fxFlex="33">
-        Submission XML (mandatory)
-        <input type="file" class="app-choose-file" #submissionFile (change)="onChangeSubmissionFile(submissionFile.files)"/>
-        Study XML
-        <input type="file" class="app-choose-file" #studyFile (change)="onChangeStudyFile(studyFile.files)"/>
-        Project XML
-        <input type="file" class="app-choose-file" #projectFile (change)="onChangeProjectFile(projectFile.files)"/>
-        Sample XML
-        <input type="file" class="app-choose-file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)"/>
-      </div>
-      <div fxFlex="33">
-        Experiment XML
-        <input type="file" class="app-choose-file" #experimentFile (change)="onChangeExperimentFile(experimentFile.files)"/>
-        Run XML
-        <input type="file" class="app-choose-file" #runFile (change)="onChangeRunFile(runFile.files)"/>
-        Analysis XML
-        <input type="file" class="app-choose-file" #analysisFile (change)="onChangeAnalysisFile(analysisFile.files)"/>
-      </div>
+      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="space-around start" fxLayoutGap="10px">
+        <div fxFlex="33">
+          Submission XML (mandatory)
+          <input type="file" class="app-choose-file" #submissionFile
+            (change)="onChangeSubmissionFile(submissionFile.files)" />
+          Study XML
+          <input type="file" class="app-choose-file" #studyFile (change)="onChangeStudyFile(studyFile.files)" />
+          Project XML
+          <input type="file" class="app-choose-file" #projectFile (change)="onChangeProjectFile(projectFile.files)" />
+          Sample XML
+          <input type="file" class="app-choose-file" #sampleFile (change)="onChangeSampleFile(sampleFile.files)" />
+        </div>
+        <div fxFlex="33">
+          Experiment XML
+          <input type="file" class="app-choose-file" #experimentFile
+            (change)="onChangeExperimentFile(experimentFile.files)" />
+          Run XML
+          <input type="file" class="app-choose-file" #runFile (change)="onChangeRunFile(runFile.files)" />
+          Analysis XML
+          <input type="file" class="app-choose-file" #analysisFile
+            (change)="onChangeAnalysisFile(analysisFile.files)" />
+        </div>
 
-      <div *ngIf="isEga()">
-        <div fxFlex>
-          EGA DAC XML
-          <input type="file" class="app-choose-file" #dacFile (change)="onChangeDacFile(dacFile.files)"/>
-          EGA Policy XML
-          <input type="file" class="app-choose-file" #policyFile (change)="onChangePolicyFile(policyFile.files)"/>
-          EGA Dataset XML
-          <input type="file" class="app-choose-file" #datasetFile (change)="onChangeDatasetFile(datasetFile.files)"/>
+        <div *ngIf="isEga()">
+          <div fxFlex>
+            EGA DAC XML
+            <input type="file" class="app-choose-file" #dacFile (change)="onChangeDacFile(dacFile.files)" />
+            EGA Policy XML
+            <input type="file" class="app-choose-file" #policyFile (change)="onChangePolicyFile(policyFile.files)" />
+            EGA Dataset XML
+            <input type="file" class="app-choose-file" #datasetFile (change)="onChangeDatasetFile(datasetFile.files)" />
+          </div>
         </div>
       </div>
-    </div>
 
-    <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
-  </mat-expansion-panel>
+      <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
+    </mat-expansion-panel>
 
-  <mat-expansion-panel *ngIf="!isEga()">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <b>Download spreadsheet template for annotated sequences</b>
-      </mat-panel-title>
-
-    </mat-expansion-panel-header>
-
-    <app-checklist [checklistType]="ChecklistType.sequence"></app-checklist>
-
-  </mat-expansion-panel>
-
-</mat-accordion>
+    <ng-container *ngIf="!isEga()">
+      <app-checklist [checklistType]="ChecklistType.sequence" [init]="false"></app-checklist>
+    </ng-container>
+  </mat-accordion>
 
 </div> <!-- component-margin -->

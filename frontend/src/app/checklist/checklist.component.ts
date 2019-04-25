@@ -9,11 +9,11 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
-import { retry, mergeMap } from 'rxjs/operators';
+import { retry, mergeMap, map } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
 import { ChecklistInterface } from '../checklist.interface';
 import { ChecklistGroupInterface } from '../checklist-group.interface';
@@ -21,6 +21,7 @@ import { ChecklistFieldGroupInterface } from '../checklist-field-group.interface
 import { ChecklistFieldInterface } from '../checklist-field.interface';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
+import { ActivatedRoute } from '@angular/router';
 
 interface BooleanFieldInterface {
   [key: string]: boolean;
@@ -32,9 +33,9 @@ interface BooleanFieldInterface {
   styleUrls: ['./checklist.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ChecklistComponent {
-
-  @Input() checklistType: ChecklistType = ChecklistType.sample;
+export class ChecklistComponent implements OnInit {
+  @Input() checklistType: ChecklistType;
+  @Input() init = true;
 
   ChecklistType = ChecklistType;   // Allows use in template
 
@@ -53,7 +54,27 @@ export class ChecklistComponent {
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
-    private _webinReportService: WebinReportService) { }
+    private _webinReportService: WebinReportService,
+    private _route: ActivatedRoute) {
+    if (_route) {
+      switch (_route.snapshot.data.checklistType) {
+        case 'sample': {
+          this.checklistType = ChecklistType.sample;
+          break;
+        }
+        case 'sequence': {
+          this.checklistType = ChecklistType.sequence;
+          break;
+        }
+      }
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.init) {
+      this.initChecklists();
+    }
+  }
 
   // field group restriction type (not supported for spreadsheets)
   // -----------------------------
@@ -96,7 +117,7 @@ export class ChecklistComponent {
         return 'taxon field';
       }
       case 'ONTOLOGY_FIELD': {
-         return 'ontology field';
+        return 'ontology field';
       }
       default: {
         return 'field';
@@ -106,7 +127,7 @@ export class ChecklistComponent {
 
   getSelectedFieldsDisplayText(fieldGroup: ChecklistFieldGroupInterface): string {
     let cnt = 0;
-    fieldGroup.fields.forEach( (field) => {
+    fieldGroup.fields.forEach((field) => {
       if (this.selectedFields[field.label]) {
         cnt++;
       }
@@ -115,8 +136,8 @@ export class ChecklistComponent {
   }
 
   setChecklistGroup(checklistGroup: ChecklistGroupInterface, stepper): void {
-      this.selectedChecklistGroup = checklistGroup;
-      this.checklistDataSource = new MatTableDataSource<ChecklistInterface>(this.selectedChecklistGroup.checklists);
+    this.selectedChecklistGroup = checklistGroup;
+    this.checklistDataSource = new MatTableDataSource<ChecklistInterface>(this.selectedChecklistGroup.checklists);
     stepper.next();
   }
 
@@ -124,8 +145,8 @@ export class ChecklistComponent {
     this.selectedChecklist = checklist;
     this.selectedFields = {};
     this.mandatoryFields = {};
-    this.selectedChecklist.fieldGroups.forEach( (fieldGroup) => {
-      fieldGroup.fields.forEach( (field) => {
+    this.selectedChecklist.fieldGroups.forEach((fieldGroup) => {
+      fieldGroup.fields.forEach((field) => {
         this.selectedFields[field.label] = (field.mandatory === 'mandatory');
         this.mandatoryFields[field.label] = (field.mandatory === 'mandatory');
       });
@@ -157,30 +178,35 @@ export class ChecklistComponent {
     this.dataError = undefined;
     this._checklistGroups = new Array<ChecklistGroupInterface>();
 
-    this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue()).
-    pipe(
-      retry(3),
-      mergeMap(data => {
-        this.setChecklistGroups(data);
-        return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
-      })
-    ).
-    subscribe(
-      data => this.setChecklistXmls(data),
-      (err: HttpErrorResponse) => {
-        console.log('** Webin checklist service failed **', err);
-        this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
-      },
-      () => {
-        this.active = false;
-      }
-    );
+    const checklistGroups = this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
+    if (!checklistGroups) {
+      return;
+    }
+
+    checklistGroups.
+      pipe(
+        retry(3),
+        mergeMap(data => {
+          this.setChecklistGroups(data);
+          return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+        })
+      ).
+      subscribe(
+        data => this.setChecklistXmls(data),
+        (err: HttpErrorResponse) => {
+          console.log('** Webin checklist service failed **', err);
+          this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
+        },
+        () => {
+          this.active = false;
+        }
+      );
   }
 
   private setChecklistGroups(data): void {
-     // console.log('** checklistGroupData **', data);
+    // console.log('** checklistGroupData **', data);
 
-    data.forEach( (checklistGroupData) => {
+    data.forEach((checklistGroupData) => {
       const report = checklistGroupData.report;
       this._checklistGroups.push({
         name: report.name,
@@ -200,11 +226,11 @@ export class ChecklistComponent {
     let checklistNode = checklistNodes.iterateNext();
     while (checklistNode) {
       const checklist: ChecklistInterface = {
-          id: this.getXmlTextValue(checklistNode, '@accession'),
-          name: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/NAME/text()'),
-          description: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/DESCRIPTION/text()'),
-          type: this.getXmlTextValue(checklistNode, '@checklistType'),
-          fieldGroups: new Array<ChecklistFieldGroupInterface>()
+        id: this.getXmlTextValue(checklistNode, '@accession'),
+        name: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/NAME/text()'),
+        description: this.getXmlTextValue(checklistNode, 'DESCRIPTOR/DESCRIPTION/text()'),
+        type: this.getXmlTextValue(checklistNode, '@checklistType'),
+        fieldGroups: new Array<ChecklistFieldGroupInterface>()
       };
 
       const fieldGroupNodes = this.getXmlNodes(checklistNode, 'DESCRIPTOR/FIELD_GROUP');
@@ -212,7 +238,7 @@ export class ChecklistComponent {
       while (fieldGroupNode) {
         const fieldGroup: ChecklistFieldGroupInterface = {
           name: this.getXmlTextValue(fieldGroupNode, 'NAME/text()'),
-          fields : new Array<ChecklistFieldInterface>()
+          fields: new Array<ChecklistFieldInterface>()
         };
 
         const fieldNodes = this.getXmlNodes(fieldGroupNode, 'FIELD');
@@ -284,8 +310,8 @@ export class ChecklistComponent {
         fieldGroupNode = fieldGroupNodes.iterateNext();
       }
 
-      this._checklistGroups.forEach( checklistGroup => {
-        checklistGroup.checklistIds.forEach ( id => {
+      this._checklistGroups.forEach(checklistGroup => {
+        checklistGroup.checklistIds.forEach(id => {
           if (checklist.id === id) {
             checklistGroup.checklists.push(checklist);
           }
@@ -311,8 +337,8 @@ export class ChecklistComponent {
     const { fieldGroups } = this.selectedChecklist;
 
     let selectedFieldsCnt = 0;
-    fieldGroups.forEach( fieldGroup => {
-      fieldGroup.fields.forEach( field => {
+    fieldGroups.forEach(fieldGroup => {
+      fieldGroup.fields.forEach(field => {
         if (this.selectedFields[field.label]) {
           selectedFieldsCnt++;
         }
@@ -320,8 +346,8 @@ export class ChecklistComponent {
     });
 
     let i = 0;
-    fieldGroups.forEach( fieldGroup => {
-      fieldGroup.fields.forEach( field => {
+    fieldGroups.forEach(fieldGroup => {
+      fieldGroup.fields.forEach(field => {
         if (this.selectedFields[field.label]) {
           spreadsheetText += field.label;
           if (++i < selectedFieldsCnt) {
@@ -339,7 +365,7 @@ export class ChecklistComponent {
 
     const dateText = (new Date()).toISOString();
 
-    const blob = new Blob([this.getSequenceSpreadsheetText()], {type: 'text/plain;charset=utf-8'});
+    const blob = new Blob([this.getSequenceSpreadsheetText()], { type: 'text/plain;charset=utf-8' });
     saveAs(blob, 'Sequence-' + this.selectedChecklist.id + '-' + dateText + '.tsv');
   }
 }
