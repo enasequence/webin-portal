@@ -40,7 +40,7 @@ export class ChecklistComponent implements OnInit {
   ChecklistType = ChecklistType;   // Allows use in template
 
   private _checklistGroups: Array<ChecklistGroupInterface>;
-  private _xmlParser = new DOMParser();
+  private _xmlDoc: Document;
   checklistGroupDisplayedColumns = ['name'];
   checklistGroupDataSource: MatTableDataSource<ChecklistGroupInterface>;
   checklistDataSource: MatTableDataSource<ChecklistInterface>;
@@ -155,11 +155,11 @@ export class ChecklistComponent implements OnInit {
   }
 
   getXmlTextValue(xmlDoc, xpath: string): string {
-    return document.evaluate(xpath, xmlDoc, null, XPathResult.STRING_TYPE, null).stringValue;
+    return this._xmlDoc.evaluate(xpath, xmlDoc, null, XPathResult.STRING_TYPE, null).stringValue;
   }
 
   getXmlNodes(xmlDoc, xpath: string) {
-    return document.evaluate(xpath, xmlDoc, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+    return this._xmlDoc.evaluate(xpath, xmlDoc, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
   }
 
   getChecklistTypeParamValue(): string {
@@ -192,7 +192,10 @@ export class ChecklistComponent implements OnInit {
         })
       ).
       subscribe(
-        data => this.setChecklistXmls(data),
+        data => {
+          this.setChecklistXmls(data);
+        }
+        ,
         (err: HttpErrorResponse) => {
           console.log('** Webin checklist service failed **', err);
           this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
@@ -219,10 +222,9 @@ export class ChecklistComponent implements OnInit {
 
   setChecklistXmls(data): void {
     // console.log('** setChecklistXmls **', data);
+    this._xmlDoc = (new DOMParser()).parseFromString(data.body, 'text/xml');
+    const checklistNodes = this.getXmlNodes(this._xmlDoc, '/CHECKLIST_SET/CHECKLIST');
 
-    const xmlDoc = this._xmlParser.parseFromString(data.body, 'text/xml');
-
-    const checklistNodes = this.getXmlNodes(xmlDoc, 'CHECKLIST_SET/CHECKLIST');
     let checklistNode = checklistNodes.iterateNext();
     while (checklistNode) {
       const checklist: ChecklistInterface = {
