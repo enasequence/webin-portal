@@ -285,6 +285,11 @@ static def removeLeadingSlash(url){
     return url
 }
 
+// javascript unit testing
+task testUnit(type: NpmTask) {
+    args = ['run' , 'testHeadLess']
+}
+//include js unit tests into project build lifecycle
 
 def printSetup(){
     println()
@@ -302,3 +307,6 @@ bootRepackage.dependsOn(buildClient)
 bootRun.dependsOn(bootRepackage)
 jar.dependsOn(buildClient)
 compileJava.dependsOn(clean)
+test.dependsOn testUnit
+
+

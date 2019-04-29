@@ -11,6 +11,7 @@
     "buildTest": "ng build --configuration=test",
     "buildProd": "ng build --prod --configuration=production",
     "test": "ng test",
+    "testHeadLess": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
