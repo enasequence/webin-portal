@@ -112,20 +112,20 @@ export class ReportComponent {
 
   isMetadataReport() {
     return this.reportType !== ReportType.runFiles &&
-           this.reportType !== ReportType.analysisFiles &&
-           this.reportType !== ReportType.runProcess &&
-           this.reportType !== ReportType.analysisProcess &&
-           this.reportType !== ReportType.unsubmittedFiles;
+      this.reportType !== ReportType.analysisFiles &&
+      this.reportType !== ReportType.runProcess &&
+      this.reportType !== ReportType.analysisProcess &&
+      this.reportType !== ReportType.unsubmittedFiles;
   }
 
   isFileReport() {
     return this.reportType === ReportType.runFiles ||
-           this.reportType === ReportType.analysisFiles;
+      this.reportType === ReportType.analysisFiles;
   }
 
   isProcessReport() {
     return this.reportType === ReportType.runProcess ||
-           this.reportType === ReportType.analysisProcess;
+      this.reportType === ReportType.analysisProcess;
   }
 
   setStudyReportColumns() {
@@ -387,7 +387,7 @@ export class ReportComponent {
     } else if (this.reportType === ReportType.analysisFiles) {
       actions.push(ReportActionType.createEditXmlAction(ReportType.analyses, this.getId(result)));
     } else if (this.reportType === ReportType.studies ||
-               this.reportType === ReportType.projects) {
+      this.reportType === ReportType.projects) {
       actions.push(ReportActionType.createEditXmlAction(ReportType.projects, this.getId(result)));
       // actions.push(this.createEditXmlAction(ReportType.studies, this.getSecondaryId(result)));
     } else {
@@ -412,7 +412,7 @@ export class ReportComponent {
       actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getSecondaryId(result)));
     }
     if (this.reportType === ReportType.samples ||
-        this.reportType === ReportType.runFiles) {
+      this.reportType === ReportType.runFiles) {
       actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getId(result)));
     }
 
@@ -421,7 +421,7 @@ export class ReportComponent {
       actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getSecondaryId(result)));
     }
     if (this.reportType === ReportType.samples ||
-        this.reportType === ReportType.analysisFiles) {
+      this.reportType === ReportType.analysisFiles) {
       actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getId(result)));
     }
 
@@ -468,12 +468,12 @@ export class ReportComponent {
     console.log('** action **', action);
 
     if (action && action.reportActionType === ReportActionType.changeReport) {
-      console.log('** change report action **' , action);
+      // console.log('** change report action **', action);
       this.reportChange.emit(action);
     }
 
     if (action && action.reportActionType === ReportActionType.editXml) {
-      console.log('** edit xml action **' , action);
+      // console.log('** edit xml action **', action);
       this.editXml(action);
     }
 
@@ -482,8 +482,8 @@ export class ReportComponent {
   editXml(action: ReportActionInterface): void {
 
     const reportDialogRef = this._reportDialog.open(ReportEditDialogComponent, {
-        width: '600px',
-        data: action
+      width: '600px',
+      data: action
     });
     reportDialogRef.afterClosed().subscribe();
   }
@@ -566,7 +566,7 @@ export class ReportComponent {
     }
 
     if (this.reportType === ReportType.studies ||
-        this.reportType === ReportType.projects) {
+      this.reportType === ReportType.projects) {
       if (this.id) {
         return this._webinReportService.getProjects(this.id, rows, format);
         // return this._webinReportService.getStudies(this.id, rows, format);
@@ -694,27 +694,34 @@ export class ReportComponent {
     return result.report.secondaryId;
   }
 
+  removeNullAndUndefined(value) {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    return value;
+  }
+
   // Column callbacks
   //
 
   accessionColumnCallback(result) {
-    return this.getId(result);
+    return this.removeNullAndUndefined(this.getId(result));
   }
 
   aliasColumnCallback(result) {
-    return result.report.alias;
+    return this.removeNullAndUndefined(result.report.alias);
   }
 
   studyColumnCallback(result) {
-    return this.getStudyId(result);
+    return this.removeNullAndUndefined(this.getStudyId(result));
   }
 
   sampleColumnCallback(result) {
-    return this.getSampleId(result);
+    return this.removeNullAndUndefined(this.getSampleId(result));
   }
 
   experimentColumnCallback(result) {
-    return this.getExperimentId(result);
+    return this.removeNullAndUndefined(this.getExperimentId(result));
   }
 
   humanReadableFormat(token: string) {
@@ -727,19 +734,19 @@ export class ReportComponent {
   }
 
   analysisTypeColumnCallback(result) {
-    return this.humanReadableFormat(result.report.analysisType);
+    return this.humanReadableFormat(this.removeNullAndUndefined(result.report.analysisType));
   }
 
   processingStatusColumnCallback(result) {
-    return result.report.processingStatus;
+    return this.removeNullAndUndefined(result.report.processingStatus);
   }
 
   processingErrorColumnCallback(result) {
-    return result.report.processingError;
+    return this.removeNullAndUndefined(result.report.processingError);
   }
 
   processingAccessionColumnCallback(result) {
-    return result.report.acc;
+    return this.removeNullAndUndefined(result.report.acc);
   }
 
   dateFormat(date: Date) {
@@ -760,8 +767,8 @@ export class ReportComponent {
     }
 
     return date.getDate() + daySuffix + ' ' +
-           month[date.getMonth()]  + ' ' +
-           date.getFullYear();
+      month[date.getMonth()] + ' ' +
+      date.getFullYear();
   }
 
   submissionDateColumnCallback(result) {
@@ -797,59 +804,59 @@ export class ReportComponent {
   }
 
   statusColumnCallback(result) {
-    return this.humanReadableFormat(result.report.releaseStatus);
+    return this.removeNullAndUndefined(this.humanReadableFormat(result.report.releaseStatus));
   }
 
   fileNameColumnCallback(result) {
-    return result.report.fileName;
+    return this.removeNullAndUndefined(result.report.fileName);
   }
 
   fileSizeColumnCallback(result) {
-    return result.report.bytes;
+    return this.removeNullAndUndefined(result.report.bytes);
   }
 
   fileChecksumMethodColumnCallback(result) {
-    return result.report.checksumMethod;
+    return this.removeNullAndUndefined(result.report.checksumMethod);
   }
 
   fileChecksumColumnCallback(result) {
-    return result.report.checksum;
+    return this.removeNullAndUndefined(result.report.checksum);
   }
 
   fileFormatColumnCallback(result) {
-    return result.report.fileFormat;
+    return this.removeNullAndUndefined(result.report.fileFormat);
   }
 
   fileArchiveStatusColumnCallback(result) {
-    return result.report.archiveStatus;
+    return this.removeNullAndUndefined(result.report.archiveStatus);
   }
 
   secondaryIdColumnCallback(result) {
-    return this.getSecondaryId(result);
+    return this.removeNullAndUndefined(this.getSecondaryId(result));
   }
 
   titleColumnCallback(result) {
-    return result.report.title;
+    return this.removeNullAndUndefined(result.report.title);
   }
 
   organismColumnCallback(result) {
-    return result.report.scientificName;
+    return this.removeNullAndUndefined(result.report.scientificName);
   }
 
   taxIdColumnCallback(result) {
-    return result.report.taxId;
+    return this.removeNullAndUndefined(result.report.taxId);
   }
 
   instrumentColumnCallback(result) {
-    return result.report.instrumentModel;
+    return this.removeNullAndUndefined(result.report.instrumentModel);
   }
 
   dacColumnCallback(result) {
-    return this.getDacId(result);
+    return this.removeNullAndUndefined(this.getDacId(result));
   }
 
   policyColumnCallback(result) {
-    return this.getPolicyId(result);
+    return this.removeNullAndUndefined(this.getPolicyId(result));
   }
 
   csvDownloadAllLink() {
