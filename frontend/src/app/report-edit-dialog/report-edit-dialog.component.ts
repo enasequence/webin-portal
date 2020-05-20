@@ -29,7 +29,7 @@ import { ReportActionInterface } from '../report-action.interface';
 })
 export class ReportEditDialogComponent implements OnInit {
 
-  @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
+  @ViewChild(SubmissionResultComponent, { static: true }) submissionResult: SubmissionResultComponent;
 
   constructor(
     private _webinXmlReportService: WebinXmlReportService,

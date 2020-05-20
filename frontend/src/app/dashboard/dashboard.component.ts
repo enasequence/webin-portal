@@ -29,19 +29,19 @@ export class DashboardComponent {
 
   ReportType = ReportType;   // Allows use in template
 
-  @ViewChild('tabGroup') tabGroup: MatTabGroup;
-  @ViewChild('studies') studies: ReportComponent;
-  @ViewChild('samples') samples: ReportComponent;
-  @ViewChild('runs') runs: ReportComponent;
-  @ViewChild('analyses') analyses: ReportComponent;
-  @ViewChild('runFiles') runFiles: ReportComponent;
-  @ViewChild('analysisFiles') analysisFiles: ReportComponent;
-  @ViewChild('runProcess') runProcess: ReportComponent;
-  @ViewChild('analysisProcess') analysisProcess: ReportComponent;
-  @ViewChild('unsubmittedFiles') unsubmittedFiles: ReportComponent;
-  @ViewChild('dacs') dacs: ReportComponent;
-  @ViewChild('policies') policies: ReportComponent;
-  @ViewChild('datasets') datasets: ReportComponent;
+  @ViewChild('tabGroup', { static: true }) tabGroup: MatTabGroup;
+  @ViewChild('studies', { static: true }) studies: ReportComponent;
+  @ViewChild('samples', { static: true }) samples: ReportComponent;
+  @ViewChild('runs', { static: true }) runs: ReportComponent;
+  @ViewChild('analyses', { static: true }) analyses: ReportComponent;
+  @ViewChild('runFiles', { static: false }) runFiles: ReportComponent;
+  @ViewChild('analysisFiles', { static: false }) analysisFiles: ReportComponent;
+  @ViewChild('runProcess', { static: false }) runProcess: ReportComponent;
+  @ViewChild('analysisProcess', { static: false }) analysisProcess: ReportComponent;
+  @ViewChild('unsubmittedFiles', { static: false }) unsubmittedFiles: ReportComponent;
+  @ViewChild('dacs', { static: false }) dacs: ReportComponent;
+  @ViewChild('policies', { static: false }) policies: ReportComponent;
+  @ViewChild('datasets', { static: false }) datasets: ReportComponent;
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService) { }
