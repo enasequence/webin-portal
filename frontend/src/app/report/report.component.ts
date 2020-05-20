@@ -38,7 +38,7 @@ export class ReportComponent {
 
   @Input() reportType: ReportType;
   @Output() reportChange = new EventEmitter<ReportActionInterface>();
-  @ViewChild(MatPaginator) dataPaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) dataPaginator: MatPaginator;
 
   private _id: string;
   private _showAlias = false;

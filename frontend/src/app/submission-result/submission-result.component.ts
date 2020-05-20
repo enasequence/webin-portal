@@ -42,8 +42,8 @@ export class SubmissionResultComponent {
   webinAccessionTableColumns = ['type', 'accession', 'alias'];
   webinErrorDataSource;
   webinAccessionDataSource;
-  @ViewChild(MatPaginator) webinErrorPaginator: MatPaginator;
-  @ViewChild(MatPaginator) webinAccessionPaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) webinErrorPaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) webinAccessionPaginator: MatPaginator;
   result;
   resultError;
   showReceiptXml = false;

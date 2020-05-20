@@ -21,7 +21,7 @@ import {  MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class SubmissionResultDialogComponent implements OnInit {
 
-  @ViewChild(SubmissionResultComponent) submissionResult: SubmissionResultComponent;
+  @ViewChild(SubmissionResultComponent, { static: true }) submissionResult: SubmissionResultComponent;
 
   constructor(
     public dialogRef: MatDialogRef<SubmissionResultDialogComponent>,
