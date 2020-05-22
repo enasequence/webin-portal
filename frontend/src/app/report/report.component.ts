@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, EventEmitter, ViewEncapsulation, ViewChild, Input, Output } from '@angular/core';
+import { Component, EventEmitter, ViewEncapsulation, ViewChild, Input, Output, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
@@ -24,6 +24,7 @@ import { ReportActionType } from '../report-action-type.enum';
 import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportActionInterface } from '../report-action.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -31,7 +32,7 @@ import { ReportActionInterface } from '../report-action.interface';
   styleUrls: ['./report.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReportComponent {
+export class ReportComponent implements OnInit{
 
   ReportType = ReportType;   // Allows use in template
 
@@ -57,7 +58,12 @@ export class ReportComponent {
     private _webinReportService: WebinReportService,
     private _webinAuthenticationService: WebinAuthenticationService,
     private _reportDialog: MatDialog,
-    public media: ObservableMedia) { }
+    public media: ObservableMedia,
+    private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit() {
+      this.reportType=this.activatedRoute.snapshot.params.reportType;
+  }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

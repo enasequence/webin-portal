@@ -1,0 +1,56 @@
+.body{
+    padding-top: 20px;
+    padding-bottom: 10px;
+   
+}
+.container{
+    margin: 20px;
+}
+.header{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(109, 108, 108);
+}
+.cat-element{
+    width: 100%
+}
+.category p{
+    font-size: medium;
+    font-weight: 600;
+    color: #00767b;
+}
+.cat-element span{
+    display: inline-block;
+    text-align: center;
+    width: 140px;
+    vertical-align: top;
+    cursor: pointer;
+}
+.cat-element span p{
+    font-size: 10px;
+    font-weight: 600;
+    color: #6361618f;
+    margin-top: -10px;
+}
+.cat-element span mat-icon{
+    width: 50px !important;
+    font-size: 50px;
+}
+.insert_chart{
+    color: #02028c;
+}
+.account_box{
+    color:#900000;
+}
+.note_add{
+    color:#036d03;
+}
+.system_update_alt{
+    color:#85858e;
+}
+span:hover {
+    background-color: rgba(180, 180, 180, 0.164);
+  }
+

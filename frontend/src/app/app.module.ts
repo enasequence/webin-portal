@@ -68,6 +68,11 @@ const appRoutes: Routes = [
     canActivate: [WebinAuthenticationGuardService],
   },
   {
+    path: 'report/:reportType',
+    component: ReportComponent,
+     canActivate: [WebinAuthenticationGuardService],
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],

@@ -1,55 +1,85 @@
-<div>
-  <mat-tab-group #tabGroup class="app-dashboard">
+<div class="body">
+  <div class="header">Webin Home</div>
+  <div class="container">
+    <div class="category">
+      <p>Account Management</p>
+      <div class="cat-element">
+       <span>
+        <mat-icon class="account_box">account_box</mat-icon>
+        <p>Account Information</p>
+       </span> 
+      </div>
+    </div>
 
-    <mat-tab label="Submit">
-      <app-submit></app-submit>
-    </mat-tab>
-    <mat-tab label="Studies">
-      <app-report #studies [reportType]="ReportType.studies" (reportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
-    <mat-tab label="Samples">
-      <app-report #samples [reportType]="ReportType.samples" (reportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
-    <mat-tab label="Runs">
-      <app-report #runs [reportType]="ReportType.runs" (reportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
-    <mat-tab label="Analyses">
-      <app-report #analyses [reportType]="ReportType.analyses" (reportChange)="consumeReportChange($event)"></app-report>
-    </mat-tab>
+    <div class="category">
+      <p>Submissions</p>
+      <div class="cat-element">
+       <span>
+        <mat-icon class="note_add">note_add</mat-icon>
+        <p>Xml Submission</p>
+       </span> 
+    </div>
 
-    <ng-container *ngIf="!isEga()">
+    <div class="category">
+      <p>Spreadsheet Templates</p>
+      <div class="cat-element">
+       <span>
+        <mat-icon class="system_update_alt">system_update_alt</mat-icon>
+        <p>Download Spreadsheet</p>
+       </span> 
+    </div>
 
-      <mat-tab label="Run files">
-        <app-report #runFiles [reportType]="ReportType.runFiles" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
-      <mat-tab label="Analysis files">
-        <app-report #analysisFiles [reportType]="ReportType.analysisFiles" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
-      <mat-tab label="Run process">
-        <app-report #runProcess [reportType]="ReportType.runProcess" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
-      <mat-tab label="Analysis process">
-        <app-report #analysisProcess [reportType]="ReportType.analysisProcess" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
-      <mat-tab label="Unsubmitted files">
-        <app-report #unsubmittedFiles [reportType]="ReportType.unsubmittedFiles" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
+    <!-------------------------Reports------------------------->
+    <div class="category">
+      <p>Reports</p>
+      <div class="cat-element">
+       <span [routerLink]="['/report',ReportType.studies]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Studies Report</p>
+       </span>
+       
+       <span [routerLink]="['/report',ReportType.samples]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Samples Report</p>
+       </span>
 
-    </ng-container>
+       <span [routerLink]="['/report',ReportType.runs]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Runs Report</p>
+       </span>
 
-    <ng-container *ngIf="isEga()">
+       <span [routerLink]="['/report',ReportType.analyses]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Analysis Report</p>
+       </span>
 
-      <mat-tab label="Dacs">
-        <app-report #dacs [reportType]="ReportType.dacs" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
-      <mat-tab label="Policies">
-        <app-report #policies [reportType]="ReportType.policies" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
-      <mat-tab label="Datasets">
-        <app-report #datasets [reportType]="ReportType.datasets" (reportChange)="consumeReportChange($event)"></app-report>
-      </mat-tab>
+       <span [routerLink]="['/report',ReportType.runFiles]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Run File Report</p>
+       </span>
 
-    </ng-container>
+       <span [routerLink]="['/report',ReportType.analysisFiles]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Analysis File Report</p>
+       </span>
 
-  </mat-tab-group>
+       <span [routerLink]="['/report',ReportType.runProcess]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Run Process Report</p>
+       </span>
+
+       <span [routerLink]="['/report',ReportType.analysisProcess]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>Analysis Process Report</p>
+       </span>
+
+       <span [routerLink]="['/report',ReportType.unsubmittedFiles]" >
+        <mat-icon class=insert_chart>insert_chart</mat-icon>
+        <p>UnsubmittedFiles Files Report</p>
+       </span>
+      </div>
+    </div>
+  
+  </div>
+  
 </div>
