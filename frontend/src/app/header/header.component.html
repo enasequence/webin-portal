@@ -5,7 +5,7 @@
   <header id="masthead" class="masthead compact-for-data">
     
     <div class="masthead-inner row expanded">
-      <div class="homeDiv">
+      <div *ngIf="isAuthenticated()" class="homeDiv">
         <mat-icon matTooltip="Dashboard" routerLink="">home</mat-icon>
       </div>
 
