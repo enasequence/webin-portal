@@ -1,25 +1,9 @@
 .body{
-    padding-top: 20px;
-    padding-bottom: 10px;
-   
+    padding:10px 20px 10px 10px;
 }
+
 .container{
-    margin: 20px;
-}
-.header{
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: rgb(109, 108, 108);
-}
-.cat-element{
-    width: 100%
-}
-.category p{
-    font-size: medium;
-    font-weight: 600;
-    color: #00767b;
+    padding: 10px 0px 0px 0px;
 }
 .cat-element span{
     display: inline-block;
@@ -29,28 +13,19 @@
     cursor: pointer;
 }
 .cat-element span p{
-    font-size: 10px;
-    font-weight: 600;
-    color: #6361618f;
     margin-top: -10px;
 }
 .cat-element span mat-icon{
-    width: 50px !important;
     font-size: 50px;
+    padding-right: 25px;
 }
-.insert_chart{
-    color: #02028c;
-}
-.account_box{
-    color:#900000;
-}
-.note_add{
-    color:#036d03;
-}
-.system_update_alt{
-    color:#85858e;
-}
+
 span:hover {
     background-color: rgba(180, 180, 180, 0.164);
   }
 
+  mat-card{
+      margin:10px;
+  }
+
+ 

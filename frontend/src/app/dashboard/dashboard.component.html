@@ -1,85 +1,132 @@
 <div class="body">
-  <div class="header">Webin Home</div>
+  <div class="mat-h3 mat-tittle">Dashboard</div>
+
+  <mat-divider></mat-divider>
+  
   <div class="container">
-    <div class="category">
-      <p>Account Management</p>
-      <div class="cat-element">
-       <span>
-        <mat-icon class="account_box">account_box</mat-icon>
-        <p>Account Information</p>
-       </span> 
-      </div>
-    </div>
 
-    <div class="category">
-      <p>Submissions</p>
-      <div class="cat-element">
-       <span>
-        <mat-icon class="note_add">note_add</mat-icon>
-        <p>Xml Submission</p>
-       </span> 
+    <mat-accordion>
+    <div class="category" hidden>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          Account Management
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="cat-element">
+        <span>
+          <mat-icon class="account_box">account_box</mat-icon>
+          <p class="mat-small mat-caption">Account Information</p>
+        </span> 
+        </div>
+    </mat-expansion-panel>
     </div>
+  
 
+  
     <div class="category">
-      <p>Spreadsheet Templates</p>
-      <div class="cat-element">
-       <span>
-        <mat-icon class="system_update_alt">system_update_alt</mat-icon>
-        <p>Download Spreadsheet</p>
-       </span> 
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Submissions </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="cat-element">
+          <span [routerLink]="['/app-submit']">
+            <mat-icon class="note_add">note_add</mat-icon>
+            <p class="mat-small mat-caption">Xml Submission</p>
+          </span> 
+        </div>
+      </mat-expansion-panel>
+      
     </div>
-
+    
+   
+    <div class="category">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Spreadsheet Templates</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="cat-element">
+          <span [routerLink]="['/app-checklist','sequence',true]">
+          <mat-icon class="system_update_alt">system_update_alt</mat-icon>
+          <p class="mat-small mat-caption">Annotated Sequences</p>
+        </span> 
+        </div>
+      </mat-expansion-panel>
+    </div>
+    
     <!-------------------------Reports------------------------->
     <div class="category">
-      <p>Reports</p>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+        <mat-panel-title>Reports</mat-panel-title>
+        </mat-expansion-panel-header>
       <div class="cat-element">
        <span [routerLink]="['/report',ReportType.studies]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Studies Report</p>
+        <p class="mat-small mat-caption">Studies Report</p>
        </span>
        
        <span [routerLink]="['/report',ReportType.samples]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Samples Report</p>
+        <p class="mat-small mat-caption">Samples Report</p>
        </span>
 
        <span [routerLink]="['/report',ReportType.runs]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Runs Report</p>
+        <p class="mat-small mat-caption">Runs Report</p>
        </span>
 
        <span [routerLink]="['/report',ReportType.analyses]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Analysis Report</p>
+        <p class="mat-small mat-caption">Analysis Report</p>
        </span>
 
-       <span [routerLink]="['/report',ReportType.runFiles]" >
-        <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Run File Report</p>
-       </span>
+       <ng-container *ngIf="!isEga()">
 
-       <span [routerLink]="['/report',ReportType.analysisFiles]" >
-        <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Analysis File Report</p>
-       </span>
+          <span [routerLink]="['/report',ReportType.runFiles]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Run File Report</p>
+          </span>
 
-       <span [routerLink]="['/report',ReportType.runProcess]" >
-        <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Run Process Report</p>
-       </span>
+          <span [routerLink]="['/report',ReportType.analysisFiles]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Analysis File Report</p>
+          </span>
 
-       <span [routerLink]="['/report',ReportType.analysisProcess]" >
-        <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>Analysis Process Report</p>
-       </span>
+          <span [routerLink]="['/report',ReportType.runProcess]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Run Process Report</p>
+          </span>
 
-       <span [routerLink]="['/report',ReportType.unsubmittedFiles]" >
-        <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p>UnsubmittedFiles Files Report</p>
-       </span>
+          <span [routerLink]="['/report',ReportType.analysisProcess]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Analysis Process Report</p>
+          </span>
+
+          <span [routerLink]="['/report',ReportType.unsubmittedFiles]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Unsubmitted Files Report</p>
+          </span>
+        </ng-container>
+        <ng-container *ngIf="isEga()">
+          <span [routerLink]="['/report',ReportType.dacs]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Dacs</p>
+          </span>
+          <span [routerLink]="['/report',ReportType.policies]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Policies</p>
+          </span>
+          <span [routerLink]="['/report',ReportType.datasets]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Datasets</p>
+          </span>
+        </ng-container>
       </div>
+      </mat-expansion-panel>
     </div>
-  
+  </mat-accordion>
   </div>
+
   
 </div>

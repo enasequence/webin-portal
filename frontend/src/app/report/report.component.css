@@ -1,10 +1,25 @@
-table, th, td {
+.body{
+  padding:10px 20px 10px 10px;
+}
+
+.container{
+  padding: 10px 0px 0px 0px;
+}
+
+.cdk-table {
     background: white;
 }
 
+.cdk-row:nth-child(even){
+  background-color:#f8f8f8;
+  }
+
 .component-margin {
-  margin-top: 5px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  margin-left: 5px;
+  padding: 10px 0px 0px 0px;
 }
+
+mat-form-field.mat-form-field {
+  font-size: 14px;
+  font-family: Roboto;
+}
+

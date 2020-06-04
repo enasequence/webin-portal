@@ -55,7 +55,8 @@ export class ChecklistComponent implements OnInit {
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinReportService: WebinReportService,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute) {
     if (_route) {
       switch (_route.snapshot.data.checklistType) {
         case 'sample': {
@@ -71,9 +72,16 @@ export class ChecklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checklistType=this.activatedRoute.snapshot.params.checklistType;
+    console.log("this.checklistType : "+this.checklistType)
+    this.init=this.activatedRoute.snapshot.params.init;
+    
     if (this.init) {
       this.initChecklists();
     }
+    
+      
+  
   }
 
   // field group restriction type (not supported for spreadsheets)
@@ -172,7 +180,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   initChecklists(): void {
-    // console.log(' ** initChecklists **');
+     console.log(' ** initChecklists **');
 
     this.active = true;
     this.dataError = undefined;

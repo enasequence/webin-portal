@@ -9,10 +9,13 @@
   ~ specific language governing permissions and limitations under the License.
   -->
 
-<div class="component-margin">
+<div class="body">
+  <div class="mat-h3 mat-tittle">Submit XML</div>
 
-  <div>
-    <p>
+  <mat-divider></mat-divider>
+
+  <div  class="container">
+    <p class="mat-body">
       <span class="app-primary-color">
         <i class="material-icons">info</i>
       </span>
@@ -21,14 +24,8 @@
     </p>
   </div>
 
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <b>Submit XML files</b>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
+    <mat-card class="mat-body">
+  
       <p>
         Use this submission option to make any type of Webin submission using XML files.
       </p>
@@ -69,11 +66,11 @@
       </div>
 
       <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
-    </mat-expansion-panel>
+    </mat-card>
 
-    <ng-container *ngIf="!isEga()">
+   <!-- <ng-container *ngIf="!isEga()">
       <app-checklist [checklistType]="ChecklistType.sequence" [init]="false"></app-checklist>
-    </ng-container>
-  </mat-accordion>
+    </ng-container> -->
+  
 
 </div> <!-- component-margin -->

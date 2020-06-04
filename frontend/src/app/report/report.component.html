@@ -1,6 +1,11 @@
-<div class="component-margin">
+<div class="body">
 
-<p>
+
+<div class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
+
+<mat-divider></mat-divider>
+<div class="container">
+<p class="mat-body" >
   <span class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
@@ -37,10 +42,13 @@
 
 </p>
 
-<p><b>Please click search to see the results.</b></p>
+<p class="mat-body-strong">Please click search to see the results.</p>
 
+<mat-card class="mat-body">
+  <mat-card-subtitle>Search {{ ReportType.getPluralName(reportType) | titlecase  }}</mat-card-subtitle>
 <div fxLayout="row wrap"
      fxLayoutAlign="start center">
+    
 
   <div *ngIf="!isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
     <mat-form-field class="app-field-padding">
@@ -48,8 +56,8 @@
     </mat-form-field>
   </div>
   <div *ngIf="isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
-    <mat-form-field class="app-field-padding">
-      <input matInput placeholder="Accession or Name" [(ngModel)]="id">
+    <mat-form-field  class="app-field-padding">
+      <input  matInput placeholder="Accession or Name" [(ngModel)]="id">
     </mat-form-field>
   </div>
   <div *ngIf="isMetadataReport()">
@@ -187,9 +195,10 @@
     </mat-checkbox>
   </div>
 </div>
+</mat-card>
 
 <div *ngIf="this.data && this.data.length > 0">
-  <p><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
+  <p class="mat-body-strong"><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
 </div>
 
 <div *ngIf="active" style="height:70px;">
@@ -197,16 +206,17 @@
     </mat-spinner>
 </div>
 
-<div *ngIf="dataSource">
 
-  <table cdk-table [dataSource]="dataSource">
+<div *ngIf="dataSource">
+  <mat-card>
+  <table cdk-table class="mat-body" [dataSource]="dataSource">
       <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
   	    <th cdk-header-cell *cdkHeaderCellDef>{{ col }}</th>
         <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status'">
   	         <td cdk-cell *cdkCellDef="let element">{{getElementValue(element, col)}}</td>
         </ng-container>
 
-        <ng-container *ngIf="col=='Archive status'">
+        <ng-container  *ngIf="col=='Archive status'">
 
           <td cdk-cell *cdkCellDef="let element">
             <ng-container *ngIf="getElementValue(element, col)=='File archived'">
@@ -264,7 +274,9 @@
       <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr> <!-- (click)="clickRow(row)" -->
 
   </table>
+</mat-card>
 </div>
+
 
 <div [hidden]="!dataSource">
   <!-- the paginator must be created before the dataSource has been defined -->
@@ -283,3 +295,4 @@
 </div>
 
 </div> <!-- component-margin -->
+</div>

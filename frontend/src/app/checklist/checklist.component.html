@@ -1,11 +1,11 @@
-<mat-expansion-panel [expanded]="init">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <b>Download spreadsheet template for annotated sequences</b>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
+<div class="body">
+  <div class="mat-h3 mat-tittle">Download spreadsheet template for annotated sequences</div>
+  <mat-divider></mat-divider>
 
-  <div *ngIf="!checklistGroupDataSource && !init">
+  <div class="container">
+
+  <mat-card class="mat-body">
+  <div *ngIf="!checklistGroupDataSource && !init" class="mat-body">
 
     <p *ngIf="checklistType === ChecklistType.sample">
       Use this submission option to create and download a spreadsheet template for samples.
@@ -208,4 +208,9 @@
 
     </mat-step>
   </mat-vertical-stepper>
-</mat-expansion-panel>
+</mat-card>
+
+
+
+  </div>
+</div>

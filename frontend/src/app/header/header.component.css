@@ -1,0 +1,11 @@
+
+
+.homeDiv{
+    float: left;
+    padding: 0px 0px 0px 5px;
+}
+
+.homeDiv mat-icon{
+    font-size: 33px;
+    cursor: pointer;
+}

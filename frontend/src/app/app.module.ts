@@ -73,6 +73,16 @@ const appRoutes: Routes = [
      canActivate: [WebinAuthenticationGuardService],
   },
   {
+    path: 'app-submit',
+    component: SubmitComponent,
+     canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'app-checklist/:checklistType/:init',
+    component: ChecklistComponent,
+     canActivate: [WebinAuthenticationGuardService],
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],

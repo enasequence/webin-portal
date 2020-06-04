@@ -1,11 +1,19 @@
 <header id="masthead-black-bar" class="clearfix masthead-black-bar">
 </header>
 <div> <!-- fxHide fxShow.gt-xs> <!-- ** Application specific content: fxHide fxShow.gt-xs ** -->
+     
   <header id="masthead" class="masthead compact-for-data">
+    
     <div class="masthead-inner row expanded">
+      <div class="homeDiv">
+        <mat-icon matTooltip="Dashboard" routerLink="">home</mat-icon>
+      </div>
+
       <!-- local-title -->
       <div class="float-left inline-block padding-left-large" id="local-title">
-        <a routerLink=""><h4 style="color:white">{{getTitle()}}</h4></a> <!-- ** Application specific content ** -->
+        <a routerLink=""><h4 style="color:white">
+          {{getTitle()}}
+        </h4></a> <!-- ** Application specific content ** -->
       </div>
       <!-- /local-title -->
       <!-- local-nav -->

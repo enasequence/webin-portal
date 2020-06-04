@@ -9,44 +9,34 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { UiModule } from '../ui/ui.module';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { MatTabGroup } from '@angular/material/tabs';
 import { WebinAuthenticationService } from '../webin-authentication.service';
-import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
-import { MockReportComponent } from '../mock/mock-report.component';
-import { MockSubmitComponent } from '../mock/mock-submit.component';
+import { ReportType } from '../report-type.enum';
+import { MatIconModule } from '@angular/material'
+import {MatExpansionModule} from '@angular/material/expansion';
 
-import { DashboardComponent } from './dashboard.component';
+@Component({
+  selector: 'app-main',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None,
+ 
+})
+export class DashboardComponent {
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+  ReportType = ReportType;   // Allows use in template
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        DashboardComponent,
-        MockReportComponent,
-        MockSubmitComponent,
-      ],
-      imports: [ UiModule ],
-      providers: [
-        {
-          provide: WebinAuthenticationService,
-          useClass: MockWebinAuthenticationService
-        },
-      ]
-    })
-    .compileComponents();
-  }));
+  constructor(
+    private _webinAuthenticationService: WebinAuthenticationService) { }
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  ngOnInit() {
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  ngOnDestroy() {
+  }
+
+  isEga(): boolean {
+    return this._webinAuthenticationService.ega;
+  }
+}

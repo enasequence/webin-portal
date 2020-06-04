@@ -11,10 +11,8 @@
 
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
-import { ReportComponent } from '../report/report.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
-import { ReportActionInterface } from '../report-action.interface';
 import { MatIconModule } from '@angular/material'
 
 @Component({
@@ -22,9 +20,6 @@ import { MatIconModule } from '@angular/material'
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   encapsulation: ViewEncapsulation.None,
-  providers: [
-    ReportComponent
-  ]
 })
 export class DashboardComponent {
 
