@@ -42,6 +42,10 @@ import { WebinGdprGuardService } from './webin-gdpr-guard.service';
 import { WebinAuthenticationInterceptor } from './webin-authentication.interceptor';
 
 import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from './register/register.component';
+import { ContactDialogModalComponent } from './contact-dialog-modal/contact-dialog-modal.component';
+import { UniqueContactEmailDirective } from './directives/unique-contact-email.directive';
+import { MatchPasswordDirective } from './directives/match-password.directive';
 
 const appRoutes: Routes = [
   {
@@ -83,6 +87,11 @@ const appRoutes: Routes = [
      canActivate: [WebinAuthenticationGuardService],
   },
   {
+    path: 'register',
+    component: RegisterComponent,
+    
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
@@ -115,6 +124,10 @@ const appRoutes: Routes = [
     ReportActionComponent,
     GdprComponent,
     ChecklistComponent,
+    RegisterComponent,
+    ContactDialogModalComponent,
+    UniqueContactEmailDirective,
+    MatchPasswordDirective,
   ],
   bootstrap: [
     AppComponent,
@@ -139,6 +152,7 @@ const appRoutes: Routes = [
   entryComponents: [
     ReportEditDialogComponent,
     SubmissionResultDialogComponent,
+    ContactDialogModalComponent
   ]
 })
 export class AppModule { }

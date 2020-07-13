@@ -6,6 +6,7 @@
   <div class="container">
 
     <mat-accordion>
+    <ng-container *ngIf="!isEga()">  
     <div class="category" hidden>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -21,9 +22,9 @@
         </div>
     </mat-expansion-panel>
     </div>
+    </ng-container>
   
 
-  
     <div class="category">
       <mat-expansion-panel expanded>
         <mat-expansion-panel-header>
@@ -36,10 +37,9 @@
           </span> 
         </div>
       </mat-expansion-panel>
-      
     </div>
     
-   
+    <ng-container *ngIf="!isEga()">
     <div class="category">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -53,6 +53,7 @@
         </div>
       </mat-expansion-panel>
     </div>
+    </ng-container>
     
     <!-------------------------Reports------------------------->
     <div class="category">

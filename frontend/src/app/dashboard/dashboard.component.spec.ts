@@ -10,7 +10,6 @@
  */
 
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatTabGroup } from '@angular/material/tabs';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
 import { MatIconModule } from '@angular/material'

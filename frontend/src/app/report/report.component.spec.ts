@@ -18,6 +18,7 @@ import { MockWebinReportService } from '../mock/mock-webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 import { ReportComponent } from './report.component';
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe('ReportComponent', () => {
   let component: ReportComponent;
@@ -29,7 +30,8 @@ describe('ReportComponent', () => {
         ReportComponent,
         MockReportActionComponent
      ],
-      imports: [ UiModule ],
+      imports: [ UiModule, RouterTestingModule ],
+      
       providers: [
         {
           provide: WebinAuthenticationService,

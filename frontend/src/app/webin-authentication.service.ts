@@ -131,7 +131,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
-
-    return this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+      var txt=this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+      return txt;
   }
 }

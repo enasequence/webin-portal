@@ -52,7 +52,7 @@ export class WebinXmlReportService implements WebinXmlReportServiceInterface {
 
   private getXml(xmlType: string, id: string): Observable<string> {
     const url: string = this._baseUrl + '/' + xmlType + '/' + id + '?format=xml';
-    console.log(url);
+    //console.log(url);
     return this.http.get(url, {responseType: 'text' });
   }
 }

@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { mergeMap } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
