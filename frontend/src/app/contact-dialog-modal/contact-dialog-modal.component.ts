@@ -2,6 +2,7 @@ import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {UtilService} from '../util/Util-services'
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ContactDialogModalComponent implements OnInit {
   contactObj={};
   
   constructor( private formBuilder: FormBuilder, public dialogRef: MatDialogRef<ContactDialogModalComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) { 
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private util: UtilService) { 
       this.action = data.action;
       this.emails=data.emailList;
       if(this.action!="Error"){
@@ -38,7 +39,7 @@ export class ContactDialogModalComponent implements OnInit {
 
   doAction(){
     if(this.action==="Add") {
-      this.contactObj["id"]=this.getId();
+      this.contactObj["id"]=this.util.getId();
     }
     let contact=this.updateName(this.contactObj);
     this.dialogRef.close({ event: this.action, data: contact });
@@ -48,14 +49,10 @@ export class ContactDialogModalComponent implements OnInit {
     this.dialogRef.close({event: 'close'});
   }
 
-  getId(){
-    return Math.floor(1000 + Math.random() * 9000);
-  }
-
   updateName(contact){
-    var name= contact["firstName"] + " " + contact["middleName"] + " "+ contact["surname"];
+    var name= contact["firstName"] + " " + (contact["middleInitials"] || "") + " "+ contact["surname"];
     if(contact["consortiumContact"]){
-      name=contact["consortiumName"];
+      name=contact["consortium"];
     }
     contact["name"]=name;
     return contact;
@@ -63,13 +60,14 @@ export class ContactDialogModalComponent implements OnInit {
 
   copyObjectValue(from,to){
     to.id=from.id;
-    to.email=from.email;
+    to.emailAddress=from.emailAddress;
     to.firstName=from.firstName;
-    to.middleName=from.middleName;
+    to.middleInitials=from.middleInitials;
     to.surname=from.surname;
-    to.consortiumName=from.consortiumName;
-    to.primaryfrom=from.primaryContact;
+    to.consortium=from.consortium;
+    to.mainContact=from.mainContact;
     to.consortiumContact=from.consortiumContact;
     to.name=from.name;
+    to.submissionAccountId=from.submissionAccountId;
   }
 }

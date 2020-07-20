@@ -185,6 +185,8 @@ export class WebinReportService implements WebinReportServiceInterface {
     params['format'] = format;
     const url: string = this._baseUrl + '/' + reportType + '?' + this.getUrlParams(params);
 
+    console.log(url);
+    console.log(format);
     if (format === 'json') {
       // console.log(url);
       return this._http.get(url);

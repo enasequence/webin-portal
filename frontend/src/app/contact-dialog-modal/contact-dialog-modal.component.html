@@ -2,15 +2,17 @@
 <div class="mat-h3 mat-tittle">Contact Details</div>
 <form (ngSubmit)="doAction()" #cf="ngForm">
 <div *ngIf="action!='Delete' && action!='Success' && action!='Error'">
-    <mat-checkbox matInput name="primaryContact" [(ngModel)]="contactObj.primaryContact">Is Primary Contact</mat-checkbox>
+    <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact">Is Primary Contact</mat-checkbox>
     <mat-checkbox matInput name="consortiumContact"  [(ngModel)]="contactObj.consortiumContact" style="padding-left: 20px;" >Is Consortium Contact</mat-checkbox>
     
+    <input   type="hidden" name="submissionAccountId" [(ngModel)]="contactObj.submissionAccountId"/>
+
     <mat-form-field>
-        <input matInput  name="email" [(ngModel)]="contactObj.email" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.email}}" required email/>
-           <mat-error *ngIf="cf.controls['email']?.errors?.nonUniqueEmail">
+        <input matInput  name="emailAddress" [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email/>
+           <mat-error *ngIf="cf.controls['emailAddress']?.errors?.nonUniqueEmail">
             Email address is used by other contact
         </mat-error> 
-        <mat-error *ngIf="cf.controls['email']?.errors?.required || cf.controls['email']?.errors?.invalid ">
+        <mat-error *ngIf="cf.controls['emailAddress']?.errors?.required || cf.controls['emailAddress']?.errors?.invalid ">
             Please enter a valid email address
         </mat-error>
 
@@ -20,7 +22,7 @@
         <input matInput name="firstName" [(ngModel)]="contactObj.firstName" placeholder="First Name"  required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="middleName" [(ngModel)]="contactObj.middleName" placeholder="Middle Name">
+        <input matInput name="middleInitials" [(ngModel)]="contactObj.middleInitials" placeholder="Middle Name">
     </mat-form-field>
     <mat-form-field>
         <input matInput name="surname" [(ngModel)]="contactObj.surname" placeholder="Surame"  required>
@@ -28,15 +30,15 @@
     </div>
     <div *ngIf="contactObj.consortiumContact">
         <mat-form-field>
-            <input matInput name="consortiumName" [(ngModel)]="contactObj.consortiumName" placeholder="Consortium Name"  required>
+            <input matInput name="consortium" [(ngModel)]="contactObj.consortium" placeholder="Consortium Name"  required>
         </mat-form-field>
     </div>
 </div>
 <div class="mat-body" *ngIf="action==='Delete'">
-    Delete will remove the contact with email "{{contactObj.email}}" from the Account. Please click the {{action}} Contact button to proceed.
+    Delete will remove the contact with email "{{contactObj.emailAddress}}" from the Account. Please click the {{action}} Contact button to proceed.
 </div>
 <div class="mat-body" *ngIf="action==='Success'">
-    Successfully created subbmission account with id : {{contactObj.id}}.
+    Successfully saved subbmission account with id : {{contactObj.id}}.
 </div>
 <div class="mat-body" *ngIf="action==='Error'">
     {{contactObj.error.errorMessage}}

@@ -17,6 +17,7 @@ import { mergeMap } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
     subscribe(
         data => {
           // console.log('WebinAuthenticationService.loginToken succeeded');
+          console.log(data)
           this._webinAuthenticationService.token = data;
           const redirectUrl = this._webinAuthenticationService.redirectUrl;
           if (redirectUrl) {

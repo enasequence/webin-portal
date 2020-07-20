@@ -25,6 +25,7 @@ import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportActionInterface } from '../report-action.interface';
 import { ActivatedRoute } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -59,10 +60,19 @@ export class ReportComponent implements OnInit{
     private _webinAuthenticationService: WebinAuthenticationService,
     private _reportDialog: MatDialog,
     public media: ObservableMedia,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { 
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
   ngOnInit() {
       this.reportType=this.activatedRoute.snapshot.params.reportType;
+      this._id=this.activatedRoute.snapshot.params.id;
+
+      if(this.reportType && this._id){
+        this.report();
+      }
+      
   }
 
   isEga(): boolean {
@@ -475,7 +485,10 @@ export class ReportComponent implements OnInit{
 
     if (action && action.reportActionType === ReportActionType.changeReport) {
       // console.log('** change report action **', action);
-      this.reportChange.emit(action);
+      //this.reportChange.emit(action);
+      this.router.navigate(['/report',action.reportType,action.id]);
+      
+      
     }
 
     if (action && action.reportActionType === ReportActionType.editXml) {

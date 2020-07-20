@@ -24,7 +24,8 @@ ext.environment = project.hasProperty('env') ? env : Environment.dev.toString()
 version = version_base + "-$ext.environment"
 group = 'uk.ac.ebi.ena.webin-portal'
 
-ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_rsa")
+ext.sshKeyFile = file(hasProperty('sshKeyFile') ? sshKeyFile : "${System.properties['user.home']}/.ssh/id_rsa.ppk")
+
 ext.gitlab_project_id ='977'
 
 ext.envAngularBuildScriptMap = [
@@ -136,7 +137,8 @@ publishing {
             // Developer token in Gitlab.
             credentials(HttpHeaderCredentials) {
                 name = "Private-Token"
-                value = project.ext.properties.gitlab_private_token
+                value = "-35Eh5MFLnrPuDYUnNq4"
+                //value = project.ext.properties.gitlab_private_token
             }
             authentication {
                 header( HttpHeaderAuthentication )

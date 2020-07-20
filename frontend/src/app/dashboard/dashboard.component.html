@@ -3,64 +3,56 @@
 
   <mat-divider></mat-divider>
   
-  <div class="container">
-
-    <mat-accordion>
-    <ng-container *ngIf="!isEga()">  
-    <div class="category" hidden>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
+  
+  
+    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center end">
+    <ng-container *ngIf="!isEga()" >  
+      <mat-card *ngIf="false">
+          <mat-card-subtitle>
           Account Management
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+          </mat-card-subtitle>
         <div class="cat-element">
-        <span>
+        <span [routerLink]="['/register']">
           <mat-icon class="account_box">account_box</mat-icon>
           <p class="mat-small mat-caption">Account Information</p>
         </span> 
         </div>
-    </mat-expansion-panel>
-    </div>
+      </mat-card>
     </ng-container>
   
 
-    <div class="category">
-      <mat-expansion-panel expanded>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Submissions </mat-panel-title>
-        </mat-expansion-panel-header>
+    <ng-container>
+      <mat-card>
+        
+          <mat-card-subtitle> Submissions </mat-card-subtitle>
         <div class="cat-element">
           <span [routerLink]="['/app-submit']">
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Xml Submission</p>
           </span> 
         </div>
-      </mat-expansion-panel>
-    </div>
-    
+      </mat-card>
+    </ng-container>
+
     <ng-container *ngIf="!isEga()">
-    <div class="category">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Spreadsheet Templates</mat-panel-title>
-        </mat-expansion-panel-header>
+    
+      <mat-card>
+          <mat-card-subtitle>Spreadsheet Templates</mat-card-subtitle>
         <div class="cat-element">
           <span [routerLink]="['/app-checklist','sequence',true]">
           <mat-icon class="system_update_alt">system_update_alt</mat-icon>
           <p class="mat-small mat-caption">Annotated Sequences</p>
         </span> 
         </div>
-      </mat-expansion-panel>
-    </div>
-    </ng-container>
+      </mat-card>
     
+    </ng-container>
+  </div>
     <!-------------------------Reports------------------------->
+  <div>
     <div class="category">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-        <mat-panel-title>Reports</mat-panel-title>
-        </mat-expansion-panel-header>
+      <mat-card>
+        <mat-card-subtitle>Reports</mat-card-subtitle>
       <div class="cat-element">
        <span [routerLink]="['/report',ReportType.studies]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
@@ -72,36 +64,35 @@
         <p class="mat-small mat-caption">Samples Report</p>
        </span>
 
-       <span [routerLink]="['/report',ReportType.runs]" >
-        <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p class="mat-small mat-caption">Runs Report</p>
-       </span>
-
        <span [routerLink]="['/report',ReportType.analyses]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
         <p class="mat-small mat-caption">Analysis Report</p>
        </span>
 
        <ng-container *ngIf="!isEga()">
-
-          <span [routerLink]="['/report',ReportType.runFiles]" >
-            <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Run File Report</p>
-          </span>
-
           <span [routerLink]="['/report',ReportType.analysisFiles]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
             <p class="mat-small mat-caption">Analysis File Report</p>
           </span>
 
-          <span [routerLink]="['/report',ReportType.runProcess]" >
-            <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Run Process Report</p>
-          </span>
-
           <span [routerLink]="['/report',ReportType.analysisProcess]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
             <p class="mat-small mat-caption">Analysis Process Report</p>
+          </span>
+
+          <span [routerLink]="['/report',ReportType.runs]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Runs Report</p>
+           </span>
+           
+          <span [routerLink]="['/report',ReportType.runFiles]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Run File Report</p>
+          </span>
+
+          <span [routerLink]="['/report',ReportType.runProcess]" >
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Run Process Report</p>
           </span>
 
           <span [routerLink]="['/report',ReportType.unsubmittedFiles]" >
@@ -122,12 +113,15 @@
             <mat-icon class=insert_chart>insert_chart</mat-icon>
             <p class="mat-small mat-caption">Datasets</p>
           </span>
+          
+
         </ng-container>
       </div>
-      </mat-expansion-panel>
+      </mat-card>
     </div>
-  </mat-accordion>
   </div>
+  
+  
 
   
-</div>
+

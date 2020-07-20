@@ -24,13 +24,16 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
   console.log(req.url);
+  
     if (!req.url.startsWith(environment.webinAuthenticationServiceUrl) &&
         !req.url.startsWith(environment.webinReportServiceUrl + "/checklist-groups") &&
         !req.url.startsWith(environment.webinReportServiceUrl + "/checklists") &&
         !req.url.startsWith(environment.webinAuthenticationTokenUrl) &&
-        !req.url.endsWith( "/submission-account")) {
-      // console.log('Webin authentication interceptor');
+        !(req.url.startsWith(environment.webinAdminServiceUrl + "/submission-account") && req.method==="POST") &&
+        !req.url.startsWith(environment.webinAdminServiceUrl + "/country")) {
+       //console.log('Webin authentication interceptor');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
+      console.log(webinAuthenticationService.getAuthorizationTokenHeader())
       const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationTokenHeader())});
       return next.handle(authReq);
 
