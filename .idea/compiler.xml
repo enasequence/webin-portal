@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="uk.ac.ebi.ena.webin-portal.webin-portal.main" target="1.8" />
       <module name="uk.ac.ebi.ena.webin-portal.webin-portal.test" target="1.8" />
+      <module name="webin-portal.main" target="1.8" />
+      <module name="webin-portal.test" target="1.8" />
       <module name="webin-portal_main" target="1.8" />
       <module name="webin-portal_test" target="1.8" />
     </bytecodeTargetLevel>

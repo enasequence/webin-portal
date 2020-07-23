@@ -1,10 +1,5 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.9.RELEASE'
-	}
-
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
         classpath 'org.hidetake:gradle-ssh-plugin:2.9.0'
 	}
@@ -35,23 +30,9 @@ ext.envAngularBuildScriptMap = [
 ]
 printSetup()
 
-
-def props = new Properties()
-file('src/main/resources/application.properties').withInputStream {
-    props.load(it)
-}
-ext.serverContextPath = removeLeadingSlash(props['server.contextPath'])
-ext.serverPort = props['server.port']
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'com.moowork.node'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'maven-publish'
-
-sourceCompatibility = 1.8
-sourceSets.main.resources.includes = [ "**/*.*" ]
 
 repositories {
     mavenLocal()
@@ -59,40 +40,11 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
 node {
     version = "10.9.0"
     download = true
     nodeModulesDir = file("frontend")
 }
-
-processResources {
-    filesMatching('application*.properties') {
-        expand(project.properties)
-    }
-}
-
-jar {
-    manifest {
-        attributes(
-                'Implementation-Title': project.name,
-                'Implementation-Version': project.version,
-                'Built-By': System.getProperty('user.name'),
-                'Built-Date': new Date(),
-                'Source-Compatibility': project.sourceCompatibility)
-    }
-}
-
-task sourceJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
 
 remotes {
     dev {
@@ -121,14 +73,7 @@ remotes {
     }
 }
 
-
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact sourceJar
-        }
-    }
     repositories {
         maven {
             // Project specific maven repository in Gitlab.
@@ -144,7 +89,6 @@ publishing {
         }
     }
 }
-
 
 wrapper{
     gradleVersion = '5.2.1'
@@ -163,10 +107,6 @@ task buildClient(type:NpmTask, dependsOn:'npmInstall'){
             args = ['run', getAngularBuildScript()]
         }
 
-
-
-
-
 def getEnvRemotes() {
     def hosts = []
     switch (environment){
@@ -180,14 +120,11 @@ def getEnvRemotes() {
     return hosts
 }
 
-
 def getAngularBuildScript(){
     def script = envAngularBuildScriptMap[environment.toString()]
     if(script) return script
     else return envAngularBuildScriptMap['default']
 }
-
-
 
 task deploy() {
     doLast{
@@ -202,7 +139,6 @@ task deploy() {
         }
     }
 }
-
 
 task restartDev(){
     doLast{
@@ -223,8 +159,6 @@ task restartProd(){
     }
 }
 
-
-
 def restart(remote){
     ssh.run {
         session(remote) {
@@ -234,8 +168,6 @@ def restart(remote){
         }
     }
 }
-
-
 
 task displayInfo(){
     doLast{
@@ -254,7 +186,6 @@ def displayInfo(remote){
     doGet(getHealthURL(remote))
     println ""
 }
-
 
 def doGet(String url){
     try {
@@ -302,11 +233,5 @@ def printSetup(){
 }
 
 deploy.dependsOn(publish)
-publish.dependsOn(assemble)
-bootRepackage.dependsOn(buildClient)
-bootRun.dependsOn(bootRepackage)
-jar.dependsOn(buildClient)
-compileJava.dependsOn(clean)
-test.dependsOn testUnit
 
 
