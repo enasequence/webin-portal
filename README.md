@@ -10,6 +10,16 @@ version 7.3.8
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/ena/submit/webin`. The app will automatically reload if you change any of the source files.
 
+## Production server
+
+Run `ng build --prod` and then `ng serve --prod` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
+
+## Docker (single stage for testing)
+
+1. Run `ng build --prod`
+2. Run `docker build -t <image_name> . `
+3. Run `docker run --name <container_name>-1 -d -p 8080:80 <image_name>`
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
