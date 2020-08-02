@@ -15,7 +15,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType } from '../report-type.enum';
@@ -57,7 +57,7 @@ export class ReportComponent {
     private _webinReportService: WebinReportService,
     private _webinAuthenticationService: WebinAuthenticationService,
     private _reportDialog: MatDialog,
-    public media: ObservableMedia) { }
+    public media: MediaObserver) { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webin-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: webin-portal
+  template:
+    metadata:
+      labels:
+        run: webin-portal
+    spec:
+      containers:
+        - name: webin-portal
+          image: dockerhub.ebi.ac.uk/enasequence/webin-portal:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 443
