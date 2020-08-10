@@ -2,17 +2,18 @@
 <div class="mat-h3 mat-tittle">Contact Details</div>
 <form (ngSubmit)="doAction()" #cf="ngForm">
 <div *ngIf="action!='Delete' && action!='Success' && action!='Error'">
-    <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact">Is Primary Contact</mat-checkbox>
+    <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact" >Is Primary Contact</mat-checkbox>
     <mat-checkbox matInput name="consortiumContact"  [(ngModel)]="contactObj.consortiumContact" style="padding-left: 20px;" >Is Consortium Contact</mat-checkbox>
     
     <input   type="hidden" name="submissionAccountId" [(ngModel)]="contactObj.submissionAccountId"/>
 
     <mat-form-field>
-        <input matInput  name="emailAddress" [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email/>
-           <mat-error *ngIf="cf.controls['emailAddress']?.errors?.nonUniqueEmail">
+        <input matInput *ngIf="action==='Update'" [readonly]="true"  name="emailAddress" [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email/>
+        <input matInput *ngIf="action!='Update'" name="emailAddress" [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email/>
+        <mat-error *ngIf="cf.controls['emailAddress']?.errors?.nonUniqueEmail">
             Email address is used by other contact
         </mat-error> 
-        <mat-error *ngIf="cf.controls['emailAddress']?.errors?.required || cf.controls['emailAddress']?.errors?.invalid ">
+        <mat-error *ngIf="cf.controls['emailAddress']?.errors?.required || cf.controls['emailAddress']?.invalid">
             Please enter a valid email address
         </mat-error>
 
@@ -34,15 +35,17 @@
         </mat-form-field>
     </div>
 </div>
+
 <div class="mat-body" *ngIf="action==='Delete'">
     Delete will remove the contact with email "{{contactObj.emailAddress}}" from the Account. Please click the {{action}} Contact button to proceed.
 </div>
 <div class="mat-body" *ngIf="action==='Success'">
-    Successfully saved subbmission account with id : {{contactObj.id}}.
+    Successfully saved the account with id : {{contactObj.id}}.
 </div>
 <div class="mat-body" *ngIf="action==='Error'">
-    {{contactObj.error.errorMessage}}
+    {{contactObj.error}}
 </div>
+<br>
 <div style="text-align:center" *ngIf="action!='Error' && action!='Success'">
     <button mat-raised-button color=primary [disabled]="cf.invalid">{{action}} Contact</button>
     <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Cancel</button>

@@ -36,11 +36,17 @@ export class WebinAuthenticationGuardService implements CanActivate {
     // console.log('WebinAuthenticationGuardService: not authenticated');
 
     const url = state.url;
+    console.log("URL ::");
+    console.log(url);
     if (url.startsWith("/?page=")) {
     // console.log('WebinAuthenticationGuardService: set redirectUrl', url);
       this.webinAuthenticationService.redirectUrl = url;
     }
-    this.router.navigate(['login']);
+   
+    
+    
+      this.router.navigate(['login']);
     return false;
+    
   }
 }

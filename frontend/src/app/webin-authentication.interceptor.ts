@@ -30,7 +30,9 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
         !req.url.startsWith(environment.webinReportServiceUrl + "/checklists") &&
         !req.url.startsWith(environment.webinAuthenticationTokenUrl) &&
         !(req.url.startsWith(environment.webinAdminServiceUrl + "/submission-account") && req.method==="POST") &&
-        !req.url.startsWith(environment.webinAdminServiceUrl + "/country")) {
+        !req.url.startsWith(environment.webinAdminServiceUrl + "/country") && 
+        !req.url.startsWith(environment.pupMedUrl) && 
+        !req.url.startsWith(environment.webinAdminServiceUrl + "/requestPasswordChange") ) {
        //console.log('Webin authentication interceptor');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
       console.log(webinAuthenticationService.getAuthorizationTokenHeader())

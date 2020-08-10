@@ -28,4 +28,8 @@ span:hover {
       margin:10px;
   }
 
+  mat-card-subtitle{
+      text-align: center;
+  }
+
  

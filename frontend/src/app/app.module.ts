@@ -46,11 +46,18 @@ import { AccountInfoComponent } from './accountInfo/accountInfo.component';
 import { ContactDialogModalComponent } from './contact-dialog-modal/contact-dialog-modal.component';
 import { UniqueContactEmailDirective } from './directives/unique-contact-email.directive';
 import { MatchPasswordDirective } from './directives/match-password.directive';
+import { ResetPasswordRequestDialogComponent } from './reset-password-request-dialog/reset-password-request-dialog.component';
+import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
+import { RegisterStudyComponent } from './register-study/register-study.component';
 
 const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'resetPassword',
+    component: ResetPasswordPageComponent,
   },
   {
     path: 'logout',
@@ -92,9 +99,12 @@ const appRoutes: Routes = [
      canActivate: [WebinAuthenticationGuardService],
   },
   {
-    path: 'register',
+    path: 'accountInfo',
     component: AccountInfoComponent,
-    
+  },
+  {
+    path: 'registerStudy',
+    component: RegisterStudyComponent,
   },
   {
     path: '**',
@@ -133,6 +143,9 @@ const appRoutes: Routes = [
     ContactDialogModalComponent,
     UniqueContactEmailDirective,
     MatchPasswordDirective,
+    ResetPasswordRequestDialogComponent,
+    ResetPasswordPageComponent,
+    RegisterStudyComponent
   ],
   bootstrap: [
     AppComponent,
@@ -157,7 +170,9 @@ const appRoutes: Routes = [
   entryComponents: [
     ReportEditDialogComponent,
     SubmissionResultDialogComponent,
-    ContactDialogModalComponent
+    ContactDialogModalComponent,
+    ResetPasswordRequestDialogComponent
+    
   ]
 })
 export class AppModule { }

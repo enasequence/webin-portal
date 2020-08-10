@@ -22,8 +22,10 @@ export class ContactDialogModalComponent implements OnInit {
 
   contactObj={};
   
-  constructor( private formBuilder: FormBuilder, public dialogRef: MatDialogRef<ContactDialogModalComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private util: UtilService) { 
+  constructor( private formBuilder: FormBuilder, 
+              public dialogRef: MatDialogRef<ContactDialogModalComponent>,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+              private util: UtilService) { 
       this.action = data.action;
       this.emails=data.emailList;
       if(this.action!="Error"){
@@ -53,7 +55,13 @@ export class ContactDialogModalComponent implements OnInit {
     var name= contact["firstName"] + " " + (contact["middleInitials"] || "") + " "+ contact["surname"];
     if(contact["consortiumContact"]){
       name=contact["consortium"];
+      contact.firstName="";
+      contact.surname="";
+      contact.middleInitials="";
+    }else{
+      contact.consortium="";
     }
+
     contact["name"]=name;
     return contact;
   }
@@ -70,4 +78,6 @@ export class ContactDialogModalComponent implements OnInit {
     to.name=from.name;
     to.submissionAccountId=from.submissionAccountId;
   }
+
+  
 }

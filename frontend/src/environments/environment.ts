@@ -8,13 +8,15 @@ export const environment = {
   title: 'Webin submissions portal (DEFAULT)',
   webinServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinUpdateRequestUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/email/update-request/',
-  webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
-  webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
-  //webinAuthenticationServiceUrl: 'http://localhost:8210/ena/webinauth/auth/login',
-  //webinAuthenticationTokenUrl: 'http://localhost:8210/ena/webinauth/auth/token',
+  //webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
+  //webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
+  webinAuthenticationServiceUrl: 'http://localhost:8210/webin/auth/login',
+  webinAuthenticationTokenUrl: 'http://localhost:8210/webin/auth/token',
   // webinReportServiceUrl: 'http://RASKO-W7D.windows.ebi.ac.uk:8221/ena/submit/report',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box',
-  webinAdminServiceUrl: 'http://localhost:8210/ena/webinauth/admin',
-  webinGdprServiceUrl: 'TODO'
+  webinAdminServiceUrl: 'http://localhost:8210/webin/auth/admin',
+  webinGdprServiceUrl: 'TODO',
+  pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search'
+  
 };

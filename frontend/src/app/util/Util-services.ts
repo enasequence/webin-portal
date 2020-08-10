@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { tap, startWith, map,debounceTime, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { HttpHeaders } from '../../../node_modules/@angular/common/http';
 
 
 
@@ -57,16 +58,44 @@ import { throwError } from 'rxjs';
     }
 
     async saveNewContact(contact){
-      return this.httpClient.post(environment.webinAdminServiceUrl+'/'+'submission-contact/create',contact).
+      return this.httpClient.post(environment.webinAdminServiceUrl+'/'+'submission-contact',contact).
         pipe(
            map((data: Response) => {
              return data;
            })
         )
     }
+
+    async sendResetPasswordRequest(resetPassReq){
+      return this.httpClient.post(environment.webinAdminServiceUrl+'/'+'request-password-change',resetPassReq).
+        pipe(
+           map((data: Response) => {
+             return data;
+           })
+        )
+    }
+
+    
       
+    async resetPassword(resetPassReq,token){
+      
+      return this.httpClient.put(environment.webinAdminServiceUrl+'/'+'change-password?token='+token,resetPassReq).
+        pipe(
+           map((data: Response) => {
+             return data;
+           })
+        )
+    }
+
+    async getPubMed(prefix) {
+      var url=environment.pupMedUrl +"?query="+prefix+"&resultType=lite&cursorMark=*&format=json";
+      return this.httpClient.get(url).pipe(map((data:any) => {
+        return data;
+      }));
+    }
+
     getId(){
       return Math.floor(1000 + Math.random() * 9000);
     }
 
-    }
+}

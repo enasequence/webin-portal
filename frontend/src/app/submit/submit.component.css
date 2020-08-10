@@ -5,3 +5,9 @@
 .container{
     padding: 10px 0px 0px 0px;
   }
+
+  .back-div{
+    float: left;
+    padding-top: 2px;
+    cursor: pointer;
+  }

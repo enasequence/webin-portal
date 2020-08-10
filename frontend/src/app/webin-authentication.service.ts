@@ -110,7 +110,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-    const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
+    const body = { authRealms: [ 'ENA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
@@ -127,7 +127,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-    const body = { authRealms: [ 'SRA', 'EGA' ], password: password, username: this.username };
+    const body = { authRealms: [ 'ENA', 'EGA' ], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');

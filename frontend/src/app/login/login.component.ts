@@ -15,6 +15,8 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { mergeMap } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetPasswordRequestDialogComponent } from '../reset-password-request-dialog/reset-password-request-dialog.component'
 
 
 
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _webinAuthenticationService: WebinAuthenticationService) { }
+    private _webinAuthenticationService: WebinAuthenticationService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     //  console.log('LoginComponent.ngOnInit');
@@ -78,5 +81,14 @@ export class LoginComponent implements OnInit {
           this._webinAuthenticationService.authenticated = true;
         }
       );
+  }
+
+  openResetPasswordRequestDialog(obj){
+    const dialogRef = this.dialog.open(ResetPasswordRequestDialogComponent, {
+      width: '400px',
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: {resetObj:obj}
+    });
   }
 }

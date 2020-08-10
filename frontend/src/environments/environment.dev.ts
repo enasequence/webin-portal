@@ -11,5 +11,6 @@ export const environment = {
   webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box',
-  webinGdprServiceUrl: 'TODO'
+  webinAdminServiceUrl: 'http://localhost:8210/ena/webinauth/admin',
+    webinGdprServiceUrl: 'TODO'
 };

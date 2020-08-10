@@ -7,12 +7,12 @@
   
     <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center end">
     <ng-container *ngIf="!isEga()" >  
-      <mat-card *ngIf="false">
+      <mat-card>
           <mat-card-subtitle>
           Account Management
           </mat-card-subtitle>
         <div class="cat-element">
-        <span [routerLink]="['/register']">
+        <span [routerLink]="['/accountInfo']">
           <mat-icon class="account_box">account_box</mat-icon>
           <p class="mat-small mat-caption">Account Information</p>
         </span> 
@@ -30,6 +30,10 @@
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Xml Submission</p>
           </span> 
+          <span [routerLink]="['/registerStudy']" >
+            <mat-icon class=note_add>note_add</mat-icon>
+            <p class="mat-small mat-caption">Register study (project)</p>
+           </span>
         </div>
       </mat-card>
     </ng-container>
