@@ -1,0 +1,31 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx3g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
+  DOCKER_DRIVER: overlay
+  DOCKER_TLS_CERTDIR: ""
+  SPRING_PROFILES_ACTIVE: dev
+
+stages:
+  - package
+  - deploy
+
+docker-build:
+  stage: package
+  script:
+    - docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal .
+    - docker login dockerhub.ebi.ac.uk -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker tag dockerhub.ebi.ac.uk/enasequence/webin-auth dockerhub.ebi.ac.uk/enasequence/webin-portal:latest
+    - docker push dockerhub.ebi.ac.uk/enasequence/webin-portal
+
+k8s-deploy:
+  image: dtzar/helm-kubectl
+  stage: deploy
+  script:
+    - export KUBECONFIG=./Kubernetes-cluster.yaml
+    - kubectl delete secret gitlab
+    - kubectl create secret docker-registry gitlab --docker-server=dockerhub.ebi.ac.uk --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL
+    - kubectl create -f Kubernetes-deployment.yaml --namespace=ena-dev
+    - kubectl create -f Kubernetes-service.yaml  --namespace=ena-dev
