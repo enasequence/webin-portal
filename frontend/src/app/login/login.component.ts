@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
           }
           else {
             this._router.navigateByUrl('');
+            this._webinAuthenticationService.setSubmissionAccount();
           }
         },
         // Errors.
@@ -81,6 +82,7 @@ export class LoginComponent implements OnInit {
           this._webinAuthenticationService.authenticated = true;
         }
       );
+      
   }
 
   openResetPasswordRequestDialog(obj){

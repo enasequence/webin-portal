@@ -19,4 +19,5 @@ import { ReportActionInterface } from '../report-action.interface';
 export class MockReportActionComponent {
   @Input() actions: Array<ReportActionInterface>;
   @Output() actionChange = new EventEmitter<ReportActionInterface>();
+  @Input() reportData: Object;
 }

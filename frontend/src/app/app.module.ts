@@ -8,7 +8,7 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { UiModule } from './ui/ui.module';
@@ -48,7 +48,10 @@ import { UniqueContactEmailDirective } from './directives/unique-contact-email.d
 import { MatchPasswordDirective } from './directives/match-password.directive';
 import { ResetPasswordRequestDialogComponent } from './reset-password-request-dialog/reset-password-request-dialog.component';
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
-import { RegisterStudyComponent } from './register-study/register-study.component';
+import { StudyManagementComponent } from './study-management/study-management.component';
+import { PopupMessageComponent } from './popup-message/popup-message.component';
+import { FormsModule }   from '@angular/forms';
+import { MatIconModule, MatCardSubtitle } from '@angular/material';
 
 const appRoutes: Routes = [
   {
@@ -103,8 +106,12 @@ const appRoutes: Routes = [
     component: AccountInfoComponent,
   },
   {
-    path: 'registerStudy',
-    component: RegisterStudyComponent,
+    path: 'study',
+    component: StudyManagementComponent,
+  },
+  {
+    path: 'study/:id',
+    component: StudyManagementComponent,
   },
   {
     path: '**',
@@ -118,6 +125,9 @@ const appRoutes: Routes = [
     BrowserModule,
     UiModule,
     HttpClientModule,
+    FormsModule,
+    MatIconModule,
+         
     // Router
     RouterModule.forRoot(
       appRoutes,
@@ -145,7 +155,9 @@ const appRoutes: Routes = [
     MatchPasswordDirective,
     ResetPasswordRequestDialogComponent,
     ResetPasswordPageComponent,
-    RegisterStudyComponent
+    StudyManagementComponent,
+    PopupMessageComponent,
+    
   ],
   bootstrap: [
     AppComponent,
@@ -171,8 +183,10 @@ const appRoutes: Routes = [
     ReportEditDialogComponent,
     SubmissionResultDialogComponent,
     ContactDialogModalComponent,
-    ResetPasswordRequestDialogComponent
+    ResetPasswordRequestDialogComponent,
+    PopupMessageComponent
     
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

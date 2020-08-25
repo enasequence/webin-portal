@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { WebinAuthenticationServiceInterface } from './webin-authentication.service.interface';
 import { WebinAuthenticationResultInterface } from './webin-authentication-result.interface';
+import { UtilService } from './util/Util-services';
 
 @Injectable()
 export class WebinAuthenticationService implements WebinAuthenticationServiceInterface {
@@ -75,7 +76,10 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.setItem('logoutDate', JSON.stringify(logoutDate));
   }
 
-  constructor(private _http: HttpClient) { }
+  
+
+  constructor(private _http: HttpClient,
+    private util:UtilService) { }
 
   /*
   getAuthorizationHeader() {
@@ -85,7 +89,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   */
 
   getAuthorizationTokenHeader() {
-      console.log('** Webin authorization token header **');
+      //console.log('** Webin authorization token header **');
       return 'Bearer ' + this.token;
   }
 
@@ -99,6 +103,8 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.removeItem('ega');
     sessionStorage.removeItem('loginDate');
     sessionStorage.removeItem('logoutDate');
+    sessionStorage.removeItem('submissionAccount');
+    
   }
 
   login(username: string, password: string): Observable<WebinAuthenticationResultInterface> {
@@ -135,5 +141,16 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
       console.log(txt)
       return txt;*/
       return this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+  }
+
+  getSubmissionAccount(){
+    return sessionStorage.getItem('submissionAccount');
+  }
+  
+  async setSubmissionAccount(){
+     (await this.util.getAccountDetails()).
+    subscribe((data:any) => {
+      sessionStorage.setItem('submissionAccount', JSON.stringify(data));
+    });
   }
 }

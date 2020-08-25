@@ -93,9 +93,33 @@ import { HttpHeaders } from '../../../node_modules/@angular/common/http';
         return data;
       }));
     }
+    ext_id:781840
+
+    async getPubMedById(id) {
+      var url=environment.pupMedUrl +"?query=ext_id:"+id+"&resultType=lite&cursorMark=*&format=json";
+      return this.httpClient.get(url).pipe(map((data:any) => {
+        return data;
+      }));
+    }
+
+    async getProjectDetails(projectId) {
+      var url=environment.webinReportServiceUrl +"/projects/"+projectId;
+      return this.httpClient.get(url).pipe(map((data:any) => {
+        return data;
+      }));
+    }
+
+    async getProjectXml(projectId) {
+      var url=environment.webinReportServiceUrl +"/projects/xml/"+projectId;
+      return this.httpClient.get(url,{ responseType: 'text' })
+    }
+
+    
 
     getId(){
       return Math.floor(1000 + Math.random() * 9000);
     }
+
+    
 
 }

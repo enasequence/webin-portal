@@ -396,7 +396,6 @@ export class ReportComponent implements OnInit{
 
   getActions(result): Array<ReportActionInterface> {
     const actions = [];
-
     // Allow edit XML.
     if (this.reportType === ReportType.runFiles) {
       actions.push(ReportActionType.createEditXmlAction(ReportType.runs, this.getId(result)));

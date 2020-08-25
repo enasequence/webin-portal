@@ -13,6 +13,7 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
 import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 import { ReportActionInterface } from '../report-action.interface';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-action',
@@ -22,11 +23,17 @@ import { ReportActionInterface } from '../report-action.interface';
 })
 export class ReportActionComponent {
   @Input() actions: Array<ReportActionInterface>;
+  @Input() reportData: Object;
   @Output() actionChange = new EventEmitter<ReportActionInterface>();
 
   ReportType = ReportType;   // Allows use in template
 
-  constructor() { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { 
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
+  
 
   private isAction(reportType: ReportType, reportActionType: ReportActionType, action ): boolean {
     return action.reportActionType === reportActionType && action.reportType === reportType;
@@ -56,5 +63,10 @@ export class ReportActionComponent {
   editXmlAction(reportType: ReportType): void {
     console.log('** edit xml action **', reportType);
     this.actionChange.emit(this.getEditXmlAction(reportType));
+  }
+
+  editProjectAction(projObj){
+    console.log(projObj);
+    this.router.navigate(['/study',projObj.report.id]);
   }
 }

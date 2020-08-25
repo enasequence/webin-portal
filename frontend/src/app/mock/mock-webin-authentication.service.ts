@@ -22,6 +22,7 @@ export class MockWebinAuthenticationService implements WebinAuthenticationServic
   ega = false;
   loginDate = new Date();
   logoutDate = new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate() + 7);
+  submissionAccount= new Object();
 
   getAuthorizationTokenHeader() {
       return 'Bearer ' + this.token;
@@ -39,5 +40,13 @@ export class MockWebinAuthenticationService implements WebinAuthenticationServic
   loginToken(username: string, password: string): Observable<string> {
     this.authenticated = true;
     return null;
+  }
+
+  getSubmissionAccount(){
+    return this.submissionAccount;
+  }
+  
+  setSubmissionAccount(){
+   
   }
 }

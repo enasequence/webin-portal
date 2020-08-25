@@ -13,10 +13,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
+import { tap, startWith, map,debounceTime, catchError } from 'rxjs/operators';
+
 
 import { ReportType } from './report-type.enum';
 import { WebinRestServiceInterface } from './webin-rest.service.interface';
 import { WebinAuthenticationService } from './webin-authentication.service';
+
 
 @Injectable()
 export class WebinRestService implements WebinRestServiceInterface {
@@ -47,19 +50,47 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' });
   }
 
+   submitProjectXml(formData){
+    const headers = this.headers();
+    return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' }).
+      pipe(
+         map((data: any) => {
+           return data;
+         })
+      )
+  }
+
   updateXml(
     reportType: ReportType,
-    xml: Blob): Observable<string> {
+    xml: Blob,
+    mode: string,
+    releaseDate: any): Observable<string> {
      console.log('** Update XML **');
      const formData: FormData = new FormData();
+     var releaseDateStr=""; 
+     var modeAction="";
+     if(releaseDate){
+      releaseDateStr='<ACTION>'+
+                     '<HOLD HoldUntilDate="'+releaseDate+'"></HOLD>'+
+                     '</ACTION>';
+     }
+
+     if(mode==="Edit"){
+      modeAction='<ACTION>' +
+                 '  <MODIFY/>' +
+                 '</ACTION>' 
+     }else{
+      modeAction= '<ACTION>' +
+      '    			    <ADD/>' +
+      '    		    </ACTION>' 
+     }
 
      let submissionXml: Blob = new Blob([
        '<SUBMISSION_SET>' +
        '  <SUBMISSION>' +
        '	<ACTIONS>' +
-       '    		<ACTION>' +
-       '    			<MODIFY/>' +
-       '    		</ACTION>' +
+            		modeAction +
+                releaseDateStr +
        '    	</ACTIONS>' +
        '    </SUBMISSION>' +
        '</SUBMISSION_SET>']);
@@ -68,12 +99,11 @@ export class WebinRestService implements WebinRestServiceInterface {
        '<SUBMISSION_SET>' +
        '  <SUBMISSION broker_name="EGA">' +
        '	<ACTIONS>' +
-       '    		<ACTION>' +
-       '    			<MODIFY/>' +
-       '    		</ACTION>' +
+                  modeAction  +
        '    		<ACTION>' +
        '    			<PROTECT/>' +
        '    		</ACTION>' +
+                  releaseDateStr +
        '    	</ACTIONS>' +
        '    </SUBMISSION>' +
        '</SUBMISSION_SET>']);
@@ -121,8 +151,10 @@ export class WebinRestService implements WebinRestServiceInterface {
 
     console.log('** webin submission form data **', formData);
     return this.post(formData);
+    
   }
 
+ 
   submitXml(
     submissionXml: Blob,
     studyXml: Blob,
@@ -204,4 +236,6 @@ export class WebinRestService implements WebinRestServiceInterface {
 
     return receipt;
   }
+
+ 
 }

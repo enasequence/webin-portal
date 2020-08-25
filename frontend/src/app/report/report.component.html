@@ -261,7 +261,7 @@
 
           <td cdk-cell *cdkCellDef="let element">
             <span *ngIf="media.isActive('xs')">Action:</span>
-            <app-report-action [actions]="getActions(element)" (actionChange)="action($event)">
+            <app-report-action [actions]="getActions(element)" [reportData]='element' (actionChange)="action($event)">
             </app-report-action>
 
           </td>

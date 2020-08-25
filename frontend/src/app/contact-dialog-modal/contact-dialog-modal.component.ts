@@ -1,8 +1,9 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder} from '@angular/forms';
+import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {UtilService} from '../util/Util-services'
+import { NgModule } from '@angular/core';
 
 
 @Component({
@@ -22,11 +23,12 @@ export class ContactDialogModalComponent implements OnInit {
 
   contactObj={};
   
-  constructor( private formBuilder: FormBuilder, 
+  constructor( 
               public dialogRef: MatDialogRef<ContactDialogModalComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
               private util: UtilService) { 
       this.action = data.action;
+      console.log(data)
       this.emails=data.emailList;
       if(this.action!="Error"){
         this.copyObjectValue(data.contactObj,this.contactObj)

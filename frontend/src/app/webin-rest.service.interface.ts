@@ -16,7 +16,9 @@ export interface WebinRestServiceInterface {
 
     updateXml(
         reportType: ReportType,
-        xml: Blob): Observable<string>;
+        xml: Blob,
+        mode: string,
+        releaseDate:any): Observable<string>;
 
     submitXml(
         submissionXml: Blob,
