@@ -27,5 +27,5 @@ k8s-deploy:
     - export KUBECONFIG=./Kubernetes-cluster.yaml
     - kubectl delete secret gitlab
     - kubectl create secret docker-registry gitlab --docker-server=dockerhub.ebi.ac.uk --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL
-    - kubectl create -f Kubernetes-deployment.yaml --namespace=ena-dev
+    - kubectl create -f Kubernetes-deploy.yaml --namespace=ena-dev
     - kubectl create -f Kubernetes-service.yaml  --namespace=ena-dev
