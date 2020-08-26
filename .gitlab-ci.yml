@@ -3,7 +3,7 @@ services:
   - docker:dind
 
 before_script:
-  -export KUBECONFIG=./Kubernetes-cluster.yaml
+  - export KUBECONFIG=./Kubernetes-cluster.yaml
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx3g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
