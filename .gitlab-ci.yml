@@ -46,7 +46,7 @@ k8s-deploy-dev:
     - kubectl create secret docker-registry gitlab --docker-server=dockerhub.ebi.ac.uk --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL
     - kubectl apply -f Kubernetes-dev-deploy.yaml --namespace=ena-dev
 
-  k8s-deploy-test:
+k8s-deploy-test:
     image: dtzar/helm-kubectl
     stage: deploy
     script:
@@ -54,7 +54,7 @@ k8s-deploy-dev:
       - kubectl create secret docker-registry gitlab --docker-server=dockerhub.ebi.ac.uk --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL
       - kubectl apply -f Kubernetes-test-deploy.yaml --namespace=ena-test
 
-  k8s-deploy-prod:
+k8s-deploy-prod:
     image: dtzar/helm-kubectl
     stage: deploy
     script:
