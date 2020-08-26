@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-ARG configuration=production
 RUN npm run build -- --configuration $configuration
 
 ### STAGE 2: Run ###

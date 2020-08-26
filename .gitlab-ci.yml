@@ -15,9 +15,9 @@ stages:
 docker-build:
   stage: package
   script:
-    - docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal .
+    - docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal --build-arg configuration=production .
     - docker login dockerhub.ebi.ac.uk -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - docker tag dockerhub.ebi.ac.uk/enasequence/webin-portal dockerhub.ebi.ac.uk/enasequence/webin-portal:latest
+    - docker tag dockerhub.ebi.ac.uk/enasequence/webin-portal dockerhub.ebi.ac.uk/enasequence/webin-portal:dev
     - docker push dockerhub.ebi.ac.uk/enasequence/webin-portal
 
 k8s-deploy:
