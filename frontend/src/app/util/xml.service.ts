@@ -234,7 +234,7 @@ getlocusTagXmlTags(locusTagArray){
       width: '500px',
       backdropClass: 'custom-dialog-backdrop-class',
       panelClass: 'custom-dialog-panel-class',
-      data: {'action':'Error','message':message,'title':'Study Submission'}
+      data: {'action':'Error','message':message,'title':'Study Redistration Error'}
     });
 
  }

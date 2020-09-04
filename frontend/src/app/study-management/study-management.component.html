@@ -38,8 +38,8 @@
     </mat-card>
   <!-- #################### P U B M E D    R E G I S T R A T I O N #################### -->
     <mat-card class="mat-body">
-      <mat-card-subtitle>PubMed Registration</mat-card-subtitle>
-      <a (click)="addPubMed()">Add PubMed <mat-icon>add_circle</mat-icon></a>
+      <mat-card-subtitle>PubMed Citations Registration</mat-card-subtitle>
+      <a (click)="addPubMed()">Add PubMed Citations <mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showPubMedSearch" >
         <mat-form-field  class="app-field-padding">
             <input matInput placeholder="Search PubMedId" [matAutocomplete]="auto" name="pubMedSearch" #pubMedSearchVal="ngModel" [(ngModel)]="pubMedSearch" (ngModelChange)="getPubMed(pubMedSearch)">
@@ -78,8 +78,8 @@
 <!-- ####################   A T T R I B U T E   R G I S T R A T I O N  #################### -->
 
     <mat-card class="mat-body">
-      <mat-card-subtitle>Project Attributes</mat-card-subtitle>
-      <a (click)="showAttributeAddPanel()">Add Attribute <mat-icon>add_circle</mat-icon></a>
+      <mat-card-subtitle>Study Attributes</mat-card-subtitle>
+      <a (click)="showAttributeAddPanel()">Add Study Attributes <mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showAttributeAdd">
         <div class="row">
           <div class="column3">
@@ -125,8 +125,8 @@
     <!-- ####################   L O C U S - T A G   R G I S T R A T I O N  #################### -->
 
     <mat-card class="mat-body"  >
-      <mat-card-subtitle>Locus Tag Registration</mat-card-subtitle>
-      <a (click)="showLocusTagAddPanel()">Add Locus Tag <mat-icon>add_circle</mat-icon></a>
+      <mat-card-subtitle>Locus Tag Prefix Registration</mat-card-subtitle>
+      <a (click)="showLocusTagAddPanel()">Add Locus Tag Prefixes<mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showLocusTagAdd">
         <div class="row">
           <div class="column">
