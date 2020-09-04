@@ -128,8 +128,9 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   save() {
+    var action={name:"Edit"};
     const observable: Observable<string> = this._webinRestService.updateXml(
-      this.data.reportType, new Blob([ this.xml ]),'Edit',null);
+      this.data.reportType, new Blob([ this.xml ]),action,null);
 
     this.submissionResult.submit(observable);
   }

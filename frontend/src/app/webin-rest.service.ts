@@ -63,33 +63,19 @@ export class WebinRestService implements WebinRestServiceInterface {
   updateXml(
     reportType: ReportType,
     xml: Blob,
-    mode: string,
+    action: Object,
     releaseDate: any): Observable<string> {
      console.log('** Update XML **');
      const formData: FormData = new FormData();
-     var releaseDateStr=""; 
-     var modeAction="";
-     if(releaseDate){
-      releaseDateStr='<ACTION>'+
-                     '<HOLD HoldUntilDate="'+releaseDate+'"></HOLD>'+
-                     '</ACTION>';
-     }
-
-     if(mode==="Edit"){
-      modeAction='<ACTION>' +
-                 '  <MODIFY/>' +
-                 '</ACTION>' 
-     }else{
-      modeAction= '<ACTION>' +
-      '    			    <ADD/>' +
-      '    		    </ACTION>' 
-     }
-
+     var mode=action["name"];
+     
+     var releaseDateStr=this.getReleaseDateStr(action,mode,releaseDate)  
+     var actionString=this.getActionStr(action,mode);
      let submissionXml: Blob = new Blob([
        '<SUBMISSION_SET>' +
        '  <SUBMISSION>' +
        '	<ACTIONS>' +
-            		modeAction +
+                actionString +
                 releaseDateStr +
        '    	</ACTIONS>' +
        '    </SUBMISSION>' +
@@ -99,7 +85,7 @@ export class WebinRestService implements WebinRestServiceInterface {
        '<SUBMISSION_SET>' +
        '  <SUBMISSION broker_name="EGA">' +
        '	<ACTIONS>' +
-                  modeAction  +
+                  actionString  +
        '    		<ACTION>' +
        '    			<PROTECT/>' +
        '    		</ACTION>' +
@@ -237,5 +223,35 @@ export class WebinRestService implements WebinRestServiceInterface {
     return receipt;
   }
 
+  getActionStr(action,mode){
+    var actionStr="";
+    if(mode==="Edit"){
+       
+      actionStr='<ACTION>' +
+                 '  <MODIFY/>' +
+                 '</ACTION>' ;
+     }else{
+      actionStr= '<ACTION>' +
+      '    			    <ADD/>' +
+      '    		    </ACTION>' 
+     }
+
+     return actionStr;
+  }
+
+  getReleaseDateStr(action,mode,releaseDate){
+    var releaseDateStr="";
+    var targetStr="";
+
+    if(mode==="Edit" && action["id"]){
+      targetStr='target="'+action["id"]+'"';
+    }   
+    if(releaseDate){     
+      releaseDateStr='<ACTION>'+
+                     '<HOLD '+targetStr+' HoldUntilDate="'+releaseDate+'"></HOLD>'+
+                     '</ACTION>';
+     }
+     return releaseDateStr;
+  }
  
 }

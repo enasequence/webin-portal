@@ -161,54 +161,53 @@ updateEmailsArray(){
   }
 }
 
-async submitAccount(form){
- var submissionAccount=form.value;
- submissionAccount["submissionContacts"]=this.contactArray;
- this.deleteServerContacts(); 
- this.saveNewContacts();
- (await this.util.saveSubmissionAccount(submissionAccount,this.editMode)).
- subscribe((data:any) => { 
-    this.deletedContacts=[];
-    this.openDialog('Success',data);
-  },(error) => {
-    this.openDialog('Error',error); 
-  });
+submitAccount(form){
+  var submissionAccount=form.value;
+  submissionAccount["submissionContacts"]=this.contactArray;
+  this.deleteServerContacts(); 
+  this.saveNewContacts();
+  this.util.saveSubmissionAccount(submissionAccount,this.editMode).
+  subscribe((data:any) => { 
+      this.deletedContacts=[];
+      this.openDialog('Success',data);
+    },(error) => {
+      this.openDialog('Error',error); 
+    });
 }
 
-async getCountries(prefix){
-  (await this.util.getCountries(prefix)).
-  subscribe((data:any) => {
-    this.countries=data;
-  });
-}
-
-async loadUserInfo(username){
-  (await this.util.getAccountDetails()).
-  subscribe((data:any) => {
-    this.setAccountInformation(data);
-  });
-}
-
-async saveNewContacts(){
-  for (const contact of this.newContacts) {
-    (await this.util.saveNewContact(contact)).
-    
+ getCountries(prefix){
+   this.util.getCountries(prefix).
     subscribe((data:any) => {
-      if(data){
-        console.log("Created "+contact.emailAddress)
-      }
-    }); 
+      this.countries=data;
+    });
+}
+
+ loadUserInfo(username){
+  this.util.getAccountDetails().
+    subscribe((data:any) => {
+      this.setAccountInformation(data);
+    });
+}
+
+ saveNewContacts(){
+  for (const contact of this.newContacts) {
+    this.util.saveNewContact(contact).
+      subscribe((data:any) => {
+        if(data){
+          console.log("Created "+contact.emailAddress)
+        }
+      }); 
   };
 }
 
-async deleteServerContacts(){
+deleteServerContacts(){
   for (const contact of this.deletedContacts) {
-    (await this.util.deleteContact(contact)).
-    subscribe((data:any) => {
-      if(data){
-        console.log("Deleted "+contact.emailAddress)
-      }
-    }); 
+    this.util.deleteContact(contact).
+      subscribe((data:any) => {
+        if(data){
+          console.log("Deleted "+contact.emailAddress)
+        }
+      }); 
   };
 }
 

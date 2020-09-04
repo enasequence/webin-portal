@@ -36,14 +36,13 @@ export class ResetPasswordPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  async resetPassword(form){
-    
-    (await this.util.resetPassword(form.value,this.token)).
- subscribe((data:any) => { 
-    this.openDialog('Reset-Password-Success',data);
-  },(error) => {
-    this.openDialog('Reset-Password-Error',error); 
-  });
+   resetPassword(form){
+    (this.util.resetPassword(form.value,this.token)).
+      subscribe((data:any) => { 
+          this.openDialog('Reset-Password-Success',data);
+        },(error) => {
+          this.openDialog('Reset-Password-Error',error); 
+        });
   }
 
   openDialog(action,obj): void {

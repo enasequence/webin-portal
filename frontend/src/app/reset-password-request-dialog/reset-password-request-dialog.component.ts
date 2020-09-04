@@ -32,16 +32,16 @@ export class ResetPasswordRequestDialogComponent implements OnInit {
   ngOnInit() {
   }
   
-  async doAction(form){
+  doAction(form){
     var resetPassReq=form.value;
-    (await this.util.sendResetPasswordRequest(resetPassReq)).
- subscribe((data:any) => { 
-  this.closePopup();
-    data={"emailAddress": resetPassReq.emailAddress}
-    this.openDialog('Success',data);
- },(error) => {
-    this.openDialog('Error',error); 
-  });
+    this.util.sendResetPasswordRequest(resetPassReq).
+      subscribe((data:any) => { 
+        this.closePopup();
+          data={"emailAddress": resetPassReq.emailAddress}
+          this.openDialog('Success',data);
+      },(error) => {
+          this.openDialog('Error',error); 
+        });
   }
 
 openDialog(action,obj): void {

@@ -45,17 +45,30 @@ export class StudyManagementComponent implements OnInit {
   description:string;
   releaseStatus: string;
   xmlString: string;
+  tag: string;
+  tagValue: string;
+  locustag: string;
 
   pubMedArray: [];
+  attributeArray= [];
+  locusTagArray=[];
   selectedPubMedArray= [];
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['id', 'title','remove'];
+  attributeDataSource: MatTableDataSource<any>;
+  attributeDisplayColumn: string[] = ['tag','tagValue','remove']
+  locusTagDataSource: MatTableDataSource<any>;
+  locusTagDisplayColumn: string[] = ['locusTag','remove']
   showPubMedSearch = false;
+  showAttributeAdd = false;
+  showLocusTagAdd = false;
+
   pubMedSearch="";
   today=new Date();
   maxDate: any;
   id: any;
   action: string;
+  showLoadingFlag=false;
   
   constructor(private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,) { 
     var date=new Date();
@@ -72,15 +85,17 @@ export class StudyManagementComponent implements OnInit {
     
   }
 
-  async getPubMed(searchVal){
-    (await this.util.getPubMed(searchVal)).
+  getPubMed(searchVal){
+    this.showLoading();
+    this.util.getPubMed(searchVal).
       subscribe((data:any) => {
           this.pubMedArray=data.resultList.result;
+          this.hideLoading();
   });
   }
 
-  async showExistingPubMed(id){
-    (await this.util.getPubMedById(id)).
+  showExistingPubMed(id){
+    (this.util.getPubMedById(id)).
       subscribe((data:any) => {
         if(data.resultList.result.length>0){
           this.selectedPubMedArray.push(data.resultList.result[0]);
@@ -108,6 +123,14 @@ export class StudyManagementComponent implements OnInit {
     this.showPubMedSearch=true;
   }
 
+  showAttributeAddPanel(){
+    this.showAttributeAdd=true;
+  }
+
+  showLocusTagAddPanel(){
+    this.showLocusTagAdd=true;
+  }
+
   removePubMed(pubMedObj){
     var index = this.selectedPubMedArray.map(function(item) { return item.id; }).indexOf(pubMedObj.id);
     this.selectedPubMedArray.splice(index, 1);
@@ -115,23 +138,29 @@ export class StudyManagementComponent implements OnInit {
   }
 
   submitStudy(form){
+    this.showLoading()
     if(this.action!="Edit"){
-      this.xmlUtil.generateStudyXml(form.value,this.selectedPubMedArray);
+      this.xmlUtil.generateStudyXml(form.value,this.selectedPubMedArray,this.attributeArray,this.locusTagArray);
     }else{
-      this.xmlUtil.updateProjectXml(this.xmlString,form.value,this.selectedPubMedArray);
+      this.xmlUtil.updateProjectXml(this.xmlString,form.value,this.selectedPubMedArray,this.attributeArray,this.locusTagArray);
     }
+    this.hideLoading()
   }
 
-  async initEdit(id){
-    (await this.util.getProjectDetails(id)).
+  
+
+  initEdit(id){
+    this.showLoading();
+    this.util.getProjectDetails(id).
     subscribe((data:any) => {
       this.setPageValuesfromReport(data[0].report);
     });
 
-    (await this.util.getProjectXml(id)).
+    this.util.getProjectXml(id).
     subscribe((xmlString:any) => {
       this.xmlString=xmlString;
       this.setPageValuesfromXml();
+      this.hideLoading();
     });
   }
 
@@ -151,11 +180,13 @@ export class StudyManagementComponent implements OnInit {
     this.description=descriptionTag.hasChildNodes() ? descriptionTag.childNodes[0].nodeValue : "";
     
     this.setPubMedDetails(xmlDoc);
+    this.setAttributeDetails(xmlDoc);
+    this.setLocusTagDetails(xmlDoc);
+    
   }
   
   setPubMedDetails(xmlDoc){
-    var projectLinks=xmlDoc.getElementsByTagName("PROJECT_LINKS").childNodes;
-    projectLinks = xmlDoc.getElementsByTagName("PROJECT_LINKS")[0];
+    var projectLinks = xmlDoc.getElementsByTagName("PROJECT_LINKS")[0];
     if(projectLinks){
       var xRefLink=projectLinks.getElementsByTagName("XREF_LINK");
       length=xRefLink.length
@@ -168,6 +199,65 @@ export class StudyManagementComponent implements OnInit {
       }
     }
   }
+
+  setAttributeDetails(xmlDoc){
+    var projectAttributes=xmlDoc.getElementsByTagName("PROJECT_ATTRIBUTE");
+    var projAttrLen=projectAttributes.length;
+    for(var i=0;i<projAttrLen;i++){
+      var tag=projectAttributes[i].getElementsByTagName("TAG")[0].childNodes[0].nodeValue; 
+      var tagValue=projectAttributes[i].getElementsByTagName("VALUE")[0].childNodes[0].nodeValue;
+      this.attributeArray.push({id:this.util.getId(),tag:tag,tagValue:tagValue});
+    }
+    if(this.attributeArray.length>0){
+      this.attributeDataSource = new MatTableDataSource<any>(this.attributeArray);
+    }
+  }
+
+  setLocusTagDetails(xmlDoc){
+    var locusTagPrefix=xmlDoc.getElementsByTagName("LOCUS_TAG_PREFIX");
+    var locusTagPrefixLen=locusTagPrefix.length;
+    for(var i=0;i<locusTagPrefixLen;i++){
+      var locusTag=locusTagPrefix[i].childNodes[0].nodeValue; 
+      this.locusTagArray.push({id:this.util.getId(),locusTag:locusTag});
+    }
+    if(this.locusTagArray.length>0){
+      this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);
+    }
+  }
   
+  addAttribute(){
+    this.attributeArray.push({id:this.util.getId(),tag:this.tag,tagValue:this.tagValue});
+    this.attributeDataSource = new MatTableDataSource<any>(this.attributeArray);
+    this.tag="";
+    this.tagValue="";
+    this.showAttributeAdd=false;
+  }
+
+  addlocusTag(){
+    this.locusTagArray.push({id:this.util.getId,locusTag:this.locustag});
+    this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);
+    this.locustag="";
+    this.showLocusTagAdd=false;
+  }
+
+
+  removeAttribute(attr){
+    var index = this.attributeArray.map(function(item) { return item.id; }).indexOf(attr.id);
+    this.attributeArray.splice(index, 1);
+    this.attributeDataSource = new MatTableDataSource<any>(this.attributeArray);  
+  }
+
+  removeLocusTag(element){
+    var index = this.attributeArray.map(function(item) { return item.id; }).indexOf(element.id);
+    this.locusTagArray.splice(index, 1);
+    this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);  
+  }
  
+  showLoading(){
+    this.showLoadingFlag=true;
+  }
+
+  hideLoading(){
+    this.showLoadingFlag=false;
+  }
 }
