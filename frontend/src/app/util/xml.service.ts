@@ -5,10 +5,7 @@ import { WebinRestService } from '../webin-rest.service';
 import { ReportType } from '../report-type.enum';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 import { UtilService } from '../util/Util-services';
-import { PopupMessageComponent } from '../popup-message/popup-message.component';
-import { MatDialog } from '@angular/material/dialog';
 
 
 @Injectable({
@@ -17,7 +14,6 @@ import { MatDialog } from '@angular/material/dialog';
 export class XmlService {
 
   constructor(
-    public dialog: MatDialog,
     private _webinAuthenticationService:WebinAuthenticationService,
     private _webinRestService:WebinRestService,
     private util:UtilService) { }
@@ -47,7 +43,7 @@ export class XmlService {
     var action={name:"add"};
     let dateStr=this.getFormatedReleseDate(new Date(form.releaseDate));
     const observable: Observable<string>=this._webinRestService.updateXml(ReportType.projects,projectXml,'Add',dateStr)
-    this.handleServerResponse(observable);
+    return observable;
   }
 
   
@@ -122,7 +118,8 @@ getlocusTagXmlTags(locusTagArray){
   
   var action={name:"Edit",id:form.id};
   const observable: Observable<string>=this._webinRestService.updateXml(ReportType.projects,new Blob([xmlDocStr]),action,dateStr)
-  this.handleServerResponse(observable);
+  //this.handleServerResponse(observable);
+  return observable;
  }
 
  updateProjectLinks(xmlDoc,pubMedXml) {
@@ -173,7 +170,6 @@ getlocusTagXmlTags(locusTagArray){
     xmlDoc.getElementsByTagName("SEQUENCING_PROJECT")[0].append(locusTagXml.getElementsByTagName("LOCUS_TAG_PREFIX")[0]);
   }
 
-  //xmlDoc.getElementsByTagName("SEQUENCING_PROJECT")[0].append(locusTagXml.getElementsByTagName("SEQUENCING_PROJECT")[0])
  }
 
  getAlias(){
@@ -187,57 +183,12 @@ getlocusTagXmlTags(locusTagArray){
   return currdate.getDate()+"-"+currdate.getMonth()+"-"+currdate.getFullYear()+"-"+currdate.getHours()+"-"+currdate.getMinutes()+"-"+currdate.getSeconds()+"-"+currdate.getMilliseconds(); 
  }
 
- handleServerResponse(observable){
-  if (observable) {
-    observable.pipe(
-      retry(3)
-    ).subscribe(
-      data => {
-          let result = this._webinRestService.parseResult(data);
-          if (result.isError) {
-            console.log(result.errors)
-            let message=result.errors[0]["error"];
-            this.showErrorPopup(message)
-          } else {
-            
-            console.log(result.accessions);
-            let message="Successfully subimited project with project identification : "+result.accessions[0]["accession"];
-            this.showSuccessPopup(message);
-            
-          }
-      },
-      (err: HttpErrorResponse) => {
-        console.error('** Webin submission service failed **', err);
-        const message = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
-        this.showErrorPopup(message);
-    }
-  
-  );
-
-  }
- }
-
+ 
  getFormatedReleseDate(date){
   return date.getFullYear()+"-"+("0" + (date.getMonth() + 1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2); 
 }
 
- showSuccessPopup(message){
-  const dialogRef = this.dialog.open(PopupMessageComponent, {
-    width: '500px',
-    backdropClass: 'custom-dialog-backdrop-class',
-    panelClass: 'custom-dialog-panel-class',
-    data: {'action':'Success','message':message,'title':'Study Submission'}
-  });
- }
-  showErrorPopup(message){
-    const dialogRef = this.dialog.open(PopupMessageComponent, {
-      width: '500px',
-      backdropClass: 'custom-dialog-backdrop-class',
-      panelClass: 'custom-dialog-panel-class',
-      data: {'action':'Error','message':message,'title':'Study Redistration Error'}
-    });
-
- }
+ 
 
 
 }

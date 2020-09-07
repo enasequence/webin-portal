@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from '../util/Util-services'
 import { XmlService } from '../util/xml.service'
+import { WebinRestService } from '../webin-rest.service';
 
 import { MatTableDataSource, MAT_DATE_LOCALE } from '@angular/material';
 import { Observable } from 'rxjs'
@@ -9,6 +10,9 @@ import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { PopupMessageComponent } from '../popup-message/popup-message.component';
+import { MatDialog } from '@angular/material/dialog';
   
   const moment =  _moment;
   export const CUSTOM_FORMATS = {
@@ -70,7 +74,7 @@ export class StudyManagementComponent implements OnInit {
   action: string;
   showLoadingFlag=false;
   
-  constructor(private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,) { 
+  constructor(public dialog: MatDialog,private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,private _webinRestService:WebinRestService,) { 
     var date=new Date();
     this.maxDate = new Date(date.getFullYear() + 2, date.getMonth(),date.getDate());
     
@@ -139,12 +143,14 @@ export class StudyManagementComponent implements OnInit {
 
   submitStudy(form){
     this.showLoading()
+    var observable: Observable<string>;
     if(this.action!="Edit"){
-      this.xmlUtil.generateStudyXml(form.value,this.selectedPubMedArray,this.attributeArray,this.locusTagArray);
+       observable=this.xmlUtil.generateStudyXml(form.value,this.selectedPubMedArray,this.attributeArray,this.locusTagArray);
     }else{
-      this.xmlUtil.updateProjectXml(this.xmlString,form.value,this.selectedPubMedArray,this.attributeArray,this.locusTagArray);
+      observable=this.xmlUtil.updateProjectXml(this.xmlString,form.value,this.selectedPubMedArray,this.attributeArray,this.locusTagArray);
     }
-    this.hideLoading()
+    this.handleServerResponse(observable);
+      
   }
 
   
@@ -260,4 +266,55 @@ export class StudyManagementComponent implements OnInit {
   hideLoading(){
     this.showLoadingFlag=false;
   }
+
+  handleServerResponse(observable){
+    if (observable) {
+      observable.pipe(
+        retry(3)
+      ).subscribe(
+        data => {
+            let result = this._webinRestService.parseResult(data);
+            if (result.isError) {
+              console.log(result.errors)
+              let message=result.errors[0]["error"];
+              this.showErrorPopup(message)
+            } else {
+              
+              console.log(result.accessions);
+              let message="Successfully subimited project with project identification : "+result.accessions[0]["accession"];
+              this.showSuccessPopup(message);
+              
+            }
+            this.hideLoading();
+        },
+        (err: HttpErrorResponse) => {
+          console.error('** Webin submission service failed **', err);
+          const message = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          this.showErrorPopup(message);
+          this.hideLoading();
+      }
+    
+    );
+  
+    }
+   }
+
+   showSuccessPopup(message){
+    const dialogRef = this.dialog.open(PopupMessageComponent, {
+      width: '500px',
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: {'action':'Success','message':message,'title':'Study Submission'}
+    });
+   }
+   
+    showErrorPopup(message){
+      const dialogRef = this.dialog.open(PopupMessageComponent, {
+        width: '500px',
+        backdropClass: 'custom-dialog-backdrop-class',
+        panelClass: 'custom-dialog-panel-class',
+        data: {'action':'Error','message':message,'title':'Study Redistration Error'}
+      });
+  
+   }
 }
