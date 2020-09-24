@@ -1,13 +1,22 @@
 <div class="body">
+  
   <div>
     <div class="back-div" ><mat-icon matTooltip="Back" routerLink="">arrow_back_ios</mat-icon></div>
-    <div class="mat-h3 mat-tittle">Download spreadsheet template for annotated sequences</div>
+    <div *ngIf="checklistType === ChecklistType.sample" class="mat-h3 mat-tittle">Register Samples using spreadsheet template</div>
+    <div *ngIf="checklistType === ChecklistType.sequence" class="mat-h3 mat-tittle">Spreadsheet templates for Annoted sequences</div>
   </div>
   <mat-divider></mat-divider>
 
   <div class="container">
-
-  <mat-card class="mat-body">
+    <mat-accordion>
+      
+    <mat-expansion-panel  (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b *ngIf="checklistType === ChecklistType.sequence">Download spreadsheet template for annotated sequences</b>
+          <b *ngIf="checklistType === ChecklistType.sample">Download spreadsheet to register samples</b>
+        </mat-panel-title>  
+      </mat-expansion-panel-header>
   <div *ngIf="!checklistGroupDataSource && !init" class="mat-body">
 
     <p *ngIf="checklistType === ChecklistType.sample">
@@ -49,7 +58,9 @@
       {{dataError}}
     </div>
   </div>
-
+  
+  
+  
   <mat-vertical-stepper #stepper *ngIf="checklistGroupDataSource">
     <mat-step label="Select checklist group">
       <p>Please select a checklist group first.</p>
@@ -119,7 +130,7 @@
             <mat-expansion-panel *ngFor="let fieldGroup of selectedChecklist.fieldGroups">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  {{fieldGroup.name}}<span fxHide fxShow.gt-sm> {{getSelectedFieldsDisplayText(fieldGroup)}}</span>
+                 {{fieldGroup.name}}<span fxHide fxShow.gt-sm> {{getSelectedFieldsDisplayText(fieldGroup)}}</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
@@ -211,9 +222,32 @@
 
     </mat-step>
   </mat-vertical-stepper>
-</mat-card>
+  </mat-expansion-panel>
+  <mat-expansion-panel *ngIf="checklistType === ChecklistType.sample" (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>Upload filled spreadsheet to register samples</b>
+      </mat-panel-title>  
+    </mat-expansion-panel-header>
+  <form  (ngSubmit)="uploadFile(form)" #form="ngForm">
+    <div>
+      <p>If you have downloaded and filled a template spreadsheet please upload it using the <b>Submit Completed Spreadsheet</b> button.</p>
+      <br>
+      <p>Please note that only spreadsheets in tab-delimited text format are supported (with either .tsv or .txt or .tab extensions). If you edited the spreadsheet in Microsoft Excel (or equivalent) please save the spreadsheet as Text (Tab delimited). To do this please see <a href="https://support.office.com/en-us/article/Import-or-export-text-txt-or-csv-runs-5250ac4c-663c-47ce-937b-339e391393ba?ui=en-US&amp;rs=en-US&amp;ad=US#bmexport" target="_blank">these instructions</a>.</p></div>
+    <input type="file" required name="spreadSheet" [(ngModel)]="form.spreadSheet" observeFiles />
+    <button mat-raised-button color="accent" [disabled]="form.invalid ">Submit Completed Spreadsheet</button>
+    
+  </form>
+</mat-expansion-panel>
 
+</mat-accordion>
 
+<div class="centred" *ngIf="showLoadingFlag" style="height:70px;">
+  <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+  </mat-spinner>
+</div>
 
   </div>
+
 </div>

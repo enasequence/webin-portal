@@ -43,10 +43,14 @@
       <mat-card>
           <mat-card-subtitle>Spreadsheet Templates</mat-card-subtitle>
         <div class="cat-element">
+          <span [routerLink]="['/app-checklist','sample',true]">
+            <mat-icon class="system_update_alt">system_update_alt</mat-icon>
+            <p class="mat-small mat-caption">Register samples</p>
+          </span> 
           <span [routerLink]="['/app-checklist','sequence',true]">
-          <mat-icon class="system_update_alt">system_update_alt</mat-icon>
-          <p class="mat-small mat-caption">Annotated Sequences</p>
-        </span> 
+            <mat-icon class="system_update_alt">system_update_alt</mat-icon>
+            <p class="mat-small mat-caption">Annotated Sequences</p>
+          </span> 
         </div>
       </mat-card>
     

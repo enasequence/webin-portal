@@ -23,20 +23,23 @@
             <mat-form-field  class="app-field-padding">
                 <input  matInput placeholder="Study Name" [(ngModel)]="studyName" name="studyName">
             </mat-form-field>     
-            <!-- <mat-checkbox matInput name="provideGenomeAnnotation" [(ngModel)]="provideGenomeAnnotation" >Will you provide functional genome annotation</mat-checkbox> -->
+            <mat-checkbox matInput name="provideGenomeAnnotation" (click)="setGenomeAnotation($event)" [(ngModel)]="provideGenomeAnnotation" >Will you provide functional genome annotation</mat-checkbox>
           </div>
           <div class="column" *ngIf="!editMode">
             <mat-form-field  class="app-field-padding">
                 <input  matInput placeholder="Short descriptive study title" required [(ngModel)]="studyTitle" name="studyTitle">
             </mat-form-field>
             <mat-form-field  class="app-field-padding">
-                <input  matInput placeholder="Detailed study abstract" required [(ngModel)]="description" name="description">
+                <textarea rows="6" matInput placeholder="Detailed study abstract" required [(ngModel)]="description" name="description"></textarea>
             </mat-form-field>
           </div>
           
         </div>
     </mat-card>
+
+
   <!-- #################### P U B M E D    R E G I S T R A T I O N #################### -->
+
     <mat-card class="mat-body">
       <mat-card-subtitle>PubMed Citations Registration</mat-card-subtitle>
       <a (click)="addPubMed()">Add PubMed Citations <mat-icon>add_circle</mat-icon></a>
@@ -50,6 +53,9 @@
             </mat-option>
         </mat-autocomplete>
       </div>  
+      <mat-error *ngIf="showDuplicatePubMedErr">
+        Selected PubMed Citations is already added.
+      </mat-error>
        <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">
   
         <ng-container matColumnDef="id">
@@ -84,12 +90,12 @@
         <div class="row">
           <div class="column3">
             <mat-form-field  class="app-field-padding">
-                <input matInput  placeholder="Tag" name="tag"  [(ngModel)]="tag" required> 
+                <input matInput  placeholder="Tag" name="tag"  [(ngModel)]="tag"> 
             </mat-form-field>
           </div>
           <div class="column3">
             <mat-form-field  class="app-field-padding">
-              <input matInput  placeholder="Value" name="tagValue" [(ngModel)]="tagValue" required>
+              <input matInput  placeholder="Value" name="tagValue" [(ngModel)]="tagValue">
             </mat-form-field>
           </div>
           <div class="column3">
@@ -124,14 +130,15 @@
 
     <!-- ####################   L O C U S - T A G   R G I S T R A T I O N  #################### -->
 
-    <mat-card class="mat-body"  >
+  
+  <mat-card class="mat-body"  *ngIf="provideGenomeAnnotation">
       <mat-card-subtitle>Locus Tag Prefix Registration</mat-card-subtitle>
       <a (click)="showLocusTagAddPanel()">Add Locus Tag Prefixes<mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showLocusTagAdd">
         <div class="row">
           <div class="column">
             <mat-form-field  class="app-field-padding">
-                <input matInput  placeholder="Locus Tag" name="locustag"  [(ngModel)]="locustag" required> 
+                <input matInput  placeholder="Locus Tag" name="locustag"  [(ngModel)]="locustag"> 
             </mat-form-field>
           </div>
           
@@ -168,7 +175,8 @@
   
    <div style="text-align:Center">
     <button mat-raised-button color="accent" [disabled]="f.invalid || mainContact <= 0">Save</button>
-    <button mat-raised-button style="margin-left: 5px;" routerLink="/report/studies">Cancel</button>
+    <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;" routerLink="/report/studies">Cancel</button>
+    <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;" routerLink="">Cancel</button>
   </div>
   </form>  
   </div>

@@ -52,6 +52,8 @@ import { StudyManagementComponent } from './study-management/study-management.co
 import { PopupMessageComponent } from './popup-message/popup-message.component';
 import { FormsModule }   from '@angular/forms';
 import { MatIconModule, MatCardSubtitle } from '@angular/material';
+import { FileInputValueAccessor  } from './directives/file-input.accessor.directive';
+import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
 
 const appRoutes: Routes = [
   {
@@ -157,6 +159,8 @@ const appRoutes: Routes = [
     ResetPasswordPageComponent,
     StudyManagementComponent,
     PopupMessageComponent,
+    FileInputValueAccessor,
+    DiableAutofillDirective,
     
   ],
   bootstrap: [

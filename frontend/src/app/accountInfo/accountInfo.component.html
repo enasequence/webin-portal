@@ -4,7 +4,7 @@
     <div class="mat-h3 mat-tittle">Account Management</div>
   </div>
   <mat-divider></mat-divider>
-  <form  (ngSubmit)="submitAccount(f)" #f="ngForm" [appMatchPassword]="['webinPassword', 'confirmPassword']">
+  <form  (ngSubmit)="submitAccount(f)" #f="ngForm" [appMatchPassword]="['webinPassword', 'confirmPassword']" autocomplete="false">
   <div class="container">
 
     <mat-card>
@@ -16,14 +16,19 @@
           </mat-form-field>
           <mat-form-field  class="app-field-padding">
             <input name="centerName" matInput placeholder="Center Name" required [(ngModel)]="centerName">
+            <mat-hint *ngIf="editMode">
+              Changing Center Name will not affect existing submissions
+            </mat-hint>
           </mat-form-field>
+          
+          
           <mat-form-field  class="app-field-padding">
             <input  matInput placeholder="Laboratory Name" [(ngModel)]="laboratoryName" name="laboratoryName">
           </mat-form-field>
           <mat-form-field  class="app-field-padding">
             <input  matInput placeholder="Address" required [(ngModel)]="address" name="address">
           </mat-form-field>
-         <mat-form-field  class="app-field-padding">
+          <mat-form-field  class="app-field-padding">
             <input matInput placeholder="Country" [matAutocomplete]="auto" name="country" #countryVal="ngModel" [(ngModel)]="country" (ngModelChange)="getCountries(country)">
           </mat-form-field>
           <mat-autocomplete #auto="matAutocomplete">
@@ -36,13 +41,13 @@
         </div>
         <div class="column" *ngIf="!editMode">
           <mat-form-field  class="app-field-padding">
-            <input matInput [disabled]="editMode" type="password" placeholder="Password" required [(ngModel)]="webinPassword" name="webinPassword">
+            <input matInput [disabled]="editMode" type="password" placeholder="Password" required [(ngModel)]="webinPassword" name="webinPassword" autocomplete="new-password">
             
           </mat-form-field>
           <mat-form-field  class="app-field-padding">
-            <input  matInput [disabled]="editMode" type="password" placeholder="Confirm Password" required [(ngModel)]="confirmPassword" name="confirmPassword">
+            <input matInput [disabled]="editMode" type="password" placeholder="Confirm Password" required [(ngModel)]="confirmPassword" name="confirmPassword"  autocomplete="new-password">
             <mat-error *ngIf="f.controls['confirmPassword']?.errors?.passwordMismatch">
-              Password and Confirm password dose not match
+              Passwords do not match
             </mat-error>
           </mat-form-field>
         </div>
@@ -56,7 +61,7 @@
 
   <mat-card class="mat-body">
     <mat-card-subtitle>Contact Information</mat-card-subtitle>
-    <a (click)="openDialog('Add',{'submissionAccountId':id})">Add new contact <mat-icon>add_circle</mat-icon></a>
+    <a (click)="openDialog('Add',{'submissionAccountId':id})">Add At Least One Contact<mat-icon>add_circle</mat-icon></a>
 
      <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -98,9 +103,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     
-    <mat-error *ngIf="mainContact <= 0 ">
+    <!--<mat-error *ngIf="mainContact <= 0 ">
       Please enter atlease one primary contact to save the account.
-   </mat-error>
+   </mat-error>-->
   </mat-card>
  </div>
 

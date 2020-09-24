@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material';
 import { UtilService } from '../util/Util-services'
 import { getLocaleDayNames } from '@angular/common';
 import { mergeMap, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { Compiler } from '@angular/core';
 import { ResetPasswordRequestDialogComponent } from '../reset-password-request-dialog/reset-password-request-dialog.component'
@@ -47,7 +48,7 @@ export class AccountInfoComponent {
 
   editMode=false;
 
-  constructor(public dialog: MatDialog,private util: UtilService,private _webinAuthenticationService: WebinAuthenticationService,private _compiler: Compiler) {
+  constructor(private _router: Router,public dialog: MatDialog,private util: UtilService,private _webinAuthenticationService: WebinAuthenticationService,private _compiler: Compiler) {
     _compiler.clearCache();
     this.mainContact=0;
     if(_webinAuthenticationService.authenticated){
@@ -88,6 +89,14 @@ export class AccountInfoComponent {
         }
         if(result.event==='Delete'){
           this.deleteContactRow(contactObj);
+        }
+
+        if(result.event==='CloseSuccess'){
+          if(!this.editMode){
+            this._router.navigateByUrl('');
+          } else{
+            this._router.navigateByUrl('/accountInfo');
+          }
         }
 
         this.updateMainContact(contactObj)

@@ -6,6 +6,10 @@
   padding: 10px 0px 0px 0px;
 }
 
+mat-card{
+  margin:10px;
+}
+
 .checklist-restriction {
   color: black;
   background-color:	#F5F5F5;
@@ -37,4 +41,10 @@
   float: left;
   padding-top: 2px;
   cursor: pointer;
+}
+
+.centred{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
 }

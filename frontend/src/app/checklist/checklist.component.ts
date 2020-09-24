@@ -11,7 +11,7 @@
 
 import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { retry, mergeMap, map } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
@@ -21,7 +21,10 @@ import { ChecklistFieldGroupInterface } from '../checklist-field-group.interface
 import { ChecklistFieldInterface } from '../checklist-field.interface';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
+import { WebinRestService } from '../webin-rest.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { PopupMessageComponent } from '../popup-message/popup-message.component';
 
 interface BooleanFieldInterface {
   [key: string]: boolean;
@@ -51,11 +54,15 @@ export class ChecklistComponent implements OnInit {
   mandatoryFields: BooleanFieldInterface;
   active: boolean;
   dataError: string;
+  spreadSheet: File;
+  showLoadingFlag=false;
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinReportService: WebinReportService,
+    private _webinRestService: WebinRestService,
     private _route: ActivatedRoute,
+    public dialog: MatDialog,
     private activatedRoute: ActivatedRoute) {
     if (_route) {
       switch (_route.snapshot.data.checklistType) {
@@ -378,4 +385,81 @@ export class ChecklistComponent implements OnInit {
     const blob = new Blob([this.getSequenceSpreadsheetText()], { type: 'text/plain;charset=utf-8' });
     saveAs(blob, 'Sequence-' + this.selectedChecklist.id + '-' + dateText + '.tsv');
   }
+
+  uploadFile(form){
+    this.showLoading();
+    const formData: FormData = new FormData();
+    const observable: Observable<string> =
+      this._webinRestService.submitXml(
+        null,
+        null,
+        null,
+        form.spreadSheet,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null);
+        this.handleServerResponse(observable);
+  }
+
+  handleServerResponse(observable){
+    if (observable) {
+      observable.pipe(
+        retry(3)
+      ).subscribe(
+        data => {
+            let result = this._webinRestService.parseResult(data);
+            if (result.isError) {
+              console.log(result.errors)
+              let message=result.errors[0]["error"];
+              this.showErrorPopup(message)
+            } else {
+              
+              console.log(result.accessions);
+              let message="Successfully subimited project with project identification : "+result.accessions[0]["accession"];
+              this.showSuccessPopup(message);
+              
+            }
+            this.hideLoading();
+        },
+        (err: HttpErrorResponse) => {
+          console.error('** Webin submission service failed **', err);
+          const message = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          this.showErrorPopup(message);
+          this.hideLoading();
+      }
+    
+    );
+  
+    }
+   }
+
+   showLoading(){
+    this.showLoadingFlag=true;
+  }
+
+  hideLoading(){
+    this.showLoadingFlag=false;
+  }
+  
+   showSuccessPopup(message){
+    const dialogRef = this.dialog.open(PopupMessageComponent, {
+      width: '500px',
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: {'action':'Success','message':message,'title':'Study Submission'}
+    });
+   }
+
+    showErrorPopup(message){
+      const dialogRef = this.dialog.open(PopupMessageComponent, {
+        width: '500px',
+        backdropClass: 'custom-dialog-backdrop-class',
+        panelClass: 'custom-dialog-panel-class',
+        data: {'action':'Error','message':message,'title':'Study Redistration Error'}
+      });
+  
+   }
 }

@@ -47,6 +47,7 @@ export class StudyManagementComponent implements OnInit {
   studyName: string;
   studyTitle: string;
   description:string;
+  provideGenomeAnnotation:boolean;
   releaseStatus: string;
   xmlString: string;
   tag: string;
@@ -64,6 +65,7 @@ export class StudyManagementComponent implements OnInit {
   locusTagDataSource: MatTableDataSource<any>;
   locusTagDisplayColumn: string[] = ['locusTag','remove']
   showPubMedSearch = false;
+  showDuplicatePubMedErr = false;
   showAttributeAdd = false;
   showLocusTagAdd = false;
 
@@ -117,10 +119,16 @@ export class StudyManagementComponent implements OnInit {
   }
 
   selectedPubMed(event) {
-    this.selectedPubMedArray.push(event.option.value);
-    this.dataSource = new MatTableDataSource<any>(this.selectedPubMedArray);
-    this.pubMedSearch="";
-    this.showPubMedSearch=false;
+    var index = this.selectedPubMedArray.map(function(item) { return item.id; }).indexOf(event.option.value.id);
+    if(index===-1){
+      this.selectedPubMedArray.push(event.option.value);
+      this.dataSource = new MatTableDataSource<any>(this.selectedPubMedArray);
+      this.pubMedSearch="";
+      this.showPubMedSearch=false;
+      this.showDuplicatePubMedErr=false;
+    }else{
+      this.showDuplicatePubMedErr=true;
+    }
   }
 
   addPubMed(){
@@ -227,6 +235,7 @@ export class StudyManagementComponent implements OnInit {
       this.locusTagArray.push({id:this.util.getId(),locusTag:locusTag});
     }
     if(this.locusTagArray.length>0){
+      this.provideGenomeAnnotation=true;
       this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);
     }
   }
@@ -307,7 +316,7 @@ export class StudyManagementComponent implements OnInit {
       data: {'action':'Success','message':message,'title':'Study Submission'}
     });
    }
-   
+
     showErrorPopup(message){
       const dialogRef = this.dialog.open(PopupMessageComponent, {
         width: '500px',
@@ -316,5 +325,12 @@ export class StudyManagementComponent implements OnInit {
         data: {'action':'Error','message':message,'title':'Study Redistration Error'}
       });
   
+   }
+
+   setGenomeAnotation(event){
+     if(!event.target.checked){
+       this.locusTagArray=[];
+       this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);
+     }
    }
 }
