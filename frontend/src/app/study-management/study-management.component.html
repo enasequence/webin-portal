@@ -130,11 +130,11 @@
 
     <!-- ####################   L O C U S - T A G   R G I S T R A T I O N  #################### -->
 
-    <mat-card class="mat-body"  *ngIf="!provideGenomeAnnotation">
+    <mat-card class="mat-body"  *ngIf="provideGenomeAnnotation && !isProductionEnv">
       <mat-card-subtitle>Locus Tag Prefix Registration</mat-card-subtitle>
       <mat-body>Locus Tag Prefix registration is disabled in non production environment.</mat-body>
     </mat-card>
-  <mat-card class="mat-body"  *ngIf="provideGenomeAnnotation">
+  <mat-card class="mat-body"  *ngIf="provideGenomeAnnotation && isProductionEnv">
       <mat-card-subtitle>Locus Tag Prefix Registration</mat-card-subtitle>
       <a (click)="showLocusTagAddPanel()">Add Locus Tag Prefixes<mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showLocusTagAdd">

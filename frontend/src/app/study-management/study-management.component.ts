@@ -70,6 +70,7 @@ export class StudyManagementComponent implements OnInit {
   showDuplicatePubMedErr = false;
   showAttributeAdd = false;
   showLocusTagAdd = false;
+  isProductionEnv=environment.production;
 
   pubMedSearch="";
   today=new Date();
@@ -81,9 +82,6 @@ export class StudyManagementComponent implements OnInit {
   constructor(public dialog: MatDialog,private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,private _webinRestService:WebinRestService,) { 
     var date=new Date();
     this.maxDate = new Date(date.getFullYear() + 2, date.getMonth(),date.getDate());
-    if (environment.production) {
-      this.provideGenomeAnnotation=true;
-    }
     
     
   }
