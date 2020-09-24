@@ -13,6 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../environments/environment';
+
   
   const moment =  _moment;
   export const CUSTOM_FORMATS = {
@@ -79,6 +81,10 @@ export class StudyManagementComponent implements OnInit {
   constructor(public dialog: MatDialog,private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,private _webinRestService:WebinRestService,) { 
     var date=new Date();
     this.maxDate = new Date(date.getFullYear() + 2, date.getMonth(),date.getDate());
+    if (environment.production) {
+      this.provideGenomeAnnotation=true;
+    }
+    
     
   }
 
