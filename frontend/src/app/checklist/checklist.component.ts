@@ -418,7 +418,7 @@ export class ChecklistComponent implements OnInit {
             } else {
               
               console.log(result.accessions);
-              let message="Successfully subimited project with project identification : "+result.accessions[0]["accession"];
+              let message="Successfully uploaded spreadsheet template and the sample(s) are created.";
               this.showSuccessPopup(message);
               
             }

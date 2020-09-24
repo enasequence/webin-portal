@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StudyManagementComponent } from './study-management.component';
-import { MatInputModule,MatFormFieldModule , MatIconModule, MatDividerModule,MatCardSubtitle, MatFormField,MatLabel,MatDatepickerModule, MatCardModule,MatAutocompleteModule, MatTableModule, MatError, MatProgressSpinnerModule  } from '@angular/material'
+import { MatInputModule,MatFormFieldModule , MatIconModule, MatDividerModule,MatCardSubtitle, MatFormField,MatLabel,MatDatepickerModule, MatCardModule,MatAutocompleteModule, MatTableModule, MatError, MatProgressSpinnerModule,MatCheckboxModule  } from '@angular/material'
 import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder, FormsModule} from '@angular/forms';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +22,7 @@ describe('StudyManagementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, MatInputModule,MatFormFieldModule , HttpClientModule ,ObserversModule, FormsModule, MatIconModule, MatDividerModule,MatDatepickerModule, MatCardModule, MatAutocompleteModule ,MatTableModule, MatProgressSpinnerModule],
+      imports: [MatCheckboxModule,BrowserAnimationsModule, MatInputModule,MatFormFieldModule , HttpClientModule ,ObserversModule, FormsModule, MatIconModule, MatDividerModule,MatDatepickerModule, MatCardModule, MatAutocompleteModule ,MatTableModule, MatProgressSpinnerModule],
       declarations: [ StudyManagementComponent ],
       providers:[WebinAuthenticationService,WebinRestService,
         {provide: ActivatedRoute, useValue: fakeActivatedRoute},]

@@ -15,10 +15,12 @@ import { UiModule } from '../ui/ui.module';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { MockWebinAuthenticationService } from '../mock/mock-webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
+import { WebinRestService } from '../webin-rest.service';
 import { MockWebinReportService } from '../mock/mock-webin-report.service';
 
 import { ChecklistComponent } from './checklist.component';
 import { RouterModule } from '@angular/router';
+import { MockWebinRestService } from '../mock/mock-webin-rest.service';
 
 describe('ChecklistComponent', () => {
   let component: ChecklistComponent;
@@ -36,6 +38,10 @@ describe('ChecklistComponent', () => {
         {
           provide: WebinReportService,
           useClass: MockWebinReportService
+        },
+        {
+          provide: WebinRestService,
+          useClass: MockWebinRestService
         },
       ]
     })
