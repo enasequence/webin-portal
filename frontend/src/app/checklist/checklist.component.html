@@ -69,7 +69,7 @@
         <mat-table [dataSource]="checklistGroupDataSource">
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-            <mat-cell *matCellDef="let checklistGroup">
+            <mat-cell *matCellDef="let checklistGroup" style="cursor: pointer;">
               <p style="font-weight:bold;"> {{ checklistGroup.name }} </p>
               <p style="margin-left:10px;"> {{ checklistGroup.description }} </p>
             </mat-cell>
@@ -97,9 +97,9 @@
         <div class="mat-elevation-z8">
           <table cdk-table [dataSource]="checklistDataSource">
 
-            <ng-container cdkColumnDef="name">
-              <th cdk-header-cell *cdkHeaderCellDef>Name</th>
-              <td cdk-cell *cdkCellDef="let checklist">
+            <ng-container cdkColumnDef="name" >
+              <th cdk-header-cell *cdkHeaderCellDef >Name</th>
+              <td cdk-cell *cdkCellDef="let checklist" style="cursor:pointer">
                 <p style="font-weight:bold">{{ checklist.name }}</p>
                 <p>{{ checklist.description }}</p>
               </td>
@@ -211,7 +211,8 @@
 
         </div>
 
-        <button mat-raised-button color="accent" (click)="download()">Download</button>
+        <button mat-raised-button color="accent" (click)="downloadExcelSpreadsheet()">Download Excel Template</button>
+        <button mat-raised-button color="accent" (click)="downloadTsvSpreadsheet()" style="margin-left: 5px;">Download TSV Template</button>
 
       </div>
 

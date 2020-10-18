@@ -25,6 +25,7 @@ import { WebinRestService } from '../webin-rest.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
+import { UtilService } from '../util/Util-services'
 
 interface BooleanFieldInterface {
   [key: string]: boolean;
@@ -50,6 +51,8 @@ export class ChecklistComponent implements OnInit {
   checklistDisplayedColumns = ['name'];
   selectedChecklistGroup: ChecklistGroupInterface;
   selectedChecklist: ChecklistInterface;
+  selectedChecklistObject= {};
+  
   selectedFields: BooleanFieldInterface;
   mandatoryFields: BooleanFieldInterface;
   active: boolean;
@@ -63,6 +66,7 @@ export class ChecklistComponent implements OnInit {
     private _webinRestService: WebinRestService,
     private _route: ActivatedRoute,
     public dialog: MatDialog,
+    private util: UtilService,
     private activatedRoute: ActivatedRoute) {
     if (_route) {
       switch (_route.snapshot.data.checklistType) {
@@ -346,6 +350,49 @@ export class ChecklistComponent implements OnInit {
     return this._webinAuthenticationService.ega;
   }
 
+  addMandatoryFields(selectedChecklistArray){
+    if(this.checklistType==="sample"){
+      var taxIdField={"name":"tax_id","description":"Taxon id for the sample","mandatory":"mandatory"};
+      var scientificNameField={"name":"scientific_name","description":"Taxon id for the sample","mandatory":"mandatory"};
+      selectedChecklistArray.push(taxIdField);
+      selectedChecklistArray.push(scientificNameField);
+    }
+  }
+
+  buildSelectedChecklistRequestObject(callback){
+    let selectedChecklistArray= new Array();
+    this.addMandatoryFields(selectedChecklistArray)
+    let fieldGroups  = this.selectedChecklist.fieldGroups;
+    let selectedFieldsCnt = 0;
+    fieldGroups.forEach(fieldGroup => {
+      fieldGroup.fields.forEach(field => {
+        if (this.selectedFields[field.name] || this.selectedFields[field.label]) {
+          if(field.textChoice){
+            field["value_choice"]=field.textChoice ;
+          }else{
+            delete field.textChoice;
+          }
+
+          if(field.regexValue){
+            field["regex_value"]=field.regexValue ;
+          }else{
+            delete field.regexValue;
+          }
+          
+          field["mandatory_field"]=(field.mandatory ==="mandatory");
+         // delete field.label;
+          selectedChecklistArray.push(field);
+        }
+      });
+    });
+
+    this.selectedChecklistObject["checklist_id"]=this.selectedChecklist.id;
+    this.selectedChecklistObject["name"]=this.selectedChecklist.name;
+    this.selectedChecklistObject["type"]=this.selectedChecklist.type;
+    this.selectedChecklistObject["description"]=this.selectedChecklist.description;
+    this.selectedChecklistObject["fields"]=selectedChecklistArray;
+    callback(this.util,this.selectedChecklistObject);
+  }
 
   getSequenceSpreadsheetText(): string {
     let spreadsheetText = '#template_accession ' + this.selectedChecklist.id + '\n';
@@ -378,13 +425,38 @@ export class ChecklistComponent implements OnInit {
     return spreadsheetText;
   }
 
-  download() {
-
-    const dateText = (new Date()).toISOString();
-
-    const blob = new Blob([this.getSequenceSpreadsheetText()], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, 'Sequence-' + this.selectedChecklist.id + '-' + dateText + '.tsv');
+  
+  downloadExcelSpreadsheet(){
+    this.buildSelectedChecklistRequestObject(function(util,selectedChecklistObject){
+      console.log(selectedChecklistObject);
+      util.downloadExcelTemplate(selectedChecklistObject).
+      subscribe((data) => {
+          let blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+          saveAs(blob,util.getFileName(selectedChecklistObject,".xlsx"));
+        },(error) => {
+          console.log('Error',error); 
+        });
+    });
+    
   }
+
+  
+      
+  downloadTsvSpreadsheet(){
+    this.buildSelectedChecklistRequestObject(function(util,selectedChecklistObject){
+      console.log(selectedChecklistObject)
+      util.downloadTsvTemplate(selectedChecklistObject).
+      subscribe((data) => {
+          let blob = new Blob([data], { type: "text/plain;charset=utf-8'"});
+          saveAs(blob,util.getFileName(selectedChecklistObject,".tsv"));
+        },(error) => {
+          console.log('Error',error); 
+        });
+    });
+    
+    
+  }
+  
 
   uploadFile(form){
     this.showLoading();
@@ -413,7 +485,11 @@ export class ChecklistComponent implements OnInit {
             let result = this._webinRestService.parseResult(data);
             if (result.isError) {
               console.log(result.errors)
-              let message=result.errors[0]["error"];
+              let message="";
+              result.errors.forEach(errorObj => {
+                message+=errorObj.error+"\n";
+              });
+              
               this.showErrorPopup(message)
             } else {
               
@@ -455,7 +531,7 @@ export class ChecklistComponent implements OnInit {
 
     showErrorPopup(message){
       const dialogRef = this.dialog.open(PopupMessageComponent, {
-        width: '500px',
+        width: '550px',
         backdropClass: 'custom-dialog-backdrop-class',
         panelClass: 'custom-dialog-panel-class',
         data: {'action':'Error','message':message,'title':'Study Redistration Error'}

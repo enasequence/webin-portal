@@ -48,3 +48,7 @@ mat-card{
   top: 50%;
   left: 50%;
 }
+
+.mat-row:hover {
+  background-color:#f0f5f5;
+}

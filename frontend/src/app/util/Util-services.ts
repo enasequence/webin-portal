@@ -66,7 +66,17 @@ import { HttpHeaders } from '../../../node_modules/@angular/common/http';
       return this.httpClient.get(url,{ responseType: 'text' })
     }
 
-    
+    downloadExcelTemplate(checklistJson){
+      return this.httpClient.post(environment.webinXmlReportServiceUrl+'/tab/spreadsheet',checklistJson,{responseType: 'arraybuffer'});
+    }
+
+    downloadTsvTemplate(checklistJson){
+      return this.httpClient.post(environment.webinXmlReportServiceUrl+'/tab/tsv',checklistJson,{responseType: 'arraybuffer'});
+    }
+
+    getFileName(checklist,extension){
+      return checklist.type+"_"+checklist.name.replace(" ","-")+"_"+new Date().getTime()+extension;
+    }
 
     getId(){
       return Math.floor(1000 + Math.random() * 9000);

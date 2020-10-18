@@ -11,12 +11,13 @@ export const environment = {
   webinUpdateRequestUrl: 'http://localhost:8110/ena/submit/drop-box/email/update-request/',
   //webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
   //webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
-  webinAuthenticationServiceUrl: 'http://W10-D-5N6P02:8210/webin/auth/login',
-  webinAuthenticationTokenUrl: 'http://W10-D-5N6P02:8210/webin/auth/token',
-  webinReportServiceUrl: 'http://ves-ebi-5a:8221/ena/submit/report',
-  webinXmlReportServiceUrl: 'http://ves-ebi-5a:8110/ena/submit/drop-box',
+  webinAuthenticationServiceUrl: 'http://W10-D-5N6P02:8080/ena/submit/webin/auth/login',
+  webinAuthenticationTokenUrl: 'http://W10-D-5N6P02:8080/ena/submit/webin/auth/token',
+  webinReportServiceUrl: 'http://ves-ebi-5b:8221/ena/submit/report',
+  webinXmlReportServiceUrl: 'http://W10-D-5N6P02:8110/ena/submit/drop-box',
   webinAdminServiceUrl: 'http://W10-D-5N6P02:8210/webin/auth/admin',
   webinGdprServiceUrl: 'TODO',
-  pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search'
+  pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
+  
   
 };
