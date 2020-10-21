@@ -5,14 +5,14 @@
 
 export const environment = {
   production: false,
-  title: 'Webin submissions portal (DEV)',
+  title: 'Webin submissions portal (DEFAULT)',
   webinServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/submit/',
   webinUpdateRequestUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/email/update-request/',
-  webinAuthenticationServiceUrl: 'http://W10-D-5N6P02:8210/webin/auth/login',
-  webinAuthenticationTokenUrl: 'http://W10-D-5N6P02:8210/webin/auth/token',
+  webinAuthenticationServiceUrl: 'http://10.3.15.62:31437/ena/submit/webin/auth/login',
+  webinAuthenticationTokenUrl: 'http://10.3.15.62:31437/ena/submit/webin/auth/token',
   webinReportServiceUrl: 'http://ves-ebi-5b:8221/ena/submit/report',
   webinXmlReportServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box',
-  webinAdminServiceUrl: 'http://W10-D-5N6P02:8210/webin/auth/admin',
+  webinAdminServiceUrl: 'http://10.3.15.62:31437/ena/submit/webin/auth/admin',
   webinGdprServiceUrl: 'TODO',
-  pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search'
+  pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
 };
