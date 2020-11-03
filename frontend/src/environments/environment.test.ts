@@ -7,9 +7,12 @@ export const environment = {
   production: false,
   title: 'Webin submissions portal (TEST)',
   webinServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/',
-  webinAuthenticationServiceUrl: 'https://www.ebi.ac.uk/ena/auth/login',
-  webinAuthenticationTokenUrl: 'https://www.ebi.ac.uk/ena/auth/token',
+  webinUpdateRequestUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/email/update-request/',
+  webinAuthenticationServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/login',
+  webinAuthenticationTokenUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/token',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinXmlReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box',
-  webinGdprServiceUrl: 'TODO'
+  webinGdprServiceUrl: 'TODO',
+  webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/admin',
+  pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
 };
