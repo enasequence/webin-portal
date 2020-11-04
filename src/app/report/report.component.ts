@@ -61,7 +61,7 @@ export class ReportComponent implements OnInit{
     private _reportDialog: MatDialog,
     public media: ObservableMedia,
     private activatedRoute: ActivatedRoute,
-    private router: Router) { 
+    private router: Router) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
@@ -72,7 +72,7 @@ export class ReportComponent implements OnInit{
       if(this.reportType && this._id){
         this.report();
       }
-      
+
   }
 
   isEga(): boolean {
@@ -486,8 +486,8 @@ export class ReportComponent implements OnInit{
       // console.log('** change report action **', action);
       //this.reportChange.emit(action);
       this.router.navigate(['/report',action.reportType,action.id]);
-      
-      
+
+
     }
 
     if (action && action.reportActionType === ReportActionType.editXml) {

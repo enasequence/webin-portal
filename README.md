@@ -10,6 +10,34 @@ version 7.3.8
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/ena/submit/webin`. The app will automatically reload if you change any of the source files.
 
+## Production server
+
+Run `ng build --prod` and then `ng serve --prod` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
+
+## Docker image build (for local run/ test only)
+
+Run `docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal . `
+
+## Docker image push (for local run/ test only)
+
+Run `docker push dockerhub.ebi.ac.uk/enasequence/webin-portal`
+
+## Kubernetes create deployment and service (for local run/ test only)
+
+1. Run `kubectl create -f Kubernetes-deploy.yaml`
+2. Run `kubectl create -f Kubernetes-service.yaml`
+
+## Kubernetes test deployment (for local run/ test only)
+
+1. Check deployment and service configuration : Run `kubectl get all -o wide`
+Find and retain the node name of the pod from the above command
+2. Find the internal IP of the node name retained in the above commend, Run `kubectl get nodes -o wide`
+3. Access the application via node:NodePort (node found in step 1 and 2, NodePort from step 1)
+
+** for local run/ test only - Please perform the steps if you want to test locally. 
+Otherwise The docker image build, image push into registry and 
+kubernetes deployment is taken care by GitLab CI (refer .gitlab-ci.yml file).
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
