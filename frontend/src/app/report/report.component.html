@@ -1,6 +1,5 @@
 <div class="body">
 <div>
-<div class="back-div" ><mat-icon matTooltip="Back" routerLink="">arrow_back_ios</mat-icon></div>
 <div class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
 </div>
 <mat-divider></mat-divider>
@@ -212,8 +211,23 @@
   <table cdk-table class="mat-body" [dataSource]="dataSource">
       <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
   	    <th cdk-header-cell *cdkHeaderCellDef>{{ col }}</th>
-        <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status'">
+        <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status' && col!='Release date'">
   	         <td cdk-cell *cdkCellDef="let element">{{getElementValue(element, col)}}</td>
+        </ng-container>
+
+        <ng-container *ngIf="col=='Release date'">
+          <td cdk-cell *cdkCellDef="let element">
+            
+            <div>
+            {{getElementValue(element, col)}} 
+            <span class=edit-icon-span>
+              <mat-icon class="edit-icon" *ngIf="element.report.releaseStatus=='PRIVATE'" (click)="updateReleaseDate(element)">edit</mat-icon> 
+            </span>
+            </div>
+           
+          
+          </td>
+
         </ng-container>
 
         <ng-container  *ngIf="col=='Archive status'">
@@ -267,6 +281,8 @@
           </td>
 
         </ng-container>
+
+        
 
       </ng-container>
 

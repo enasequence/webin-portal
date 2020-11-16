@@ -54,6 +54,8 @@ import { FormsModule }   from '@angular/forms';
 import { MatIconModule, MatCardSubtitle } from '@angular/material';
 import { FileInputValueAccessor  } from './directives/file-input.accessor.directive';
 import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
+import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
+import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
 
 const appRoutes: Routes = [
   {
@@ -102,6 +104,10 @@ const appRoutes: Routes = [
     path: 'app-checklist/:checklistType/:init',
     component: ChecklistComponent,
      canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'account',
+    component: AccountInfoComponent,
   },
   {
     path: 'accountInfo',
@@ -161,6 +167,8 @@ const appRoutes: Routes = [
     PopupMessageComponent,
     FileInputValueAccessor,
     DiableAutofillDirective,
+    ReleaseDatePopupComponent,
+    SidenavComponent,
     
   ],
   bootstrap: [
@@ -188,7 +196,8 @@ const appRoutes: Routes = [
     SubmissionResultDialogComponent,
     ContactDialogModalComponent,
     ResetPasswordRequestDialogComponent,
-    PopupMessageComponent
+    PopupMessageComponent,
+    ReleaseDatePopupComponent
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

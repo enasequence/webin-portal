@@ -1,6 +1,5 @@
 <div class="body">
     <div>
-      <div class="back-div" ><mat-icon matTooltip="Back" routerLink="">arrow_back_ios</mat-icon></div>
       <div class="mat-h3 mat-tittle">Register study (project)</div>
     </div>
     <mat-divider></mat-divider>
@@ -16,14 +15,14 @@
             </mat-form-field>
             <mat-form-field appearance="fill" >
                 <mat-label>Release date [ This is when your study will be made public. ] </mat-label>
-                <input matInput [matDatepicker]="picker" required [(ngModel)]="releaseDate" [min]="today" [max]="maxDate" name="releaseDate">
+                <input matInput [matDatepicker]="picker"  [readonly]="true" required [(ngModel)]="releaseDate" [min]="today" [max]="maxDate" name="releaseDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>    
             <mat-form-field  class="app-field-padding">
                 <input  matInput placeholder="Study Name" [(ngModel)]="studyName" name="studyName">
             </mat-form-field>     
-            <mat-checkbox matInput name="provideGenomeAnnotation" (click)="setGenomeAnotation($event)" [(ngModel)]="provideGenomeAnnotation" >Will you provide functional genome annotation</mat-checkbox>
+            <mat-checkbox matInput name="provideGenomeAnnotation" (click)="setGenomeAnotation($event)" [(ngModel)]="provideGenomeAnnotation" >Will you provide functional genome annotation ? </mat-checkbox>
           </div>
           <div class="column" *ngIf="!editMode">
             <mat-form-field  class="app-field-padding">

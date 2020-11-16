@@ -26,6 +26,7 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportActionInterface } from '../report-action.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
 
 @Component({
   selector: 'app-report',
@@ -68,6 +69,13 @@ export class ReportComponent implements OnInit{
   ngOnInit() {
       this.reportType=this.activatedRoute.snapshot.params.reportType;
       this._id=this.activatedRoute.snapshot.params.id;
+      var defaultSearch=this.activatedRoute.snapshot.params.defaultSearch;
+      
+        if(defaultSearch==="true"){
+          
+          this.report();  
+        }
+      
 
       if(this.reportType && this._id){
         this.report();
@@ -880,4 +888,26 @@ export class ReportComponent implements OnInit{
   csvDownloadAllLink() {
     return this.initReportObservable('csv', '10000000');
   }
+
+  updateReleaseDate(row){
+    console.log(row);
+    this.openUpdateReleaseDateDialog(row)
+  }
+
+  openUpdateReleaseDateDialog(obj): void {
+    const dialogRef = this._reportDialog.open(ReleaseDatePopupComponent, {
+      width: '500px',
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: {studyObj:obj}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      if(result.event==='close'){
+        this.report();
+      }
+    })
+  }
+
+  
 }

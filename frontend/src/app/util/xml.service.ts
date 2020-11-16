@@ -122,6 +122,17 @@ getlocusTagXmlTags(locusTagArray){
   return observable;
  }
 
+ updateProjectReleaseDate(orginalXml,form){
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(orginalXml, "text/xml");
+  var xmlDocStr=new XMLSerializer().serializeToString(xmlDoc.documentElement);
+  
+  let dateStr=this.getFormatedReleseDate(new Date(form.releaseDate))
+  var action={name:"Edit",id:form.id};
+  const observable: Observable<string>=this._webinRestService.updateXml(ReportType.projects,new Blob([xmlDocStr]),action,dateStr)
+  return observable;
+ }
+
  updateProjectLinks(xmlDoc,pubMedXml) {
   if(xmlDoc.getElementsByTagName("PROJECT_LINKS")[0]){
     var xmlDocProjectLinks=xmlDoc.getElementsByTagName("PROJECT_LINKS")[0];

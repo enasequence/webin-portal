@@ -1,6 +1,5 @@
 <div class="body">
   <div>
-    <div class="back-div" ><mat-icon matTooltip="Back" routerLink="">arrow_back_ios</mat-icon></div>
     <div class="mat-h3 mat-tittle">Account Management</div>
   </div>
   <mat-divider></mat-divider>
@@ -8,8 +7,9 @@
   <div class="container">
 
     <mat-card>
-      <mat-card-subtitle>Account Details</mat-card-subtitle>
       <div class="row">
+      <mat-card-subtitle>Account Details</mat-card-subtitle>
+      
         <div class="column">
           <mat-form-field  class="app-field-padding" *ngIf="editMode">
             <input name="id" [readonly]="true" matInput placeholder="Submission Account Id" required [(ngModel)]="id">
@@ -36,8 +36,6 @@
               {{country}}
             </mat-option>
           </mat-autocomplete>
-
-          
         </div>
         <div class="column" *ngIf="!editMode">
           <mat-form-field  class="app-field-padding">
@@ -51,15 +49,19 @@
             </mat-error>
           </mat-form-field>
         </div>
+        
         <div class="column" *ngIf="editMode" style="    padding-top: 20px;">
           
           <a (click)="openResetPasswordRequestDialog({'submissionAccountId':id,'loggedIn':true})">Change Password </a> 
           
         </div>
+        
+        
       </div>
   </mat-card>
-
+  
   <mat-card class="mat-body">
+    <div class=row>
     <mat-card-subtitle>Contact Information</mat-card-subtitle>
     <a (click)="openDialog('Add',{'submissionAccountId':id})">Add At Least One Contact<mat-icon>add_circle</mat-icon></a>
 
@@ -106,7 +108,16 @@
     <!--<mat-error *ngIf="mainContact <= 0 ">
       Please enter atlease one primary contact to save the account.
    </mat-error>-->
+  </div>
   </mat-card>
+
+  <mat-card class="mat-body">
+    <div class="row">
+      <mat-card-subtitle>Metagenomics Consent</mat-card-subtitle>
+      <p>By keeping this box checked you give consent to the EBI Metagenomics team to analyse those data for which you have requested a pre-publication confidential hold. Note that the data as well as the analysis results will remain confidential until the specified release date of the associated sequencing study. This service provides pre-publication state-of-the-art analysis results, along with visualisations, that you may use in subsequent publications. The service is described in http://europepmc.org/abstract/MED/29069476 and we kindly request, should you use these analyes in your publications, that you cite this paper.</p>
+      <mat-checkbox  matInput name="metagenomicsConsented" [(ngModel)]="metagenomicsConsented" style="padding-left: 20px;">* I give consent and confirm that the data submitted through this account is NOT sensitive, restricted-access or human-identifiable:</mat-checkbox>
+    </div>
+  </mat-card>  
  </div>
 
 

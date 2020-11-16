@@ -29,3 +29,14 @@ mat-form-field.mat-form-field {
   cursor: pointer;
 }
 
+.edit-icon{
+  font-size: 20px;
+  background: #efefef;
+}
+
+.edit-icon-span{
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: -5px;
+}
+

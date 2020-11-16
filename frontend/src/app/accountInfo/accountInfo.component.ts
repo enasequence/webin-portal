@@ -16,7 +16,7 @@ import { MatTableDataSource } from '@angular/material';
 import { UtilService } from '../util/Util-services'
 import { getLocaleDayNames } from '@angular/common';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { Compiler } from '@angular/core';
 import { ResetPasswordRequestDialogComponent } from '../reset-password-request-dialog/reset-password-request-dialog.component'
@@ -40,6 +40,8 @@ export class AccountInfoComponent {
   mainContact: number;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['firstName', 'emailAddress','mainContact','edit','remove'];
+  metagenomeSubmitter = false;
+  metagenomicsConsented = false;
 
   /* Used for storing added emails, this will be used for validation */
   emails= [];
@@ -48,7 +50,7 @@ export class AccountInfoComponent {
 
   editMode=false;
 
-  constructor(private _router: Router,public dialog: MatDialog,private util: UtilService,private _webinAuthenticationService: WebinAuthenticationService,private _compiler: Compiler) {
+  constructor(private _router: Router, private _activatedRoute: ActivatedRoute, public dialog: MatDialog,private util: UtilService,private _webinAuthenticationService: WebinAuthenticationService,private _compiler: Compiler) {
     _compiler.clearCache();
     this.mainContact=0;
     if(_webinAuthenticationService.authenticated){
@@ -59,6 +61,11 @@ export class AccountInfoComponent {
 
   ngOnInit() {
     this.util.getCountries(null);
+    this._activatedRoute.fragment.subscribe((fragment: string) =>{
+      if(fragment==="metagenome_registration"){
+        this.metagenomeSubmitter=true;    
+      }
+    })
     
    }
 
@@ -99,9 +106,12 @@ export class AccountInfoComponent {
           }
         }
 
-        this.updateMainContact(contactObj)
-        this.dataSource = new MatTableDataSource<any>(this.contactArray);
+        if(typeof contactObj!="undefined"){
+          this.updateMainContact(contactObj)
+          this.dataSource = new MatTableDataSource<any>(this.contactArray);
 
+        }
+        
         this.updateEmailsArray();
       }
     });  
@@ -172,6 +182,10 @@ updateEmailsArray(){
 
 submitAccount(form){
   var submissionAccount=form.value;
+  submissionAccount["metagenomeSubmitter"]=this.metagenomeSubmitter;
+  if(!this.metagenomeSubmitter){
+    submissionAccount["metagenomeSubmitter"] = this.metagenomicsConsented ? true : false;
+  }
   submissionAccount["submissionContacts"]=this.contactArray;
   this.deleteServerContacts(); 
   this.saveNewContacts();
@@ -225,7 +239,9 @@ setAccountInformation(data){
   this.centerName=data.centerName
   this.address=data.address;
   this.laboratoryName=data.laboratoryName;
-  this.country=data.country
+  this.country=data.country;
+  this.metagenomeSubmitter=data.metagenomeSubmitter;
+  this.metagenomicsConsented=data.metagenomicsConsented;
   
   data.submissionContacts.forEach(contact => {
     contact.id=this.util.getId();
