@@ -22,7 +22,7 @@ import { ChecklistFieldInterface } from '../checklist-field.interface';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { WebinReportService } from '../webin-report.service';
 import { WebinRestService } from '../webin-rest.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
 import { UtilService } from '../util/Util-services'
@@ -67,7 +67,7 @@ export class ChecklistComponent implements OnInit {
     private _route: ActivatedRoute,
     public dialog: MatDialog,
     private util: UtilService,
-    private activatedRoute: ActivatedRoute) {
+    private router: Router) {
     if (_route) {
       switch (_route.snapshot.data.checklistType) {
         case 'sample': {
@@ -80,12 +80,13 @@ export class ChecklistComponent implements OnInit {
         }
       }
     }
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
-    this.checklistType=this.activatedRoute.snapshot.params.checklistType;
+    this.checklistType=this._route.snapshot.params.checklistType;
     console.log("this.checklistType : "+this.checklistType)
-    this.init=this.activatedRoute.snapshot.params.init;
+    this.init=this._route.snapshot.params.init;
     
     if (this.init) {
       this.initChecklists();
