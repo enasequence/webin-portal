@@ -25,10 +25,6 @@ mat-card{
   background-color: #38983e !important;
 }
 
-.mat-ripple-element {
-  background: #38983e !important;
-}
-
 .mat-expansion-panel-header,
 .mat-expansion-panel-body {
   padding-top: 0px;
