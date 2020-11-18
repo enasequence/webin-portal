@@ -9,10 +9,11 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
 import { MatIconModule } from '@angular/material'
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -20,14 +21,19 @@ import { MatIconModule } from '@angular/material'
   styleUrls: ['./dashboard.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
 
   ReportType = ReportType;   // Allows use in template
 
   constructor(
-    private _webinAuthenticationService: WebinAuthenticationService) { }
+    private _webinAuthenticationService: WebinAuthenticationService,
+    private _route: ActivatedRoute,
+    private router: Router) { 
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
   ngOnInit() {
+    
   }
 
   ngOnDestroy() {

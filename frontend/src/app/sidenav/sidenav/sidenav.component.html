@@ -22,9 +22,9 @@
     <mat-sidenav-container class="sidenav-sidenav-container">
       <mat-sidenav #snav [mode]='over'>
         <mat-nav-list >
-            <mat-list-item  class="parent">
+            <mat-list-item  class="parent" [routerLink]="['/.']" (click)="snav.toggle()">
                 <mat-icon style="padding-right: 35px;">dashboard</mat-icon>
-                <span class="full-width-dashboard" routerLink="[/]" (click)="snav.toggle()">Dashboard</span>
+                <a class="full-width-dashboard"  >Dashboard</a>
             </mat-list-item>
             <mat-list-item  class="parent">
                 <mat-icon style="padding-right: 35px;">account_box</mat-icon>
