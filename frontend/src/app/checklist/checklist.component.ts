@@ -40,6 +40,7 @@ interface BooleanFieldInterface {
 export class ChecklistComponent implements OnInit {
   @Input() checklistType: ChecklistType;
   @Input() init = true;
+  panelOpenState: boolean=false;
 
   ChecklistType = ChecklistType;   // Allows use in template
 

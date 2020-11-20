@@ -19,6 +19,7 @@ export class ReleaseDatePopupComponent implements OnInit {
   studyObj={};
   xmlString: any;
   id: any;
+  releaseDate: any;
   constructor(
     private util: UtilService,
     private xmlUtil: XmlService,

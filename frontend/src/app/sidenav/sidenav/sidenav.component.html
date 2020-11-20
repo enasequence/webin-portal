@@ -20,7 +20,7 @@
     </mat-toolbar>
   
     <mat-sidenav-container class="sidenav-sidenav-container">
-      <mat-sidenav #snav [mode]='over'>
+      <mat-sidenav #snav [mode]="over">
         <mat-nav-list >
             <mat-list-item  class="parent" [routerLink]="['/.']" (click)="snav.toggle()">
                 <mat-icon style="padding-right: 35px;">dashboard</mat-icon>

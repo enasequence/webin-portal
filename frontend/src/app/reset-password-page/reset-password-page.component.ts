@@ -17,6 +17,11 @@ export class ResetPasswordPageComponent implements OnInit {
 
   token: string;
   dialogRef: any;
+  emailAddress: string;
+  webinPassword: string;
+  confirmPassword: string;
+  error: string;
+  
 
   constructor(
     private util: UtilService,

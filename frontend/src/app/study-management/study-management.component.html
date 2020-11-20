@@ -176,7 +176,7 @@
   </div>
   
    <div style="text-align:Center">
-    <button mat-raised-button color="accent" [disabled]="f.invalid || mainContact <= 0">Save</button>
+    <button mat-raised-button color="accent" [disabled]="f.invalid">Save</button>
     <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;" routerLink="/report/studies">Cancel</button>
     <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;" routerLink="">Cancel</button>
   </div>

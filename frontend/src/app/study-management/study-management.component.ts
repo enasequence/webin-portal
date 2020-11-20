@@ -55,6 +55,7 @@ export class StudyManagementComponent implements OnInit {
   tag: string;
   tagValue: string;
   locustag: string;
+  editMode:string;
 
   pubMedArray: [];
   attributeArray= [];
