@@ -6,14 +6,14 @@
 export const environment = {
   production: false,
   title: 'Webin submissions portal (DEFAULT)',
-  webinServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/submit/',
-  webinUpdateRequestUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/email/update-request/',
-  webinAuthenticationServiceUrl: 'http://10.3.15.62:31437/ena/submit/webin/auth/login',
-  webinAuthenticationTokenUrl: 'http://10.3.15.62:31437/ena/submit/webin/auth/token',
-  webinReportServiceUrl: 'http://ves-ebi-5b:8221/ena/submit/report',
-  webinXmlReportServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box',
-  webinAdminServiceUrl: 'http://10.3.15.62:31437/ena/submit/webin/auth/admin',
+  webinServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/',
+  webinUpdateRequestUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/email/update-request/',
+  webinAuthenticationServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/login',
+  webinAuthenticationTokenUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/token',
+  webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
+  webinXmlReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box',
   webinGdprServiceUrl: 'TODO',
+  webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/admin',
   pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
   
   
