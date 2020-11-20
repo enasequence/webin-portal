@@ -21,6 +21,7 @@ import { MockWebinReportService } from '../mock/mock-webin-report.service';
 import { ChecklistComponent } from './checklist.component';
 import { RouterModule } from '@angular/router';
 import { MockWebinRestService } from '../mock/mock-webin-rest.service';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 describe('ChecklistComponent', () => {
   let component: ChecklistComponent;
@@ -29,7 +30,7 @@ describe('ChecklistComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ChecklistComponent],
-      imports: [UiModule, RouterModule.forRoot([])],
+      imports: [UiModule, RouterModule.forRoot([]),HttpClientModule],
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -41,6 +42,10 @@ describe('ChecklistComponent', () => {
         },
         {
           provide: WebinRestService,
+          useClass: MockWebinRestService
+        },
+        {
+          provide: HttpClient,
           useClass: MockWebinRestService
         },
       ]

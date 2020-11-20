@@ -22,7 +22,7 @@ describe('StudyManagementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatCheckboxModule,BrowserAnimationsModule, MatInputModule,MatFormFieldModule , HttpClientModule ,ObserversModule, FormsModule, MatIconModule, MatDividerModule,MatDatepickerModule, MatCardModule, MatAutocompleteModule ,MatTableModule, MatProgressSpinnerModule],
+      imports: [ MatCheckboxModule,BrowserAnimationsModule, MatInputModule,MatFormFieldModule , HttpClientModule ,ObserversModule, FormsModule, MatIconModule, MatDividerModule,MatDatepickerModule, MatCardModule, MatAutocompleteModule ,MatTableModule, MatProgressSpinnerModule],
       declarations: [ StudyManagementComponent ],
       providers:[WebinAuthenticationService,WebinRestService,
         {provide: ActivatedRoute, useValue: fakeActivatedRoute},]

@@ -51,7 +51,7 @@ import { ResetPasswordPageComponent } from './reset-password-page/reset-password
 import { StudyManagementComponent } from './study-management/study-management.component';
 import { PopupMessageComponent } from './popup-message/popup-message.component';
 import { FormsModule }   from '@angular/forms';
-import { MatIconModule, MatCardSubtitle } from '@angular/material';
+import { MatIconModule, MatCardSubtitle, MatSidenavModule } from '@angular/material';
 import { FileInputValueAccessor  } from './directives/file-input.accessor.directive';
 import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
 import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
@@ -135,6 +135,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     MatIconModule,
+    MatSidenavModule,
          
     // Router
     RouterModule.forRoot(

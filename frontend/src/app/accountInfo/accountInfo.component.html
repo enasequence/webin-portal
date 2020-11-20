@@ -29,7 +29,7 @@
             <input  matInput placeholder="Address" required [(ngModel)]="address" name="address">
           </mat-form-field>
           <mat-form-field  class="app-field-padding">
-            <input matInput placeholder="Country" [matAutocomplete]="auto" name="country" #countryVal="ngModel" [(ngModel)]="country" (ngModelChange)="getCountries(country)">
+            <input matInput placeholder="Country" [matAutocomplete]="auto" name="country" #countryVal="ngModel" [(ngModel)]="country" (ngModelChange)="getCountries(country)" autocomplete="new-password">
           </mat-form-field>
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let country of countries" [value]="country">
@@ -43,7 +43,7 @@
             
           </mat-form-field>
           <mat-form-field  class="app-field-padding">
-            <input matInput [disabled]="editMode" type="password" placeholder="Confirm Password" required [(ngModel)]="confirmPassword" name="confirmPassword"  autocomplete="new-password">
+            <input matInput [disabled]="editMode" type="password" placeholder="Confirm Password" required [(ngModel)]="confirmPassword" name="confirmPassword"  autocomplete="new-c-password">
             <mat-error *ngIf="f.controls['confirmPassword']?.errors?.passwordMismatch">
               Passwords do not match
             </mat-error>

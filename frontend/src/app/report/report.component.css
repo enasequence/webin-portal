@@ -39,3 +39,8 @@ mat-form-field.mat-form-field {
   vertical-align: -5px;
 }
 
+input[readonly]{
+  background-color:none;
+}
+
+

@@ -3,7 +3,6 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { environment } from '../../../environments/environment';
 import { WebinAuthenticationService } from '../../webin-authentication.service';
 import { ReportType } from '../../report-type.enum';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-sidenav',
@@ -20,20 +19,13 @@ export class SidenavComponent implements OnDestroy {
   isShowing = true;
   showSubSubMenu: boolean = true;
 
-  
-  //private _mobileQueryListener: () => void;
-
   constructor(private _webinAuthenticationService: WebinAuthenticationService,
     changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 700px)');
-    //this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-   // this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
-   // this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
   
   getTitle() {
     return environment.title;
