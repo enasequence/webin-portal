@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: webin-portal
-          image: dockerhub.ebi.ac.uk/enasequence/webin-portal:dev
+          image: %DOCKER_IMAGE%
           ports:
             - containerPort: 80
             - containerPort: 443
