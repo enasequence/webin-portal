@@ -59,7 +59,7 @@ k8s-deploy-dev:
     - branches
     - triggers
   script:
-    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-dev-deployment.yaml
+    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-dev-deploy.yaml
     - kubectl delete secret gitlab --namespace=ena-dev
     - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-dev
     - kubectl apply -f Kubernetes-dev-deploy.yaml --namespace=ena-dev
@@ -73,7 +73,7 @@ k8s-deploy-test:
     - branches
     - triggers
   script:
-    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-test-deployment.yaml
+    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-test-deploy.yaml
     - kubectl delete secret gitlab --namespace=ena-test
     - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-test
     - kubectl apply -f Kubernetes-test-deploy.yaml --namespace=ena-test
@@ -88,7 +88,7 @@ k8s-deploy-prod:
     variables:
       - $CI_COMMIT_BRANCH == "master"
   script:
-    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deployment.yaml
+    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deploy.yaml
     - kubectl delete secret gitlab --namespace=ena-prod
     - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-prod
     - kubectl apply -f Kubernetes-prod-deploy.yaml --namespace=ena-prod
