@@ -33,7 +33,7 @@
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Register samples</p>
           </span> 
-          <span [routerLink]="['/app-checklist','sequence',true]">
+          <span *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]">
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Annotated Sequences</p>
           </span> 
@@ -81,8 +81,8 @@
 
        <span [routerLink]="['/report',ReportType.analyses,{defaultSearch: true}]" >
         <mat-icon class=insert_chart>insert_chart</mat-icon>
-        <p class="mat-small mat-caption">Analysis Report</p>
-       </span>
+        <p class="mat-small mat-caption">Analyses Report</p>
+      </span>
 
        <ng-container *ngIf="!isEga()">
           <span [routerLink]="['/report',ReportType.analysisFiles,{defaultSearch: true}]" >
@@ -92,29 +92,31 @@
 
           <span [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Analysis Process Report</p>
+            <p class="mat-small mat-caption">Analysis Processing Report</p>
           </span>
-
+        </ng-container>
+        
+        
           <span [routerLink]="['/report',ReportType.runs,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
             <p class="mat-small mat-caption">Runs Report</p>
            </span>
            
-          <span [routerLink]="['/report',ReportType.runFiles,{defaultSearch: true}]" >
+          <span *ngIf="!isEga()" [routerLink]="['/report',ReportType.runFiles,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Run File Report</p>
+            <p class="mat-small mat-caption">Run Files Report</p>
           </span>
 
-          <span [routerLink]="['/report',ReportType.runProcess,{defaultSearch: true}]" >
+          <span *ngIf="!isEga()" [routerLink]="['/report',ReportType.runProcess,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Run Process Report</p>
+            <p class="mat-small mat-caption">Run Processing Report</p>
           </span>
 
-          <span [routerLink]="['/report',ReportType.unsubmittedFiles,{defaultSearch: true}]" >
+          <span *ngIf="!isEga()" [routerLink]="['/report',ReportType.unsubmittedFiles,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
             <p class="mat-small mat-caption">Unsubmitted Files Report</p>
           </span>
-        </ng-container>
+        
         <ng-container *ngIf="isEga()">
           <span [routerLink]="['/report',ReportType.dacs,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>

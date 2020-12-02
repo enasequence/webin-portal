@@ -890,7 +890,6 @@ export class ReportComponent implements OnInit{
   }
 
   updateReleaseDate(row){
-    console.log(row);
     this.openUpdateReleaseDateDialog(row)
   }
 

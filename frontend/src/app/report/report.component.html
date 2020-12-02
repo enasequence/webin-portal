@@ -220,7 +220,7 @@
             
             <div>
             {{getElementValue(element, col)}} 
-            <span class=edit-icon-span>
+            <span class=edit-icon-span *ngIf="!isEga()">
               <mat-icon class="edit-icon" *ngIf="element.report.releaseStatus=='PRIVATE'" (click)="updateReleaseDate(element)">edit</mat-icon> 
             </span>
             </div>

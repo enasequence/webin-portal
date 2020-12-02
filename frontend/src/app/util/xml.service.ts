@@ -6,6 +6,7 @@ import { ReportType } from '../report-type.enum';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { UtilService } from '../util/Util-services';
+import { v4 as uuid } from 'uuid';
 
 
 @Injectable({
@@ -23,8 +24,8 @@ export class XmlService {
     let pubMedXml=this.getPubMedXmlTags(selectedPubMedArray);
     let attributeXml=this.getAttributeXmlTags(attributeArray)
     let locusTagXml=this.getlocusTagXmlTags(locusTagArray);
-    let alias=this.getAlias();
-
+    let alias=uuid();
+    
     let projectXml=new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>'+
       '<PROJECT_SET>'+
         '<PROJECT alias="'+alias+'">'+
@@ -183,12 +184,6 @@ getlocusTagXmlTags(locusTagArray){
 
  }
 
- getAlias(){
-  let submissionaccount=JSON.parse(this._webinAuthenticationService.getSubmissionAccount());
-  let centerName = submissionaccount["centerName"];
-  return centerName+this.getDateString();
- }
-
  getDateString(){
   let currdate=new Date();
   return currdate.getDate()+"-"+currdate.getMonth()+"-"+currdate.getFullYear()+"-"+currdate.getHours()+"-"+currdate.getMinutes()+"-"+currdate.getSeconds()+"-"+currdate.getMilliseconds(); 
@@ -198,8 +193,5 @@ getlocusTagXmlTags(locusTagArray){
  getFormatedReleseDate(date){
   return date.getFullYear()+"-"+("0" + (date.getMonth() + 1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2); 
 }
-
- 
-
 
 }

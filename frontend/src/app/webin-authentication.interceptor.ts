@@ -35,6 +35,7 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
         !req.url.startsWith(environment.webinAdminServiceUrl + "/request-password-change")) {
        //console.log('Webin authentication interceptor');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
+      //console.log(webinAuthenticationService.getAuthorizationTokenHeader())
       const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationTokenHeader())});
       return next.handle(authReq);
 

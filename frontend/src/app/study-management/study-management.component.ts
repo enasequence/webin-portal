@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from '../../environments/environment';
+import { WebinAuthenticationService } from '../webin-authentication.service';
 
   
   const moment =  _moment;
@@ -80,7 +81,7 @@ export class StudyManagementComponent implements OnInit {
   action: string;
   showLoadingFlag=false;
   
-  constructor(public dialog: MatDialog,private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,private _webinRestService:WebinRestService,) { 
+  constructor(public dialog: MatDialog,private util: UtilService,private xmlUtil: XmlService,private activatedRoute: ActivatedRoute,private _webinRestService:WebinRestService,private _webinAuthenticationService: WebinAuthenticationService) { 
     var date=new Date();
     this.maxDate = new Date(date.getFullYear() + 2, date.getMonth(),date.getDate());
     
@@ -338,4 +339,8 @@ export class StudyManagementComponent implements OnInit {
        this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);
      }
    }
+
+   isEga(): boolean {
+    return this._webinAuthenticationService.ega;
+  }
 }

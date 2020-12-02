@@ -245,12 +245,14 @@ export class WebinRestService implements WebinRestServiceInterface {
 
     if(mode==="Edit" && action["id"]){
       targetStr='target="'+action["id"]+'"';
-    }   
-    if(releaseDate){     
-      releaseDateStr='<ACTION>'+
-                     '<HOLD '+targetStr+' HoldUntilDate="'+releaseDate+'"></HOLD>'+
-                     '</ACTION>';
-     }
+    }  
+    if(!this._webinAuthenticationService.ega){
+      if(releaseDate){     
+        releaseDateStr='<ACTION>'+
+                      '<HOLD '+targetStr+' HoldUntilDate="'+releaseDate+'"></HOLD>'+
+                      '</ACTION>';
+      }
+    }
      return releaseDateStr;
   }
  

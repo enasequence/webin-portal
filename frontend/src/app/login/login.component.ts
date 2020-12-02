@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
     subscribe(
         data => {
           // console.log('WebinAuthenticationService.loginToken succeeded');
-          console.log(data)
           this._webinAuthenticationService.token = data;
           const redirectUrl = this._webinAuthenticationService.redirectUrl;
           if (redirectUrl) {
@@ -68,7 +67,9 @@ export class LoginComponent implements OnInit {
           }
           else {
             this._router.navigateByUrl('');
-            this._webinAuthenticationService.setSubmissionAccount();
+            if(!this._webinAuthenticationService.ega){
+              this._webinAuthenticationService.setSubmissionAccount();
+            }
           }
         },
         // Errors.

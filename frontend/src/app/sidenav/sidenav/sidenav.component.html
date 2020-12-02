@@ -19,18 +19,18 @@
       </nav>
     </mat-toolbar>
   
-    <mat-sidenav-container class="sidenav-sidenav-container">
+    <mat-sidenav-container  class="sidenav-sidenav-container">
       <mat-sidenav #snav [mode]="over">
         <mat-nav-list >
             <mat-list-item  class="parent" [routerLink]="['/.']" (click)="snav.toggle()">
                 <mat-icon style="padding-right: 35px;">dashboard</mat-icon>
                 <a class="full-width-dashboard"  >Dashboard</a>
             </mat-list-item>
-            <mat-list-item  class="parent">
-                <mat-icon style="padding-right: 35px;">account_box</mat-icon>
-				<span class="full-width">Account Management</span>
-			</mat-list-item>
-            <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+            <mat-list-item *ngIf="!isEga()" class="parent">
+              <mat-icon style="padding-right: 35px;">account_box</mat-icon>
+				      <span class="full-width">Account Management</span>
+			      </mat-list-item>
+            <div *ngIf="!isEga()" class="submenu" [ngClass]="{'expanded' : showSubmenu}">
                 <a mat-list-item routerLink="/accountInfo" (click)="snav.toggle()">Edit Information</a>
             </div>
             <mat-list-item class="parent">
@@ -40,7 +40,7 @@
             <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
 				<a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register study (project)</a>
                 <a mat-list-item [routerLink]="['/app-checklist','sample',true]" (click)="snav.toggle()">Register sample</a>
-                <a mat-list-item [routerLink]="['/app-checklist','sequence',true]" (click)="snav.toggle()">Annotated Sequences</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/app-checklist','sequence',true]" (click)="snav.toggle()">Annotated Sequences</a>
                 <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML</a>
             </div>
             <mat-list-item class="parent">
@@ -48,15 +48,21 @@
 				<span class="full-width" >Reports</span>
 			</mat-list-item>
             <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
-				<a mat-list-item [routerLink]="['/report',ReportType.studies,{defaultSearch: true}]" (click)="snav.toggle()">Studies</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.samples,{defaultSearch: true}]" (click)="snav.toggle()">Sample</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.analyses,{defaultSearch: true}]" (click)="snav.toggle()">Analysis</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.analysisFiles,{defaultSearch: true}]" (click)="snav.toggle()">Analysis File</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]" (click)="snav.toggle()">Analysis Process</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.runs,{defaultSearch: true}]" (click)="snav.toggle()">Run</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.runFiles,{defaultSearch: true}]" (click)="snav.toggle()">Run File</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.runProcess,{defaultSearch: true}]" (click)="snav.toggle()">Run Process</a>
-                <a mat-list-item [routerLink]="['/report',ReportType.unsubmittedFiles,{defaultSearch: true}]" (click)="snav.toggle()">Unsubmitted File</a>
+				        <a mat-list-item [routerLink]="['/report',ReportType.studies,{defaultSearch: true}]" (click)="snav.toggle()">Studies</a>
+                <a mat-list-item [routerLink]="['/report',ReportType.samples,{defaultSearch: true}]" (click)="snav.toggle()">Samples</a>
+                <a mat-list-item [routerLink]="['/report',ReportType.analyses,{defaultSearch: true}]" (click)="snav.toggle()">Analyses</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.analysisFiles,{defaultSearch: true}]" (click)="snav.toggle()">Analysis File</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]" (click)="snav.toggle()">Analysis Processing</a>
+                <a mat-list-item [routerLink]="['/report',ReportType.runs,{defaultSearch: true}]" (click)="snav.toggle()">Runs</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.runFiles,{defaultSearch: true}]" (click)="snav.toggle()">Run Files</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.runProcess,{defaultSearch: true}]" (click)="snav.toggle()">Run Processing</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.unsubmittedFiles,{defaultSearch: true}]" (click)="snav.toggle()">Unsubmitted Files</a>
+
+                <ng-container *ngIf="isEga()">
+                <a mat-list-item [routerLink]="['/report',ReportType.dacs,{defaultSearch: true}]" (click)="snav.toggle()">Dacs</a>
+                <a mat-list-item [routerLink]="['/report',ReportType.policies,{defaultSearch: true}]" (click)="snav.toggle()">Policies</a>
+                <a mat-list-item [routerLink]="['/report',ReportType.datasets,{defaultSearch: true}]" (click)="snav.toggle()">Datasets</a>
+                </ng-container>
 			</div>
         </mat-nav-list> 
 

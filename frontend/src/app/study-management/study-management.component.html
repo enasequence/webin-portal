@@ -5,15 +5,14 @@
     <mat-divider></mat-divider>
     <form  (ngSubmit)="submitStudy(f)" #f="ngForm">
     <div class="container">
-  
       <mat-card>
-        <mat-card-subtitle>Submission Details</mat-card-subtitle>
         <div class="row">
+        <mat-card-subtitle>Submission Details</mat-card-subtitle>
           <div class="column">
             <mat-form-field  class="app-field-padding" *ngIf="action==='Edit'">
               <input  matInput placeholder="Project Id" required [(ngModel)]="id" name="id" readonly>
             </mat-form-field>
-            <mat-form-field appearance="fill" >
+            <mat-form-field appearance="fill" *ngIf="!isEga()">
                 <mat-label>Release date [ This is when your study will be made public. ] </mat-label>
                 <input matInput [matDatepicker]="picker"  [readonly]="true" required [(ngModel)]="releaseDate" [min]="today" [max]="maxDate" name="releaseDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -39,7 +38,8 @@
 
   <!-- #################### P U B M E D    R E G I S T R A T I O N #################### -->
 
-    <mat-card class="mat-body">
+    <mat-card>
+      <div class="row">
       <mat-card-subtitle>PubMed Citations Registration</mat-card-subtitle>
       <a (click)="addPubMed()">Add PubMed Citations <mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showPubMedSearch" >
@@ -77,12 +77,14 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+    </div>
     </mat-card>
 
     
 <!-- ####################   A T T R I B U T E   R G I S T R A T I O N  #################### -->
 
     <mat-card class="mat-body">
+      <div class="row">
       <mat-card-subtitle>Study Attributes</mat-card-subtitle>
       <a (click)="showAttributeAddPanel()">Add Study Attributes <mat-icon>add_circle</mat-icon></a>
       <div *ngIf="showAttributeAdd">
@@ -124,6 +126,7 @@
         <tr mat-header-row *matHeaderRowDef="attributeDisplayColumn"></tr>
         <tr mat-row *matRowDef="let row; columns: attributeDisplayColumn;"></tr>
       </table>
+    </div>
     </mat-card>
 
 

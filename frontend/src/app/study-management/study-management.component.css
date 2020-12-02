@@ -57,3 +57,7 @@ mat-icon{
     padding-top: 2px;
     cursor: pointer;
   }
+
+  input[readonly]{
+    background-color: #f5f5f5;
+  }
