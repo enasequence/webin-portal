@@ -55,6 +55,7 @@ export class ReportComponent implements OnInit{
   displayedColumnsCallback;
   dataError;
   active: boolean;
+  isEgaLoginFlag=false;
 
   constructor(
     private _webinReportService: WebinReportService,
@@ -67,6 +68,7 @@ export class ReportComponent implements OnInit{
     }
 
   ngOnInit() {
+    this.isEgaLoginFlag=this.isEga();
       this.reportType=this.activatedRoute.snapshot.params.reportType;
       this._id=this.activatedRoute.snapshot.params.id;
       var defaultSearch=this.activatedRoute.snapshot.params.defaultSearch;
@@ -80,7 +82,15 @@ export class ReportComponent implements OnInit{
       if(this.reportType && this._id){
         this.report();
       }
+
+     
       
+  }
+
+
+  isEgaLogin(){
+    console.log("Is EGA : "+this.isEgaLoginFlag)
+    return this.isEgaLoginFlag;
   }
 
   isEga(): boolean {
