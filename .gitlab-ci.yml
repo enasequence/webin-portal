@@ -16,8 +16,8 @@ stages:
 docker-build-dev:
   stage: package
   only:
-    - tags
-    - /^dev-.*$/
+    - variables:
+        - $CI_COMMIT_TAG =~ /^dev-.*/
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev .
@@ -26,8 +26,8 @@ docker-build-dev:
 docker-build-test:
   stage: package
   only:
-    - tags
-    - /^test-.*$/
+    - variables:
+        - $CI_COMMIT_TAG =~ /^test-.*/
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=test .
@@ -36,8 +36,8 @@ docker-build-test:
 docker-build-prod:
   stage: package
   only:
-    - tags
-    - master
+    - variables:
+        - $CI_COMMIT_TAG =~ /^prod-.*/
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production .
@@ -47,8 +47,8 @@ k8s-deploy-dev:
   image: dtzar/helm-kubectl
   stage: deploy
   only:
-    - tags
-    - /^dev-.*$/
+    - variables:
+        - $CI_COMMIT_TAG =~ /^dev-.*/
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-dev-deployment.yaml
     - kubectl delete secret gitlab --namespace=ena-dev
@@ -59,8 +59,8 @@ k8s-deploy-test:
   image: dtzar/helm-kubectl
   stage: deploy
   only:
-    - tags
-    - /^test-.*$/
+    - variables:
+        - $CI_COMMIT_TAG =~ /^test-.*/
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-test-deployment.yaml
     - kubectl delete secret gitlab --namespace=ena-test
@@ -71,8 +71,8 @@ k8s-deploy-prod:
   image: dtzar/helm-kubectl
   stage: deploy
   only:
-    - tags
-    - master
+    - variables:
+        - $CI_COMMIT_TAG =~ /^prod-.*/
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deployment.yaml
     - kubectl delete secret gitlab --namespace=ena-prod
