@@ -10,6 +10,62 @@ version 7.3.8
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/ena/submit/webin`. The app will automatically reload if you change any of the source files.
 
+## Production server
+
+Run `ng build --prod` and then `ng serve --prod` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
+
+## Docker image build (for local run/ test only)
+
+Run `docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal . `
+
+## Docker image push (for local run/ test only)
+
+Run `docker push dockerhub.ebi.ac.uk/enasequence/webin-portal`
+
+## Kubernetes deployment
+For kubernetes deployment we need a unique project version number because the version is used to create unique docker images. For keeping the version number unique we use the corresponding git tag of the release. The version related steps involved in releasing the project are listed below.
+
+1. Check the latest version number in GitHub or GitLab or using the git tag command:
+
+```
+git tag
+```
+
+The tag should be a semantic version number.
+
+When deploying in production:
+
+```
+A.B.C (e.g. 1.0.0)
+```
+
+When deploying in test:
+
+```
+test-A.B.C (e.g. dev-1.0.0)
+```
+
+When deploying in development:
+
+```
+dev-A.B.C (e.g. dev-1.0.0)
+```
+
+2. Commit and push all the changes that need to be released.
+
+3. Create and push the git tag with value "new version number". 
+
+```
+git tag [dev-]A.B.C
+git push origin [dev-]A.B.C
+```
+
+Please note: 
+
+- The package and deploy GitLab CI/CD stages will only run for git tags. The git tag will be used as the docker image tag.
+- The production deploy GitLab CI/CD stage will only run from master branch.
+- Please refer to the .gitlab-ci.yml file for more details
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
