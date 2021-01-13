@@ -1,20 +1,20 @@
 <div class="body">
 <div>
-<div class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
+<div *ngIf="!embeded" class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
 </div>
-<mat-divider></mat-divider>
+<mat-divider *ngIf="!embeded"></mat-divider>
 <div class="container">
 <p class="mat-body" >
-  <span class = "app-primary-color">
+  <span *ngIf="!embeded" class = "app-primary-color">
   <i class="material-icons">info</i>
   </span>
 
-  <span *ngIf="isMetadataReport()">
+  <span *ngIf="isMetadataReport() && !embeded">
   Shows submitted {{ ReportType.getPluralName(reportType) }} and their release statuses. Search by accession or unique name, or simply click search to show most recent submissions. The results will show the most recently submitted {{ReportType.getPluralName(reportType)}}
   in your submission account.
   </span>
 
-  <span *ngIf="isFileReport()">
+  <span *ngIf="isFileReport() && !embeded">
   Shows submitted {{ ReportType.getPluralName(reportType) }} and their archival statuses. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show the most recently submitted {{ReportType.getPluralName(reportType)}}
   in your submission account.
   </span>
@@ -41,7 +41,7 @@
 
 </p>
 
-<p class="mat-body-strong">Please click search to see the results.</p>
+<p class="mat-body-strong" *ngIf="!embeded">Please click search to see the results.</p>
 
 <mat-card class="mat-body">
   <mat-card-subtitle>Search {{ ReportType.getPluralName(reportType) | titlecase  }}</mat-card-subtitle>
@@ -197,7 +197,7 @@
 </mat-card>
 
 <div *ngIf="this.data && this.data.length > 0">
-  <p class="mat-body-strong"><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
+  <p *ngIf="!embeded" class="mat-body-strong"><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
 </div>
 
 <div *ngIf="active" style="height:70px;">
@@ -211,16 +211,25 @@
   <table cdk-table class="mat-body" [dataSource]="dataSource">
       <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
   	    <th cdk-header-cell *cdkHeaderCellDef>{{ col }}</th>
-        <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status' && col!='Release date'">
+        <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status' && col!='Release date' && col!='Select'">
   	         <td cdk-cell *cdkCellDef="let element">{{getElementValue(element, col)}}</td>
         </ng-container>
+
+        <ng-container *ngIf="col=='Select'">
+          <td cdk-cell *cdkCellDef="let element">
+            <span class=edit-icon-span *ngIf="!isEga() && embeded">
+              <mat-radio-button value="{{getElementValue(element, col)}}" (click)='selectStudy(element)'> </mat-radio-button>
+            </span>
+          </td>
+        </ng-container>
+
 
         <ng-container *ngIf="col=='Release date'">
           <td cdk-cell *cdkCellDef="let element">
             
             <div>
             {{getElementValue(element, col)}} 
-            <span class=edit-icon-span *ngIf="!isEgaLogin()">
+            <span class=edit-icon-span *ngIf="!isEga() && !embeded">
               <mat-icon class="edit-icon" *ngIf="element.report.releaseStatus=='PRIVATE'" (click)="updateReleaseDate(element)">edit</mat-icon> 
             </span>
             </div>

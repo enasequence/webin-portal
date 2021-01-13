@@ -41,6 +41,10 @@
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Submit XML</p>
           </span> 
+          <span [routerLink]="['/read-submission']">
+            <mat-icon class="note_add">note_add</mat-icon>
+            <p class="mat-small mat-caption">Register reads</p>
+          </span> 
         </div>
       </mat-card>
     </ng-container>
@@ -120,15 +124,15 @@
         <ng-container *ngIf="isEga()">
           <span [routerLink]="['/report',ReportType.dacs,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Dacs</p>
+            <p class="mat-small mat-caption">Dacs Report</p>
           </span>
           <span [routerLink]="['/report',ReportType.policies,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Policies</p>
+            <p class="mat-small mat-caption">Policies Report</p>
           </span>
           <span [routerLink]="['/report',ReportType.datasets,{defaultSearch: true}]" >
             <mat-icon class=insert_chart>insert_chart</mat-icon>
-            <p class="mat-small mat-caption">Datasets</p>
+            <p class="mat-small mat-caption">Datasets Report</p>
           </span>
         
 

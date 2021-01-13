@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { tap, startWith, map,debounceTime, catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
-import { HttpHeaders } from '../../../node_modules/@angular/common/http';
+
 
 
 
@@ -11,7 +11,8 @@ import { HttpHeaders } from '../../../node_modules/@angular/common/http';
     providedIn: 'root'
   })
   export class UtilService {
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient,
+      ) { }
   
     getCountries(prefix) {
       var url=environment.webinAdminServiceUrl+"/country" +"?partialCountry="+prefix;
@@ -78,10 +79,26 @@ import { HttpHeaders } from '../../../node_modules/@angular/common/http';
       return checklist.type+"_"+checklist.name.replace(" ","-")+"_"+new Date().getTime()+extension;
     }
 
+    getFileNameByTemplate(template,extension){
+      return template.replace(" ","-")+"_template_"+new Date().getTime()+extension;
+    }
+
     getId(){
       return Math.floor(1000 + Math.random() * 9000);
     }
 
+    getTweet(){
+
+      var url="https://api.twitter.com/1.1/search/tweets.json?q=enasequence&result_type=popular";
+      var twitterToken="AAAAAAAAAAAAAAAAAAAAACHPOQAAAAAAK%2FQU%2BR0MB%2BcMXOiWrljWlX3%2BZ%2BU%3DFV9fOpABfT8s69ntGFAUNPwEf6fgcvNk3svOBfYXlKRsuEvUWd";
+      var headers = new Headers();
+      headers.append('Authorization', 'Bearer '+twitterToken);
+
+    return this.httpClient.jsonp(url,'callback');
+
+    }
+     
+    
     
 
 }

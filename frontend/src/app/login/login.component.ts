@@ -17,6 +17,7 @@ import { mergeMap } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordRequestDialogComponent } from '../reset-password-request-dialog/reset-password-request-dialog.component'
+import { UtilService } from '../util/Util-services';
 
 
 
@@ -35,13 +36,18 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     private _webinAuthenticationService: WebinAuthenticationService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private util: UtilService,
+    
+    ) { }
 
   ngOnInit() {
     //  console.log('LoginComponent.ngOnInit');
     if (this._webinAuthenticationService.authenticated) {
       this._router.navigateByUrl('');
     }
+   
+    this.getTweet();
   }
 
   login() {
@@ -93,5 +99,15 @@ export class LoginComponent implements OnInit {
       panelClass: 'custom-dialog-panel-class',
       data: {resetObj:obj}
     });
+  }
+
+  getTweet(){
+
+    this.util.getTweet().subscribe((data:any) => { 
+      console.log(data);
+    },(error) => {
+      console.log(error);
+    });
+    
   }
 }

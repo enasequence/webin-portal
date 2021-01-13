@@ -13,7 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { UiModule } from './ui/ui.module';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -56,6 +56,8 @@ import { FileInputValueAccessor  } from './directives/file-input.accessor.direct
 import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
 import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
+import { ReadSubmissionComponent } from './read-submission/read-submission.component';
+
 
 const appRoutes: Routes = [
   {
@@ -122,6 +124,10 @@ const appRoutes: Routes = [
     component: StudyManagementComponent,
   },
   {
+    path: 'read-submission',
+    component: ReadSubmissionComponent,
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
@@ -133,6 +139,7 @@ const appRoutes: Routes = [
     BrowserModule,
     UiModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     FormsModule,
     MatIconModule,
     MatSidenavModule,
@@ -170,6 +177,8 @@ const appRoutes: Routes = [
     DiableAutofillDirective,
     ReleaseDatePopupComponent,
     SidenavComponent,
+    ReadSubmissionComponent,
+   
     
   ],
   bootstrap: [

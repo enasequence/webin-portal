@@ -226,4 +226,9 @@ export class WebinReportService implements WebinReportServiceInterface {
     // console.log(url);
     return url;
   }
+
+  getReadFiletypeAndFields() {
+    const url: string = this._baseUrl + '/checklists/getReadFields';
+    return this._http.get(url);
+  }
 }

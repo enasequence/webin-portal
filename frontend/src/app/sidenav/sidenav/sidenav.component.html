@@ -42,6 +42,7 @@
                 <a mat-list-item [routerLink]="['/app-checklist','sample',true]" (click)="snav.toggle()">Register sample</a>
                 <a *ngIf="!isEga()" mat-list-item [routerLink]="['/app-checklist','sequence',true]" (click)="snav.toggle()">Annotated Sequences</a>
                 <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML</a>
+                <a mat-list-item [routerLink]="['/read-submission']" (click)="snav.toggle()">Register read</a>
             </div>
             <mat-list-item class="parent">
                 <mat-icon style="padding-right: 35px;">insert_chart</mat-icon>

@@ -393,6 +393,8 @@ export class ChecklistComponent implements OnInit {
     this.selectedChecklistObject["type"]=this.selectedChecklist.type;
     this.selectedChecklistObject["description"]=this.selectedChecklist.description;
     this.selectedChecklistObject["fields"]=selectedChecklistArray;
+    this.selectedChecklistObject["displayChecklistRow"]=true;
+    this.selectedChecklistObject["displayUnitRow"]=true;
     callback(this.util,this.selectedChecklistObject);
   }
 

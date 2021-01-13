@@ -40,7 +40,10 @@ export class ReportComponent implements OnInit{
 
 
   @Input() reportType: ReportType;
+  @Input() embDefaultSearch: boolean;
+  @Input() embeded: boolean;
   @Output() reportChange = new EventEmitter<ReportActionInterface>();
+  @Output() selectedStudyAlias = new EventEmitter<string>();
   @ViewChild(MatPaginator, { static: true }) dataPaginator: MatPaginator;
 
   private _id: string;
@@ -55,7 +58,6 @@ export class ReportComponent implements OnInit{
   displayedColumnsCallback;
   dataError;
   active: boolean;
-  isEgaLoginFlag=false;
 
   constructor(
     private _webinReportService: WebinReportService,
@@ -68,12 +70,14 @@ export class ReportComponent implements OnInit{
     }
 
   ngOnInit() {
-    this.isEgaLoginFlag=this.isEga();
+      if(this.activatedRoute.snapshot.params.reportType !=null){
       this.reportType=this.activatedRoute.snapshot.params.reportType;
-      this._id=this.activatedRoute.snapshot.params.id;
-      var defaultSearch=this.activatedRoute.snapshot.params.defaultSearch;
       
-        if(defaultSearch==="true"){
+      }
+      var defaultSearch=this.activatedRoute.snapshot.params.defaultSearch;
+      this._id=this.activatedRoute.snapshot.params.id;
+      
+        if(defaultSearch==="true" || this.embDefaultSearch){
           
           this.report();  
         }
@@ -82,15 +86,6 @@ export class ReportComponent implements OnInit{
       if(this.reportType && this._id){
         this.report();
       }
-
-     
-      
-  }
-
-
-  isEgaLogin(){
-    console.log("Is EGA : "+this.isEgaLoginFlag)
-    return this.isEgaLoginFlag;
   }
 
   isEga(): boolean {
@@ -172,7 +167,12 @@ export class ReportComponent implements OnInit{
       'Status',
       'Action', // No callback for Action column
     ];
+    if(this.embeded){
+       this.displayedColumns.splice(-1,1); 
+       this.displayedColumns.unshift('Select')
+    }
     this.displayedColumnsCallback = {
+      'Select': this.accessionColumnCallback.bind(this),
       Accession: this.accessionColumnCallback.bind(this),
       'Unique name': this.aliasColumnCallback.bind(this),
       'Secondary Accession': this.secondaryIdColumnCallback.bind(this),
@@ -403,6 +403,7 @@ export class ReportComponent implements OnInit{
   }
 
   getElementValue(result, col) {
+    
     let columnName = '';
     if (this.media.isActive('xs')) {
       columnName = `${col}: `;
@@ -410,6 +411,7 @@ export class ReportComponent implements OnInit{
 
     const callback = this.displayedColumnsCallback[col];
     return columnName + callback(result);
+    
   }
 
   getActions(result): Array<ReportActionInterface> {
@@ -916,6 +918,10 @@ export class ReportComponent implements OnInit{
         this.report();
       }
     })
+  }
+
+  selectStudy(element){
+    this.selectedStudyAlias.emit(element.report.alias);
   }
 
   
