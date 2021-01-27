@@ -21,7 +21,7 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector) {}
 
-  twitterToken="AAAAAAAAAAAAAAAAAAAAACHPOQAAAAAAK%2FQU%2BR0MB%2BcMXOiWrljWlX3%2BZ%2BU%3DFV9fOpABfT8s69ntGFAUNPwEf6fgcvNk3svOBfYXlKRsuEvUWd"
+  //twitterToken="AAAAAAAAAAAAAAAAAAAAACHPOQAAAAAAK%2FQU%2BR0MB%2BcMXOiWrljWlX3%2BZ%2BU%3DFV9fOpABfT8s69ntGFAUNPwEf6fgcvNk3svOBfYXlKRsuEvUWd"
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -42,8 +42,8 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
       return next.handle(authReq);
 
     } else if(req.url.startsWith("https://api.twitter.com/1.1")){
-      const tweetReq = req.clone({headers: req.headers.set('Authorization', this.twitterToken)});
-      return next.handle(tweetReq);
+      //const tweetReq = req.clone({headers: req.headers.set('Authorization', this.twitterToken)});
+      //return next.handle(tweetReq);
     }else {
        return next.handle(req);
     }

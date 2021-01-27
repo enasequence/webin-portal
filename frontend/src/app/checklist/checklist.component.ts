@@ -388,15 +388,17 @@ export class ChecklistComponent implements OnInit {
       });
     });
 
-    this.selectedChecklistObject["checklist_id"]=this.selectedChecklist.id;
-    this.selectedChecklistObject["name"]=this.selectedChecklist.name;
+    this.selectedChecklistObject["checklistType"]="Checklist";
+    this.selectedChecklistObject["checklistFieldValue"]=this.selectedChecklist.id;
+    this.selectedChecklistObject["checklistFieldName"]=this.selectedChecklist.name;
+    this.selectedChecklistObject["checklistFieldDescription"]=this.selectedChecklist.description;
     this.selectedChecklistObject["type"]=this.selectedChecklist.type;
-    this.selectedChecklistObject["description"]=this.selectedChecklist.description;
     this.selectedChecklistObject["fields"]=selectedChecklistArray;
     this.selectedChecklistObject["displayChecklistRow"]=true;
     this.selectedChecklistObject["displayUnitRow"]=true;
     callback(this.util,this.selectedChecklistObject);
   }
+
 
   getSequenceSpreadsheetText(): string {
     let spreadsheetText = '#template_accession ' + this.selectedChecklist.id + '\n';
@@ -444,9 +446,7 @@ export class ChecklistComponent implements OnInit {
     
   }
 
-  
-      
-  downloadTsvSpreadsheet(){
+downloadTsvSpreadsheet(){
     this.buildSelectedChecklistRequestObject(function(util,selectedChecklistObject){
       console.log(selectedChecklistObject)
       util.downloadTsvTemplate(selectedChecklistObject).

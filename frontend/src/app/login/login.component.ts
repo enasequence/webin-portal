@@ -103,11 +103,10 @@ export class LoginComponent implements OnInit {
 
   getTweet(){
 
-    this.util.getTweet().subscribe((data:any) => { 
+  /*  this.util.getTweet().subscribe((data:any) => { 
       console.log(data);
     },(error) => {
       console.log(error);
-    });
-    
+    }); */
   }
 }

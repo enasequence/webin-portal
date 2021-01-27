@@ -1,0 +1,19 @@
+.body{
+    padding:10px 20px 10px 10px;
+  }
+  
+  .container{
+    padding: 10px 0px 0px 0px;
+  }
+  
+  mat-card{
+    margin:10px;
+  }
+
+  .checklist-checked-field {
+    color: black;
+  }
+  
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background .mat-checkbox-disabled {
+    background-color: #38983e !important;
+  }

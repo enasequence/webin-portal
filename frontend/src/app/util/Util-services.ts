@@ -76,11 +76,11 @@ import { throwError, Observable } from 'rxjs';
     }
 
     getFileName(checklist,extension){
-      return checklist.type+"_"+checklist.name.replace(" ","-")+"_"+new Date().getTime()+extension;
+      return checklist.checklistType+"_"+checklist.checklistFieldName.replace(" ","-")+"_"+new Date().getTime()+extension;
     }
 
     getFileNameByTemplate(template,extension){
-      return template.replace(" ","-")+"_template_"+new Date().getTime()+extension;
+      return template.replace(/\s/g,"-")+"_template_"+new Date().getTime()+extension;
     }
 
     getId(){
@@ -89,12 +89,12 @@ import { throwError, Observable } from 'rxjs';
 
     getTweet(){
 
-      var url="https://api.twitter.com/1.1/search/tweets.json?q=enasequence&result_type=popular";
+     /* var url="https://api.twitter.com/1.1/search/tweets.json?q=enasequence&result_type=popular";
       var twitterToken="AAAAAAAAAAAAAAAAAAAAACHPOQAAAAAAK%2FQU%2BR0MB%2BcMXOiWrljWlX3%2BZ%2BU%3DFV9fOpABfT8s69ntGFAUNPwEf6fgcvNk3svOBfYXlKRsuEvUWd";
       var headers = new Headers();
       headers.append('Authorization', 'Bearer '+twitterToken);
 
-    return this.httpClient.jsonp(url,'callback');
+    return this.httpClient.jsonp(url,'callback');*/
 
     }
      
