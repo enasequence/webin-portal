@@ -100,9 +100,17 @@ getlocusTagXmlTags(locusTagArray){
   var descriptionTag=xmlDoc.getElementsByTagName("DESCRIPTION")[0];
 
   /** Check if the tag is empty and set the values accordingly */
-  nameTag.hasChildNodes() ? nameTag.childNodes[0].nodeValue=form.studyName : nameTag.appendChild(xmlDoc.createTextNode(form.studyName));
-  titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue=form.studyTitle : titleTag.appendChild(xmlDoc.createTextNode(form.studyTitle));
-  descriptionTag.hasChildNodes() ? descriptionTag.childNodes[0].nodeValue=form.description : descriptionTag.appendChild(xmlDoc.createTextNode(form.description));
+  if(nameTag){
+    nameTag.hasChildNodes() ? nameTag.childNodes[0].nodeValue=form.studyName : nameTag.appendChild(xmlDoc.createTextNode(form.studyName));
+  }
+  if(titleTag){
+    titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue=form.studyTitle : titleTag.appendChild(xmlDoc.createTextNode(form.studyTitle));
+  }
+  if(descriptionTag){
+    descriptionTag.hasChildNodes() ? descriptionTag.childNodes[0].nodeValue=form.description : descriptionTag.appendChild(xmlDoc.createTextNode(form.description));
+  }
+  
+  
 
   /** Update PubMed Ids */
   this.updateProjectLinks(xmlDoc,pubMedXml) ; 

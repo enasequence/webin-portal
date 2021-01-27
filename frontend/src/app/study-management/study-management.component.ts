@@ -195,9 +195,15 @@ export class StudyManagementComponent implements OnInit {
     var nameTag=xmlDoc.getElementsByTagName("NAME")[0];
     var titleTag=xmlDoc.getElementsByTagName("TITLE")[0];
     var descriptionTag=xmlDoc.getElementsByTagName("DESCRIPTION")[0];
-    this.studyName=nameTag.hasChildNodes() ? nameTag.childNodes[0].nodeValue : "";
-    this.studyTitle=titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue : "";
-    this.description=descriptionTag.hasChildNodes() ? descriptionTag.childNodes[0].nodeValue : "";
+    if(nameTag){
+      this.studyName=nameTag.hasChildNodes() ? nameTag.childNodes[0].nodeValue : "";
+    }
+    if(titleTag){
+      this.studyTitle=titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue : "";
+    }
+    if(descriptionTag){
+      this.description=descriptionTag.hasChildNodes() ? descriptionTag.childNodes[0].nodeValue : "";
+    }
     
     this.setPubMedDetails(xmlDoc);
     this.setAttributeDetails(xmlDoc);
