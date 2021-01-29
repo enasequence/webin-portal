@@ -9,6 +9,7 @@ import { WebinRestService } from '../webin-rest.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
+import { WebinAuthenticationService } from '../webin-authentication.service';
 
 @Component({
   selector: 'app-read-submission',
@@ -16,7 +17,7 @@ import { PopupMessageComponent } from '../popup-message/popup-message.component'
   styleUrls: ['./read-submission.component.css']
 })
 export class ReadSubmissionComponent implements OnInit {
-
+  panelOpenState: boolean=false;
   reportType=ReportType.studies;
   selectedStudy: string;
   readFileDetails= {};
@@ -25,11 +26,12 @@ export class ReadSubmissionComponent implements OnInit {
   selectedFieldType: string;
   selectedFieldName: string;
   showLoadingFlag=false;
+  fieldType={};
   constructor(private _webinReportService: WebinReportService,
     private util: UtilService,
     private _webinRestService: WebinRestService,
     public dialog: MatDialog,
-    
+    private _webinAuthenticationService: WebinAuthenticationService
     ) { }
 
   ngOnInit() {
@@ -193,4 +195,18 @@ export class ReadSubmissionComponent implements OnInit {
   
     }
 
-}
+    isEga(): boolean {
+      return this._webinAuthenticationService.ega;
+    }
+
+    /*** This method is to hide ega fields */
+    displayEgaField(field):boolean{
+      let showField=true;
+      if(field["is_ega_field"]){
+        if(field["is_ega_field"]!=this.isEga()){
+          showField=false;  
+        }
+      }
+      return showField;
+    }
+  }

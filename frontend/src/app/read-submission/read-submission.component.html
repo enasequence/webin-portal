@@ -7,7 +7,7 @@
     <div class="container">
     <p class="mat-body">We recommend that Fastq, BAM, and CRAM read files are submitted using <a href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a></p>
 
-    <p class="mat-body">When using this interface instead of <a href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a>, raw sequences must be <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/upload.html">uploaded</a> in one of the supported <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/reads.html">data formats</a> before they can be submitted. All data submitted in a single submission will be associated with the same study. Data for different studies must be submitted in separate submissions. The study and the sequenced samples can be either pre-registered or registered during the submission process. Please note that each individual study and sample should be registered only once. In addition, you will be asked to provide information about the sequencing libraries and instruments. Please quote the study accession number (ERP*) when citing data submitted to ENA.</p>
+    <p class="mat-body">When using this interface instead of <a href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a>, raw sequences must be <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/upload.html">uploaded</a> in one of the supported <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/reads.html">data formats</a> before they can be submitted. The study and the sequenced samples must be pre-registered before the raw reads are submitted. Please note that each individual study and sample should be registered only once. You will be asked to provide information about the sequencing libraries and instruments. Please quote the study accession number (ERP*) when citing data submitted to ENA.</p>
 
     <p class="mat-body">Read <a href="https://ena-docs.readthedocs.io/en/latest/reads/interactive.html">here</a> for more information on how submit your raw reads to ENA.</p>
 
@@ -28,7 +28,7 @@
             <mat-step label="Please select a file format">
                 <div class="mat-elevation-z8">
                     <mat-accordion>
-                        <mat-expansion-panel  *ngFor="let fieldType of readFileDetails.fieldTypes" (click)="selectFileType(fieldType.file_type,fieldType.name)">
+                        <mat-expansion-panel  *ngFor="let fieldType of readFileDetails['fieldTypes']" (click)="selectFileType(fieldType.file_type,fieldType.name)">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                 <b>{{fieldType.label}} </b> <span fxHide fxShow.gt-sm style="padding-left: 30px;"><i> {{fieldType.description}}</i></span>
@@ -46,7 +46,8 @@
                                 <p class="mat-body">The 'manifest.all' file should be submitted to the archive on behalf of the files listed within.</p>
                             </div>
 
-                            <div *ngFor="let field of fieldType.fields">
+                            <div *ngFor="let field of fieldType.fields" >
+                                <div *ngIf="displayEgaField(field)">
                                 <mat-checkbox  class="checklist-checked-field" [checked]="field.mandatory || field.checked" [disabled]="field.mandatory" (change)="selectedField($event,field)"> <b class="checklist-checked-field">{{field.label}}</b></mat-checkbox>
                                 <p fxHide fxShow.gt-sm>{{field.description}}</p>
                                 <div style="width:20%">
@@ -58,6 +59,7 @@
                                     </mat-select>
                                     </p>
                                 </div>
+                            </div>
                             </div>
                         
                         </mat-expansion-panel>
