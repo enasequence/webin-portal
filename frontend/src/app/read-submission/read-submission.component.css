@@ -17,3 +17,9 @@
   .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background .mat-checkbox-disabled {
     background-color: #38983e !important;
   }
+
+  .centred{
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+  }

@@ -53,7 +53,7 @@
                                 <div style="width:20%">
                                     <p *ngIf="field.value_choice !=null">
                                     <mat-select class="checklist-restriction" placeholder="Permitted values">
-                                        <mat-option *ngFor="let PermitedValues of field.value_choice" [value]="value_choice" disabled>
+                                        <mat-option *ngFor="let PermitedValues of field.value_choice" [value]="field.value_choice" >
                                         {{ PermitedValues }}
                                         </mat-option>
                                     </mat-select>
@@ -98,5 +98,9 @@
             <button mat-raised-button color="accent" [disabled]="form.invalid ">Submit Completed Spreadsheet</button>
         </form>
     </mat-expansion-panel>
+    <div class="centred" *ngIf="showLoadingFlag" style="height:70px;">
+        <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+        </mat-spinner>
+      </div>
 </div>
 </div>

@@ -34,15 +34,22 @@
                 <a mat-list-item routerLink="/accountInfo" (click)="snav.toggle()">Edit Information</a>
             </div>
             <mat-list-item class="parent">
-                <mat-icon style="padding-right: 35px;">note_add</mat-icon>
-				<span class="full-width">Submissions</span>
-			</mat-list-item>
+              <mat-icon style="padding-right: 35px;">add_box</mat-icon>
+              <span class="full-width">Registration</span>
+            </mat-list-item>
             <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
-				<a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register study (project)</a>
+                <a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register study (project)</a>
                 <a mat-list-item [routerLink]="['/app-checklist','sample',true]" (click)="snav.toggle()">Register sample</a>
-                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/app-checklist','sequence',true]" (click)="snav.toggle()">Annotated sequences</a>
-                <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit xml</a>
+                <a mat-list-item [routerLink]="['/taxonomy']" (click)="snav.toggle()">Register taxonomy</a>
+            </div>
+            <mat-list-item class="parent">
+                <mat-icon style="padding-right: 35px;">note_add</mat-icon>
+				        <span class="full-width">Submissions</span>
+			      </mat-list-item>
+            <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+				        <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit xml</a>
                 <a mat-list-item [routerLink]="['/read-submission']" (click)="snav.toggle()">Submit reads</a>
+                <a *ngIf="!isEga()" mat-list-item [routerLink]="['/app-checklist','sequence',true]" (click)="snav.toggle()">Create annotated sequence spreadsheet</a>
             </div>
             <mat-list-item class="parent">
                 <mat-icon style="padding-right: 35px;">insert_chart</mat-icon>

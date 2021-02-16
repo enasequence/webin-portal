@@ -17,6 +17,7 @@ import { MockWebinAuthenticationService } from '../mock/mock-webin-authenticatio
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { LoginComponent } from './login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -27,7 +28,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [ UiModule, RouterTestingModule ],
+      imports: [ UiModule, RouterTestingModule,HttpClientModule ],
       providers: [
         {
           provide: WebinAuthenticationService,

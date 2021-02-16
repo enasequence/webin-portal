@@ -57,6 +57,9 @@ import { DiableAutofillDirective } from './directives/app-disable-autofill.direc
 import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
 import { ReadSubmissionComponent } from './read-submission/read-submission.component';
+import { TaxonomyManagementComponent } from './taxonomy-management/taxonomy-management.component';
+import { TaxonomyDialogModalComponent } from './taxonomy-dialog-modal/taxonomy-dialog-modal.component';
+import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.directive';
 
 
 const appRoutes: Routes = [
@@ -128,6 +131,10 @@ const appRoutes: Routes = [
     component: ReadSubmissionComponent,
   },
   {
+    path: 'taxonomy',
+    component: TaxonomyManagementComponent,
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
@@ -178,6 +185,9 @@ const appRoutes: Routes = [
     ReleaseDatePopupComponent,
     SidenavComponent,
     ReadSubmissionComponent,
+    TaxonomyManagementComponent,
+    TaxonomyDialogModalComponent,
+    UniqueNameByArrayDirective,
    
     
   ],
@@ -207,7 +217,8 @@ const appRoutes: Routes = [
     ContactDialogModalComponent,
     ResetPasswordRequestDialogComponent,
     PopupMessageComponent,
-    ReleaseDatePopupComponent
+    ReleaseDatePopupComponent,
+    TaxonomyDialogModalComponent
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

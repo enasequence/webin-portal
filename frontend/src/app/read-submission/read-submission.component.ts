@@ -157,11 +157,8 @@ export class ReadSubmissionComponent implements OnInit {
             this.hideLoading();
         },
         (err: HttpErrorResponse) => {
-          console.error('** Webin submission service failed **', err);
-          const message = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
-          this.showErrorPopup(message);
-          this.hideLoading();
-      }
+          this.util.showHttpError(this,err);  
+        }
     
     );
   

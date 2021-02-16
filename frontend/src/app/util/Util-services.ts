@@ -87,6 +87,13 @@ import { throwError, Observable } from 'rxjs';
       return Math.floor(1000 + Math.random() * 9000);
     }
 
+    showHttpError(component,err){
+      console.error('** Webin submission service failed **', err);
+      const message = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
+      component.showErrorPopup(message);
+      component.hideLoading();
+    }
+
     getTweet(){
 
      /* var url="https://api.twitter.com/1.1/search/tweets.json?q=enasequence&result_type=popular";

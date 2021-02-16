@@ -19,24 +19,33 @@
         </div>
       </mat-card>
     </ng-container>
+
+    <ng-container>
+      <mat-card class="mat-card-css">
+        <mat-card-subtitle> Registration </mat-card-subtitle>
+        <div class="cat-element">
+          <span [routerLink]="['/study']" >
+            <mat-icon class=note_add>add_box</mat-icon>
+            <p class="mat-small mat-caption">Register study (project)</p>
+           </span>
+          <span [routerLink]="['/app-checklist','sample',true]">
+            <mat-icon class="note_add">add_box</mat-icon>
+            <p class="mat-small mat-caption">Register samples</p>
+          </span> 
+          <span *ngIf="!isEga()" [routerLink]="['/taxonomy']">
+            <mat-icon class="note_add">add_box</mat-icon>
+            <p class="mat-small mat-caption">Register taxonomy</p>
+          </span> 
+          
+        </div>
+      </mat-card>
+    </ng-container>
   
 
     <ng-container>
       <mat-card class="mat-card-css">
         <mat-card-subtitle> Submissions </mat-card-subtitle>
         <div class="cat-element">
-          <span [routerLink]="['/study']" >
-            <mat-icon class=note_add>note_add</mat-icon>
-            <p class="mat-small mat-caption">Register study (project)</p>
-           </span>
-          <span [routerLink]="['/app-checklist','sample',true]">
-            <mat-icon class="note_add">note_add</mat-icon>
-            <p class="mat-small mat-caption">Register samples</p>
-          </span> 
-          <span *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]">
-            <mat-icon class="note_add">note_add</mat-icon>
-            <p class="mat-small mat-caption">Annotated sequences</p>
-          </span> 
           <span [routerLink]="['/app-submit']">
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Submit xml</p>
@@ -44,6 +53,10 @@
           <span [routerLink]="['/read-submission']">
             <mat-icon class="note_add">note_add</mat-icon>
             <p class="mat-small mat-caption">Submit reads</p>
+          </span> 
+          <span *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]">
+            <mat-icon class="note_add">note_add</mat-icon>
+            <p class="mat-small mat-caption">Create annotated sequence spreadsheet</p>
           </span> 
         </div>
       </mat-card>
