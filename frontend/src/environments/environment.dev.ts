@@ -15,4 +15,5 @@ export const environment = {
   webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/admin',
   webinGdprServiceUrl: 'TODO',
   pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
+  taxonomySubmissionEmail: 'ena-helpdesk@ebi.ac.uk'
 };
