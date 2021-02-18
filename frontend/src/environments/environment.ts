@@ -6,8 +6,7 @@
 export const environment = {
     production: false,
     title: 'Webin submissions portal (DEV)',
-    //webinServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/submit/',
-    webinServiceUrl: 'http://localhost:8110/ena/submit/drop-box/submit/',
+    webinServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/submit/',
     webinUpdateRequestUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/email/update-request/',
     webinAuthenticationServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/login',
     webinAuthenticationTokenUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/token',
