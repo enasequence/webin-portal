@@ -35,7 +35,7 @@
             </div>
             <mat-list-item class="parent">
               <mat-icon style="padding-right: 35px;">add_box</mat-icon>
-              <span class="full-width">Registration</span>
+              <span class="full-width">Metadata Registration</span>
             </mat-list-item>
             <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
                 <a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register study (project)</a>
@@ -44,7 +44,7 @@
             </div>
             <mat-list-item class="parent">
                 <mat-icon style="padding-right: 35px;">note_add</mat-icon>
-				        <span class="full-width">Submissions</span>
+				        <span class="full-width">Data Submissions</span>
 			      </mat-list-item>
             <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
 				        <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit xml</a>

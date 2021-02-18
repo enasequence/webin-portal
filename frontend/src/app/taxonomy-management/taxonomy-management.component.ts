@@ -171,7 +171,7 @@ export class TaxonomyManagementComponent implements OnInit {
       this.submissionAccount=JSON.parse(this._webinAuthService.getSubmissionAccount());
       let mail={};
       mail["from"]=this.submissionAccount["submissionContacts"].filter(contact => contact.mainContact).map(contact => (contact.emailAddress))[0] ;
-      mail["subject"]="Taxonom Consultation";
+      mail["subject"]="Taxonomy Consultation";
       mail["to"]=environment.taxonomySubmissionEmail;
       this.constructTaxonContentAndSendMail(function(taxonContent,thisObj){
         mail["content"]=taxonContent;

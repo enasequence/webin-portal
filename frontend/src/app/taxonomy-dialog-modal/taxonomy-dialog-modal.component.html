@@ -1,4 +1,4 @@
-<div class="mat-h3 mat-tittle">Taxnomy Details</div>
+<div class="mat-h3 mat-tittle">Taxonomy Details</div>
 <form (ngSubmit)="doAction(action)" #tf="ngForm" [appUniqueNameByArray]="['proposedName','proposedNameArr','action' ]">
     <div *ngIf="action!='Delete'">
         <input type='hidden'  name="proposedNameArr" [(ngModel)]="proposedNameArr"/>
@@ -30,7 +30,7 @@
         </mat-form-field>
 
         <div style="text-align:center" *ngIf="action!='Error' && action!='Success'">
-            <button mat-raised-button color=primary [disabled]="tf.invalid">{{action}} Taxonomy</button>
+            <button mat-raised-button color=primary [disabled]="tf.invalid">{{action}}</button>
             <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Cancel</button>
         </div>
     </div>
