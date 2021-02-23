@@ -21,7 +21,7 @@ export interface WebinAuthenticationServiceInterface {
     ega: boolean;
     loginDate: Date;
     logoutDate: Date;
-    
+
 
     getAuthorizationTokenHeader(): string;
 
@@ -29,8 +29,8 @@ export interface WebinAuthenticationServiceInterface {
 
     login(username: string, password: string): Observable<WebinAuthenticationResultInterface>;
     loginToken(username: string, password: string): Observable<string>;
-    
+
     setSubmissionAccount();
     getSubmissionAccount();
-    
+
 }

@@ -29,7 +29,7 @@ describe('ReportEditDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ReportEditDialogComponent,
-        SubmissionResultComponent ],
+        SubmissionResultComponent],
       imports: [
         UiModule,
       ],
@@ -48,12 +48,13 @@ describe('ReportEditDialogComponent', () => {
             close: (dialogResult: any) => { }
           }
         },
-        { provide: MAT_DIALOG_DATA,
+        {
+          provide: MAT_DIALOG_DATA,
           useValue: []
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

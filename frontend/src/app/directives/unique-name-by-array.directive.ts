@@ -8,7 +8,7 @@ import { CustomValidationService } from '../validation/custom-validation.service
 })
 export class UniqueNameByArrayDirective implements Validator {
 
-  
+
   @Input('appUniqueNameByArray') UniqueNameByArray: string[] = [];
 
   constructor(private customValidator: CustomValidationService) { }
@@ -16,4 +16,4 @@ export class UniqueNameByArrayDirective implements Validator {
   validate(formGroup: FormGroup): ValidationErrors {
     return this.customValidator.UniqueName(this.UniqueNameByArray[0], this.UniqueNameByArray[1], this.UniqueNameByArray[2])(formGroup);
   }
- }
+}

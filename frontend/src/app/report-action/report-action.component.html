@@ -1,5 +1,5 @@
 <button mat-button [matMenuTriggerFor]="menu">
-    <i class="material-icons">launch</i></button>
+  <i class="material-icons">launch</i></button>
 
 <mat-menu #menu="matMenu">
 
@@ -7,32 +7,42 @@
   <!-- Edit XML actions. -->
 
   <div *ngIf="isEditXmlAction(ReportType.projects)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.projects)"><i class="material-icons">mode_edit</i>Edit study (project) XML</button>
-    <button mat-menu-item (click)="editProjectAction(reportData)"><i class="material-icons">mode_edit</i>Edit study (project)</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.projects)"><i class="material-icons">mode_edit</i>Edit study
+      (project) XML</button>
+    <button mat-menu-item (click)="editProjectAction(reportData)"><i class="material-icons">mode_edit</i>Edit study
+      (project)</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.studies)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.studies)"><i class="material-icons">mode_edit</i>Edit study XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.studies)"><i class="material-icons">mode_edit</i>Edit study
+      XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.samples)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.samples)"><i class="material-icons">mode_edit</i>Edit sample XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.samples)"><i class="material-icons">mode_edit</i>Edit sample
+      XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.runs)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.runs)"><i class="material-icons">mode_edit</i>Edit run XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.runs)"><i class="material-icons">mode_edit</i>Edit run
+      XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.experiments)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.experiments)"><i class="material-icons">mode_edit</i>Edit experiment XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.experiments)"><i class="material-icons">mode_edit</i>Edit
+      experiment XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.analyses)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.analyses)"><i class="material-icons">mode_edit</i>Edit analysis XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.analyses)"><i class="material-icons">mode_edit</i>Edit
+      analysis XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.dacs)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.dacs)"><i class="material-icons">mode_edit</i>Edit dac XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.dacs)"><i class="material-icons">mode_edit</i>Edit dac
+      XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.policies)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.policies)"><i class="material-icons">mode_edit</i>Edit policy XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.policies)"><i class="material-icons">mode_edit</i>Edit
+      policy XML</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.datasets)">
-    <button mat-menu-item (click)="editXmlAction(ReportType.datasets)"><i class="material-icons">mode_edit</i>Edit dataset XML</button>
+    <button mat-menu-item (click)="editXmlAction(ReportType.datasets)"><i class="material-icons">mode_edit</i>Edit
+      dataset XML</button>
   </div>
 
 

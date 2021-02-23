@@ -27,8 +27,8 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-      imports: [ UiModule, RouterTestingModule,HttpClientModule ],
+      declarations: [LoginComponent],
+      imports: [UiModule, RouterTestingModule, HttpClientModule],
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -36,7 +36,7 @@ describe('LoginComponent', () => {
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

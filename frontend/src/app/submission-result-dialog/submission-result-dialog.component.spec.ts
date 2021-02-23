@@ -29,29 +29,30 @@ describe('SubmissionResultDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         SubmissionResultComponent,
-        SubmissionResultDialogComponent ],
-        imports: [ UiModule ],
-        providers: [
-          {
-            provide: WebinAuthenticationService,
-            useClass: MockWebinAuthenticationService
-          },
-          {
-            provide: WebinRestService,
-            useClass: MockWebinRestService
-          },
-          {
-            provide: MatDialogRef,
-            useValue: {
-              close: (dialogResult: any) => { }
-            }
-          },
-          { provide: MAT_DIALOG_DATA,
-            useValue: null
-          },
-        ]
-      })
-    .compileComponents();
+        SubmissionResultDialogComponent],
+      imports: [UiModule],
+      providers: [
+        {
+          provide: WebinAuthenticationService,
+          useClass: MockWebinAuthenticationService
+        },
+        {
+          provide: WebinRestService,
+          useClass: MockWebinRestService
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: (dialogResult: any) => { }
+          }
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: null
+        },
+      ]
+    })
+      .compileComponents();
   }));
 
   beforeEach(() => {

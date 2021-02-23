@@ -11,6 +11,8 @@
     width: 140px;
     vertical-align: top;
     cursor: pointer;
+    height: 100px;
+    padding-top: 13px;
 }
 .cat-element span p{
     margin-top: -10px;

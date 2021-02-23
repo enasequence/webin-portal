@@ -16,27 +16,27 @@ import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 
 import { ReportActionComponent } from './report-action.component';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute,RouterModule } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('ReportActionComponent', () => {
   let component: ReportActionComponent;
   let fixture: ComponentFixture<ReportActionComponent>;
 
   const fakeActivatedRoute = {
-    snapshot: { data: {  } }
+    snapshot: { data: {} }
   } as ActivatedRoute;
 
-  const fakeRouter={}
+  const fakeRouter = {}
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportActionComponent ],
-      imports: [ UiModule ],
-      providers:[ {provide: ActivatedRoute, useValue: fakeActivatedRoute}, 
-        {provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); routeReuseStrategy={}}} 
-        ]
+      declarations: [ReportActionComponent],
+      imports: [UiModule],
+      providers: [{ provide: ActivatedRoute, useValue: fakeActivatedRoute },
+      { provide: Router, useClass: class { navigate = jasmine.createSpy("navigate"); routeReuseStrategy = {} } }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -45,9 +45,9 @@ describe('ReportActionComponent', () => {
   });
 
   beforeEach(() => ([
-    { 
-        provide: Router, 
-        useClass: class { navigate = jasmine.createSpy("navigate"); }
+    {
+      provide: Router,
+      useClass: class { navigate = jasmine.createSpy("navigate"); }
     }]));
   it('should create', () => {
     // Set one XML and report change action.

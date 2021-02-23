@@ -9,25 +9,31 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SubmissionResultComponent } from '../submission-result/submission-result.component';
-import {  MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from "@angular/core";
+import { Observable } from "rxjs";
+import { SubmissionResultComponent } from "../submission-result/submission-result.component";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 @Component({
-  selector: 'app-submission-result-dialog',
-  templateUrl: './submission-result-dialog.component.html',
-  styleUrls: ['./submission-result-dialog.component.css']
+  selector: "app-submission-result-dialog",
+  templateUrl: "./submission-result-dialog.component.html",
+  styleUrls: ["./submission-result-dialog.component.css"],
 })
 export class SubmissionResultDialogComponent implements OnInit {
-
-  @ViewChild(SubmissionResultComponent, { static: true }) submissionResult: SubmissionResultComponent;
-
+  @ViewChild(SubmissionResultComponent, { static: true })
+  submissionResult: SubmissionResultComponent;
+  redirectPath: string;
+  data: Observable<string>;
   constructor(
     public dialogRef: MatDialogRef<SubmissionResultDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Observable<string>) {}
+    @Inject(MAT_DIALOG_DATA) public popupData: Observable<string>,
 
-    ngOnInit() {
-      this.submissionResult.submit(this.data);
-    }
+  ) {
+    this.data = popupData["observable"];
+    this.redirectPath = popupData["redirectPath"];
+  }
+
+  ngOnInit() {
+    this.submissionResult.submit(this.data);
+  }
 }

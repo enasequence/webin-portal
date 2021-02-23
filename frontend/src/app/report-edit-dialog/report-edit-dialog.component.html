@@ -7,16 +7,16 @@
     <!-- Show XML retrieval error -->
 
     <div class="app-error">
-        <i class="material-icons">error</i>
-        {{retrieveXmlError}}
+      <i class="material-icons">error</i>
+      {{retrieveXmlError}}
     </div>
   </div>
 
   <div *ngIf="!isRetrieveXmlError() && !isUpdateXmlResult()">
 
-      <!-- Show XML editor -->
+    <!-- Show XML editor -->
 
-      <textarea matInput [(ngModel)]="xml" rows="15">
+    <textarea matInput [(ngModel)]="xml" rows="15">
       </textarea>
   </div>
 
@@ -33,7 +33,7 @@
     <!-- Show save button -->
 
     <button mat-button color="primary" (click)="save()">Save</button>
-    </div>
+  </div>
 
   <div *ngIf="isUpdateXmlResult() && isUpdateXmlError()">
 

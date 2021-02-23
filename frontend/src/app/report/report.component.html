@@ -1,323 +1,335 @@
 <div class="body">
-<div>
-<div *ngIf="!embeded" class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
-</div>
-<mat-divider *ngIf="!embeded"></mat-divider>
-<div class="container">
-<p class="mat-body" >
-  <span *ngIf="!embeded" class = "app-primary-color">
-  <i class="material-icons">info</i>
-  </span>
-
-  <span *ngIf="isMetadataReport() && !embeded">
-  Shows submitted {{ ReportType.getPluralName(reportType) }} and their release statuses. Search by accession or unique name, or simply click search to show most recent submissions. The results will show the most recently submitted {{ReportType.getPluralName(reportType)}}
-  in your submission account.
-  </span>
-
-  <span *ngIf="isFileReport() && !embeded">
-  Shows submitted {{ ReportType.getPluralName(reportType) }} and their archival statuses. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show the most recently submitted {{ReportType.getPluralName(reportType)}}
-  in your submission account.
-  </span>
-
-  <span *ngIf="isProcessReport()">
-  Shows the {{ ReportType.getPluralName(reportType) }}. Search by accession or other conditions, or simply click search to show most recent submissions. The results will show the {{ReportType.getPluralName(reportType)}} in your submission account.
-  </span>
-
-  <span *ngIf="reportType === ReportType.runProcess">
-  </span>
-
-  <span *ngIf="reportType === ReportType.analysisProcess">
-  The primary use of this report is to retrieve sequence accessions assigned as part of
-  genome assembly, transcriptome assembly or sequence flat file submissions.
-  </span>
-
-  <span *ngIf="reportType === ReportType.unsubmittedFiles">
-  Shows uploaded files scheduled to be removed unless submitted by the expiration date.
-  Uploaded files will only be included into the archive once they have been
-  submitted either as runs or analyses. <b>Note that unlike all other reports, the
-  contents of this report may not be fully up to date. This report
-  is refreshed at most once per day.</b>
-  </span>
-
-</p>
-
-<p class="mat-body-strong" *ngIf="!embeded">Please click search to see the results.</p>
-
-<mat-card class="mat-body">
-  <mat-card-subtitle>Search {{ ReportType.getPluralName(reportType) | titlecase  }}</mat-card-subtitle>
-<div fxLayout="row wrap"
-     fxLayoutAlign="start center">
-    
-
-  <div *ngIf="!isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
-    <mat-form-field class="app-field-padding">
-        <input matInput placeholder="Accession" [(ngModel)]="id">
-    </mat-form-field>
-  </div>
-  <div *ngIf="isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
-    <mat-form-field  class="app-field-padding">
-      <input  matInput placeholder="Accession or Name" [(ngModel)]="id">
-    </mat-form-field>
-  </div>
-  <div *ngIf="isMetadataReport()">
-    <mat-form-field class="app-field-padding">
-      <mat-select placeholder="Release status" [(ngModel)]="status">
-        <mat-option value="private">
-          Private
-        </mat-option>
-        <mat-option value="cancelled">
-          Cancelled
-        </mat-option>
-        <mat-option value="public">
-          Public
-        </mat-option>
-        <mat-option value="suppressed">
-          Suppressed
-        </mat-option>
-        <mat-option value="killed">
-          Killed
-        </mat-option>
-        <mat-option value="temporarily suppressed">
-          Temporarily suppressed
-        </mat-option>
-        <mat-option value="temporarily killed">
-          Temporarily killed
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div *ngIf="reportType === ReportType.analyses || reportType === ReportType.analysisFiles || reportType === ReportType.analysisProcess">
-    <mat-form-field class="app-field-padding">
-      <mat-select placeholder="Analysis type" [(ngModel)]="analysisType">
-        <mat-option value="SEQUENCE_ASSEMBLY">
-          Genome assembly
-        </mat-option>
-        <mat-option value="TRANSCRIPTOME_ASSEMBLY">
-          Transcriptome assembly
-        </mat-option>
-        <mat-option value="PATHOGEN_ANALYSIS">
-          Pathogen analysis
-        </mat-option>
-        <mat-option value="AMR_ANTIBIOGRAM">
-          AMR Antibiogram
-        </mat-option>
-        <mat-option value="SEQUENCE_ANNOTATION">
-          Sequence annotation
-        </mat-option>
-        <mat-option value="SEQUENCE_VARIATION">
-          Sequence variation
-        </mat-option>
-        <mat-option value="REFERENCE_ALIGNMENT">
-          Reference alignment
-        </mat-option>
-        <mat-option value="REFERENCE_SEQUENCE">
-          Reference sequence
-        </mat-option>
-        <mat-option value="PROCESSED_READS">
-          Processed reads
-        </mat-option>
-        <mat-option value="SEQUENCE_FLATFILE">
-          Sequence flatfile
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div *ngIf="isFileReport()">
-    <mat-form-field class="app-field-padding">
-      <mat-select placeholder="Archive status" [(ngModel)]="processStatus">
-        <mat-option value="active">
-          active
-        </mat-option>
-        <mat-option value="completed">
-          completed
-        </mat-option>
-        <mat-option value="failed">
-          failed
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div *ngIf="isProcessReport()">
-    or
-    <mat-form-field class="app-field-padding">
-      <mat-select placeholder="Process status" [(ngModel)]="processStatus">
-        <mat-option value="active">
-          active
-        </mat-option>
-        <mat-option value="completed">
-          completed
-        </mat-option>
-        <mat-option value="failed">
-          failed
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="app-field-padding">
-    <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
-      Search
-    </button>
-  </div>
-
-  <div class="app-field-padding">
-    <button mat-raised-button (click)="reset()">
-      Reset
-    </button>
-  </div>
-
   <div>
-    <mat-form-field class="app-field-padding">
-      <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
-        <mat-option value="100">
-          100
-        </mat-option>
-        <mat-option value="500">
-          500
-        </mat-option>
-        <mat-option value="1000">
-          1000
-        </mat-option>
-        <mat-option value="5000">
-          5000
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div *ngIf="!embeded" class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
   </div>
+  <mat-divider *ngIf="!embeded"></mat-divider>
+  <div class="container">
+    <p class="mat-body">
+      <span *ngIf="!embeded" class="app-primary-color">
+        <i class="material-icons">info</i>
+      </span>
 
-  <div *ngIf="isMetadataReport()">
-    <mat-checkbox class="app-field-padding" [(ngModel)]="showAlias">
-      Show unique name
-    </mat-checkbox>
-  </div>
-</div>
-</mat-card>
+      <span *ngIf="isMetadataReport() && !embeded">
+        Shows submitted {{ ReportType.getPluralName(reportType) }} and their release statuses. Search by accession or
+        unique name, or simply click search to show most recent submissions. The results will show the most recently
+        submitted {{ReportType.getPluralName(reportType)}}
+        in your submission account.
+      </span>
 
-<div *ngIf="this.data && this.data.length > 0">
-  <p *ngIf="!embeded" class="mat-body-strong"><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
-</div>
+      <span *ngIf="isFileReport() && !embeded">
+        Shows submitted {{ ReportType.getPluralName(reportType) }} and their archival statuses. Search by accession or
+        other conditions, or simply click search to show most recent submissions. The results will show the most
+        recently submitted {{ReportType.getPluralName(reportType)}}
+        in your submission account.
+      </span>
 
-<div *ngIf="active" style="height:70px;">
-    <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
-    </mat-spinner>
-</div>
+      <span *ngIf="isProcessReport()">
+        Shows the {{ ReportType.getPluralName(reportType) }}. Search by accession or other conditions, or simply click
+        search to show most recent submissions. The results will show the {{ReportType.getPluralName(reportType)}} in
+        your submission account.
+      </span>
+
+      <span *ngIf="reportType === ReportType.runProcess">
+      </span>
+
+      <span *ngIf="reportType === ReportType.analysisProcess">
+        The primary use of this report is to retrieve sequence accessions assigned as part of
+        genome assembly, transcriptome assembly or sequence flat file submissions.
+      </span>
+
+      <span *ngIf="reportType === ReportType.unsubmittedFiles">
+        Shows uploaded files scheduled to be removed unless submitted by the expiration date.
+        Uploaded files will only be included into the archive once they have been
+        submitted either as runs or analyses. <b>Note that unlike all other reports, the
+          contents of this report may not be fully up to date. This report
+          is refreshed at most once per day.</b>
+      </span>
+
+    </p>
+
+    <p class="mat-body-strong" *ngIf="!embeded">Please click search to see the results.</p>
+
+    <mat-card class="mat-body">
+      <mat-card-subtitle>Search {{ ReportType.getPluralName(reportType) | titlecase  }}</mat-card-subtitle>
+      <div fxLayout="row wrap" fxLayoutAlign="start center">
 
 
-<div *ngIf="dataSource">
-  <mat-card>
-  <table cdk-table class="mat-body" [dataSource]="dataSource">
-      <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
-  	    <th cdk-header-cell *cdkHeaderCellDef>{{ col }}</th>
-        <ng-container *ngIf="col!='Action' && col!='Archive status' && col!='Process status' && col!='Release date' && col!='Select'">
-  	         <td cdk-cell *cdkCellDef="let element">{{getElementValue(element, col)}}</td>
-        </ng-container>
+        <div *ngIf="!isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
+          <mat-form-field class="app-field-padding">
+            <input matInput placeholder="Accession" [(ngModel)]="id">
+          </mat-form-field>
+        </div>
+        <div *ngIf="isMetadataReport() && reportType !== ReportType.unsubmittedFiles">
+          <mat-form-field class="app-field-padding">
+            <input matInput placeholder="Accession or Name" [(ngModel)]="id">
+          </mat-form-field>
+        </div>
+        <div *ngIf="isMetadataReport()">
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Release status" [(ngModel)]="status">
+              <mat-option value="private">
+                Private
+              </mat-option>
+              <mat-option value="cancelled">
+                Cancelled
+              </mat-option>
+              <mat-option value="public">
+                Public
+              </mat-option>
+              <mat-option value="suppressed">
+                Suppressed
+              </mat-option>
+              <mat-option value="killed">
+                Killed
+              </mat-option>
+              <mat-option value="temporarily suppressed">
+                Temporarily suppressed
+              </mat-option>
+              <mat-option value="temporarily killed">
+                Temporarily killed
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-        <ng-container *ngIf="col=='Select'">
-          <td cdk-cell *cdkCellDef="let element">
-            <span class=edit-icon-span *ngIf="!isEga() && embeded">
-              <mat-radio-button value="{{getElementValue(element, col)}}" (click)='selectStudy(element)'> </mat-radio-button>
-            </span>
-          </td>
-        </ng-container>
+        <div
+          *ngIf="reportType === ReportType.analyses || reportType === ReportType.analysisFiles || reportType === ReportType.analysisProcess">
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Analysis type" [(ngModel)]="analysisType">
+              <mat-option value="SEQUENCE_ASSEMBLY">
+                Genome assembly
+              </mat-option>
+              <mat-option value="TRANSCRIPTOME_ASSEMBLY">
+                Transcriptome assembly
+              </mat-option>
+              <mat-option value="PATHOGEN_ANALYSIS">
+                Pathogen analysis
+              </mat-option>
+              <mat-option value="AMR_ANTIBIOGRAM">
+                AMR Antibiogram
+              </mat-option>
+              <mat-option value="SEQUENCE_ANNOTATION">
+                Sequence annotation
+              </mat-option>
+              <mat-option value="SEQUENCE_VARIATION">
+                Sequence variation
+              </mat-option>
+              <mat-option value="REFERENCE_ALIGNMENT">
+                Reference alignment
+              </mat-option>
+              <mat-option value="REFERENCE_SEQUENCE">
+                Reference sequence
+              </mat-option>
+              <mat-option value="PROCESSED_READS">
+                Processed reads
+              </mat-option>
+              <mat-option value="SEQUENCE_FLATFILE">
+                Sequence flatfile
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="isFileReport()">
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Archive status" [(ngModel)]="processStatus">
+              <mat-option value="active">
+                active
+              </mat-option>
+              <mat-option value="completed">
+                completed
+              </mat-option>
+              <mat-option value="failed">
+                failed
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="isProcessReport()">
+          or
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Process status" [(ngModel)]="processStatus">
+              <mat-option value="active">
+                active
+              </mat-option>
+              <mat-option value="completed">
+                completed
+              </mat-option>
+              <mat-option value="failed">
+                failed
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="app-field-padding">
+          <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
+            Search
+          </button>
+        </div>
+
+        <div class="app-field-padding">
+          <button mat-raised-button (click)="reset()">
+            Reset
+          </button>
+        </div>
+
+        <div>
+          <mat-form-field class="app-field-padding">
+            <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
+              <mat-option value="100">
+                100
+              </mat-option>
+              <mat-option value="500">
+                500
+              </mat-option>
+              <mat-option value="1000">
+                1000
+              </mat-option>
+              <mat-option value="5000">
+                5000
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="isMetadataReport()">
+          <mat-checkbox class="app-field-padding" [(ngModel)]="showAlias">
+            Show unique name
+          </mat-checkbox>
+        </div>
+      </div>
+    </mat-card>
+
+    <div *ngIf="this.data && this.data.length > 0">
+      <p *ngIf="!embeded" class="mat-body-strong"><a href="{{ csvDownloadAllLink() }}">Download all results</a></p>
+    </div>
+
+    <div *ngIf="active" style="height:70px;">
+      <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+      </mat-spinner>
+    </div>
 
 
-        <ng-container *ngIf="col=='Release date'">
-          <td cdk-cell *cdkCellDef="let element">
-            
-            <div>
-            {{getElementValue(element, col)}} 
-            <span class=edit-icon-span *ngIf="!isEga() && !embeded">
-              <mat-icon class="edit-icon" *ngIf="element.report.releaseStatus=='PRIVATE'" (click)="updateReleaseDate(element)">edit</mat-icon> 
-            </span>
-            </div>
-           
-          
-          </td>
+    <div *ngIf="dataSource">
+      <mat-card>
+        <table cdk-table class="mat-body" [dataSource]="dataSource">
+          <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
+            <th cdk-header-cell *cdkHeaderCellDef>{{ col }}</th>
+            <ng-container
+              *ngIf="col!='Action' && col!='Archive status' && col!='Process status' && col!='Release date' && col!='Select'">
+              <td cdk-cell *cdkCellDef="let element">{{getElementValue(element, col)}}</td>
+            </ng-container>
 
-        </ng-container>
+            <ng-container *ngIf="col=='Select'">
+              <td cdk-cell *cdkCellDef="let element">
+                <span class=edit-icon-span *ngIf="!isEga() && embeded">
+                  <mat-radio-button value="{{getElementValue(element, col)}}" (click)='selectStudy(element)'>
+                  </mat-radio-button>
+                </span>
+              </td>
+            </ng-container>
 
-        <ng-container  *ngIf="col=='Archive status'">
 
-          <td cdk-cell *cdkCellDef="let element">
-            <ng-container *ngIf="getElementValue(element, col)=='File archived'">
-              <span class="action-completed"
+            <ng-container *ngIf="col=='Release date'">
+              <td cdk-cell *cdkCellDef="let element">
+
+                <div>
+                  {{getElementValue(element, col)}}
+                  <span class=edit-icon-span *ngIf="!isEga() && !embeded">
+                    <mat-icon class="edit-icon" *ngIf="element.report.releaseStatus=='PRIVATE'"
+                      (click)="updateReleaseDate(element)">edit</mat-icon>
+                  </span>
+                </div>
+
+
+              </td>
+
+            </ng-container>
+
+            <ng-container *ngIf="col=='Archive status'">
+
+              <td cdk-cell *cdkCellDef="let element">
+                <ng-container *ngIf="getElementValue(element, col)=='File archived'">
+                  <span class="action-completed"
                     matTooltip="The file has been included in the permanent archive.">{{getElementValue(element, col)}}</span>
-            </ng-container>
-            <ng-container *ngIf="getElementValue(element, col)=='Processing file' || getElementValue(element, col)=='File submitted'">
-              <span class="action-active"
-              matTooltip="The file is waiting to be included in the permanent archive.">{{getElementValue(element, col)}}</span>
-            </ng-container>
-            <ng-container *ngIf="getElementValue(element, col)!='File archived' && getElementValue(element, col)!='Processing file' && getElementValue(element, col)!='File submitted'">
-              <span class="action-failed"
-              matTooltip="The file has failed to be included in the permanent archived.">{{getElementValue(element, col)}}</span>
-            </ng-container>
-          </td>
+                </ng-container>
+                <ng-container
+                  *ngIf="getElementValue(element, col)=='Processing file' || getElementValue(element, col)=='File submitted'">
+                  <span class="action-active"
+                    matTooltip="The file is waiting to be included in the permanent archive.">{{getElementValue(element, col)}}</span>
+                </ng-container>
+                <ng-container
+                  *ngIf="getElementValue(element, col)!='File archived' && getElementValue(element, col)!='Processing file' && getElementValue(element, col)!='File submitted'">
+                  <span class="action-failed"
+                    matTooltip="The file has failed to be included in the permanent archived.">{{getElementValue(element, col)}}</span>
+                </ng-container>
+              </td>
 
-        </ng-container>
-
-        <ng-container *ngIf="col=='Process status'">
-
-          <td cdk-cell *cdkCellDef="let element">
-
-            <ng-container *ngIf="getElementValue(element, col)=='COMPLETED' || getElementValue(element, col)=='CANCELLED'">
-              <span class="action-completed"
-                   matTooltip="The post-archival processing of the file has finished.">{{getElementValue(element, col)}}</span>
-            </ng-container>
-            <ng-container *ngIf="getElementValue(element, col)=='FAILED'">
-              <span class="action-failed"
-                   matTooltip="The post-archival processing of the file has failed.">{{getElementValue(element, col)}}</span>
-            </ng-container>
-            <ng-container *ngIf="getElementValue(element, col)!='COMPLETED' && getElementValue(element, col)!='CANCELLED' && getElementValue(element, col)!='FAILED'">
-              <span class="action-active"
-                   matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element, col)}}</span>
             </ng-container>
 
-          </td>
+            <ng-container *ngIf="col=='Process status'">
 
-        </ng-container>
+              <td cdk-cell *cdkCellDef="let element">
 
+                <ng-container
+                  *ngIf="getElementValue(element, col)=='COMPLETED' || getElementValue(element, col)=='CANCELLED'">
+                  <span class="action-completed"
+                    matTooltip="The post-archival processing of the file has finished.">{{getElementValue(element, col)}}</span>
+                </ng-container>
+                <ng-container *ngIf="getElementValue(element, col)=='FAILED'">
+                  <span class="action-failed"
+                    matTooltip="The post-archival processing of the file has failed.">{{getElementValue(element, col)}}</span>
+                </ng-container>
+                <ng-container
+                  *ngIf="getElementValue(element, col)!='COMPLETED' && getElementValue(element, col)!='CANCELLED' && getElementValue(element, col)!='FAILED'">
+                  <span class="action-active"
+                    matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element, col)}}</span>
+                </ng-container>
 
-        <ng-container *ngIf="col=='Action'">
+              </td>
 
-          <td cdk-cell *cdkCellDef="let element">
-            <span *ngIf="media.isActive('xs')">Action:</span>
-            <app-report-action [actions]="getActions(element)" [reportData]='element' (actionChange)="action($event)">
-            </app-report-action>
-
-          </td>
-
-        </ng-container>
-
-        
-
-      </ng-container>
-
-      <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-      <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr> <!-- (click)="clickRow(row)" -->
-
-  </table>
-</mat-card>
-</div>
+            </ng-container>
 
 
-<div [hidden]="!dataSource">
-  <!-- the paginator must be created before the dataSource has been defined -->
-  <mat-paginator #dataPaginator
-                 [pageSize]="10"
-                 [pageSizeOptions]="[10, 25, 50]">
-  </mat-paginator>
+            <ng-container *ngIf="col=='Action'">
 
-</div>
+              <td cdk-cell *cdkCellDef="let element">
+                <span *ngIf="media.isActive('xs')">Action:</span>
+                <app-report-action [actions]="getActions(element)" [reportData]='element'
+                  (actionChange)="action($event)">
+                </app-report-action>
 
-<div *ngIf="dataError">
-  <div class="app-error">
-      <i class="material-icons">error</i>
-      {{dataError}}
-  </div>
-</div>
+              </td>
 
-</div> <!-- component-margin -->
+            </ng-container>
+
+
+
+          </ng-container>
+
+          <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+          <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr> <!-- (click)="clickRow(row)" -->
+
+        </table>
+      </mat-card>
+    </div>
+
+
+    <div [hidden]="!dataSource">
+      <!-- the paginator must be created before the dataSource has been defined -->
+      <mat-paginator #dataPaginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
+
+    </div>
+
+    <div *ngIf="dataError">
+      <div class="app-error">
+        <i class="material-icons">error</i>
+        {{dataError}}
+      </div>
+    </div>
+
+  </div> <!-- component-margin -->
 </div>

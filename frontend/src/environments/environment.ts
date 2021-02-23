@@ -16,5 +16,5 @@ export const environment = {
     webinGdprServiceUrl: 'TODO',
     pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
     taxonomySubmissionEmail: 'ena-collaborations@ebi.ac.uk'
-  
+
 };

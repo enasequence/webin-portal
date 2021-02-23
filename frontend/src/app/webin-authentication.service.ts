@@ -76,10 +76,10 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.setItem('logoutDate', JSON.stringify(logoutDate));
   }
 
-  
+
 
   constructor(private _http: HttpClient,
-    private util:UtilService) { }
+    private util: UtilService) { }
 
   /*
   getAuthorizationHeader() {
@@ -89,8 +89,8 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   */
 
   getAuthorizationTokenHeader() {
-      //console.log('** Webin authorization token header **');
-      return 'Bearer ' + this.token;
+    //console.log('** Webin authorization token header **');
+    return 'Bearer ' + this.token;
   }
 
   logout() {
@@ -104,7 +104,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.removeItem('loginDate');
     sessionStorage.removeItem('logoutDate');
     sessionStorage.removeItem('submissionAccount');
-    
+
   }
 
   login(username: string, password: string): Observable<WebinAuthenticationResultInterface> {
@@ -116,7 +116,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-    const body = { authRealms: [ 'ENA', 'EGA' ], password: password, username: this.username };
+    const body = { authRealms: ['ENA', 'EGA'], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
@@ -133,24 +133,24 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-    const body = { authRealms: [ 'ENA', 'EGA' ], password: password, username: this.username };
+    const body = { authRealms: ['ENA', 'EGA'], password: password, username: this.username };
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
-      /*var txt=this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
-      console.log(txt)
-      return txt;*/
-      return this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+    /*var txt=this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+    console.log(txt)
+    return txt;*/
+    return this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
   }
 
-  getSubmissionAccount(){
+  getSubmissionAccount() {
     return sessionStorage.getItem('submissionAccount');
   }
-  
-  async setSubmissionAccount(){
-     (await this.util.getAccountDetails()).
-    subscribe((data:any) => {
-      sessionStorage.setItem('submissionAccount', JSON.stringify(data));
-    });
+
+  async setSubmissionAccount() {
+    (await this.util.getAccountDetails()).
+      subscribe((data: any) => {
+        sessionStorage.setItem('submissionAccount', JSON.stringify(data));
+      });
   }
 }

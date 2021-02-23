@@ -9,23 +9,22 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ChecklistType } from '../checklist-type.enum';
-import { WebinAuthenticationService } from '../webin-authentication.service';
-import { WebinRestService } from '../webin-rest.service';
-import { MatDialog } from '@angular/material';
-import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
+import { Component, ViewEncapsulation } from "@angular/core";
+import { Observable } from "rxjs";
+import { ChecklistType } from "../checklist-type.enum";
+import { WebinAuthenticationService } from "../webin-authentication.service";
+import { WebinRestService } from "../webin-rest.service";
+import { MatDialog } from "@angular/material";
+import { SubmissionResultDialogComponent } from "../submission-result-dialog/submission-result-dialog.component";
 
 @Component({
-  selector: 'app-submit',
-  templateUrl: './submit.component.html',
-  styleUrls: ['./submit.component.css'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-submit",
+  templateUrl: "./submit.component.html",
+  styleUrls: ["./submit.component.css"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SubmitComponent {
-
-  ChecklistType = ChecklistType;   // Allows use in template
+  ChecklistType = ChecklistType; // Allows use in template
 
   submissionFile: File;
   studyFile: File;
@@ -41,7 +40,8 @@ export class SubmitComponent {
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinRestService: WebinRestService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog
+  ) { }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
@@ -102,24 +102,24 @@ export class SubmitComponent {
   }
 
   submit() {
-    console.log('** Webin XML submission **');
+    console.log("** Webin XML submission **");
 
-    const observable: Observable<string> =
-      this._webinRestService.submitXml(
-        this.submissionFile,
-        this.studyFile,
-        this.projectFile,
-        this.sampleFile,
-        this.experimentFile,
-        this.runFile,
-        this.analysisFile,
-        this.dacFile,
-        this.policyFile,
-        this.datasetFile);
+    const observable: Observable<string> = this._webinRestService.submitXml(
+      this.submissionFile,
+      this.studyFile,
+      this.projectFile,
+      this.sampleFile,
+      this.experimentFile,
+      this.runFile,
+      this.analysisFile,
+      this.dacFile,
+      this.policyFile,
+      this.datasetFile
+    );
 
     this.dialog.open(SubmissionResultDialogComponent, {
-      width: '600px',
-      data: observable
+      width: "600px",
+      data: { "observable": observable, "redirectPath": "/app-submit" },
     });
   }
 }

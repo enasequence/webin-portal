@@ -50,9 +50,9 @@ import { ResetPasswordRequestDialogComponent } from './reset-password-request-di
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
 import { StudyManagementComponent } from './study-management/study-management.component';
 import { PopupMessageComponent } from './popup-message/popup-message.component';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule, MatCardSubtitle, MatSidenavModule } from '@angular/material';
-import { FileInputValueAccessor  } from './directives/file-input.accessor.directive';
+import { FileInputValueAccessor } from './directives/file-input.accessor.directive';
 import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
 import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
@@ -60,6 +60,7 @@ import { ReadSubmissionComponent } from './read-submission/read-submission.compo
 import { TaxonomyManagementComponent } from './taxonomy-management/taxonomy-management.component';
 import { TaxonomyDialogModalComponent } from './taxonomy-dialog-modal/taxonomy-dialog-modal.component';
 import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.directive';
+import { NonSubmissionResultDialogComponent } from './non-submission-result-dialog/non-submission-result-dialog.component';
 
 
 const appRoutes: Routes = [
@@ -93,22 +94,22 @@ const appRoutes: Routes = [
   {
     path: 'report/:reportType',
     component: ReportComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'report/:reportType/:id',
     component: ReportComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'app-submit',
     component: SubmitComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'app-checklist/:checklistType/:init',
     component: ChecklistComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'account',
@@ -150,11 +151,14 @@ const appRoutes: Routes = [
     FormsModule,
     MatIconModule,
     MatSidenavModule,
-         
+
     // Router
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
+      {
+        enableTracing: false, // <-- debugging purposes only
+        onSameUrlNavigation: "reload"
+      }
     ),
   ],
   declarations: [
@@ -188,8 +192,9 @@ const appRoutes: Routes = [
     TaxonomyManagementComponent,
     TaxonomyDialogModalComponent,
     UniqueNameByArrayDirective,
-   
-    
+    NonSubmissionResultDialogComponent,
+
+
   ],
   bootstrap: [
     AppComponent,
@@ -218,8 +223,9 @@ const appRoutes: Routes = [
     ResetPasswordRequestDialogComponent,
     PopupMessageComponent,
     ReleaseDatePopupComponent,
-    TaxonomyDialogModalComponent
-    
+    TaxonomyDialogModalComponent,
+    NonSubmissionResultDialogComponent
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

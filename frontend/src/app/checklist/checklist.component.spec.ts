@@ -30,7 +30,7 @@ describe('ChecklistComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ChecklistComponent],
-      imports: [UiModule, RouterModule.forRoot([]),HttpClientModule],
+      imports: [UiModule, RouterModule.forRoot([]), HttpClientModule],
       providers: [
         {
           provide: WebinAuthenticationService,

@@ -30,29 +30,29 @@ export class ReportActionComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router) { 
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    }
-  
+    private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
-  private isAction(reportType: ReportType, reportActionType: ReportActionType, action ): boolean {
+
+  private isAction(reportType: ReportType, reportActionType: ReportActionType, action): boolean {
     return action.reportActionType === reportActionType && action.reportType === reportType;
   }
 
   isChangeReportAction(reportType: ReportType): boolean {
-      return this.actions.some( action => this.isAction(reportType, ReportActionType.changeReport, action) );
+    return this.actions.some(action => this.isAction(reportType, ReportActionType.changeReport, action));
   }
 
   isEditXmlAction(reportType: ReportType): boolean {
-    return this.actions.some( action => this.isAction(reportType, ReportActionType.editXml, action) );
+    return this.actions.some(action => this.isAction(reportType, ReportActionType.editXml, action));
   }
 
   getChangeReportAction(reportType: ReportType): ReportActionInterface {
-    return this.actions.find( action => this.isAction(reportType, ReportActionType.changeReport, action) );
+    return this.actions.find(action => this.isAction(reportType, ReportActionType.changeReport, action));
   }
 
   getEditXmlAction(reportType: ReportType): ReportActionInterface {
-    return this.actions.find( action => this.isAction(reportType, ReportActionType.editXml, action) );
+    return this.actions.find(action => this.isAction(reportType, ReportActionType.editXml, action));
   }
 
   changeReportAction(reportType: ReportType): void {
@@ -65,8 +65,8 @@ export class ReportActionComponent {
     this.actionChange.emit(this.getEditXmlAction(reportType));
   }
 
-  editProjectAction(projObj){
+  editProjectAction(projObj) {
     console.log(projObj);
-    this.router.navigate(['/study',projObj.report.id]);
+    this.router.navigate(['/study', projObj.report.id]);
   }
 }

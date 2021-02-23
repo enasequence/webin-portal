@@ -7,13 +7,13 @@ import { CustomValidationService } from '../validation/custom-validation.service
   providers: [{ provide: NG_VALIDATORS, useExisting: UniqueContactEmailDirective, multi: true }]
 })
 
-export class UniqueContactEmailDirective implements Validator{
+export class UniqueContactEmailDirective implements Validator {
 
   constructor(private customValidator: CustomValidationService) { }
 
- @Input('appUniqueContactEmail') uniqueEmailsInput: string;
+  @Input('appUniqueContactEmail') uniqueEmailsInput: string;
 
- 
+
   validate(control: AbstractControl): { [key: string]: any } | null {
 
     return this.customValidator.UniqueEmailValidation(this.uniqueEmailsInput, control.value);

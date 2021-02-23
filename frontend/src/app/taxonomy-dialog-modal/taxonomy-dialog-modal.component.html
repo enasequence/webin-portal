@@ -1,32 +1,32 @@
 <div class="mat-h3 mat-tittle">Taxonomy Details</div>
 <form (ngSubmit)="doAction(action)" #tf="ngForm" [appUniqueNameByArray]="['proposedName','proposedNameArr','action' ]">
-    <div *ngIf="action!='Delete'">
-        <input type='hidden'  name="proposedNameArr" [(ngModel)]="proposedNameArr"/>
-        <input type='hidden'  name="action" [(ngModel)]="action"/>
+    <div *ngIf="action!='Delete' && action!='Clear'">
+        <input type='hidden' name="proposedNameArr" [(ngModel)]="proposedNameArr" />
+        <input type='hidden' name="action" [(ngModel)]="action" />
         <mat-form-field>
-            <input *ngIf="action=='Update'" matInput [readonly]="true"  name="proposedName" [(ngModel)]="taxonRefObj.proposedName" placeholder="Proposed name"/>
-            <input *ngIf="action=='Add'" matInput name="proposedName" [(ngModel)]="taxonRefObj.proposedName" placeholder="Proposed name" />
+            <input *ngIf="action=='Update'" matInput [readonly]="true" name="proposedName"
+                [(ngModel)]="taxonRefObj.proposedName" placeholder="Proposed name" />
+            <input *ngIf="action=='Add'" matInput name="proposedName" [(ngModel)]="taxonRefObj.proposedName" required
+                placeholder="Proposed name" />
             <mat-error *ngIf="tf.controls['proposedName']?.errors">
                 Proposed name is already available in list please add a unique proposed name.
             </mat-error>
         </mat-form-field>
+
+        <ng-template *ngIf="action=='Add'" [ngTemplateOutlet]="nameTypeSelect"
+            [ngTemplateOutletContext]="{required:false}"></ng-template>
+        <ng-template *ngIf="action=='Update'" [ngTemplateOutlet]="nameTypeSelect"
+            [ngTemplateOutletContext]="{required:true}"></ng-template>
+
         <mat-form-field>
-            <mat-select matInput name="nameType" [(ngModel)]="taxonRefObj.nameType" required  placeholder="Name type" >
-                <mat-option value="Environmental Name">Environmental Name</mat-option>
-                <mat-option value="Synthetic Name">Synthetic Name</mat-option>
-                <mat-option value="Novel Species">Novel Species</mat-option>
-                <mat-option value="Unidentified Species">Unidentified Species</mat-option>
-                <mat-option value="Published Name">Published Name</mat-option>
-            </mat-select>
+            <input matInput name="host" [(ngModel)]="taxonRefObj.host" placeholder="Host">
         </mat-form-field>
         <mat-form-field>
-            <input matInput name="host" [(ngModel)]="taxonRefObj.host" required placeholder="Host">
+            <input matInput name="projectId" [(ngModel)]="taxonRefObj.projectId" placeholder="Project Id">
         </mat-form-field>
         <mat-form-field>
-            <input matInput name="projectId" [(ngModel)]="taxonRefObj.projectId" required placeholder="Project Id">
-        </mat-form-field>
-        <mat-form-field>
-            <textarea rows="6" matInput placeholder="Taxonomy description" [(ngModel)]="taxonRefObj.description" required name="taxonRefObj.description"></textarea>
+            <textarea rows="6" matInput placeholder="Taxonomy description" [(ngModel)]="taxonRefObj.description"
+                required name="taxonRefObj.description"></textarea>
         </mat-form-field>
 
         <div style="text-align:center" *ngIf="action!='Error' && action!='Success'">
@@ -39,8 +39,22 @@
             Are you sure to remove the taxonomy request.
         </p>
         <div style="text-align: center;">
-            <button mat-raised-button color=primary [disabled]="tf.invalid">{{action}} Taxonomy</button>
+            <button mat-raised-button color=primary [disabled]=" tf.invalid">{{action}}</button>
             <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Cancel</button>
         </div>
     </div>
+
+    <ng-template #nameTypeSelect let-required="required">
+        <mat-form-field>
+            <mat-select matInput name="nameType" [(ngModel)]="taxonRefObj.nameType" placeholder="Name type"
+                [required]="required">
+                <mat-option value="Environmental Name">Environmental Name</mat-option>
+                <mat-option value="Synthetic Name">Synthetic Name</mat-option>
+                <mat-option value="Novel Species">Novel Species</mat-option>
+                <mat-option value="Unidentified Species">Unidentified Species</mat-option>
+                <mat-option value="Published Name">Published Name</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-template>
+
 </form>

@@ -20,7 +20,7 @@ import { WebinGdprGuardService } from './webin-gdpr-guard.service';
 describe('WebinGdprGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [RouterTestingModule],
       providers: [
         WebinGdprGuardService,
         {

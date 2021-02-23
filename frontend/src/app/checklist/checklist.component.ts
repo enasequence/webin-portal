@@ -26,6 +26,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
 import { UtilService } from '../util/Util-services'
+import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
 
 interface BooleanFieldInterface {
   [key: string]: boolean;
@@ -40,7 +41,7 @@ interface BooleanFieldInterface {
 export class ChecklistComponent implements OnInit {
   @Input() checklistType: ChecklistType;
   @Input() init = true;
-  panelOpenState: boolean=false;
+  panelOpenState: boolean = false;
 
   ChecklistType = ChecklistType;   // Allows use in template
 
@@ -52,14 +53,13 @@ export class ChecklistComponent implements OnInit {
   checklistDisplayedColumns = ['name'];
   selectedChecklistGroup: ChecklistGroupInterface;
   selectedChecklist: ChecklistInterface;
-  selectedChecklistObject= {};
-  
+  selectedChecklistObject = {};
+
   selectedFields: BooleanFieldInterface;
   mandatoryFields: BooleanFieldInterface;
   active: boolean;
   dataError: string;
   spreadSheet: File;
-  showLoadingFlag=false;
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
@@ -82,19 +82,20 @@ export class ChecklistComponent implements OnInit {
       }
     }
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
   }
 
   ngOnInit(): void {
-    this.checklistType=this._route.snapshot.params.checklistType;
-    console.log("this.checklistType : "+this.checklistType)
-    this.init=this._route.snapshot.params.init;
-    
+    this.checklistType = this._route.snapshot.params.checklistType;
+    console.log("this.checklistType : " + this.checklistType)
+    this.init = this._route.snapshot.params.init;
+
     if (this.init) {
       this.initChecklists();
     }
-    
-      
-  
+
+
+
   }
 
   // field group restriction type (not supported for spreadsheets)
@@ -193,7 +194,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   initChecklists(): void {
-     console.log(' ** initChecklists **');
+    console.log(' ** initChecklists **');
 
     this.active = true;
     this.dataError = undefined;
@@ -352,51 +353,51 @@ export class ChecklistComponent implements OnInit {
     return this._webinAuthenticationService.ega;
   }
 
-  addMandatoryFields(selectedChecklistArray){
-    if(this.checklistType==="sample"){
-      var taxIdField={"name":"tax_id","description":"Taxon id for the sample","mandatory":"mandatory"};
-      var scientificNameField={"name":"scientific_name","description":"Taxon id for the sample","mandatory":"mandatory"};
+  addMandatoryFields(selectedChecklistArray) {
+    if (this.checklistType === "sample") {
+      var taxIdField = { "name": "tax_id", "description": "Taxon id for the sample", "mandatory": "mandatory" };
+      var scientificNameField = { "name": "scientific_name", "description": "Taxon id for the sample", "mandatory": "mandatory" };
       selectedChecklistArray.push(taxIdField);
       selectedChecklistArray.push(scientificNameField);
     }
   }
 
-  buildSelectedChecklistRequestObject(callback){
-    let selectedChecklistArray= new Array();
+  buildSelectedChecklistRequestObject(callback) {
+    let selectedChecklistArray = new Array();
     this.addMandatoryFields(selectedChecklistArray)
-    let fieldGroups  = this.selectedChecklist.fieldGroups;
+    let fieldGroups = this.selectedChecklist.fieldGroups;
     let selectedFieldsCnt = 0;
     fieldGroups.forEach(fieldGroup => {
       fieldGroup.fields.forEach(field => {
         if (this.selectedFields[field.name] || this.selectedFields[field.label]) {
-          if(field.textChoice){
-            field["value_choice"]=field.textChoice ;
-          }else{
+          if (field.textChoice) {
+            field["value_choice"] = field.textChoice;
+          } else {
             delete field.textChoice;
           }
 
-          if(field.regexValue){
-            field["regex_value"]=field.regexValue ;
-          }else{
+          if (field.regexValue) {
+            field["regex_value"] = field.regexValue;
+          } else {
             delete field.regexValue;
           }
-          
-          field["mandatory_field"]=(field.mandatory ==="mandatory");
-         // delete field.label;
+
+          field["mandatory_field"] = (field.mandatory === "mandatory");
+          // delete field.label;
           selectedChecklistArray.push(field);
         }
       });
     });
 
-    this.selectedChecklistObject["checklistType"]="Checklist";
-    this.selectedChecklistObject["checklistFieldValue"]=this.selectedChecklist.id;
-    this.selectedChecklistObject["checklistFieldName"]=this.selectedChecklist.name;
-    this.selectedChecklistObject["checklistFieldDescription"]=this.selectedChecklist.description;
-    this.selectedChecklistObject["type"]=this.selectedChecklist.type;
-    this.selectedChecklistObject["fields"]=selectedChecklistArray;
-    this.selectedChecklistObject["displayChecklistRow"]=true;
-    this.selectedChecklistObject["displayUnitRow"]=true;
-    callback(this.util,this.selectedChecklistObject);
+    this.selectedChecklistObject["checklistType"] = "Checklist";
+    this.selectedChecklistObject["checklistFieldValue"] = this.selectedChecklist.id;
+    this.selectedChecklistObject["checklistFieldName"] = this.selectedChecklist.name;
+    this.selectedChecklistObject["checklistFieldDescription"] = this.selectedChecklist.description;
+    this.selectedChecklistObject["type"] = this.selectedChecklist.type;
+    this.selectedChecklistObject["fields"] = selectedChecklistArray;
+    this.selectedChecklistObject["displayChecklistRow"] = true;
+    this.selectedChecklistObject["displayUnitRow"] = true;
+    callback(this.util, this.selectedChecklistObject);
   }
 
 
@@ -431,39 +432,38 @@ export class ChecklistComponent implements OnInit {
     return spreadsheetText;
   }
 
-  
-  downloadExcelSpreadsheet(){
-    this.buildSelectedChecklistRequestObject(function(util,selectedChecklistObject){
+
+  downloadExcelSpreadsheet() {
+    this.buildSelectedChecklistRequestObject(function (util, selectedChecklistObject) {
       console.log(selectedChecklistObject);
       util.downloadExcelTemplate(selectedChecklistObject).
-      subscribe((data) => {
-          let blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-          saveAs(blob,util.getFileName(selectedChecklistObject,".xlsx"));
-        },(error) => {
-          console.log('Error',error); 
+        subscribe((data) => {
+          let blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+          saveAs(blob, util.getFileName(selectedChecklistObject, ".xlsx"));
+        }, (error) => {
+          console.log('Error', error);
         });
     });
-    
+
   }
 
-downloadTsvSpreadsheet(){
-    this.buildSelectedChecklistRequestObject(function(util,selectedChecklistObject){
+  downloadTsvSpreadsheet() {
+    this.buildSelectedChecklistRequestObject(function (util, selectedChecklistObject) {
       console.log(selectedChecklistObject)
       util.downloadTsvTemplate(selectedChecklistObject).
-      subscribe((data) => {
-          let blob = new Blob([data], { type: "text/plain;charset=utf-8'"});
-          saveAs(blob,util.getFileName(selectedChecklistObject,".tsv"));
-        },(error) => {
-          console.log('Error',error); 
+        subscribe((data) => {
+          let blob = new Blob([data], { type: "text/plain;charset=utf-8'" });
+          saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
+        }, (error) => {
+          console.log('Error', error);
         });
     });
-    
-    
-  }
-  
 
-  uploadFile(form){
-    this.showLoading();
+
+  }
+
+
+  uploadFile(form) {
     const formData: FormData = new FormData();
     const observable: Observable<string> =
       this._webinRestService.submitXml(
@@ -477,66 +477,8 @@ downloadTsvSpreadsheet(){
         null,
         null,
         null);
-        this.handleServerResponse(observable);
+    let redirectPath = "/app-checklist/sample/true"
+    this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath);
   }
 
-  handleServerResponse(observable){
-    if (observable) {
-      observable.pipe(
-        retry(3)
-      ).subscribe(
-        data => {
-            let result = this._webinRestService.parseResult(data);
-            if (result.isError) {
-              console.log(result.errors)
-              let message="";
-              result.errors.forEach(errorObj => {
-                message+=errorObj.error+"\n";
-              });
-              
-              this.showErrorPopup(message)
-            } else {
-              
-              console.log(result.accessions);
-              let message="Successfully uploaded spreadsheet template and the sample(s) are created.";
-              this.showSuccessPopup(message);
-              
-            }
-            this.hideLoading();
-        },
-        (err: HttpErrorResponse) => {
-          this.util.showHttpError(this,err);
-      }
-    
-    );
-  
-    }
-   }
-
-   showLoading(){
-    this.showLoadingFlag=true;
-  }
-
-  hideLoading(){
-    this.showLoadingFlag=false;
-  }
-  
-   showSuccessPopup(message){
-    const dialogRef = this.dialog.open(PopupMessageComponent, {
-      width: '500px',
-      backdropClass: 'custom-dialog-backdrop-class',
-      panelClass: 'custom-dialog-panel-class',
-      data: {'action':'Success','message':message,'title':'Study Submission'}
-    });
-   }
-
-    showErrorPopup(message){
-      const dialogRef = this.dialog.open(PopupMessageComponent, {
-        width: '550px',
-        backdropClass: 'custom-dialog-backdrop-class',
-        panelClass: 'custom-dialog-panel-class',
-        data: {'action':'Error','message':message,'title':'Study Redistration Error'}
-      });
-  
-   }
 }

@@ -16,21 +16,21 @@ describe('ReleaseDatePopupComponent', () => {
   let fixture: ComponentFixture<ReleaseDatePopupComponent>;
 
   const fakeActivatedRoute = {
-    snapshot: { params: {"id":123 } }
-  } ;
-  
+    snapshot: { params: { "id": 123 } }
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReleaseDatePopupComponent ],
-      imports:[BrowserAnimationsModule,FormsModule,HttpClientModule,MatFormFieldModule,MatInputModule,MatDatepickerModule,MatDialogModule],
-      providers:[WebinAuthenticationService,WebinRestService,
-        {provide: ActivatedRoute, useValue: fakeActivatedRoute},
-        {provide:MatDialogRef, useValue:{} },{ provide: MAT_DIALOG_DATA, useValue: {"contactObj":{"id":123}}},
-        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]}, 
-        {provide: MAT_DATE_FORMATS, useValue: CUSTOM_FORMATS}
+      declarations: [ReleaseDatePopupComponent],
+      imports: [BrowserAnimationsModule, FormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatDialogModule],
+      providers: [WebinAuthenticationService, WebinRestService,
+        { provide: ActivatedRoute, useValue: fakeActivatedRoute },
+        { provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: { "contactObj": { "id": 123 } } },
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: CUSTOM_FORMATS }
       ]
-      })
-    .compileComponents();
+    })
+      .compileComponents();
   }));
 
   beforeEach(() => {

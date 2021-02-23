@@ -1,18 +1,18 @@
-.body{
-  padding:10px 20px 10px 10px;
+.body {
+  padding: 10px 20px 10px 10px;
 }
 
-.container{
+.container {
   padding: 10px 0px 0px 0px;
 }
 
-mat-card{
-  margin:10px;
+mat-card {
+  margin: 10px;
 }
 
 .checklist-restriction {
   color: black;
-  background-color:	#F5F5F5;
+  background-color: #f5f5f5;
 }
 
 /* Checklist field selection checkbox always green and text always black. */
@@ -21,7 +21,8 @@ mat-card{
   color: black;
 }
 
-.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
   background-color: #38983e !important;
 }
 
@@ -33,18 +34,18 @@ mat-card{
   padding-left: 5px;
 }
 
-.back-div{
+.back-div {
   float: left;
   padding-top: 2px;
   cursor: pointer;
 }
 
-.centred{
+.centred {
   position: fixed; /* or absolute */
   top: 50%;
   left: 50%;
 }
 
 .mat-row:hover {
-  background-color:#f0f5f5;
+  background-color: #f0f5f5;
 }

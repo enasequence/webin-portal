@@ -21,7 +21,7 @@ import { WebinGdprService } from '../webin-gdpr.service';
 })
 export class GdprComponent {
 
- constructor(
+  constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinGdprServer: WebinGdprService) { }
 
@@ -30,6 +30,6 @@ export class GdprComponent {
   }
 
   consent() {
-      this._webinGdprServer.consent();
-    }
+    this._webinGdprServer.consent();
+  }
 }

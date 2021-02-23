@@ -34,7 +34,7 @@ import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-po
   styleUrls: ['./report.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReportComponent implements OnInit{
+export class ReportComponent implements OnInit {
 
   ReportType = ReportType;   // Allows use in template
 
@@ -65,27 +65,27 @@ export class ReportComponent implements OnInit{
     private _reportDialog: MatDialog,
     public media: ObservableMedia,
     private activatedRoute: ActivatedRoute,
-    private router: Router) { 
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    }
+    private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit() {
-      if(this.activatedRoute.snapshot.params.reportType !=null){
-      this.reportType=this.activatedRoute.snapshot.params.reportType;
-      
-      }
-      var defaultSearch=this.activatedRoute.snapshot.params.defaultSearch;
-      this._id=this.activatedRoute.snapshot.params.id;
-      
-        if(defaultSearch==="true" || this.embDefaultSearch){
-          
-          this.report();  
-        }
-      
+    if (this.activatedRoute.snapshot.params.reportType != null) {
+      this.reportType = this.activatedRoute.snapshot.params.reportType;
 
-      if(this.reportType && this._id){
-        this.report();
-      }
+    }
+    var defaultSearch = this.activatedRoute.snapshot.params.defaultSearch;
+    this._id = this.activatedRoute.snapshot.params.id;
+
+    if (defaultSearch === "true" || this.embDefaultSearch) {
+
+      this.report();
+    }
+
+
+    if (this.reportType && this._id) {
+      this.report();
+    }
   }
 
   isEga(): boolean {
@@ -167,9 +167,9 @@ export class ReportComponent implements OnInit{
       'Status',
       'Action', // No callback for Action column
     ];
-    if(this.embeded){
-       this.displayedColumns.splice(-1,1); 
-       this.displayedColumns.unshift('Select')
+    if (this.embeded) {
+      this.displayedColumns.splice(-1, 1);
+      this.displayedColumns.unshift('Select')
     }
     this.displayedColumnsCallback = {
       'Select': this.accessionColumnCallback.bind(this),
@@ -403,7 +403,7 @@ export class ReportComponent implements OnInit{
   }
 
   getElementValue(result, col) {
-    
+
     let columnName = '';
     if (this.media.isActive('xs')) {
       columnName = `${col}: `;
@@ -411,7 +411,7 @@ export class ReportComponent implements OnInit{
 
     const callback = this.displayedColumnsCallback[col];
     return columnName + callback(result);
-    
+
   }
 
   getActions(result): Array<ReportActionInterface> {
@@ -505,9 +505,9 @@ export class ReportComponent implements OnInit{
     if (action && action.reportActionType === ReportActionType.changeReport) {
       // console.log('** change report action **', action);
       //this.reportChange.emit(action);
-      this.router.navigate(['/report',action.reportType,action.id]);
-      
-      
+      this.router.navigate(['/report', action.reportType, action.id]);
+
+
     }
 
     if (action && action.reportActionType === ReportActionType.editXml) {
@@ -901,7 +901,7 @@ export class ReportComponent implements OnInit{
     return this.initReportObservable('csv', '10000000');
   }
 
-  updateReleaseDate(row){
+  updateReleaseDate(row) {
     this.openUpdateReleaseDateDialog(row)
   }
 
@@ -910,19 +910,19 @@ export class ReportComponent implements OnInit{
       width: '500px',
       backdropClass: 'custom-dialog-backdrop-class',
       panelClass: 'custom-dialog-panel-class',
-      data: {studyObj:obj}
+      data: { studyObj: obj }
     });
     dialogRef.afterClosed().subscribe(result => {
 
-      if(result.event==='close'){
+      if (result.event === 'close') {
         this.report();
       }
     })
   }
 
-  selectStudy(element){
+  selectStudy(element) {
     this.selectedStudyAlias.emit(element.report.alias);
   }
 
-  
+
 }

@@ -69,42 +69,42 @@ export class ReportEditDialogComponent implements OnInit {
     console.log('** xml retrieval **', reportType, id);
 
     switch (reportType) {
-       case ReportType.studies: {
-         observable = this._webinXmlReportService.getStudyXml(id);
-         break;
-       }
-       case ReportType.projects: {
-         observable = this._webinXmlReportService.getProjectXml(id);
-         break;
-       }
-       case ReportType.samples: {
-         observable = this._webinXmlReportService.getSampleXml(id);
-         break;
-       }
-       case ReportType.runs: {
-         observable = this._webinXmlReportService.getRunXml(id);
-         break;
-       }
-       case ReportType.experiments: {
+      case ReportType.studies: {
+        observable = this._webinXmlReportService.getStudyXml(id);
+        break;
+      }
+      case ReportType.projects: {
+        observable = this._webinXmlReportService.getProjectXml(id);
+        break;
+      }
+      case ReportType.samples: {
+        observable = this._webinXmlReportService.getSampleXml(id);
+        break;
+      }
+      case ReportType.runs: {
+        observable = this._webinXmlReportService.getRunXml(id);
+        break;
+      }
+      case ReportType.experiments: {
         observable = this._webinXmlReportService.getExperimentXml(id);
-         break;
-       }
-       case ReportType.analyses: {
-         observable = this._webinXmlReportService.getAnalysisXml(id);
-         break;
-       }
-       case ReportType.dacs: {
-         observable = this._webinXmlReportService.getDacXml(id);
-         break;
-       }
-       case ReportType.policies: {
-         observable = this._webinXmlReportService.getPolicyXml(id);
-         break;
-       }
-       case ReportType.datasets: {
-         observable = this._webinXmlReportService.getDatasetXml(id);
-         break;
-       }
+        break;
+      }
+      case ReportType.analyses: {
+        observable = this._webinXmlReportService.getAnalysisXml(id);
+        break;
+      }
+      case ReportType.dacs: {
+        observable = this._webinXmlReportService.getDacXml(id);
+        break;
+      }
+      case ReportType.policies: {
+        observable = this._webinXmlReportService.getPolicyXml(id);
+        break;
+      }
+      case ReportType.datasets: {
+        observable = this._webinXmlReportService.getDatasetXml(id);
+        break;
+      }
     }
 
     if (observable) {
@@ -119,7 +119,7 @@ export class ReportEditDialogComponent implements OnInit {
           console.error('** webin xml retrieval service failed **', err);
           const msg = 'Webin XML retrieval service failed. Please try again later. If the problem persists please contact the helpdesk.';
           this.retrieveXmlError = msg;
-      });
+        });
     }
   }
 
@@ -128,9 +128,9 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   save() {
-    var action={name:"Edit"};
+    var action = { name: "Edit" };
     const observable: Observable<string> = this._webinRestService.updateXml(
-      this.data.reportType, new Blob([ this.xml ]),action,null);
+      this.data.reportType, new Blob([this.xml]), action, null);
 
     this.submissionResult.submit(observable);
   }

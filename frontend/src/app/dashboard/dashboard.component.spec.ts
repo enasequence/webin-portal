@@ -13,14 +13,14 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
 import { MatIconModule } from '@angular/material'
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-main',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   encapsulation: ViewEncapsulation.None,
- 
+
 })
 export class DashboardComponent {
 

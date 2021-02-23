@@ -24,8 +24,8 @@ describe('LogoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogoutComponent ],
-      imports: [ UiModule,  RouterTestingModule ],
+      declarations: [LogoutComponent],
+      imports: [UiModule, RouterTestingModule],
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -33,7 +33,7 @@ describe('LogoutComponent', () => {
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

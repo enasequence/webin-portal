@@ -1,8 +1,8 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import {UtilService} from '../util/Util-services'
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { UtilService } from '../util/Util-services'
 import { NgModule } from '@angular/core';
 
 
@@ -13,77 +13,77 @@ import { NgModule } from '@angular/core';
 })
 export class ContactDialogModalComponent implements OnInit {
 
- 
+
 
   /* Used for storing dssed emails, this will be used for validation */
-  emails= [];
+  emails = [];
 
   /* Add / Update / Delete */
   action: string;
 
-  contactObj={};
-  
-  constructor( 
-              public dialogRef: MatDialogRef<ContactDialogModalComponent>,
-              @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-              private util: UtilService) { 
-      this.action = data.action;
-      console.log(data)
-      this.emails=data.emailList;
-      if(this.action!="Error"){
-        this.copyObjectValue(data.contactObj,this.contactObj)
-      }else{
-        this.contactObj=data.contactObj;
-      }
-      
+  contactObj = {};
+
+  constructor(
+    public dialogRef: MatDialogRef<ContactDialogModalComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private util: UtilService) {
+    this.action = data.action;
+    console.log(data)
+    this.emails = data.emailList;
+    if (this.action != "Error") {
+      this.copyObjectValue(data.contactObj, this.contactObj)
+    } else {
+      this.contactObj = data.contactObj;
     }
 
-  ngOnInit() { 
   }
 
-  doAction(){
-    if(this.action==="Add") {
-      this.contactObj["id"]=this.util.getId();
+  ngOnInit() {
+  }
+
+  doAction() {
+    if (this.action === "Add") {
+      this.contactObj["id"] = this.util.getId();
     }
-    let contact=this.updateName(this.contactObj);
+    let contact = this.updateName(this.contactObj);
     this.dialogRef.close({ event: this.action, data: contact });
   }
 
-  closePopup(){
-    this.dialogRef.close({event: 'close'});
+  closePopup() {
+    this.dialogRef.close({ event: 'close' });
   }
 
-  closeSuccessPopup(){
-    this.dialogRef.close({event: 'CloseSuccess'});
+  closeSuccessPopup() {
+    this.dialogRef.close({ event: 'CloseSuccess' });
   }
 
-  updateName(contact){
-    var name= contact["firstName"] + " " + (contact["middleInitials"] || "") + " "+ contact["surname"];
-    if(contact["consortiumContact"]){
-      name=contact["consortium"];
-      contact.firstName="";
-      contact.surname="";
-      contact.middleInitials="";
-    }else{
-      contact.consortium="";
+  updateName(contact) {
+    var name = contact["firstName"] + " " + (contact["middleInitials"] || "") + " " + contact["surname"];
+    if (contact["consortiumContact"]) {
+      name = contact["consortium"];
+      contact.firstName = "";
+      contact.surname = "";
+      contact.middleInitials = "";
+    } else {
+      contact.consortium = "";
     }
 
-    contact["name"]=name;
+    contact["name"] = name;
     return contact;
   }
 
-  copyObjectValue(from,to){
-    to.id=from.id;
-    to.emailAddress=from.emailAddress;
-    to.firstName=from.firstName;
-    to.middleInitials=from.middleInitials;
-    to.surname=from.surname;
-    to.consortium=from.consortium;
-    to.mainContact=from.mainContact;
-    to.consortiumContact=from.consortiumContact;
-    to.name=from.name;
-    to.submissionAccountId=from.submissionAccountId;
+  copyObjectValue(from, to) {
+    to.id = from.id;
+    to.emailAddress = from.emailAddress;
+    to.firstName = from.firstName;
+    to.middleInitials = from.middleInitials;
+    to.surname = from.surname;
+    to.consortium = from.consortium;
+    to.mainContact = from.mainContact;
+    to.consortiumContact = from.consortiumContact;
+    to.name = from.name;
+    to.submissionAccountId = from.submissionAccountId;
   }
 
-  
+
 }

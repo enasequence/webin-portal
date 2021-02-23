@@ -9,8 +9,8 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import {Injectable, Injector} from '@angular/core';
-import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { WebinAuthenticationService } from './webin-authentication.service';
@@ -19,33 +19,33 @@ import { environment } from '../environments/environment';
 @Injectable()
 export class WebinAuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
   //twitterToken="AAAAAAAAAAAAAAAAAAAAACHPOQAAAAAAK%2FQU%2BR0MB%2BcMXOiWrljWlX3%2BZ%2BU%3DFV9fOpABfT8s69ntGFAUNPwEf6fgcvNk3svOBfYXlKRsuEvUWd"
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-  console.log(req.url);
-  
+    console.log(req.url);
+
     if (!req.url.startsWith(environment.webinAuthenticationServiceUrl) &&
-        !req.url.startsWith(environment.webinReportServiceUrl + "/checklist-groups") &&
-        !req.url.startsWith(environment.webinReportServiceUrl + "/checklists") &&
-        !req.url.startsWith(environment.webinAuthenticationTokenUrl) &&
-        !(req.url.startsWith(environment.webinAdminServiceUrl + "/submission-account") && req.method==="POST") &&
-        !req.url.startsWith(environment.webinAdminServiceUrl + "/country") && 
-        !req.url.startsWith(environment.pupMedUrl) && 
-        !req.url.startsWith(environment.webinAdminServiceUrl + "/request-password-change")) {
-       //console.log('Webin authentication interceptor');
+      !req.url.startsWith(environment.webinReportServiceUrl + "/checklist-groups") &&
+      !req.url.startsWith(environment.webinReportServiceUrl + "/checklists") &&
+      !req.url.startsWith(environment.webinAuthenticationTokenUrl) &&
+      !(req.url.startsWith(environment.webinAdminServiceUrl + "/submission-account") && req.method === "POST") &&
+      !req.url.startsWith(environment.webinAdminServiceUrl + "/country") &&
+      !req.url.startsWith(environment.pupMedUrl) &&
+      !req.url.startsWith(environment.webinAdminServiceUrl + "/request-password-change")) {
+      //console.log('Webin authentication interceptor');
       const webinAuthenticationService = this.injector.get(WebinAuthenticationService);
       //console.log(webinAuthenticationService.getAuthorizationTokenHeader())
-      const authReq = req.clone({headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationTokenHeader())});
+      const authReq = req.clone({ headers: req.headers.set('Authorization', webinAuthenticationService.getAuthorizationTokenHeader()) });
       return next.handle(authReq);
 
-    } else if(req.url.startsWith("https://api.twitter.com/1.1")){
+    } else if (req.url.startsWith("https://api.twitter.com/1.1")) {
       //const tweetReq = req.clone({headers: req.headers.set('Authorization', this.twitterToken)});
       //return next.handle(tweetReq);
-    }else {
-       return next.handle(req);
+    } else {
+      return next.handle(req);
     }
   }
 }
