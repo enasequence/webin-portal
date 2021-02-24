@@ -98,9 +98,9 @@ export class TaxonomyManagementComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this.util.showHttpError(
             this,
+            NonSubmissionResultDialogComponent,
             err,
-            "Taxonomy Registration",
-            NonSubmissionResultDialogComponent
+            'Taxonomy Registration'
           );
         }
       );
