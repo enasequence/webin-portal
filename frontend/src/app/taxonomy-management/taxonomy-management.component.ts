@@ -83,8 +83,8 @@ export class TaxonomyManagementComponent implements OnInit {
     if (observable) {
       observable.pipe(retry(3)).subscribe(
         (data) => {
-          if (data.indexOf("TaxonomyError") > -1) {
-            data = data.replace("TaxonomyError:", "");
+          if (data.indexOf("TaxonomyRegistrationError") > -1) {
+            data = data.replace("TaxonomyRegistrationError:", "");
             this.showErrorPopup(data);
           } else {
             let result = JSON.parse(data);
