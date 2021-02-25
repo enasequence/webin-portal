@@ -1,0 +1,17 @@
+mat-form-field {
+    width: 100%;
+}
+
+mat-form-field.mat-form-field {
+    font-size: 14px;
+    font-family: Roboto;
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: 100%;
+}
+
+input[readonly]{
+    background-color: #f5f5f5;
+  }

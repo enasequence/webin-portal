@@ -43,7 +43,7 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 	private onTouchedCallback: Function;
 
 	// I initialize the file-input value accessor service.
-	constructor( elementRef: ElementRef ) {
+	constructor(elementRef: ElementRef) {
 
 		this.elementRef = elementRef;
 
@@ -60,22 +60,22 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 	// I handle changes to the file input element value made by the user. Instead of
 	// pushing the "value," I push the underlying File or File[] references to the
 	// calling context.
-	public handleChange( files: FileList ) : void {
+	public handleChange(files: FileList): void {
 
 		// If the input is set to allow MULTIPLE files, then always push an ARRAY of
 		// files through to the calling context (even if it is empty).
 		// --
 		// NOTE: We are using Array.from() in order to create a proper Array from the
 		// Array-like FileList collection.
-		if ( this.elementRef.nativeElement.multiple ) {
+		if (this.elementRef.nativeElement.multiple) {
 
-			this.onChangeCallback( Array.from( files ) );
+			this.onChangeCallback(Array.from(files));
 
-		// If the input is set to allow only a SINGLE file, then let's only push the
-		// first file in the collection (or NULL if no file is available).
+			// If the input is set to allow only a SINGLE file, then let's only push the
+			// first file in the collection (or NULL if no file is available).
 		} else {
 
-			this.onChangeCallback( files.length ? files[ 0 ] : null );
+			this.onChangeCallback(files.length ? files[0] : null);
 
 		}
 
@@ -84,7 +84,7 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 
 	// I register the callback to be invoked when the value of the file input element
 	// has been changed by the user.
-	public registerOnChange( callback: Function ) : void {
+	public registerOnChange(callback: Function): void {
 
 		this.onChangeCallback = callback;
 
@@ -93,7 +93,7 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 
 	// I register the callback to be invoked when the file input element has been
 	// "touched" by the user.
-	public registerOnTouched( callback: Function ) : void {
+	public registerOnTouched(callback: Function): void {
 
 		this.onTouchedCallback = callback;
 
@@ -101,7 +101,7 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 
 
 	// I set the disabled property of the file input element.
-	public setDisabledState( isDisabled: boolean ) : void {
+	public setDisabledState(isDisabled: boolean): void {
 
 		this.elementRef.nativeElement.disabled = isDisabled;
 
@@ -111,17 +111,17 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 	// I set the value property of the file input element.
 	// --
 	// CAUTION: Only a limited set of values can be used on file inputs.
-	public writeValue( value: any ) : void {
+	public writeValue(value: any): void {
 
-		if ( value instanceof FileList ) {
+		if (value instanceof FileList) {
 
 			this.elementRef.nativeElement.files = value;
 
-		} else if ( Array.isArray( value ) && ! value.length ) {
+		} else if (Array.isArray(value) && !value.length) {
 
 			this.elementRef.nativeElement.files = null;
 
-		} else if ( value === null ) {
+		} else if (value === null) {
 
 			this.elementRef.nativeElement.files = null;
 
@@ -129,10 +129,10 @@ export class FileInputValueAccessor implements ControlValueAccessor {
 
 			// Since we cannot manually construct a FileList instance, we have to ignore
 			// any attempt to push a non-FileList instance into the input.
-			if ( console && console.warn && console.log ) {
+			if (console && console.warn && console.log) {
 
-				console.warn( "Ignoring attempt to assign non-FileList to input[type=file]." );
-				console.log( "Value:", value );
+				console.warn("Ignoring attempt to assign non-FileList to input[type=file].");
+				console.log("Value:", value);
 
 			}
 

@@ -29,9 +29,9 @@ describe('ReportComponent', () => {
       declarations: [
         ReportComponent,
         MockReportActionComponent
-     ],
-      imports: [ UiModule, RouterTestingModule ],
-      
+      ],
+      imports: [UiModule, RouterTestingModule],
+
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -43,7 +43,7 @@ describe('ReportComponent', () => {
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

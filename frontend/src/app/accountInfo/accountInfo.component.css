@@ -1,60 +1,59 @@
-.body{
-    padding:10px 20px 10px 10px;
+.body {
+  padding: 10px 20px 10px 10px;
 }
 
-.container{
-    padding: 10px 0px 0px 0px;
+.container {
+  padding: 10px 0px 0px 0px;
 }
 
 .column {
-    float: left;
-    width: 50%;
-  }
-
-mat-form-field {
-    width: 100%;
+  float: left;
+  width: 50%;
 }
 
-mat-card{
-    margin:10px;
+mat-form-field {
+  width: 100%;
+}
+
+mat-card {
+  margin: 10px;
 }
 
 mat-form-field.mat-form-field {
-    font-size: 14px;
-    font-family: Roboto;
-  }
-
-mat-icon{
-  cursor: pointer;  
-}
- 
-.mat-row:nth-child(even){
-    background-color:#f8f8f8;
+  font-size: 14px;
+  font-family: Roboto;
 }
 
-.mat-header-cell{
-    font-weight: bold;
-    font-size: 14px;
-    color: #000000c7;
+mat-icon {
+  cursor: pointer;
 }
 
-input[type="password"]{
-    box-shadow: none;
-    height: auto;
-    
-} 
-
-input[type="password"]:focus{
-    border: none;
-    box-shadow: none;
+.mat-row:nth-child(even) {
+  background-color: #f8f8f8;
 }
 
-.back-div{
-    float: left;
-    padding-top: 2px;
-    cursor: pointer;
-  }
+.mat-header-cell {
+  font-weight: bold;
+  font-size: 14px;
+  color: #000000c7;
+}
 
-  input[readonly]{
-    background-color: #f5f5f5;
-  }
+input[type="password"] {
+  box-shadow: none;
+  height: auto;
+}
+
+input[type="password"]:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.back-div {
+  float: left;
+  padding-top: 2px;
+  cursor: pointer;
+}
+
+input[readonly] {
+  background-color: #f5f5f5;
+}

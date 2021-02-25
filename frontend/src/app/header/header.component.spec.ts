@@ -23,8 +23,8 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ],
-      imports: [ UiModule ],
+      declarations: [HeaderComponent],
+      imports: [UiModule],
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -32,7 +32,7 @@ describe('HeaderComponent', () => {
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

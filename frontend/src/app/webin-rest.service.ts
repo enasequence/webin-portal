@@ -50,6 +50,15 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' });
   }
 
+  private postTaxon(formData: FormData): Observable<string> {
+    const headers = this.headers();
+    return this._http.post(environment.webinXmlReportServiceUrl+"/portal/register/taxonomy", formData, { headers, responseType: 'text' });
+  }
+
+  private postEmail(mail) {
+    return this._http.post(environment.webinXmlReportServiceUrl+'/email',mail);
+  }
+
    submitProjectXml(formData){
     const headers = this.headers();
     return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' }).
@@ -59,6 +68,7 @@ export class WebinRestService implements WebinRestServiceInterface {
          })
       )
   }
+  
 
   updateXml(
     reportType: ReportType,
@@ -254,6 +264,19 @@ export class WebinRestService implements WebinRestServiceInterface {
       }
     }
      return releaseDateStr;
+  }
+
+  uploadTaxonTemplate(taxonTemplate: Blob): Observable<any> {
+    console.log('** Submit tacon template **');
+    const formData: FormData = new FormData();
+    formData.append('taxonomyRegistrationFile', taxonTemplate, 'taxonomyTemplate.tsv');
+    return this.postTaxon(formData);
+  }
+
+  sendTaxonEmail(mail: any)
+ {
+    console.log('** Send email for taxon **');
+    return this.postEmail(mail)
   }
  
 }

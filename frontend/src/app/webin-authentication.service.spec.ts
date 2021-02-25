@@ -17,8 +17,8 @@ import { WebinAuthenticationService } from './webin-authentication.service';
 describe('WebinAuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientModule ],
-      providers: [ WebinAuthenticationService ]
+      imports: [HttpClientModule],
+      providers: [WebinAuthenticationService]
     });
   });
 

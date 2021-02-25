@@ -16,13 +16,13 @@ import { WebinAuthenticationService } from './webin-authentication.service';
 @Injectable()
 export class WebinAuthenticationGuardService implements CanActivate {
 
-  constructor(private webinAuthenticationService: WebinAuthenticationService, private router: Router) {}
+  constructor(private webinAuthenticationService: WebinAuthenticationService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     // console.log('WebinAuthenticationGuardService.canActivate');
     if (this.webinAuthenticationService.authenticated) {
       if (new Date() >=
-          this.webinAuthenticationService.logoutDate) {
+        this.webinAuthenticationService.logoutDate) {
         // console.log('WebinAuthenticationGuardService: authentication timeout');
         this.webinAuthenticationService.logout();
         this.router.navigate(['login']);
@@ -39,14 +39,14 @@ export class WebinAuthenticationGuardService implements CanActivate {
     console.log("URL ::");
     console.log(url);
     if (url.startsWith("/?page=")) {
-    // console.log('WebinAuthenticationGuardService: set redirectUrl', url);
+      // console.log('WebinAuthenticationGuardService: set redirectUrl', url);
       this.webinAuthenticationService.redirectUrl = url;
     }
-   
-    
-    
-      this.router.navigate(['login']);
+
+
+
+    this.router.navigate(['login']);
     return false;
-    
+
   }
 }

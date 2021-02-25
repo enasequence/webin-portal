@@ -26,8 +26,8 @@ describe('GdprComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GdprComponent ],
-      imports: [ UiModule, RouterTestingModule ],
+      declarations: [GdprComponent],
+      imports: [UiModule, RouterTestingModule],
       providers: [
         {
           provide: WebinAuthenticationService,
@@ -39,7 +39,7 @@ describe('GdprComponent', () => {
         },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

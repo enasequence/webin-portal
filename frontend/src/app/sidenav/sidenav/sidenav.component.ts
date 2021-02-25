@@ -13,14 +13,14 @@ export class SidenavComponent implements OnDestroy, AfterViewChecked {
 
   mobileQuery: MediaQueryList;
 
-  ReportType = ReportType;  
+  ReportType = ReportType;
   isExpanded = true;
   showSubmenu: boolean = true;
   isShowing = true;
   showSubSubMenu: boolean = true;
-  over="over";
-  authFlag=false;
-  
+  over = "over";
+  authFlag = false;
+
 
   constructor(private _webinAuthenticationService: WebinAuthenticationService,
     private changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
@@ -29,7 +29,7 @@ export class SidenavComponent implements OnDestroy, AfterViewChecked {
 
   ngOnDestroy(): void {
   }
-  
+
   getTitle() {
     return environment.title;
   }
@@ -50,11 +50,11 @@ export class SidenavComponent implements OnDestroy, AfterViewChecked {
     }
   }
 
-  isAuthenticated(){
+  isAuthenticated() {
     return this.authFlag;
   }
   ngAfterViewChecked() {
-    if(this.authFlag != this._webinAuthenticationService.authenticated){
+    if (this.authFlag != this._webinAuthenticationService.authenticated) {
       this.authFlag = this._webinAuthenticationService.authenticated;
       this.changeDetectorRef.detectChanges();
     }

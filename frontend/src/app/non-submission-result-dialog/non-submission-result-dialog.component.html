@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content>
+
+  <app-submission-result #submissionResult></app-submission-result>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+
+
+  <button mat-button color="primary" [routerLink]="redirectPath" [mat-dialog-close]="true">Close</button>
+
+
+</mat-dialog-actions>

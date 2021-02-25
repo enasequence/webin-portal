@@ -12,11 +12,11 @@ describe('ResetPasswordRequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetPasswordRequestDialogComponent, ],
-      imports:[FormsModule,MatFormFieldModule,HttpClientModule,MatInputModule,BrowserAnimationsModule],
-      providers:[{provide:MatDialogRef, useValue:{} },{provide:MatDialog, useValue:{} },{ provide: MAT_DIALOG_DATA, useValue: {"contactObj":{"id":123}}} ],
+      declarations: [ResetPasswordRequestDialogComponent,],
+      imports: [FormsModule, MatFormFieldModule, HttpClientModule, MatInputModule, BrowserAnimationsModule],
+      providers: [{ provide: MatDialogRef, useValue: {} }, { provide: MatDialog, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: { "contactObj": { "id": 123 } } }],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

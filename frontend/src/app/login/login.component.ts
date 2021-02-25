@@ -17,6 +17,7 @@ import { mergeMap } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordRequestDialogComponent } from '../reset-password-request-dialog/reset-password-request-dialog.component'
+import { UtilService } from '../util/Util-services';
 
 
 
@@ -35,28 +36,33 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     private _webinAuthenticationService: WebinAuthenticationService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private util: UtilService,
+
+  ) { }
 
   ngOnInit() {
     //  console.log('LoginComponent.ngOnInit');
     if (this._webinAuthenticationService.authenticated) {
       this._router.navigateByUrl('');
     }
+
+    this.getTweet();
   }
 
   login() {
     this._webinAuthenticationService.logout();
 
     this._webinAuthenticationService.login(this.username, this.password).
-    pipe(
-      mergeMap(data => {
-        // console.log('WebinAuthenticationService.login succeeded');
-        this._webinAuthenticationService.ega = data.roles.EGA;
-        this._webinAuthenticationService.account = data.principle;
-        return this._webinAuthenticationService.loginToken(this.username, this.password);
-      })
-    ).
-    subscribe(
+      pipe(
+        mergeMap(data => {
+          // console.log('WebinAuthenticationService.login succeeded');
+          this._webinAuthenticationService.ega = data.roles.EGA;
+          this._webinAuthenticationService.account = data.principle;
+          return this._webinAuthenticationService.loginToken(this.username, this.password);
+        })
+      ).
+      subscribe(
         data => {
           // console.log('WebinAuthenticationService.loginToken succeeded');
           this._webinAuthenticationService.token = data;
@@ -67,7 +73,7 @@ export class LoginComponent implements OnInit {
           }
           else {
             this._router.navigateByUrl('');
-            if(!this._webinAuthenticationService.ega){
+            if (!this._webinAuthenticationService.ega) {
               this._webinAuthenticationService.setSubmissionAccount();
             }
           }
@@ -83,15 +89,24 @@ export class LoginComponent implements OnInit {
           this._webinAuthenticationService.authenticated = true;
         }
       );
-      
+
   }
 
-  openResetPasswordRequestDialog(obj){
+  openResetPasswordRequestDialog(obj) {
     const dialogRef = this.dialog.open(ResetPasswordRequestDialogComponent, {
       width: '400px',
       backdropClass: 'custom-dialog-backdrop-class',
       panelClass: 'custom-dialog-panel-class',
-      data: {resetObj:obj}
+      data: { resetObj: obj }
     });
+  }
+
+  getTweet() {
+
+    /*  this.util.getTweet().subscribe((data:any) => { 
+        console.log(data);
+      },(error) => {
+        console.log(error);
+      }); */
   }
 }

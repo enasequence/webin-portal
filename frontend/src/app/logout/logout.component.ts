@@ -14,10 +14,10 @@ import { Router } from '@angular/router';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 
 @Component({
-  selector: 'app-logout',
-  templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-logout',
+    templateUrl: './logout.component.html',
+    styleUrls: ['./logout.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class LogoutComponent implements OnInit {
 

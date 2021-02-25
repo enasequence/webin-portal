@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PopupMessageComponent } from './popup-message.component';
-import { MatDialogModule,MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PopupMessageComponent', () => {
@@ -10,14 +10,14 @@ describe('PopupMessageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[MatDialogModule],
-      declarations: [ PopupMessageComponent ],
-      providers:[ {provide: MatDialogRef, useValue:{}},{ provide: MAT_DIALOG_DATA, useValue: {} } ],
-      
+      imports: [MatDialogModule],
+      declarations: [PopupMessageComponent],
+      providers: [{ provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {} }],
+
       //providers:[MatDialogRef ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

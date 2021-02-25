@@ -1,0 +1,129 @@
+<div class="body">
+
+    <div>
+        <div class="mat-h3 mat-tittle">Read Submission</div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="container">
+        <p class="mat-body">We recommend that Fastq, BAM, and CRAM read files are submitted using <a
+                href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a></p>
+
+        <p class="mat-body">When using this interface instead of <a
+                href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a>, raw sequences must
+            be <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/upload.html">uploaded</a> in one of the
+            supported <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/reads.html">data formats</a> before
+            they can be submitted. The study and the sequenced samples must be pre-registered before the raw reads are
+            submitted. Please note that each individual study and sample should be registered only once. You will be
+            asked to provide information about the sequencing libraries and instruments. Please quote the study
+            accession number (ERP*) when citing data submitted to ENA.</p>
+
+        <p class="mat-body">Read <a href="https://ena-docs.readthedocs.io/en/latest/reads/interactive.html">here</a> for
+            more information on how submit your raw reads to ENA.</p>
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>Download spreadsheet template for Read submission</b>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-vertical-stepper #stepper>
+                <!--<mat-step label="Please select a study">
+                <app-report (selectedStudyAlias)="getSelectedStudy($event,stepper)" [reportType]="reportType" [embDefaultSearch]="true" [embeded]="true"></app-report>
+                <div>
+                    <button mat-button matStepperNext [disabled]="!this.selectedStudy">Next</button>
+                </div>
+            </mat-step> -->
+                <mat-step label="Please select a file format">
+                    <div class="mat-elevation-z8">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let fieldType of readFileDetails['fieldTypes']"
+                                (click)="selectFileType(fieldType.file_type,fieldType.name)">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <b>{{fieldType.label}} </b> <span fxHide fxShow.gt-sm
+                                            style="padding-left: 30px;"><i> {{fieldType.description}}</i></span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div *ngIf="fieldType.name=='PacBio_HDFS'">
+                                    <p class="mat-body">A PacBio experiment output consists of a metadata.xml, bas.h5
+                                        and bax.h5 files. These files should be submitted using a 'manifest.all' file
+                                        that lists these files for a given run. The recommended way to create the
+                                        manifest file is to use the linux md5sum command. The manifest file must have
+                                        two columns, the first containing file md5 checksum and the second the file
+                                        name.</p>
+
+                                    <p class="mat-body">For example, the 'manifest.all' file may look like:
+
+                                    <p class="mat-body">0ddf706a5962b55fc85c524c4150231d metadata.xml</p>
+                                    <p class="mat-body">d45f37b3567dfac6b33a1e150e6c5a68 a.bas.h5</p>
+                                    <p class="mat-body">12d4309a2b7c71500194261acbc00c62 a.bax.h5</p>
+                                    <p class="mat-body">The 'manifest.all' file should be submitted to the archive on
+                                        behalf of the files listed within.</p>
+                                </div>
+
+                                <div *ngFor="let field of fieldType.fields">
+                                    <div *ngIf="displayEgaField(field)">
+                                        <mat-checkbox class="checklist-checked-field"
+                                            [checked]="field.mandatory || field.checked" [disabled]="field.mandatory"
+                                            (change)="selectedField($event,field)"> <b
+                                                class="checklist-checked-field">{{field.label}}</b></mat-checkbox>
+                                        <p fxHide fxShow.gt-sm>{{field.description}}</p>
+                                        <div style="width:20%">
+                                            <p *ngIf="field.value_choice !=null">
+                                                <mat-select class="checklist-restriction"
+                                                    placeholder="Permitted values">
+                                                    <mat-option *ngFor="let PermitedValues of field.value_choice"
+                                                        [value]="field.value_choice">
+                                                        {{ PermitedValues }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext [disabled]="!this.selectedFieldType">Next</button>
+                    </div>
+                </mat-step>
+                <mat-step label="Download spreadsheet template">
+                    <p>
+                        Please download the spreadsheet template containing the fields you have selected by using the
+                        'Download' button below.
+                    </p>
+                    <!-- <button mat-raised-button color="accent" (click)="downloadReadExcelTemplate()" style="margin-left: 5px;">Download Excel Template</button> -->
+                    <button mat-raised-button color="accent" (click)="downloadReadTsvTemplate()"
+                        style="margin-left: 5px;">Download TSV Template</button>
+
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <!-- <button mat-button matStepperNext (click)="">Done</button> -->
+                    </div>
+
+                </mat-step>
+            </mat-vertical-stepper>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>Upload filled spreadsheet template for Read submission</b>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you have downloaded and filled a Read submission template spreadsheet please upload it using the
+                <b>Submit Completed Spreadsheet button</b>.</p>
+            <form (ngSubmit)="uploadFile(form)" #form="ngForm">
+                <input type="file" required name="spreadSheet" [(ngModel)]="form.spreadSheet" observeFiles />
+                <button mat-raised-button color="accent" [disabled]="form.invalid ">Submit Completed
+                    Spreadsheet</button>
+            </form>
+        </mat-expansion-panel>
+
+    </div>
+</div>

@@ -13,7 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { UiModule } from './ui/ui.module';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -50,12 +50,18 @@ import { ResetPasswordRequestDialogComponent } from './reset-password-request-di
 import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
 import { StudyManagementComponent } from './study-management/study-management.component';
 import { PopupMessageComponent } from './popup-message/popup-message.component';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule, MatCardSubtitle, MatSidenavModule } from '@angular/material';
-import { FileInputValueAccessor  } from './directives/file-input.accessor.directive';
+import { FileInputValueAccessor } from './directives/file-input.accessor.directive';
 import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
 import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
 import { SidenavComponent } from './sidenav/sidenav/sidenav.component';
+import { ReadSubmissionComponent } from './read-submission/read-submission.component';
+import { TaxonomyManagementComponent } from './taxonomy-management/taxonomy-management.component';
+import { TaxonomyDialogModalComponent } from './taxonomy-dialog-modal/taxonomy-dialog-modal.component';
+import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.directive';
+import { NonSubmissionResultDialogComponent } from './non-submission-result-dialog/non-submission-result-dialog.component';
+
 
 const appRoutes: Routes = [
   {
@@ -88,22 +94,22 @@ const appRoutes: Routes = [
   {
     path: 'report/:reportType',
     component: ReportComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'report/:reportType/:id',
     component: ReportComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'app-submit',
     component: SubmitComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'app-checklist/:checklistType/:init',
     component: ChecklistComponent,
-     canActivate: [WebinAuthenticationGuardService],
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'account',
@@ -122,6 +128,14 @@ const appRoutes: Routes = [
     component: StudyManagementComponent,
   },
   {
+    path: 'read-submission',
+    component: ReadSubmissionComponent,
+  },
+  {
+    path: 'taxonomy',
+    component: TaxonomyManagementComponent,
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
@@ -133,14 +147,18 @@ const appRoutes: Routes = [
     BrowserModule,
     UiModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     FormsModule,
     MatIconModule,
     MatSidenavModule,
-         
+
     // Router
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
+      {
+        enableTracing: false, // <-- debugging purposes only
+        onSameUrlNavigation: "reload"
+      }
     ),
   ],
   declarations: [
@@ -170,7 +188,13 @@ const appRoutes: Routes = [
     DiableAutofillDirective,
     ReleaseDatePopupComponent,
     SidenavComponent,
-    
+    ReadSubmissionComponent,
+    TaxonomyManagementComponent,
+    TaxonomyDialogModalComponent,
+    UniqueNameByArrayDirective,
+    NonSubmissionResultDialogComponent,
+
+
   ],
   bootstrap: [
     AppComponent,
@@ -198,8 +222,10 @@ const appRoutes: Routes = [
     ContactDialogModalComponent,
     ResetPasswordRequestDialogComponent,
     PopupMessageComponent,
-    ReleaseDatePopupComponent
-    
+    ReleaseDatePopupComponent,
+    TaxonomyDialogModalComponent,
+    NonSubmissionResultDialogComponent
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

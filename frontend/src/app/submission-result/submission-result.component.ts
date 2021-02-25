@@ -16,10 +16,10 @@ import { ObservableMedia } from '@angular/flex-layout';
 
 import { WebinRestService } from '../webin-rest.service';
 
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
-import {saveAs as importedSaveAs} from 'file-saver';
+import { saveAs as importedSaveAs } from 'file-saver';
 
 export interface WebinError {
   error: string;
@@ -45,10 +45,13 @@ export class SubmissionResultComponent {
   @ViewChild(MatPaginator, { static: false }) webinErrorPaginator: MatPaginator;
   @ViewChild(MatPaginator, { static: false }) webinAccessionPaginator: MatPaginator;
   result;
+  message;
+  errorMessage;
   resultError;
   showReceiptXml = false;
   @Input() showReceiptSuccess = true;
   active: boolean;
+  displayMessage: string;
 
   constructor(
     private _webinRestService: WebinRestService,
@@ -56,6 +59,10 @@ export class SubmissionResultComponent {
 
   isResult(): boolean {
     return this.result ? true : false;
+  }
+
+  isMessage(): boolean {
+    return this.message ? true : false;
   }
 
   isError(): boolean {
@@ -84,31 +91,38 @@ export class SubmissionResultComponent {
         retry(3)
       ).subscribe(
         data => {
-            // HttpResponse when using {observe: 'response'}
-            this.result = this._webinRestService.parseResult(data);
-            // console.log('** Webin submission **', this.result);
+          // HttpResponse when using {observe: 'response'}
+          this.result = this._webinRestService.parseResult(data);
+          // console.log('** Webin submission **', this.result);
 
-            if (this.result.isError) {
-              this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
-              this.webinErrorDataSource.paginator = this.webinErrorPaginator;
-            } else {
-              this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(this.result.accessions);
-              this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
-            }
+          if (this.result.isError) {
+            this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
+            this.webinErrorDataSource.paginator = this.webinErrorPaginator;
+          } else {
+            this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(this.result.accessions);
+            this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
+          }
         },
         (err: HttpErrorResponse) => {
           console.error('** Webin submission service failed **', err);
           const msg = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
           this.resultError = msg;
-      },
-    () => {
-      this.active = false;
-    });
+        },
+        () => {
+          this.active = false;
+        });
     }
   }
 
+  showMessage(resp) {
+    this.message = true;
+    this.errorMessage = resp.isError;
+    this.displayMessage = resp.message;
+
+  }
+
   downloadReceiptXml() {
-    const blob = new Blob([this.result.xml], {type: 'text/plain;charset=utf-8'});
+    const blob = new Blob([this.result.xml], { type: 'text/plain;charset=utf-8' });
     importedSaveAs(blob, 'Webin-receipt-' + this.result.date + '.xml');
   }
 
@@ -116,9 +130,9 @@ export class SubmissionResultComponent {
     if (this.result.errors) {
       const arr = [];
       arr.push('ERROR');
-      this.result.errors.forEach( error => arr.push( error.error ));
+      this.result.errors.forEach(error => arr.push(error.error));
 
-      const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
+      const blob = new Blob([arr.join('\n')], { type: 'text/plain;charset=utf-8' });
       importedSaveAs(blob, 'Webin-errors-' + this.result.date + '.txt');
     }
   }
@@ -127,11 +141,11 @@ export class SubmissionResultComponent {
     if (this.result.accessions) {
       const arr = [];
       arr.push('TYPE\tACCESSION\tALIAS');
-      this.result.accessions.forEach( accession => arr.push(
-          `${accession.type}\t${accession.accession}\t${accession.alias}`
+      this.result.accessions.forEach(accession => arr.push(
+        `${accession.type}\t${accession.accession}\t${accession.alias}`
       ));
 
-      const blob = new Blob([arr.join('\n')], {type: 'text/plain;charset=utf-8'});
+      const blob = new Blob([arr.join('\n')], { type: 'text/plain;charset=utf-8' });
       importedSaveAs(blob, 'Webin-accessions-' + this.result.date + '.txt');
     }
   }

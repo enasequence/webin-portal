@@ -1,60 +1,60 @@
-
 <div class="mat-h3 mat-tittle">Contact Details</div>
 <form (ngSubmit)="doAction()" #cf="ngForm">
-<div *ngIf="action!='Delete' && action!='Success' && action!='Error'">
-    <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact" >Is Primary Contact</mat-checkbox>
-    <mat-checkbox matInput name="consortiumContact"  [(ngModel)]="contactObj.consortiumContact" style="padding-left: 20px;" >Is Consortium Contact</mat-checkbox>
-    
-    <input   type="hidden" name="submissionAccountId" [(ngModel)]="contactObj.submissionAccountId"/>
+    <div *ngIf="action!='Delete' && action!='Success' && action!='Error'">
+        <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact">Is Primary Contact</mat-checkbox>
+        <mat-checkbox matInput name="consortiumContact" [(ngModel)]="contactObj.consortiumContact"
+            style="padding-left: 20px;">Is Consortium Contact</mat-checkbox>
 
-    <mat-form-field>
-        <input matInput *ngIf="action==='Update'" [readonly]="true"  name="emailAddress" [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email/>
-        <input matInput *ngIf="action!='Update'" name="emailAddress" [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address" appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email/>
-        <mat-error *ngIf="cf.controls['emailAddress']?.errors?.nonUniqueEmail">
-            Email address is used by other contact
-        </mat-error> 
-        <mat-error *ngIf="cf.controls['emailAddress']?.errors?.required || cf.controls['emailAddress']?.invalid">
-            Please enter a valid email address
-        </mat-error>
+        <input type="hidden" name="submissionAccountId" [(ngModel)]="contactObj.submissionAccountId" />
 
-     </mat-form-field>
-    <div *ngIf="!contactObj.consortiumContact">
-    <mat-form-field>
-        <input matInput name="firstName" [(ngModel)]="contactObj.firstName" placeholder="First Name"  required>
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput name="middleInitials" [(ngModel)]="contactObj.middleInitials" placeholder="Middle Name">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput name="surname" [(ngModel)]="contactObj.surname" placeholder="Surame"  required>
-    </mat-form-field>
-    </div>
-    <div *ngIf="contactObj.consortiumContact">
         <mat-form-field>
-            <input matInput name="consortium" [(ngModel)]="contactObj.consortium" placeholder="Consortium Name"  required>
-        </mat-form-field>
-    </div>
-</div>
+            <input matInput *ngIf="action==='Update'" [readonly]="true" name="emailAddress"
+                [(ngModel)]="contactObj.emailAddress" #emailVal="ngModel" placeholder="Email Address"
+                appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email />
+            <input matInput *ngIf="action!='Update'" name="emailAddress" [(ngModel)]="contactObj.emailAddress"
+                #emailVal="ngModel" placeholder="Email Address"
+                appUniqueContactEmail="{{emails}}|{{action}}|{{contactObj.emailAddress}}" required email />
+            <mat-error *ngIf="cf.controls['emailAddress']?.errors?.nonUniqueEmail">
+                Email address is used by other contact
+            </mat-error>
+            <mat-error *ngIf="cf.controls['emailAddress']?.errors?.required || cf.controls['emailAddress']?.invalid">
+                Please enter a valid email address
+            </mat-error>
 
-<div class="mat-body" *ngIf="action==='Delete'">
-    Delete will remove the contact with email "{{contactObj.emailAddress}}" from the Account. Please click the {{action}} Contact button to proceed.
-</div>
-<div class="mat-body" *ngIf="action==='Success'">
-    Successfully saved the account with id : {{contactObj.id}}.
-</div>
-<div class="mat-body" *ngIf="action==='Error'">
-    {{contactObj.error}}
-</div>
-<br>
-<div style="text-align:center" *ngIf="action!='Error' && action!='Success'">
-    <button mat-raised-button color=primary [disabled]="cf.invalid">{{action}} Contact</button>
-    <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Cancel</button>
-</div>
-<div style="text-align:center" *ngIf="action==='Error'">
-    <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Ok</button>
-</div>
-<div style="text-align:center" *ngIf="action==='Success'">
-    <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closeSuccessPopup()" >Ok</button>
-</div>
+        </mat-form-field>
+        <div *ngIf="!contactObj.consortiumContact">
+            <mat-form-field>
+                <input matInput name="firstName" [(ngModel)]="contactObj.firstName" placeholder="First Name" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput name="middleInitials" [(ngModel)]="contactObj.middleInitials" placeholder="Middle Name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput name="surname" [(ngModel)]="contactObj.surname" placeholder="Surame" required>
+            </mat-form-field>
+        </div>
+        <div *ngIf="contactObj.consortiumContact">
+            <mat-form-field>
+                <input matInput name="consortium" [(ngModel)]="contactObj.consortium" placeholder="Consortium Name"
+                    required>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="mat-body" *ngIf="action==='Delete'">
+        Delete will remove the contact with email "{{contactObj.emailAddress}}" from the Account. Please click the
+        {{action}} Contact button to proceed.
+    </div>
+    <br>
+    <div style="text-align:center" *ngIf="action!='Error' && action!='Success'">
+        <button mat-raised-button color=primary [disabled]="cf.invalid">{{action}} Contact</button>
+        <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Cancel</button>
+    </div>
+    <div style="text-align:center" *ngIf="action==='Error'">
+        <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Ok</button>
+    </div>
+    <div style="text-align:center" *ngIf="action==='Success'">
+        <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closeSuccessPopup()">Ok</button>
+    </div>
 
 </form>
