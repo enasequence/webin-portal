@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  envName: 'test',
   title: 'Webin submissions portal (TEST)',
   webinServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/',
   webinUpdateRequestUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/email/update-request/',

@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  envName: 'dev',
   title: 'Webin submissions portal (DEV)',
   webinServiceUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/submit/',
   webinUpdateRequestUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box/email/update-request/',
