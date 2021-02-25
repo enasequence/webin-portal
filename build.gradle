@@ -137,8 +137,7 @@ publishing {
             // Developer token in Gitlab.
             credentials(HttpHeaderCredentials) {
                 name = "Private-Token"
-                //value = project.ext.properties.gitlab_private_token
-                value="-35Eh5MFLnrPuDYUnNq4"
+                value = project.ext.properties.gitlab_private_token
             }
             authentication {
                 header( HttpHeaderAuthentication )
