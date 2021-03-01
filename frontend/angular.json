@@ -13,7 +13,7 @@
           "options": {
             "baseHref": "/ena/submit/webin/",
             "deployUrl": "/ena/submit/webin/",
-            "outputPath": "dist/webin-portal",
+            "outputPath": "../src/main/resources/static",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
