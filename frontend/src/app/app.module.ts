@@ -61,6 +61,7 @@ import { TaxonomyManagementComponent } from './taxonomy-management/taxonomy-mana
 import { TaxonomyDialogModalComponent } from './taxonomy-dialog-modal/taxonomy-dialog-modal.component';
 import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.directive';
 import { NonSubmissionResultDialogComponent } from './non-submission-result-dialog/non-submission-result-dialog.component';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 
 const appRoutes: Routes = [
@@ -160,6 +161,7 @@ const appRoutes: Routes = [
         onSameUrlNavigation: "reload"
       }
     ),
+    AceEditorModule,
   ],
   declarations: [
     AppComponent,

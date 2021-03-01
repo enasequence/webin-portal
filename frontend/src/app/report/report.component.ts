@@ -520,10 +520,13 @@ export class ReportComponent implements OnInit {
   editXml(action: ReportActionInterface): void {
 
     const reportDialogRef = this._reportDialog.open(ReportEditDialogComponent, {
-      width: '600px',
+      width: window.innerWidth + 'px',
+      height: window.innerHeight - 200 + 'px',
       data: action
     });
-    reportDialogRef.afterClosed().subscribe();
+    reportDialogRef.afterClosed().subscribe(result => {
+      this.report();
+    });
   }
 
   reset() {

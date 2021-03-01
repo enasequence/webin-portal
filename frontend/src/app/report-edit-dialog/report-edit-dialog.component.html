@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{getTitle()}}</h2>
 
-<mat-dialog-content>
+<mat-dialog-content style="height:100%">
 
   <div *ngIf="isRetrieveXmlError()">
 
@@ -12,12 +12,14 @@
     </div>
   </div>
 
-  <div *ngIf="!isRetrieveXmlError() && !isUpdateXmlResult()">
+  <div *ngIf="!isRetrieveXmlError() && !isUpdateXmlResult()" style="height:100%;overflow: hidden;">
 
     <!-- Show XML editor -->
 
-    <textarea matInput [(ngModel)]="xml" rows="15">
-      </textarea>
+    <ace-editor [(value)]="xml" [mode]="'xml'" [(ngModel)]="xml" [theme]="'eclipse'" [wrap]="'false'"
+      style="min-height: 100% ;">
+    </ace-editor>
+
   </div>
 
   <!-- Show XML update result -->
