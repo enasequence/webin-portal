@@ -20,6 +20,7 @@ import { SubmissionResultComponent } from '../submission-result/submission-resul
 
 import { ReportType } from '../report-type.enum';
 import { ReportActionInterface } from '../report-action.interface';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 @Component({
   selector: 'app-report-edit-dialog',

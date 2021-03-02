@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "baseHref" : "/ena/submit/webin/",
+            "baseHref": "/ena/submit/webin/",
             "deployUrl": "/ena/submit/webin/",
             "outputPath": "dist/webin-portal",
             "index": "src/index.html",
@@ -20,12 +20,31 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              {
+                "glob": "worker-xml.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-css.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-json.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/ace-builds/src/ace.js",
+              "./node_modules/ace-builds/src/mode-xml.js",
+              "./node_modules/ace-builds/src/theme-eclipse.js"
+            ]
           },
           "configurations": {
             "dev": {
