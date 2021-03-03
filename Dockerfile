@@ -5,7 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 ARG configuration
-RUN node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build
+RUN node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration $configuration
 
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
