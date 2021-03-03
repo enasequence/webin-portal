@@ -62,6 +62,7 @@ import { TaxonomyDialogModalComponent } from './taxonomy-dialog-modal/taxonomy-d
 import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.directive';
 import { NonSubmissionResultDialogComponent } from './non-submission-result-dialog/non-submission-result-dialog.component';
 import { AceEditorModule } from 'ng2-ace-editor';
+import { DacManagementComponent } from './dac-management/dac-management.component';
 
 
 const appRoutes: Routes = [
@@ -137,6 +138,10 @@ const appRoutes: Routes = [
     component: TaxonomyManagementComponent,
   },
   {
+    path: 'dac',
+    component: DacManagementComponent,
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
@@ -195,6 +200,7 @@ const appRoutes: Routes = [
     TaxonomyDialogModalComponent,
     UniqueNameByArrayDirective,
     NonSubmissionResultDialogComponent,
+    DacManagementComponent,
 
 
   ],

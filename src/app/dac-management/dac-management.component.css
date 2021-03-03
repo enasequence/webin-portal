@@ -1,0 +1,30 @@
+.body{
+    padding:10px 20px 10px 10px;
+}
+
+.container{
+    padding: 10px 0px 0px 0px;
+}
+
+.mat-row:nth-child(even){
+    background-color:#f8f8f8;
+}
+
+.mat-header-cell{
+    font-weight: bold;
+    font-size: 14px;
+    color: #000000c7;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-card{
+    margin:10px;
+}
+
+mat-form-field.mat-form-field {
+    font-size: 14px;
+    font-family: Roboto;
+  }
