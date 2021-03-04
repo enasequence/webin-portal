@@ -1,10 +1,12 @@
 <div class="mat-h3 mat-tittle">Contact Details</div>
 <form (ngSubmit)="doAction()" #cf="ngForm">
     <div *ngIf="action!='Delete' && action!='Success' && action!='Error'">
-        <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact">Is Primary Contact</mat-checkbox>
-        <mat-checkbox matInput name="consortiumContact" [(ngModel)]="contactObj.consortiumContact"
-            style="padding-left: 20px;">Is Consortium Contact</mat-checkbox>
-
+        <ng-container *ngIf="!isDac">
+            <mat-checkbox matInput name="mainContact" [(ngModel)]="contactObj.mainContact">Is Primary Contact
+            </mat-checkbox>
+            <mat-checkbox matInput name="consortiumContact" [(ngModel)]="contactObj.consortiumContact"
+                style="padding-left: 20px;">Is Consortium Contact</mat-checkbox>
+        </ng-container>
         <input type="hidden" name="submissionAccountId" [(ngModel)]="contactObj.submissionAccountId" />
 
         <mat-form-field>
@@ -20,25 +22,41 @@
             <mat-error *ngIf="cf.controls['emailAddress']?.errors?.required || cf.controls['emailAddress']?.invalid">
                 Please enter a valid email address
             </mat-error>
-
         </mat-form-field>
-        <div *ngIf="!contactObj.consortiumContact">
+        <ng-container *ngIf="!isDac">
+            <div *ngIf="!contactObj.consortiumContact && !isDac">
+                <mat-form-field>
+                    <input matInput name="firstName" [(ngModel)]="contactObj.firstName" placeholder="First Name"
+                        required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput name="middleInitials" [(ngModel)]="contactObj.middleInitials"
+                        placeholder="Middle Name">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput name="surname" [(ngModel)]="contactObj.surname" placeholder="Surame" required>
+                </mat-form-field>
+            </div>
+            <div *ngIf="contactObj.consortiumContact">
+                <mat-form-field>
+                    <input matInput name="consortium" [(ngModel)]="contactObj.consortium" placeholder="Consortium Name"
+                        required>
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isDac">
             <mat-form-field>
-                <input matInput name="firstName" [(ngModel)]="contactObj.firstName" placeholder="First Name" required>
+                <input matInput name="name" [(ngModel)]="contactObj.name" placeholder="Name" required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput name="middleInitials" [(ngModel)]="contactObj.middleInitials" placeholder="Middle Name">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="surname" [(ngModel)]="contactObj.surname" placeholder="Surame" required>
-            </mat-form-field>
-        </div>
-        <div *ngIf="contactObj.consortiumContact">
-            <mat-form-field>
-                <input matInput name="consortium" [(ngModel)]="contactObj.consortium" placeholder="Consortium Name"
+                <input matInput name="telephone" [(ngModel)]="contactObj.telephone" placeholder="Telephone number"
                     required>
             </mat-form-field>
-        </div>
+            <mat-form-field>
+                <input matInput name="organization" [(ngModel)]="contactObj.organization" placeholder="Organization"
+                    required>
+            </mat-form-field>
+        </ng-container>
     </div>
 
     <div class="mat-body" *ngIf="action==='Delete'">

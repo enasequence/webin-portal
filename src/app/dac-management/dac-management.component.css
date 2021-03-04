@@ -28,3 +28,7 @@ mat-form-field.mat-form-field {
     font-size: 14px;
     font-family: Roboto;
   }
+
+  mat-icon {
+    cursor: pointer;
+  }

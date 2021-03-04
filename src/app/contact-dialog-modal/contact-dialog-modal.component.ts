@@ -23,12 +23,14 @@ export class ContactDialogModalComponent implements OnInit {
 
   contactObj = {};
 
+  isDac: boolean;
+
   constructor(
     public dialogRef: MatDialogRef<ContactDialogModalComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     private util: UtilService) {
     this.action = data.action;
-    console.log(data)
+    this.isDac = data.isDac || false;
     this.emails = data.emailList;
     if (this.action != "Error") {
       this.copyObjectValue(data.contactObj, this.contactObj)
@@ -45,7 +47,10 @@ export class ContactDialogModalComponent implements OnInit {
     if (this.action === "Add") {
       this.contactObj["id"] = this.util.getId();
     }
-    let contact = this.updateName(this.contactObj);
+    let contact = this.contactObj;
+    if (!this.isDac) {
+      contact = this.updateName(this.contactObj);
+    }
     this.dialogRef.close({ event: this.action, data: contact });
   }
 
@@ -83,6 +88,11 @@ export class ContactDialogModalComponent implements OnInit {
     to.consortiumContact = from.consortiumContact;
     to.name = from.name;
     to.submissionAccountId = from.submissionAccountId;
+
+    // Fields for DAC
+    to.telephone = from.telephone;
+    to.organization = from.organization;
+
   }
 
 
