@@ -22,7 +22,7 @@ docker-build-dev:
     - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev --base-href="/ena/dev/submit/webin" --deploy-url="/ena/dev/submit/webin" .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev context=/ena/dev/submit/webin .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 
 docker-build-test:
