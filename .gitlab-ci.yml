@@ -22,7 +22,7 @@ docker-build-dev:
     - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev --build-arg --basePath=/ena/dev/submit/webin/ .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 
 docker-build-test:
@@ -34,7 +34,7 @@ docker-build-test:
     - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=test --build-arg --basePath=/ena/submit/webin/ .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=test --build-arg basePath=/ena/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 
 #docker-build-prod:
@@ -59,7 +59,7 @@ docker-build-prod:
     - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production --build-arg --basePath=/ena/submit/webin/ .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production --build-arg basePath=/ena/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 
 
