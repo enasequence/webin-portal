@@ -17,7 +17,7 @@ spec:
           image: %DOCKER_IMAGE%
           ports:
             - containerPort: 80
-            - containerPort: 443
+         #   - containerPort: 443
       imagePullSecrets:
         - name: gitlab
 ---
@@ -34,8 +34,8 @@ spec:
       targetPort: 80
       protocol: TCP
       name: http
-    - port: 443
-      protocol: TCP
-      name: https
+  #  - port: 443
+  #    protocol: TCP
+  #    name: https
   selector:
     run: webin-portal
