@@ -45,7 +45,11 @@
         <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
           <a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register study (project)</a>
           <a mat-list-item [routerLink]="['/app-checklist','sample',true]" (click)="snav.toggle()">Register sample</a>
-          <a mat-list-item [routerLink]="['/taxonomy']" (click)="snav.toggle()">Register taxonomy</a>
+          <ng-container *ngIf="isEga()">
+            <a mat-list-item [routerLink]="['/dac']" (click)="snav.toggle()">Register data access committee</a>
+            <a mat-list-item [routerLink]="['/dac-policy']" (click)="snav.toggle()">Register data access policy</a>
+            <a mat-list-item [routerLink]="['/taxonomy']" (click)="snav.toggle()">Register taxonomy</a>
+          </ng-container>
         </div>
         <mat-list-item class="parent">
           <mat-icon style="padding-right: 35px;">note_add</mat-icon>

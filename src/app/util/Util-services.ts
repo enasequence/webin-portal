@@ -68,6 +68,11 @@ export class UtilService {
     return this.httpClient.get(url, { responseType: 'text' })
   }
 
+  getDacXml(dacId) {
+    var url = environment.webinReportServiceUrl + "/dacs/xml/" + dacId;
+    return this.httpClient.get(url, { responseType: 'text' })
+  }
+
   downloadExcelTemplate(checklistJson) {
     return this.httpClient.post(environment.webinXmlReportServiceUrl + '/tab/spreadsheet', checklistJson, { responseType: 'arraybuffer' });
   }

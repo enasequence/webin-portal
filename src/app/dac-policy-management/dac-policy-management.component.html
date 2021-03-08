@@ -1,0 +1,24 @@
+<form (ngSubmit)="submitDacPolicy(f)" #f="ngForm">
+    <div class="body">
+        <div>
+            <div class="mat-h3 mat-tittle">Register Data access policy</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="container">
+            <mat-card>
+                <mat-vertical-stepper #stepper>
+                    <mat-step label="Select an existing DAC">
+                        <app-report (selectedRecord)="getSelectedDac($event,stepper)" [reportType]="reportType"
+                            [embDefaultSearch]="true" [embeded]="true"></app-report>
+
+                    </mat-step>
+                    <mat-step label="Submit policy">
+
+
+                    </mat-step>
+                </mat-vertical-stepper>
+            </mat-card>
+
+        </div>
+    </div>
+</form>
