@@ -17,7 +17,7 @@
       <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
         <li><a href="https://www.ebi.ac.uk/ena/browser/support">Support <i class="icon icon-generic"
               data-icon="x"></i></a></li> <!-- ** Application specific content ** -->
-        <li *ngIf="isAuthenticated()"><a href="logout">Logout
+        <li *ngIf="isAuthenticated()"><a [routerLink]="['/login']">Logout
             <span>({{getAccount()}})</span> <!-- ** Application specific content ** -->
           </a></li>
       </ul>

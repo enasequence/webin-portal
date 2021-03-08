@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     //  console.log('LoginComponent.ngOnInit');
     if (this._webinAuthenticationService.authenticated) {
-      this._router.navigateByUrl('');
+      //this._router.navigateByUrl('');
     }
 
     this.getTweet();
