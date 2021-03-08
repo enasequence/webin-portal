@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ContactDialogModalComponent } from '../contact-dialog-modal/contact-dialog-modal.component';
+import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
+import { UtilService } from '../util/Util-services';
+import { XmlService } from '../util/xml.service';
 
 @Component({
   selector: 'app-dac-management',
@@ -13,8 +18,12 @@ export class DacManagementComponent implements OnInit {
   /* Used for storing added emails, this will be used for validation */
   emails = [];
   contactArray = [];
-  deletedContacts = [];
+  action: string;
   dataSource: MatTableDataSource<any>;
+  id: string;
+  showLoadingFlag: boolean;
+  xmlString: string;
+  title: string;
   displayedColumns: string[] = [
     "emailAddress",
     "name",
@@ -25,9 +34,19 @@ export class DacManagementComponent implements OnInit {
   ];
 
 
-  constructor(public dialog: MatDialog,) { }
+  constructor(
+    public dialog: MatDialog,
+    private util: UtilService,
+    private xmlUtil: XmlService,
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.params.id;
+    if (this.id) {
+      this.action = "Edit";
+      this.initEdit(this.id);
+    }
   }
 
   openDialog(action, obj): void {
@@ -100,7 +119,81 @@ export class DacManagementComponent implements OnInit {
         return item.id;
       })
       .indexOf(contact.id);
-    this.deletedContacts.push(this.contactArray[index]);
     this.contactArray.splice(index, 1);
   }
+
+  submitDac(form) {
+    var observable: Observable<string>;
+    let redirectPath = ""
+    if (this.action != "Edit") {
+      observable = this.xmlUtil.generateDacXml(
+        form.value,
+        this.contactArray,
+      );
+
+    } else {
+      observable = this.xmlUtil.updateDacXml(
+        this.xmlString,
+        form.value,
+        this.contactArray,
+      );
+      redirectPath = null;
+    }
+
+    this.util.showSubmissionResponse(
+      this,
+      SubmissionResultDialogComponent,
+      observable,
+      redirectPath
+    );
+  }
+
+  initEdit(id) {
+    this.showLoading();
+    this.util.getDacXml(id).subscribe((xmlString: any) => {
+      this.xmlString = xmlString;
+      this.setPageValuesfromXml();
+      this.hideLoading();
+    });
+  }
+  setPageValuesfromXml() {
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(this.xmlString, "text/xml");
+
+    this.title = xmlDoc.getElementsByTagName("TITLE")[0].childNodes[0].nodeValue;
+    this.setContactDetails(xmlDoc);
+
+  }
+
+  setContactDetails(xmlDoc) {
+    var contacts = xmlDoc.getElementsByTagName("CONTACT");
+    var contactLen = contacts.length;
+    for (var i = 0; i < contactLen; i++) {
+      var email = contacts[i].getAttribute("email");
+      var name = contacts[i].getAttribute("name") || "";
+      var organisation = contacts[i].getAttribute("organisation") || "";
+      var telephone = contacts[i].getAttribute("telephone") || "";
+      this.contactArray.push({
+        id: this.util.getId(),
+        emailAddress: email,
+        name: name,
+        organization: organisation,
+        telephone: telephone
+
+      });
+    }
+    if (contacts.length > 0) {
+      this.dataSource = new MatTableDataSource<any>(this.contactArray);
+    }
+  }
+
+  showLoading() {
+    this.showLoadingFlag = true;
+  }
+
+  hideLoading() {
+    this.showLoadingFlag = false;
+  }
+
+
 }
