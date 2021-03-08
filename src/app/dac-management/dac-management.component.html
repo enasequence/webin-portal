@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <form (ngSubmit)="submitDac(f)" #f="ngForm">
     <div class="body">
         <div>
@@ -24,6 +25,33 @@
                         <th mat-header-cell *matHeaderCellDef>Email</th>
                         <td mat-cell *matCellDef="let element">{{ element.emailAddress }}</td>
                     </ng-container>
+=======
+<div class="body">
+    <div>
+        <div class="mat-h3 mat-tittle">Register Data access committee (DAC)</div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="container">
+        <mat-card>
+            <mat-card-subtitle>DAC Details</mat-card-subtitle>
+            <div style="width: 100%;">
+                <mat-form-field class="app-field-padding">
+                    <textarea rows="3" matInput placeholder="Short descriptive title for the DAC" required
+                        [(ngModel)]="title" name="title"></textarea>
+                </mat-form-field>
+            </div>
+        </mat-card>
+        <mat-card>
+            <mat-card-subtitle>Contact Information</mat-card-subtitle>
+            <a (click)="openDialog('Add', { submissionAccountId: id })">Add At Least One Contact
+                <mat-icon>add_circle</mat-icon>
+            </a>
+            <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="emailAddress">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let element">{{ element.emailAddress }}</td>
+                </ng-container>
+>>>>>>> ce1fbda77b9f9784fc30557a25c78dc4178bbaa2
 
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -78,5 +106,9 @@
             </mat-spinner>
         </div>
     </div>
+<<<<<<< HEAD
 
 </form>
+=======
+</div>
+>>>>>>> ce1fbda77b9f9784fc30557a25c78dc4178bbaa2
