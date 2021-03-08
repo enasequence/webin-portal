@@ -13,7 +13,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-import { tap, startWith, map,debounceTime, catchError } from 'rxjs/operators';
+import { tap, startWith, map, debounceTime, catchError } from 'rxjs/operators';
 
 
 import { ReportType } from './report-type.enum';
@@ -29,7 +29,7 @@ export class WebinRestService implements WebinRestServiceInterface {
   private _xmlParser = new DOMParser();
 
   constructor(private _http: HttpClient,
-  private _webinAuthenticationService:WebinAuthenticationService) { }
+    private _webinAuthenticationService: WebinAuthenticationService) { }
 
   private headers() {
     return new HttpHeaders();
@@ -52,105 +52,108 @@ export class WebinRestService implements WebinRestServiceInterface {
 
   private postTaxon(formData: FormData): Observable<string> {
     const headers = this.headers();
-    return this._http.post(environment.webinXmlReportServiceUrl+"/portal/register/taxonomy", formData, { headers, responseType: 'text' });
+    return this._http.post(environment.webinXmlReportServiceUrl + "/portal/register/taxonomy", formData, { headers, responseType: 'text' });
   }
 
   private postEmail(mail) {
-    return this._http.post(environment.webinXmlReportServiceUrl+'/email',mail);
+    return this._http.post(environment.webinXmlReportServiceUrl + '/email', mail);
   }
 
-   submitProjectXml(formData){
+  submitProjectXml(formData) {
     const headers = this.headers();
     return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' }).
       pipe(
-         map((data: any) => {
-           return data;
-         })
+        map((data: any) => {
+          return data;
+        })
       )
   }
-  
+
 
   updateXml(
     reportType: ReportType,
     xml: Blob,
     action: Object,
-    releaseDate: any): Observable<string> {
-     console.log('** Update XML **');
-     const formData: FormData = new FormData();
-     var mode=action["name"];
-     
-     var releaseDateStr=this.getReleaseDateStr(action,mode,releaseDate)  
-     var actionString=this.getActionStr(action,mode);
-     let submissionXml: Blob = new Blob([
-       '<SUBMISSION_SET>' +
-       '  <SUBMISSION>' +
-       '	<ACTIONS>' +
-                actionString +
-                releaseDateStr +
-       '    	</ACTIONS>' +
-       '    </SUBMISSION>' +
-       '</SUBMISSION_SET>']);
-    if(this._webinAuthenticationService.ega) {
-      submissionXml=new Blob([
-       '<SUBMISSION_SET>' +
-       '  <SUBMISSION broker_name="EGA">' +
-       '	<ACTIONS>' +
-                  actionString  +
-       '    		<ACTION>' +
-       '    			<PROTECT/>' +
-       '    		</ACTION>' +
-                  releaseDateStr +
-       '    	</ACTIONS>' +
-       '    </SUBMISSION>' +
-       '</SUBMISSION_SET>']);
-    }
-     this.appendXml(formData, 'SUBMISSION', submissionXml);
+    releaseDate?: any): Observable<string> {
+    console.log('** Update XML **');
+    const formData: FormData = new FormData();
+    var mode = action["name"];
 
-     switch (reportType) {
-        case ReportType.studies: {
-          this.appendXml(formData, 'STUDY', xml);
-          break;
-        }
-        case ReportType.projects: {
-          this.appendXml(formData, 'PROJECT', xml);
-          break;
-        }
-        case ReportType.samples: {
-          this.appendXml(formData, 'SAMPLE', xml);
-          break;
-        }
-        case ReportType.experiments: {
-          this.appendXml(formData, 'EXPERIMENT', xml);
-          break;
-        }
-        case ReportType.runs: {
-          this.appendXml(formData, 'RUN', xml);
-          break;
-        }
-        case ReportType.analyses: {
-          this.appendXml(formData, 'ANALYSIS', xml);
-          break;
-        }
-        case ReportType.dacs: {
-          this.appendXml(formData, 'DAC', xml);
-          break;
-        }
-        case ReportType.policies: {
-          this.appendXml(formData, 'POLICY', xml);
-          break;
-        }
-        case ReportType.datasets: {
-          this.appendXml(formData, 'DATASET', xml);
-          break;
-        }
+    var releaseDateStr = this.getReleaseDateStr(action, mode, releaseDate)
+    var actionString = this.getActionStr(action, mode);
+    var submissionAttr = this.getSubmissionAttrStr();
+    let submissionXml: Blob = new Blob([
+      '<SUBMISSION_SET>' +
+      '  <SUBMISSION>' +
+      '	<ACTIONS>' +
+      actionString +
+      releaseDateStr +
+      '    	</ACTIONS>' +
+      submissionAttr +
+      '    </SUBMISSION>' +
+      '</SUBMISSION_SET>']);
+    if (this._webinAuthenticationService.ega) {
+      submissionXml = new Blob([
+        '<SUBMISSION_SET>' +
+        '  <SUBMISSION broker_name="EGA">' +
+        '	<ACTIONS>' +
+        actionString +
+        '    		<ACTION>' +
+        '    			<PROTECT/>' +
+        '    		</ACTION>' +
+        releaseDateStr +
+        '    	</ACTIONS>' +
+        submissionAttr +
+        '    </SUBMISSION>' +
+        '</SUBMISSION_SET>']);
+    }
+    this.appendXml(formData, 'SUBMISSION', submissionXml);
+
+    switch (reportType) {
+      case ReportType.studies: {
+        this.appendXml(formData, 'STUDY', xml);
+        break;
+      }
+      case ReportType.projects: {
+        this.appendXml(formData, 'PROJECT', xml);
+        break;
+      }
+      case ReportType.samples: {
+        this.appendXml(formData, 'SAMPLE', xml);
+        break;
+      }
+      case ReportType.experiments: {
+        this.appendXml(formData, 'EXPERIMENT', xml);
+        break;
+      }
+      case ReportType.runs: {
+        this.appendXml(formData, 'RUN', xml);
+        break;
+      }
+      case ReportType.analyses: {
+        this.appendXml(formData, 'ANALYSIS', xml);
+        break;
+      }
+      case ReportType.dacs: {
+        this.appendXml(formData, 'DAC', xml);
+        break;
+      }
+      case ReportType.policies: {
+        this.appendXml(formData, 'POLICY', xml);
+        break;
+      }
+      case ReportType.datasets: {
+        this.appendXml(formData, 'DATASET', xml);
+        break;
+      }
     }
 
     console.log('** webin submission form data **', formData);
     return this.post(formData);
-    
+
   }
 
- 
+
   submitXml(
     submissionXml: Blob,
     studyXml: Blob,
@@ -201,15 +204,15 @@ export class WebinRestService implements WebinRestServiceInterface {
       for (i = 0; i < nodes.length; i++) {
         const childNode = nodes[i];
         if (childNode.tagName === 'ANALYSIS' ||
-            childNode.tagName === 'EXPERIMENT' ||
-            childNode.tagName === 'RUN' ||
-            childNode.tagName === 'SAMPLE' ||
-            childNode.tagName === 'STUDY' ||
-            childNode.tagName === 'DAC' ||
-            childNode.tagName === 'POLICY' ||
-            childNode.tagName === 'DATASET' ||
-            childNode.tagName === 'PROJECT' ||
-            ( childNode.tagName === 'SUBMISSION' && childNode.getAttribute('accession'))) {
+          childNode.tagName === 'EXPERIMENT' ||
+          childNode.tagName === 'RUN' ||
+          childNode.tagName === 'SAMPLE' ||
+          childNode.tagName === 'STUDY' ||
+          childNode.tagName === 'DAC' ||
+          childNode.tagName === 'POLICY' ||
+          childNode.tagName === 'DATASET' ||
+          childNode.tagName === 'PROJECT' ||
+          (childNode.tagName === 'SUBMISSION' && childNode.getAttribute('accession'))) {
           receipt.accessions.push(
             {
               type: childNode.tagName,
@@ -233,37 +236,47 @@ export class WebinRestService implements WebinRestServiceInterface {
     return receipt;
   }
 
-  getActionStr(action,mode){
-    var actionStr="";
-    if(mode==="Edit"){
-       
-      actionStr='<ACTION>' +
-                 '  <MODIFY/>' +
-                 '</ACTION>' ;
-     }else{
-      actionStr= '<ACTION>' +
-      '    			    <ADD/>' +
-      '    		    </ACTION>' 
-     }
+  getActionStr(action, mode) {
+    var actionStr = "";
+    if (mode === "Edit") {
 
-     return actionStr;
+      actionStr = '<ACTION>' +
+        '  <MODIFY/>' +
+        '</ACTION>';
+    } else {
+      actionStr = '<ACTION>' +
+        '    			    <ADD/>' +
+        '    		    </ACTION>'
+    }
+
+    return actionStr;
   }
 
-  getReleaseDateStr(action,mode,releaseDate){
-    var releaseDateStr="";
-    var targetStr="";
+  getReleaseDateStr(action, mode, releaseDate) {
+    var releaseDateStr = "";
+    var targetStr = "";
 
-    if(mode==="Edit" && action["id"]){
-      targetStr='target="'+action["id"]+'"';
-    }  
-    if(!this._webinAuthenticationService.ega){
-      if(releaseDate){     
-        releaseDateStr='<ACTION>'+
-                      '<HOLD '+targetStr+' HoldUntilDate="'+releaseDate+'"></HOLD>'+
-                      '</ACTION>';
+    if (mode === "Edit" && action["id"]) {
+      targetStr = 'target="' + action["id"] + '"';
+    }
+    if (!this._webinAuthenticationService.ega) {
+      if (releaseDate) {
+        releaseDateStr = '<ACTION>' +
+          '<HOLD ' + targetStr + ' HoldUntilDate="' + releaseDate + '"></HOLD>' +
+          '</ACTION>';
       }
     }
-     return releaseDateStr;
+    return releaseDateStr;
+  }
+
+  getSubmissionAttrStr() {
+    return "<SUBMISSION_ATTRIBUTES>" +
+      "<SUBMISSION_ATTRIBUTE>" +
+      "<TAG>ENA-SUBMISSION-TOOL</TAG>" +
+      "<VALUE>Webin-Portal</VALUE>" +
+      "</SUBMISSION_ATTRIBUTE>" +
+      "</SUBMISSION_ATTRIBUTES>";
+
   }
 
   uploadTaxonTemplate(taxonTemplate: Blob): Observable<any> {
@@ -273,10 +286,9 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this.postTaxon(formData);
   }
 
-  sendTaxonEmail(mail: any)
- {
+  sendTaxonEmail(mail: any) {
     console.log('** Send email for taxon **');
     return this.postEmail(mail)
   }
- 
+
 }

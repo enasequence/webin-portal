@@ -28,12 +28,13 @@
             </mat-expansion-panel-header>
 
             <mat-vertical-stepper #stepper>
-                <!--<mat-step label="Please select a study">
-                <app-report (selectedStudyAlias)="getSelectedStudy($event,stepper)" [reportType]="reportType" [embDefaultSearch]="true" [embeded]="true"></app-report>
-                <div>
-                    <button mat-button matStepperNext [disabled]="!this.selectedStudy">Next</button>
-                </div>
-            </mat-step> -->
+                <mat-step label="Please select a study">
+                    <app-report (selectedRecord)="getSelectedStudy($event,stepper)" [reportType]="reportType"
+                        [embDefaultSearch]="true" [embeded]="true"></app-report>
+                    <div>
+                        <button mat-button matStepperNext [disabled]="!this.selectedStudy">Next</button>
+                    </div>
+                </mat-step>
                 <mat-step label="Please select a file format">
                     <div class="mat-elevation-z8">
                         <mat-accordion>
@@ -117,7 +118,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <p>If you have downloaded and filled a Read submission template spreadsheet please upload it using the
-                <b>Submit Completed Spreadsheet button</b>.</p>
+                <b>Submit Completed Spreadsheet button</b>.
+            </p>
             <form (ngSubmit)="uploadFile(form)" #form="ngForm">
                 <input type="file" required name="spreadSheet" [(ngModel)]="form.spreadSheet" observeFiles />
                 <button mat-raised-button color="accent" [disabled]="form.invalid ">Submit Completed

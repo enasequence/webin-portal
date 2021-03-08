@@ -63,6 +63,7 @@ import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.di
 import { NonSubmissionResultDialogComponent } from './non-submission-result-dialog/non-submission-result-dialog.component';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { DacManagementComponent } from './dac-management/dac-management.component';
+import { DacPolicyManagementComponent } from './dac-policy-management/dac-policy-management.component';
 
 
 const appRoutes: Routes = [
@@ -142,6 +143,14 @@ const appRoutes: Routes = [
     component: DacManagementComponent,
   },
   {
+    path: 'dac/:id',
+    component: DacManagementComponent,
+  },
+  {
+    path: 'dac-policy',
+    component: DacPolicyManagementComponent,
+  },
+  {
     path: '**',
     component: DashboardComponent,
     canActivate: [WebinAuthenticationGuardService, WebinGdprGuardService],
@@ -201,6 +210,7 @@ const appRoutes: Routes = [
     UniqueNameByArrayDirective,
     NonSubmissionResultDialogComponent,
     DacManagementComponent,
+    DacPolicyManagementComponent,
 
 
   ],

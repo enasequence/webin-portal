@@ -69,4 +69,9 @@ export class ReportActionComponent {
     console.log(projObj);
     this.router.navigate(['/study', projObj.report.id]);
   }
+
+  editDacAction(dacObj) {
+    console.log(dacObj);
+    this.router.navigate(['/dac', dacObj.report.id]);
+  }
 }

@@ -1,6 +1,6 @@
 <div class="body">
   <div>
-    <div *ngIf="!embeded" class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase  }} Report</div>
+    <div *ngIf="!embeded" class="mat-h3 mat-tittle">{{ ReportType.getPluralName(reportType) | titlecase }} Report</div>
   </div>
   <mat-divider *ngIf="!embeded"></mat-divider>
   <div class="container">
@@ -50,7 +50,7 @@
     <p class="mat-body-strong" *ngIf="!embeded">Please click search to see the results.</p>
 
     <mat-card class="mat-body">
-      <mat-card-subtitle>Search {{ ReportType.getPluralName(reportType) | titlecase  }}</mat-card-subtitle>
+      <mat-card-subtitle>Search {{ ReportType.getPluralName(reportType) | titlecase }}</mat-card-subtitle>
       <div fxLayout="row wrap" fxLayoutAlign="start center">
 
 
@@ -224,8 +224,8 @@
 
             <ng-container *ngIf="col=='Select'">
               <td cdk-cell *cdkCellDef="let element">
-                <span class=edit-icon-span *ngIf="!isEga() && embeded">
-                  <mat-radio-button value="{{getElementValue(element, col)}}" (click)='selectStudy(element)'>
+                <span class=edit-icon-span *ngIf="embeded">
+                  <mat-radio-button value="{{getElementValue(element, col)}}" (click)='selectRow(element)'>
                   </mat-radio-button>
                 </span>
               </td>
@@ -253,17 +253,20 @@
               <td cdk-cell *cdkCellDef="let element">
                 <ng-container *ngIf="getElementValue(element, col)=='File archived'">
                   <span class="action-completed"
-                    matTooltip="The file has been included in the permanent archive.">{{getElementValue(element, col)}}</span>
+                    matTooltip="The file has been included in the permanent archive.">{{getElementValue(element,
+                    col)}}</span>
                 </ng-container>
                 <ng-container
                   *ngIf="getElementValue(element, col)=='Processing file' || getElementValue(element, col)=='File submitted'">
                   <span class="action-active"
-                    matTooltip="The file is waiting to be included in the permanent archive.">{{getElementValue(element, col)}}</span>
+                    matTooltip="The file is waiting to be included in the permanent archive.">{{getElementValue(element,
+                    col)}}</span>
                 </ng-container>
                 <ng-container
                   *ngIf="getElementValue(element, col)!='File archived' && getElementValue(element, col)!='Processing file' && getElementValue(element, col)!='File submitted'">
                   <span class="action-failed"
-                    matTooltip="The file has failed to be included in the permanent archived.">{{getElementValue(element, col)}}</span>
+                    matTooltip="The file has failed to be included in the permanent archived.">{{getElementValue(element,
+                    col)}}</span>
                 </ng-container>
               </td>
 
@@ -276,16 +279,19 @@
                 <ng-container
                   *ngIf="getElementValue(element, col)=='COMPLETED' || getElementValue(element, col)=='CANCELLED'">
                   <span class="action-completed"
-                    matTooltip="The post-archival processing of the file has finished.">{{getElementValue(element, col)}}</span>
+                    matTooltip="The post-archival processing of the file has finished.">{{getElementValue(element,
+                    col)}}</span>
                 </ng-container>
                 <ng-container *ngIf="getElementValue(element, col)=='FAILED'">
                   <span class="action-failed"
-                    matTooltip="The post-archival processing of the file has failed.">{{getElementValue(element, col)}}</span>
+                    matTooltip="The post-archival processing of the file has failed.">{{getElementValue(element,
+                    col)}}</span>
                 </ng-container>
                 <ng-container
                   *ngIf="getElementValue(element, col)!='COMPLETED' && getElementValue(element, col)!='CANCELLED' && getElementValue(element, col)!='FAILED'">
                   <span class="action-active"
-                    matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element, col)}}</span>
+                    matTooltip="The post-archival processing of the file is ongoing.">{{getElementValue(element,
+                    col)}}</span>
                 </ng-container>
 
               </td>

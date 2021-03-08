@@ -43,7 +43,7 @@ export class ReportComponent implements OnInit {
   @Input() embDefaultSearch: boolean;
   @Input() embeded: boolean;
   @Output() reportChange = new EventEmitter<ReportActionInterface>();
-  @Output() selectedStudyAlias = new EventEmitter<string>();
+  @Output() selectedRecord = new EventEmitter<string>();
   @ViewChild(MatPaginator, { static: true }) dataPaginator: MatPaginator;
 
   private _id: string;
@@ -923,8 +923,8 @@ export class ReportComponent implements OnInit {
     })
   }
 
-  selectStudy(element) {
-    this.selectedStudyAlias.emit(element.report.alias);
+  selectRow(element) {
+    this.selectedRecord.emit(element.report);
   }
 
 

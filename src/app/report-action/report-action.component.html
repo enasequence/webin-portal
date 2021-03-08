@@ -35,6 +35,7 @@
   <div *ngIf="isEditXmlAction(ReportType.dacs)">
     <button mat-menu-item (click)="editXmlAction(ReportType.dacs)"><i class="material-icons">mode_edit</i>Edit dac
       XML</button>
+    <button mat-menu-item (click)="editDacAction(reportData)"><i class="material-icons">mode_edit</i>Edit dac</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.policies)">
     <button mat-menu-item (click)="editXmlAction(ReportType.policies)"><i class="material-icons">mode_edit</i>Edit

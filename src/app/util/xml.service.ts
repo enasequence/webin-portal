@@ -47,6 +47,23 @@ export class XmlService {
     return observable;
   }
 
+  generateDacXml(form, contactArray) {
+
+    let contactXml = this.getContactXmlTags(contactArray);
+    let alias = uuid();
+
+    let dacXml = new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>' +
+      '<DAC_SET>' +
+      '<DAC alias="' + alias + '">' +
+      '<TITLE>' + form.title + '</TITLE>' +
+      contactXml +
+      '</DAC>' +
+      '</DAC_SET>'])
+    var action = { name: "add" };
+    //let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate));
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.dacs, dacXml, 'Add')
+    return observable;
+  }
 
 
   getPubMedXmlTags(selectedPubMedArray) {
@@ -85,6 +102,18 @@ export class XmlService {
 
     return locusTagXml;
   }
+
+  getContactXmlTags(contactArray) {
+    let contactXml = "<CONTACTS>";
+    contactArray.forEach(element => {
+      //contactXml += '<CONTACT name="' + element.name + '" email="' + element.emailAddress + '" organisation="' + element.organization + '" telephone="' + element.telephone + '"/>';
+      contactXml += '<CONTACT name="' + element.name + '" email="' + element.emailAddress + '" organisation="' + element.organization + '"/>';
+    });
+    contactXml += "</CONTACTS>"
+    return contactXml;
+  }
+
+
 
   updateProjectXml(orginalXml, form, pubMedArray, attributeArray, locusTagArray) {
     var pubMedXmlStr = this.getPubMedXmlTags(pubMedArray);
@@ -131,6 +160,32 @@ export class XmlService {
     return observable;
   }
 
+  updateDacXml(orginalXml, form, contactArray) {
+    var contactXmlStr = this.getContactXmlTags(contactArray);
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(orginalXml, "text/xml");
+    var contactXml = parser.parseFromString(contactXmlStr, "text/xml");
+    var titleTag = xmlDoc.getElementsByTagName("TITLE")[0];
+
+
+    /** Check if the tag is empty and set the values accordingly */
+    if (titleTag) {
+      titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue = form.title : titleTag.appendChild(xmlDoc.createTextNode(form.title));
+    }
+
+    /** Update project attributes */
+    this.updateDacContacts(xmlDoc, contactXml);
+
+
+    var xmlDocStr = new XMLSerializer().serializeToString(xmlDoc.documentElement);
+    //console.log(xmlDocStr);
+    let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate))
+
+    var action = { name: "Edit", id: form.id };
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.dacs, new Blob([xmlDocStr]), action, dateStr)
+    return observable;
+  }
+
   updateProjectReleaseDate(orginalXml, form) {
     var parser = new DOMParser();
     var xmlDoc = parser.parseFromString(orginalXml, "text/xml");
@@ -173,6 +228,12 @@ export class XmlService {
       xmlDoc.getElementsByTagName("PROJECT_ATTRIBUTES")[0].replaceWith(attributeXml.getElementsByTagName("PROJECT_ATTRIBUTES")[0]);
     } else {
       xmlDoc.getElementsByTagName("PROJECT")[0].append(attributeXml.getElementsByTagName("PROJECT_ATTRIBUTES")[0])
+    }
+  }
+
+  updateDacContacts(xmlDoc, contactsXml) {
+    if (xmlDoc.getElementsByTagName("CONTACTS")[0]) {
+      xmlDoc.getElementsByTagName("CONTACTS")[0].replaceWith(contactsXml.getElementsByTagName("CONTACTS")[0]);
     }
   }
 

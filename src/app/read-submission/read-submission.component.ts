@@ -38,8 +38,8 @@ export class ReadSubmissionComponent implements OnInit {
     this.getReadFileDetails();
   }
 
-  getSelectedStudy(studyAlias: string, stepper: MatStepper) {
-    this.selectedStudy = studyAlias;
+  getSelectedStudy(studyAlias: object, stepper: MatStepper) {
+    this.selectedStudy = studyAlias["alias"];
     stepper.next();
   }
 
