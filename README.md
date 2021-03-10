@@ -14,6 +14,14 @@ Run `ng serve --base-href=/ena/dev/submit/webin/` for a dev server. Navigate to 
 
 Run `ng build --prod` and then `ng serve --prod --base-href=/ena/submit/webin/` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
 
+## Docker image build (for local system only)
+
+`docker build -t webin-portal --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ .`
+
+## Docker image run (for local system only)
+
+`docker run --name webin-portal-container -d -p 8080:80 webin-portal`
+
 ## Docker image build (for local run/ test only)
 
 Run `docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ . `
