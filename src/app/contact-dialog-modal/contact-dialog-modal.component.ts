@@ -58,9 +58,7 @@ export class ContactDialogModalComponent implements OnInit {
     this.dialogRef.close({ event: 'close' });
   }
 
-  closeSuccessPopup() {
-    this.dialogRef.close({ event: 'CloseSuccess' });
-  }
+
 
   updateName(contact) {
     var name = contact["firstName"] + " " + (contact["middleInitials"] || "") + " " + contact["surname"];

@@ -60,6 +60,10 @@ export class SidenavComponent implements OnDestroy, AfterViewChecked {
     }
   }
 
+  logout() {
+    this._webinAuthenticationService.logout();
+  }
+
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
   }

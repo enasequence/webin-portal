@@ -8,15 +8,15 @@ version 7.3.8
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/ena/submit/webin`. The app will automatically reload if you change any of the source files.
+Run `ng serve --base-href=/ena/dev/submit/webin/` for a dev server. Navigate to `http://localhost:4200/ena/dev/submit/webin`. The app will automatically reload if you change any of the source files.
 
 ## Production server
 
-Run `ng build --prod` and then `ng serve --prod` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
+Run `ng build --prod` and then `ng serve --prod --base-href=/ena/submit/webin/` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
 
 ## Docker image build (for local run/ test only)
 
-Run `docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal . `
+Run `docker build -t dockerhub.ebi.ac.uk/enasequence/webin-portal --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ . `
 
 ## Docker image push (for local run/ test only)
 
