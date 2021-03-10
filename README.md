@@ -18,9 +18,12 @@ Run `ng build --prod` and then `ng serve --prod --base-href=/ena/submit/webin/` 
 
 `docker build -t webin-portal --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ .`
 
+The above command will create a docker image configured with dev profile. 
+
 ## Docker image run (for local system only)
 
 `docker run --name webin-portal-container -d -p 8080:80 webin-portal`
+
 The application will be running in `http://localhost:8080//ena/dev/submit/webin/`
 
 ## Docker image build (for local run/ test only)
