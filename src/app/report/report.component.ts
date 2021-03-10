@@ -354,8 +354,12 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-    ];
+    ]; if (this.embeded) {
+      this.displayedColumns.splice(-1, 1);
+      this.displayedColumns.unshift('Select')
+    }
     this.displayedColumnsCallback = {
+      'Select': this.accessionColumnCallback.bind(this),
       Accession: this.accessionColumnCallback.bind(this),
       'Unique name': this.aliasColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),

@@ -32,3 +32,6 @@ mat-form-field.mat-form-field {
   mat-icon {
     cursor: pointer;
   }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }

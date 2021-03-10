@@ -10,11 +10,27 @@
                     <mat-step label="Select an existing DAC">
                         <app-report (selectedRecord)="getSelectedDac($event,stepper)" [reportType]="reportType"
                             [embDefaultSearch]="true" [embeded]="true"></app-report>
-
                     </mat-step>
                     <mat-step label="Submit policy">
+                        <div style="width: 50%;">
+                            <mat-radio-group name="group" [(ngModel)]="policyType">
+                                <mat-radio-button value="textSelected"> Enter
+                                    policy text
+                                </mat-radio-button>
+                                <mat-radio-button value="urlSelected">Enter the
+                                    URL containing
+                                    your policy text
+                                </mat-radio-button>
+                            </mat-radio-group>
 
-
+                            <mat-form-field *ngIf="policyType=='textSelected'">
+                                <textarea matInput rows="3" [(ngModel)]="text" name="text" placeholder="Polict text"
+                                    required></textarea>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="policyType=='urlSelected'">
+                                <input matInput [(ngModel)]="url" name="url" placeholder="Polict URL" required />
+                            </mat-form-field>
+                        </div>
                     </mat-step>
                 </mat-vertical-stepper>
             </mat-card>
