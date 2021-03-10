@@ -11,7 +11,7 @@ export const environment = {
   webinUpdateRequestUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/drop-box/email/update-request/',
   webinAuthenticationServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/login',
   webinAuthenticationTokenUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/token',
-  webinReportServiceUrl: 'http://ves-ebi-5b:8221/ena/submit/report',
+  webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/report',
   webinXmlReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/drop-box',
   webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/admin',
   webinGdprServiceUrl: 'TODO',
