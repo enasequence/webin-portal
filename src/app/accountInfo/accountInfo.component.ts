@@ -108,14 +108,6 @@ export class AccountInfoComponent {
           this.deleteContactRow(contactObj);
         }
 
-        if (result.event === "CloseSuccess") {
-          if (!this.editMode) {
-            this._router.navigateByUrl("");
-          } else {
-            this._router.navigateByUrl("/accountInfo");
-          }
-        }
-
         if (typeof contactObj != "undefined") {
           this.updateMainContact(contactObj);
           this.dataSource = new MatTableDataSource<any>(this.contactArray);

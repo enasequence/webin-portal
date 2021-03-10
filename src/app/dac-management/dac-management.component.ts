@@ -73,14 +73,6 @@ export class DacManagementComponent implements OnInit {
           this.deleteContactRow(contactObj);
         }
 
-        if (result.event === "CloseSuccess") {
-          if (!this.editMode) {
-            //   this._router.navigateByUrl("");
-          } else {
-            //   this._router.navigateByUrl("/accountInfo");
-          }
-        }
-
         if (typeof contactObj != "undefined") {
           this.dataSource = new MatTableDataSource<any>(this.contactArray);
         }
