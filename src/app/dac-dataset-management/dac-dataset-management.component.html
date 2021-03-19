@@ -1,0 +1,78 @@
+<form (ngSubmit)="submitDacDataset(f)" #f="ngForm">
+    <div class="body">
+        <div>
+            <div class="mat-h3 mat-tittle">Register Dataset</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="container">
+            <mat-card>
+                <mat-vertical-stepper #stepper>
+                    <mat-step label="Select an existing policy" *ngIf="action!='Edit'">
+                        <app-report (selectedRecord)="getSelectedPolicy($event,stepper)"
+                            [reportType]="ReportType.policies" [embDefaultSearch]="true" [embeded]="true">
+                        </app-report>
+                        <input type="hidden" name="policyRef" [(ngModel)]="selectedDacPolicyId" />
+                    </mat-step>
+                    <mat-step label="Submit dataset">
+                        <div class="row">
+                            <div class="column">
+                                <mat-form-field class="app-field-padding">
+                                    <input matInput placeholder="Short descriptive title for the dataset" required
+                                        [(ngModel)]="title" name="title" />
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <textarea matInput rows="3" [(ngModel)]="accessions" name="accessions"
+                                        placeholder="Accessions of the runs and/or analysis to be associated with this dataset. e.g. EGAR00001nnnnnn, EGAZ00001nnnnnn)"
+                                        required></textarea>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="column">
+                                <mat-form-field>
+                                    <textarea matInput rows="3" [(ngModel)]="description" name="description"
+                                        placeholder="Description for the dataset" required></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <mat-card style="display:flow-root">
+                                <mat-card-subtitle>Dataset type</mat-card-subtitle>
+                                <div class="column">
+                                    <div *ngFor="let type of datasetTypes1">
+                                        <mat-checkbox matInput [checked]="typeArr.indexOf(type)>=0"
+                                            (change)="typeSelected($event,type)">
+                                            {{type}}
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div sty1e="float:left;width:50%" *ngFor="let type of datasetTypes2">
+                                        <mat-checkbox matInput [checked]="typeArr.indexOf(type)>=0"
+                                            (change)="typeSelected($event,type)">
+                                            {{type}}
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+
+                            </mat-card>
+
+                        </div>
+                        <div style="text-align:Center">
+                            <button mat-raised-button color="accent" [disabled]="f.invalid">Save</button>
+                            <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;"
+                                [routerLink]="['/report',ReportType.datasets,{defaultSearch: true}]">Cancel</button>
+                            <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;"
+                                routerLink="">Cancel</button>
+                        </div>
+                    </mat-step>
+
+                </mat-vertical-stepper>
+            </mat-card>
+
+        </div>
+    </div>
+    <div class="centred" *ngIf="showLoadingFlag" style="height:70px;">
+        <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+        </mat-spinner>
+    </div>
+</form>

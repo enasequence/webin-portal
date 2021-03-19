@@ -44,7 +44,7 @@ export class WebinXmlReportService implements WebinXmlReportServiceInterface {
     return this.getXml('dacs', id);
   }
   getPolicyXml(id: string): Observable<string> {
-    return this.getXml('policies', id);
+    return this.getXml('policys', id);
   }
   getDatasetXml(id: string): Observable<string> {
     return this.getXml('datasets', id);
@@ -53,6 +53,6 @@ export class WebinXmlReportService implements WebinXmlReportServiceInterface {
   private getXml(xmlType: string, id: string): Observable<string> {
     const url: string = this._baseUrl + '/' + xmlType + '/' + id + '?format=xml';
     //console.log(url);
-    return this.http.get(url, {responseType: 'text' });
+    return this.http.get(url, { responseType: 'text' });
   }
 }

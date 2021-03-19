@@ -64,6 +64,7 @@ import { NonSubmissionResultDialogComponent } from './non-submission-result-dial
 import { AceEditorModule } from 'ng2-ace-editor';
 import { DacManagementComponent } from './dac-management/dac-management.component';
 import { DacPolicyManagementComponent } from './dac-policy-management/dac-policy-management.component';
+import { DacDatasetManagementComponent } from './dac-dataset-management/dac-dataset-management.component';
 
 
 const appRoutes: Routes = [
@@ -113,6 +114,7 @@ const appRoutes: Routes = [
     path: 'app-checklist/:checklistType/:init',
     component: ChecklistComponent,
     canActivate: [WebinAuthenticationGuardService],
+
   },
   {
     path: 'account',
@@ -125,30 +127,52 @@ const appRoutes: Routes = [
   {
     path: 'study',
     component: StudyManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'study/:id',
     component: StudyManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'read-submission',
     component: ReadSubmissionComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'taxonomy',
     component: TaxonomyManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'dac',
     component: DacManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'dac/:id',
     component: DacManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: 'dac-policy',
     component: DacPolicyManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'dac-policy/:id',
+    component: DacPolicyManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'dac-dataset',
+    component: DacDatasetManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'dac-dataset/:id',
+    component: DacDatasetManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
   },
   {
     path: '**',
@@ -211,6 +235,7 @@ const appRoutes: Routes = [
     NonSubmissionResultDialogComponent,
     DacManagementComponent,
     DacPolicyManagementComponent,
+    DacDatasetManagementComponent,
 
 
   ],

@@ -73,6 +73,16 @@ export class UtilService {
     return this.httpClient.get(url, { responseType: 'text' })
   }
 
+  getDacPolicyXml(policyId) {
+    var url = environment.webinReportServiceUrl + "/policies/xml/" + policyId;
+    return this.httpClient.get(url, { responseType: 'text' })
+  }
+
+  getDacDatasetXml(datasetId) {
+    var url = environment.webinReportServiceUrl + "/datasets/xml/" + datasetId;
+    return this.httpClient.get(url, { responseType: 'text' })
+  }
+
   downloadExcelTemplate(checklistJson) {
     return this.httpClient.post(environment.webinXmlReportServiceUrl + '/tab/spreadsheet', checklistJson, { responseType: 'arraybuffer' });
   }

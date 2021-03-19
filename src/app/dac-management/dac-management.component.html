@@ -7,7 +7,7 @@
         <div class="container">
             <mat-card>
                 <mat-card-subtitle>DAC Details</mat-card-subtitle>
-                <div style="width: 100%;">
+                <div style="width: 50%;">
                     <mat-form-field class="app-field-padding">
                         <textarea rows="3" matInput placeholder="Short descriptive title for the DAC" required
                             [(ngModel)]="title" name="title"></textarea>
@@ -32,12 +32,12 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="telephone">
+                    <!--<ng-container matColumnDef="telephone">
                         <th mat-header-cell *matHeaderCellDef>Telephone</th>
                         <td mat-cell *matCellDef="let element">
                             {{ element.telephone }}
                         </td>
-                    </ng-container>
+                    </ng-container>-->
 
                     <ng-container matColumnDef="organization">
                         <th mat-header-cell *matHeaderCellDef>Organization</th>
@@ -67,7 +67,7 @@
                     <button mat-raised-button color="accent"
                         [disabled]="f.invalid || contactArray.length < 1">Save</button>
                     <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;"
-                        routerLink="/report/studies">Cancel</button>
+                        [routerLink]="['/report',ReportType.dacs,{defaultSearch: true}]">Cancel</button>
                     <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;"
                         routerLink="">Cancel</button>
                 </div>

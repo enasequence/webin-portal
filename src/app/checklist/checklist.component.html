@@ -147,10 +147,10 @@
                     </mat-expansion-panel-header>
 
                     <div *ngFor="let field of fieldGroup.fields">
-                      <mat-checkbox class="checklist-checked-field" [(ngModel)]="selectedFields[field.label]"
-                        [disabled]="mandatoryFields[field.label]"><b class="checklist-checked-field">{{
-                          field.label
-                        }}</b>
+                      <mat-checkbox [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]">
+                        {{
+                        field.label
+                        }}
                       </mat-checkbox>
                       <p fxHide fxShow.gt-sm>
                         <i>{{ field.mandatory }}

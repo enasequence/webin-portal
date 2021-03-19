@@ -40,10 +40,14 @@
   <div *ngIf="isEditXmlAction(ReportType.policies)">
     <button mat-menu-item (click)="editXmlAction(ReportType.policies)"><i class="material-icons">mode_edit</i>Edit
       policy XML</button>
+    <button mat-menu-item (click)="editPolicyAction(reportData)"><i class="material-icons">mode_edit</i>Edit
+      policy</button>
   </div>
   <div *ngIf="isEditXmlAction(ReportType.datasets)">
     <button mat-menu-item (click)="editXmlAction(ReportType.datasets)"><i class="material-icons">mode_edit</i>Edit
       dataset XML</button>
+    <button mat-menu-item (click)="editDatasetAction(reportData)"><i class="material-icons">mode_edit</i>Edit
+      dataset</button>
   </div>
 
 

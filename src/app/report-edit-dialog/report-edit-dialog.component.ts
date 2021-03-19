@@ -112,7 +112,7 @@ export class ReportEditDialogComponent implements OnInit {
       observable.subscribe(
         // Success
         data => {
-          console.log('** xml retrieval succeeded **', data);
+          //console.log('** xml retrieval succeeded **', data);
           this.xml = data;
         },
         // Errors

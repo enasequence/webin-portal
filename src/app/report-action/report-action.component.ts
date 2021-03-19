@@ -74,4 +74,12 @@ export class ReportActionComponent {
     console.log(dacObj);
     this.router.navigate(['/dac', dacObj.report.id]);
   }
+
+  editPolicyAction(policyObj) {
+    this.router.navigate(['/dac-policy', policyObj.report.id]);
+  }
+
+  editDatasetAction(datasetObj) {
+    this.router.navigate(['/dac-dataset', datasetObj.report.id]);
+  }
 }

@@ -65,6 +65,43 @@ export class XmlService {
     return observable;
   }
 
+  generateDacPolicyXml(form) {
+
+    let alias = uuid();
+    let dacPolicyXml = new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>' +
+      '<POLICY_SET>' +
+      '<POLICY alias="' + alias + '" center_name="" accession="" >' +
+      '<TITLE>' + form.title + '</TITLE>' +
+      '<DAC_REF accession="' + form.dacRef + '"/>' +
+      '<POLICY_TEXT>' + form.policyText + '</POLICY_TEXT>' +
+      '</POLICY>' +
+      '</POLICY_SET>'])
+    var action = { name: "add" };
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.policies, dacPolicyXml, 'Add')
+    return observable;
+  }
+
+  generateDacDatasetXml(form, typeArr, refArr) {
+    let typeXml = this.getDatasetTypeXml(typeArr);
+    let refXml = this.getRefXml(refArr);
+    let alias = uuid();
+    let dacDatasetXmlStr = '' +
+      '<DATASETS>' +
+      '<DATASET alias="' + alias + '" broker_name="EGA" >' +
+      '<TITLE>' + form.title + '</TITLE>' +
+      '<DESCRIPTION>' + form.description + '</DESCRIPTION>' +
+      typeXml +
+      refXml +
+      '<POLICY_REF accession="' + form.policyRef + '"/>' +
+      '</DATASET>' +
+      '</DATASETS>';
+    console.log(dacDatasetXmlStr)
+    let dacDatasetXml = new Blob([dacDatasetXmlStr]);
+    var action = { name: "add" };
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.datasets, dacDatasetXml, 'Add')
+    return observable;
+  }
+
 
   getPubMedXmlTags(selectedPubMedArray) {
     let pubmedXml = "<PROJECT_LINKS>";
@@ -111,6 +148,27 @@ export class XmlService {
     });
     contactXml += "</CONTACTS>"
     return contactXml;
+  }
+
+  getDatasetTypeXml(typeArr) {
+    let typeXml = "";
+    typeArr.forEach(element => {
+      typeXml += "<DATASET_TYPE>" + element + "</DATASET_TYPE>"
+    });
+    return typeXml;
+  }
+
+  getRefXml(refArr) {
+    let refXml = "";
+    let ref = ""
+    refArr.forEach(val => {
+      ref = "ANALYSIS_REF"
+      if (val.trim().startsWith("EGAR")) {
+        ref = "RUN_REF";
+      }
+      refXml += '<' + ref + ' accession="' + val + '"/>'
+    });
+    return refXml;
   }
 
 
@@ -185,6 +243,98 @@ export class XmlService {
     const observable: Observable<string> = this._webinRestService.updateXml(ReportType.dacs, new Blob([xmlDocStr]), action, dateStr)
     return observable;
   }
+
+  updateDacPolicyXml(orginalXml, form) {
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(orginalXml, "text/xml");
+    var titleTag = xmlDoc.getElementsByTagName("TITLE")[0];
+    var policyTextTag = xmlDoc.getElementsByTagName("POLICY_TEXT")[0];
+
+    /** Check if the tag is empty and set the values accordingly */
+    if (titleTag) {
+      titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue = form.title : titleTag.appendChild(xmlDoc.createTextNode(form.title));
+    }
+
+    /** Check if the tag is empty and set the values accordingly */
+    if (policyTextTag) {
+      policyTextTag.hasChildNodes() ? policyTextTag.childNodes[0].nodeValue = form.policyText : policyTextTag.appendChild(xmlDoc.createTextNode(form.policyText));
+    }
+
+    var xmlDocStr = new XMLSerializer().serializeToString(xmlDoc.documentElement);
+    //console.log(xmlDocStr);
+    let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate))
+
+    var action = { name: "Edit", id: form.id };
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.policies, new Blob([xmlDocStr]), action, dateStr)
+    return observable;
+  }
+
+  updateDacDatasetXml(orginalXml, form, typeArr, refArr) {
+
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(orginalXml, "text/xml");
+    let newTypeXml = parser.parseFromString('<DATASET_TYPES>' + this.getDatasetTypeXml(typeArr) + '</DATASET_TYPES>', "text/xml");
+    let newRefXml = parser.parseFromString('<REFS>' + this.getRefXml(refArr) + '</REFS>', "text/xml");
+
+    var titleTag = xmlDoc.getElementsByTagName("TITLE")[0];
+    var descriptionTag = xmlDoc.getElementsByTagName("DESCRIPTION")[0];
+    var datasetType = xmlDoc.getElementsByTagName("DATASET_TYPE");
+    var runRef = xmlDoc.getElementsByTagName("RUN_REF");
+    var analysisRef = xmlDoc.getElementsByTagName("ANALYSIS_REF");
+    var datasetRef = xmlDoc.getElementsByTagName("DATASET")[0];
+
+    /** Check if the tag is empty and set the values accordingly */
+    if (titleTag) {
+      titleTag.hasChildNodes() ? titleTag.childNodes[0].nodeValue = form.title : titleTag.appendChild(xmlDoc.createTextNode(form.title));
+    }
+
+    /** Check if the tag is empty and set the values accordingly */
+    if (descriptionTag) {
+      descriptionTag.hasChildNodes() ? descriptionTag.childNodes[0].nodeValue = form.description : descriptionTag.appendChild(xmlDoc.createTextNode(form.description));
+    }
+
+    /** Removing DATASET_TYPE, RUN_REF and ANALYSIS_REF */
+    while (datasetType.length > 0) {
+      xmlDoc.getElementsByTagName("DATASET_TYPE")[0].remove();
+    }
+
+    while (runRef.length > 0) {
+      xmlDoc.getElementsByTagName("RUN_REF")[0].remove();
+    }
+
+    while (analysisRef.length > 0) {
+      xmlDoc.getElementsByTagName("ANALYSIS_REF")[0].remove();
+    }
+
+    /** Adding DATASET_TYPE, RUN_REF and ANALYSIS_REF */
+    var datasetTypes = newTypeXml.getElementsByTagName("DATASET_TYPES")[0];
+    while (datasetTypes.hasChildNodes()) {
+      datasetRef.append(datasetTypes.firstChild);
+      datasetTypes.removeChild[0];
+    }
+
+    var refs = newRefXml.getElementsByTagName("REFS")[0];
+    while (refs.hasChildNodes()) {
+      datasetRef.append(refs.firstChild);
+      refs.removeChild[0];
+    }
+
+    /** Removing POLICY_REF and appending to the end due to validation errors when uppended before other RUN_REF or ANALYSIS_REF */
+    var policyRefClone = xmlDoc.getElementsByTagName("POLICY_REF")[0].cloneNode(true);
+    xmlDoc.getElementsByTagName("POLICY_REF")[0].remove();
+    datasetRef.append(policyRefClone);
+
+
+
+    var xmlDocStr = new XMLSerializer().serializeToString(xmlDoc.documentElement);
+    console.log(xmlDocStr);
+    let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate))
+
+    var action = { name: "Edit", id: form.id };
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.datasets, new Blob([xmlDocStr]), action, dateStr)
+    return observable;
+  }
+
 
   updateProjectReleaseDate(orginalXml, form) {
     var parser = new DOMParser();

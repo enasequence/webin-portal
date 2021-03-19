@@ -7,34 +7,54 @@
         <div class="container">
             <mat-card>
                 <mat-vertical-stepper #stepper>
-                    <mat-step label="Select an existing DAC">
-                        <app-report (selectedRecord)="getSelectedDac($event,stepper)" [reportType]="reportType"
-                            [embDefaultSearch]="true" [embeded]="true"></app-report>
+                    <mat-step label="Select an existing DAC" *ngIf="action!='Edit'">
+                        <app-report (selectedRecord)="getSelectedDac($event,stepper)" [reportType]="ReportType.dacs"
+                            [embDefaultSearch]="true" [embeded]="true">
+                        </app-report>
+                        <input type="hidden" name="dacRef" [(ngModel)]="selectedDacId" />
                     </mat-step>
                     <mat-step label="Submit policy">
                         <div style="width: 50%;">
-                            <mat-radio-group name="group" [(ngModel)]="policyType">
-                                <mat-radio-button value="textSelected"> Enter
+                            <mat-form-field class="app-field-padding">
+                                <input matInput placeholder="Short descriptive title for the policy" required
+                                    [(ngModel)]="title" name="title" />
+                            </mat-form-field>
+                            <mat-radio-group name="group" #radioGroup="matRadioGroup">
+                                <mat-radio-button [checked]="!policyUrl" value="textSelected"> Enter
                                     policy text
                                 </mat-radio-button>
-                                <mat-radio-button value="urlSelected">Enter the
+                                <mat-radio-button [checked]="policyUrl" value="urlSelected">Enter
+                                    the
                                     URL containing
                                     your policy text
                                 </mat-radio-button>
                             </mat-radio-group>
 
-                            <mat-form-field *ngIf="policyType=='textSelected'">
-                                <textarea matInput rows="3" [(ngModel)]="text" name="text" placeholder="Polict text"
-                                    required></textarea>
+                            <mat-form-field *ngIf="radioGroup.value=='textSelected'">
+                                <textarea matInput rows="3" [(ngModel)]="policyText" name="policyText"
+                                    placeholder="Polict text" required></textarea>
                             </mat-form-field>
-                            <mat-form-field *ngIf="policyType=='urlSelected'">
-                                <input matInput [(ngModel)]="url" name="url" placeholder="Polict URL" required />
+                            <mat-form-field *ngIf="radioGroup.value=='urlSelected'">
+                                <input matInput [(ngModel)]="policyText" name="policyText" placeholder="Polict URL"
+                                    required />
                             </mat-form-field>
                         </div>
+                        <div style="text-align:Center">
+                            <button mat-raised-button color="accent" [disabled]="f.invalid">Save</button>
+                            <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;"
+                                [routerLink]="['/report',ReportType.policies,{defaultSearch: true}]">Cancel</button>
+                            <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;"
+                                routerLink="">Cancel</button>
+                        </div>
                     </mat-step>
+
                 </mat-vertical-stepper>
             </mat-card>
 
         </div>
+    </div>
+    <div class="centred" *ngIf="showLoadingFlag" style="height:70px;">
+        <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+        </mat-spinner>
     </div>
 </form>
