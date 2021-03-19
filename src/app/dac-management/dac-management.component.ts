@@ -3,6 +3,7 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ContactDialogModalComponent } from '../contact-dialog-modal/contact-dialog-modal.component';
+import { ReportType } from '../report-type.enum';
 import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
 import { UtilService } from '../util/Util-services';
 import { XmlService } from '../util/xml.service';
@@ -14,6 +15,7 @@ import { XmlService } from '../util/xml.service';
 })
 export class DacManagementComponent implements OnInit {
 
+  ReportType = ReportType;
   editMode = false;
   /* Used for storing added emails, this will be used for validation */
   emails = [];
@@ -27,7 +29,7 @@ export class DacManagementComponent implements OnInit {
   displayedColumns: string[] = [
     "emailAddress",
     "name",
-    "telephone",
+    //"telephone",
     "organization",
     "edit",
     "remove",
@@ -174,6 +176,7 @@ export class DacManagementComponent implements OnInit {
 
       });
     }
+    this.updateEmailsArray();
     if (contacts.length > 0) {
       this.dataSource = new MatTableDataSource<any>(this.contactArray);
     }

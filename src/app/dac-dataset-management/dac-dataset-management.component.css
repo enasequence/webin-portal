@@ -9,7 +9,11 @@
 .mat-row:nth-child(even){
     background-color:#f8f8f8;
 }
-
+.column {
+    float: left;
+    width: 50%;
+    
+  }
 .mat-header-cell{
     font-weight: bold;
     font-size: 14px;

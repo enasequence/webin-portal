@@ -354,8 +354,12 @@ export class ReportComponent implements OnInit {
       'Submission date',
       'Status',
       'Action', // No callback for Action column
-    ];
+    ]; if (this.embeded) {
+      this.displayedColumns.splice(-1, 1);
+      this.displayedColumns.unshift('Select')
+    }
     this.displayedColumnsCallback = {
+      'Select': this.accessionColumnCallback.bind(this),
       Accession: this.accessionColumnCallback.bind(this),
       'Unique name': this.aliasColumnCallback.bind(this),
       Title: this.titleColumnCallback.bind(this),
@@ -373,7 +377,12 @@ export class ReportComponent implements OnInit {
       'Status',
       'Action', // No callback for Action column
     ];
+    if (this.embeded) {
+      this.displayedColumns.splice(-1, 1);
+      this.displayedColumns.unshift('Select')
+    }
     this.displayedColumnsCallback = {
+      'Select': this.accessionColumnCallback.bind(this),
       Accession: this.accessionColumnCallback.bind(this),
       'Unique name': this.aliasColumnCallback.bind(this),
       Dac: this.dacColumnCallback.bind(this),
@@ -565,6 +574,9 @@ export class ReportComponent implements OnInit {
           console.log('** Webin reports service failed **', err);
           const msg = 'Webin reports service failed. Please try again later. If the problem persists please contact the helpdesk.';
           this.dataError = msg;
+          if (err.status === 401 || err.status === 403) {
+            this.router.navigate(['/login']);
+          }
         },
         () => {
           this.active = false;
