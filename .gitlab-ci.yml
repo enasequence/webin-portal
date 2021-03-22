@@ -43,7 +43,7 @@ docker-build-prod:
       - master
       - tags
     variables:
-      - $CI_COMMIT_BRANCH == "master"
+      #- $CI_COMMIT_BRANCH == "master"
       - /^(?!dev-|test-).*/
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
@@ -85,7 +85,7 @@ k8s-deploy-prod:
       - master
       - tags
     variables:
-      - $CI_COMMIT_BRANCH == "master"
+      #- $CI_COMMIT_BRANCH == "master"
       - /^(?!dev-|test-).+/
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deploy.yaml
