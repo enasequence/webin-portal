@@ -39,7 +39,7 @@ docker-build-test:
 docker-build-prod:
   stage: package
   only:
-    - /^(?!dev-|test-).*/
+    - /^(?!dev-|test-).*$/
     refs:
       - master
       - tags
@@ -79,7 +79,7 @@ k8s-deploy-prod:
   image: dtzar/helm-kubectl
   stage: deploy
   only:
-    - /^(?!dev-|test-).+/
+    - /^(?!dev-|test-).*$/
     refs:
       - master
       - tags
