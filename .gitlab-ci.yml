@@ -30,7 +30,6 @@ docker-build-test:
   only:
     - /^test-.*$/
   except:
-    - branches
     - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
@@ -71,7 +70,6 @@ k8s-deploy-test:
   only:
     - /^test-.*$/
   except:
-    - branches
     - triggers
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-test-deploy.yaml
