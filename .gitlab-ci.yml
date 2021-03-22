@@ -79,10 +79,10 @@ k8s-deploy-prod:
   image: dtzar/helm-kubectl
   stage: deploy
   only:
+    - /^(?!dev-|test-).+/
     refs:
       - master
       - tags
-      - /^(?!dev-|test-).+/
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deploy.yaml
     - kubectl delete secret gitlab --namespace=ena-prod
