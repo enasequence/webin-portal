@@ -40,9 +40,8 @@ docker-build-prod:
   stage: package
   only:
     - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
-    refs:
-      - master
-      - tags
+  except:
+    - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production --build-arg basePath=/ena/submit/webin/ .
@@ -80,9 +79,8 @@ k8s-deploy-prod:
   stage: deploy
   only:
     - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
-    refs:
-      - master
-      - tags
+  except:
+    - triggers
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deploy.yaml
     - kubectl delete secret gitlab --namespace=ena-prod
