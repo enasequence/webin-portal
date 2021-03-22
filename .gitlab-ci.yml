@@ -40,8 +40,6 @@ docker-build-prod:
   stage: package
   only:
     - /^(?!dev-|test-).*$/
-    - master
-    - tags
   #  refs:
   #    - master
   #    - tags
@@ -82,8 +80,7 @@ k8s-deploy-prod:
   stage: deploy
   only:
     - /^(?!dev-|test-).*$/
-    - master
-    - tags
+
     #refs:
     #  - master
     #  - tags
