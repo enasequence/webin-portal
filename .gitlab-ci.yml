@@ -43,7 +43,6 @@ docker-build-prod:
     refs:
       - master
       - tags
-    - /^dev-.*$/
     variables:
       - $CI_COMMIT_BRANCH == "master"
       - /^(?!dev-|test-).*/
