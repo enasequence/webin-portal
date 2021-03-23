@@ -39,7 +39,9 @@ docker-build-test:
 docker-build-prod:
   stage: package
   only:
-    - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
+    refs:
+      - master
+      - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
   except:
     - triggers
   script:
