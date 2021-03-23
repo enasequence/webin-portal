@@ -39,9 +39,10 @@ docker-build-test:
 docker-build-prod:
   stage: package
   only:
-    - master
-    - tags
-    - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
+    - tags && /^(\d+\.)?(\d+\.)?(\*|\d+)$/
+    variables:
+      - $CI_COMMIT_BRANCH == "master"
+
   except:
     - triggers
   script:
