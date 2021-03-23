@@ -47,8 +47,8 @@ docker-build-prod:
     - if: $CI_COMMIT_TAG
     - if: $CI_COMMIT_REF_NAME =~ /^(\d+\.)?(\d+\.)?(\*|\d+)$/
 
-  except:
-    - triggers
+  #except:
+   # - triggers
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production --build-arg basePath=/ena/submit/webin/ .
