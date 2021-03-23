@@ -40,8 +40,8 @@ docker-build-prod:
   stage: package
   only:
     refs:
-      - master
       - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
+      - master
   except:
     - triggers
   script:
