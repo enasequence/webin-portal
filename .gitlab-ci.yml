@@ -38,12 +38,13 @@ docker-build-test:
 
 docker-build-prod:
   stage: package
- # only:
+  only:
+    - /^(\d+\.)?(\d+\.)?(\*|\d+)$/ && tags && master
  #   - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
  # variables:
  #   - $CI_COMMIT_BRANCH == "master"
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master" && $CI_COMMIT_REF_NAME =~ /^(\d+\.)?(\d+\.)?(\*|\d+)$/'
+  #rules:
+  #  - if: '$CI_COMMIT_BRANCH == "master" && $CI_COMMIT_REF_NAME =~ /^(\d+\.)?(\d+\.)?(\*|\d+)$/'
   #  - if: '$CI_COMMIT_TAG'
   #  - if: '$CI_COMMIT_REF_NAME =~ /^(\d+\.)?(\d+\.)?(\*|\d+)$/'
 
@@ -87,7 +88,7 @@ k8s-deploy-prod:
   image: dtzar/helm-kubectl
   stage: deploy
   only:
-    - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
+    - /^(\d+\.)?(\d+\.)?(\*|\d+)$/ && tags && master
   except:
     - triggers
   script:
