@@ -476,9 +476,13 @@ export class ChecklistComponent implements OnInit {
         null,
         null,
         null,
-        null);
+        null,
+        form.value.centerName);
     let redirectPath = "/app-checklist/sample/true"
     this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath);
   }
 
+  isBroker(): boolean {
+    return this._webinAuthenticationService.isBroker();
+  }
 }

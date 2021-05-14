@@ -43,7 +43,7 @@ export class XmlService {
       '</PROJECT_SET>'])
     var action = { name: "add" };
     let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate));
-    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.projects, projectXml, 'Add', dateStr)
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.projects, projectXml, 'Add', dateStr, form)
     return observable;
   }
 
@@ -61,7 +61,7 @@ export class XmlService {
       '</DAC_SET>'])
     var action = { name: "add" };
     //let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate));
-    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.dacs, dacXml, 'Add')
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.dacs, dacXml, 'Add', form)
     return observable;
   }
 
@@ -213,7 +213,7 @@ export class XmlService {
     let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate))
 
     var action = { name: "Edit", id: form.id };
-    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.projects, new Blob([xmlDocStr]), action, dateStr)
+    const observable: Observable<string> = this._webinRestService.updateXml(ReportType.projects, new Blob([xmlDocStr]), action, dateStr, form)
     //this.handleServerResponse(observable);
     return observable;
   }

@@ -108,7 +108,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   }
 
   login(username: string, password: string): Observable<WebinAuthenticationResultInterface> {
-    const baseUrl: string = environment.webinAuthenticationServiceUrl;
+    const baseUrl: string = environment.webinAuthUrl + "/login";
     // console.log('Webin authentication login', baseUrl);
 
     this.username = username;
@@ -125,7 +125,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   }
 
   loginToken(username: string, password: string): Observable<string> {
-    const baseUrl: string = environment.webinAuthenticationTokenUrl;
+    const baseUrl: string = environment.webinAuthUrl + "/token";
     // console.log('Webin authentication token', baseUrl);
 
     this.username = username;
@@ -152,5 +152,12 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
       subscribe((data: any) => {
         sessionStorage.setItem('submissionAccount', JSON.stringify(data));
       });
+  }
+
+  isBroker(): boolean {
+    var submissionAccount = JSON.parse(
+      sessionStorage.getItem('submissionAccount')
+    );
+    return submissionAccount["brokerName"] != "";
   }
 }

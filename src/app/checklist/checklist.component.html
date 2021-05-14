@@ -268,10 +268,15 @@
                 target="_blank">these instructions</a>.
             </p>
           </div>
-          <input type="file" required name="spreadSheet" [(ngModel)]="form.spreadSheet" observeFiles />
-          <button mat-raised-button color="accent" [disabled]="form.invalid">
-            Submit Completed Spreadsheet
-          </button>
+          <div>
+            <input type="file" required name="spreadSheet" [(ngModel)]="form.spreadSheet" observeFiles />
+            <mat-form-field *ngIf="isBroker()" appearance="outline" style="width:7%; margin-right: 5px;">
+              <input matInput placeholder="Center name" name="centerName" [(ngModel)]="centerName">
+            </mat-form-field>
+            <button mat-raised-button color="accent" [disabled]="form.invalid">
+              Submit Completed Spreadsheet
+            </button>
+          </div>
         </form>
       </mat-expansion-panel>
     </mat-accordion>

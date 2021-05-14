@@ -27,6 +27,8 @@ export class ReadSubmissionComponent implements OnInit {
   selectedFieldType: string;
   selectedFieldName: string;
   fieldType = {};
+  centerName: String;
+
   constructor(private _webinReportService: WebinReportService,
     private util: UtilService,
     private _webinRestService: WebinRestService,
@@ -127,7 +129,8 @@ export class ReadSubmissionComponent implements OnInit {
         null,
         null,
         null,
-        null);
+        null,
+        this.centerName);
     let redirectPath = "/read-submission";
     this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath)
   }
@@ -145,5 +148,9 @@ export class ReadSubmissionComponent implements OnInit {
       }
     }
     return showField;
+  }
+
+  isBroker(): boolean {
+    return this._webinAuthenticationService.isBroker();
   }
 }
