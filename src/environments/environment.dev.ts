@@ -5,16 +5,12 @@
 
 export const environment = {
   production: false,
-  envName: 'dev',
   title: 'Webin submissions portal (DEV)',
-  webinServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/drop-box/submit',
-  webinUpdateRequestUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/drop-box/email/update-request/',
-  webinAuthenticationServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/login',
-  webinAuthenticationTokenUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/token',
+  webinRestUrl: 'http://ves-ebi-5b:8110/ena/submit/drop-box',
+  webinAuthUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/report',
-  webinXmlReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/drop-box',
   webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/admin',
   webinGdprServiceUrl: 'TODO',
   pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
-  taxonomySubmissionEmail: 'ena-collaborations@ebi.ac.uk'
+  taxonomySubmissionEmail: 'ena-collaborations@ebi.ac.uk',
 };
