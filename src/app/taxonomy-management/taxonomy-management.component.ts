@@ -65,7 +65,8 @@ export class TaxonomyManagementComponent implements OnInit {
     private _webinRestService: WebinRestService,
     private _webinAuthService: WebinAuthenticationService,
     public dialog: MatDialog,
-    private util: UtilService
+    private util: UtilService,
+    private _webinAuthenticationService: WebinAuthenticationService
   ) { }
 
   ngOnInit() { }
@@ -421,4 +422,8 @@ export class TaxonomyManagementComponent implements OnInit {
       },
     ],
   };
+
+  isBroker(): boolean {
+    return this._webinAuthenticationService.isBroker();
+  }
 }

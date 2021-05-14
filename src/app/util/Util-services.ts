@@ -84,11 +84,11 @@ export class UtilService {
   }
 
   downloadExcelTemplate(checklistJson) {
-    return this.httpClient.post(environment.webinXmlReportServiceUrl + '/tab/spreadsheet', checklistJson, { responseType: 'arraybuffer' });
+    return this.httpClient.post(environment.webinRestUrl + '/tab/spreadsheet', checklistJson, { responseType: 'arraybuffer' });
   }
 
   downloadTsvTemplate(checklistJson) {
-    return this.httpClient.post(environment.webinXmlReportServiceUrl + '/tab/tsv', checklistJson, { responseType: 'arraybuffer' });
+    return this.httpClient.post(environment.webinRestUrl + '/tab/tsv', checklistJson, { responseType: 'arraybuffer' });
   }
 
   getFileName(checklist, extension) {

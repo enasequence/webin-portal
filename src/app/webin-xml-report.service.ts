@@ -18,7 +18,7 @@ import { WebinXmlReportServiceInterface } from './webin-xml-report.service.inter
 @Injectable()
 export class WebinXmlReportService implements WebinXmlReportServiceInterface {
 
-  private _baseUrl = environment.webinXmlReportServiceUrl;
+  private _baseUrl = environment.webinRestUrl;
 
   constructor(private http: HttpClient) { }
 

@@ -351,4 +351,8 @@ export class StudyManagementComponent implements OnInit {
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
   }
+
+  isBroker(): boolean {
+    return this._webinAuthenticationService.isBroker();
+  }
 }

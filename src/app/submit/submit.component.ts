@@ -36,6 +36,7 @@ export class SubmitComponent {
   dacFile: File;
   policyFile: File;
   datasetFile: File;
+  centerName: String;
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
@@ -114,12 +115,17 @@ export class SubmitComponent {
       this.analysisFile,
       this.dacFile,
       this.policyFile,
-      this.datasetFile
+      this.datasetFile,
+      this.centerName
     );
 
     this.dialog.open(SubmissionResultDialogComponent, {
       width: "600px",
       data: { "observable": observable, "redirectPath": "/app-submit" },
     });
+  }
+
+  isBroker(): boolean {
+    return this._webinAuthenticationService.isBroker();
   }
 }

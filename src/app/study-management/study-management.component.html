@@ -186,8 +186,12 @@
       </mat-spinner>
     </div>
 
+
     <div style="text-align:Center">
-      <button mat-raised-button color="accent" [disabled]="f.invalid">Save</button>
+      <mat-form-field *ngIf="isBroker()" appearance="outline" style="width:7%; margin-right: 5px;">
+        <input matInput placeholder="Center name" name="centerName" [(ngModel)]="centerName">
+      </mat-form-field>
+      <button mat-raised-button color="accent" [disabled]="f.invalid">Submit</button>
       <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;"
         routerLink="/report/studies">Cancel</button>
       <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;" routerLink="">Cancel</button>

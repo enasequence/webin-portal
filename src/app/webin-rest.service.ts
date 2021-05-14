@@ -24,7 +24,7 @@ import { WebinAuthenticationService } from './webin-authentication.service';
 @Injectable()
 export class WebinRestService implements WebinRestServiceInterface {
 
-  private _baseUrl = environment.webinServiceUrl;
+  private _baseUrl = environment.webinRestUrl + "/submit/";
 
   private _xmlParser = new DOMParser();
 
@@ -45,18 +45,18 @@ export class WebinRestService implements WebinRestServiceInterface {
     }
   }
 
-  private post(formData: FormData): Observable<string> {
+  private post(formData: FormData, parameters?): Observable<string> {
     const headers = this.headers();
-    return this._http.post(this._baseUrl, formData, { headers, responseType: 'text' });
+    return this._http.post(this._baseUrl + "?" + parameters, formData, { headers, responseType: 'text' });
   }
 
   private postTaxon(formData: FormData): Observable<string> {
     const headers = this.headers();
-    return this._http.post(environment.webinXmlReportServiceUrl + "/portal/register/taxonomy", formData, { headers, responseType: 'text' });
+    return this._http.post(environment.webinRestUrl + "/portal/register/taxonomy", formData, { headers, responseType: 'text' });
   }
 
   private postEmail(mail) {
-    return this._http.post(environment.webinXmlReportServiceUrl + '/email', mail);
+    return this._http.post(environment.webinRestUrl + '/email', mail);
   }
 
   submitProjectXml(formData) {
@@ -74,7 +74,8 @@ export class WebinRestService implements WebinRestServiceInterface {
     reportType: ReportType,
     xml: Blob,
     action: Object,
-    releaseDate?: any): Observable<string> {
+    releaseDate?: any,
+    form?): Observable<string> {
     console.log('** Update XML **');
     const formData: FormData = new FormData();
     var mode = action["name"];
@@ -148,8 +149,12 @@ export class WebinRestService implements WebinRestServiceInterface {
       }
     }
 
+    let postParam = "";
+    if (form) {
+      postParam = this.getCenterNamePostParam(form.centerName);
+    }
     console.log('** webin submission form data **', formData);
-    return this.post(formData);
+    return this.post(formData, postParam);
 
   }
 
@@ -164,7 +169,8 @@ export class WebinRestService implements WebinRestServiceInterface {
     analysisXml: Blob,
     dacXml: Blob,
     policyXml: Blob,
-    datasetXml: Blob): Observable<string> {
+    datasetXml: Blob,
+    centerName?): Observable<string> {
 
     console.log('** Submit XML **');
     const formData: FormData = new FormData();
@@ -178,7 +184,19 @@ export class WebinRestService implements WebinRestServiceInterface {
     this.appendXml(formData, 'DAC', dacXml);
     this.appendXml(formData, 'POLICY', policyXml);
     this.appendXml(formData, 'DATASET', datasetXml);
-    return this.post(formData);
+
+    let postParam = "";
+    if (centerName) {
+      postParam = this.getCenterNamePostParam(centerName);
+    }
+
+    return this.post(formData, postParam);
+  }
+
+  getCenterNamePostParam(centerName) {
+    if (centerName) {
+      return "CENTER_NAME=" + centerName;
+    }
   }
 
   parseResult(data: string) {
