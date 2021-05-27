@@ -158,6 +158,10 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     var submissionAccount = JSON.parse(
       sessionStorage.getItem('submissionAccount')
     );
-    return submissionAccount["brokerName"] != "";
+    // Check if submissionAccount is not null in case of EGA user
+    if (submissionAccount) {
+      return submissionAccount["brokerName"] != "";
+    }
+    return false;
   }
 }
