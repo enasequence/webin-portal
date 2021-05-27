@@ -47,7 +47,8 @@ export class WebinRestService implements WebinRestServiceInterface {
 
   private post(formData: FormData, parameters?): Observable<string> {
     const headers = this.headers();
-    return this._http.post(this._baseUrl + "?" + parameters, formData, { headers, responseType: 'text' });
+    var postParameters = parameters + "&ENA_SUBMISSION_TOOL=Webin-Portal";
+    return this._http.post(this._baseUrl + "?" + postParameters, formData, { headers, responseType: 'text' });
   }
 
   private postTaxon(formData: FormData): Observable<string> {
@@ -82,7 +83,6 @@ export class WebinRestService implements WebinRestServiceInterface {
 
     var releaseDateStr = this.getReleaseDateStr(action, mode, releaseDate)
     var actionString = this.getActionStr(action, mode);
-    var submissionAttr = this.getSubmissionAttrStr();
     let submissionXml: Blob = new Blob([
       '<SUBMISSION_SET>' +
       '  <SUBMISSION>' +
@@ -90,7 +90,6 @@ export class WebinRestService implements WebinRestServiceInterface {
       actionString +
       releaseDateStr +
       '    	</ACTIONS>' +
-      submissionAttr +
       '    </SUBMISSION>' +
       '</SUBMISSION_SET>']);
     if (this._webinAuthenticationService.ega) {
@@ -104,7 +103,6 @@ export class WebinRestService implements WebinRestServiceInterface {
         '    		</ACTION>' +
         releaseDateStr +
         '    	</ACTIONS>' +
-        submissionAttr +
         '    </SUBMISSION>' +
         '</SUBMISSION_SET>']);
     }
@@ -285,16 +283,6 @@ export class WebinRestService implements WebinRestServiceInterface {
       }
     }
     return releaseDateStr;
-  }
-
-  getSubmissionAttrStr() {
-    return "<SUBMISSION_ATTRIBUTES>" +
-      "<SUBMISSION_ATTRIBUTE>" +
-      "<TAG>ENA-SUBMISSION-TOOL</TAG>" +
-      "<VALUE>Webin-Portal</VALUE>" +
-      "</SUBMISSION_ATTRIBUTE>" +
-      "</SUBMISSION_ATTRIBUTES>";
-
   }
 
   uploadTaxonTemplate(taxonTemplate: Blob): Observable<any> {
