@@ -70,6 +70,11 @@ export class ReportActionComponent {
     this.router.navigate(['/study', projObj.report.id]);
   }
 
+  editUmbrellaProjectAction(umbrellaProjObj) {
+    console.log(umbrellaProjObj);
+    this.router.navigate(['/umbrella', umbrellaProjObj.report.id]);
+  }
+
   editDacAction(dacObj) {
     console.log(dacObj);
     this.router.navigate(['/dac', dacObj.report.id]);

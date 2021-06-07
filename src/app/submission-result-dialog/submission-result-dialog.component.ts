@@ -24,6 +24,11 @@ export class SubmissionResultDialogComponent implements OnInit {
   submissionResult: SubmissionResultComponent;
   redirectPath: string;
   data: Observable<string>;
+
+  //Only for umbrella project.
+  projectLinkJsonForUpdate: object;
+  projectLinkJsonForDelete: object;
+
   constructor(
     public dialogRef: MatDialogRef<SubmissionResultDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public popupData: Observable<string>,
@@ -31,9 +36,19 @@ export class SubmissionResultDialogComponent implements OnInit {
   ) {
     this.data = popupData["observable"];
     this.redirectPath = popupData["redirectPath"];
+
+    // Only for umbrella project.
+    this.projectLinkJsonForUpdate = popupData["projectLinkJsonForUpdate"];
+    this.projectLinkJsonForDelete = popupData["projectLinkJsonForDelete"];
+
   }
 
   ngOnInit() {
-    this.submissionResult.submit(this.data);
+
+    if (this.projectLinkJsonForUpdate) {
+      this.submissionResult.submitUmbrellaProject(this.data, this.projectLinkJsonForUpdate, this.projectLinkJsonForDelete)
+    } else {
+      this.submissionResult.submit(this.data);
+    }
   }
 }

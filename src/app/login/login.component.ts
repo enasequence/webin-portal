@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
         mergeMap(data => {
           // console.log('WebinAuthenticationService.login succeeded');
           this._webinAuthenticationService.ega = data.roles.EGA;
+          this._webinAuthenticationService.superUser = data.roles.SUPER_USER;
           this._webinAuthenticationService.account = data.principle;
           return this._webinAuthenticationService.loginToken(this.username, this.password);
         })

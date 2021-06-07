@@ -19,6 +19,7 @@ export interface WebinAuthenticationServiceInterface {
     authenticated: boolean;
     account: string;
     ega: boolean;
+    superUser: boolean;
     loginDate: Date;
     logoutDate: Date;
 

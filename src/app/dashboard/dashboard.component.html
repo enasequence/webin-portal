@@ -28,6 +28,10 @@
             <mat-icon class=note_add>add_box</mat-icon>
             <p class="mat-small mat-caption">Register study (project)</p>
           </span>
+          <span *ngIf="isSuperUser()" [routerLink]="['/umbrella']">
+            <mat-icon class=note_add>add_box</mat-icon>
+            <p class="mat-small mat-caption">Register umbrella project</p>
+          </span>
           <span [routerLink]="['/app-checklist','sample',true]">
             <mat-icon class="note_add">add_box</mat-icon>
             <p class="mat-small mat-caption">Register samples</p>
@@ -100,6 +104,11 @@
           <span [routerLink]="['/report',ReportType.studies,{defaultSearch: true}]">
             <mat-icon class=insert_chart>insert_chart</mat-icon>
             <p class="mat-small mat-caption">Studies Report</p>
+          </span>
+
+          <span *ngIf="isSuperUser()" [routerLink]="['/report',ReportType.umbrellaProjects,{defaultSearch: true}]">
+            <mat-icon class=insert_chart>insert_chart</mat-icon>
+            <p class="mat-small mat-caption">Umbrella Project Report</p>
           </span>
 
           <span [routerLink]="['/report',ReportType.samples,{defaultSearch: true}]">

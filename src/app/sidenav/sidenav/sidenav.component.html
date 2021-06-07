@@ -44,12 +44,16 @@
         </mat-list-item>
         <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
           <a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register study (project)</a>
+          <a mat-list-item *ngIf="isSuperUser()" [routerLink]="['/umbrella']" (click)="snav.toggle()">Register umbrella
+            project</a>
           <a mat-list-item [routerLink]="['/app-checklist','sample',true]" (click)="snav.toggle()">Register sample</a>
+          <ng-container *ngIf="!isEga()">
+            <a mat-list-item [routerLink]="['/taxonomy']" (click)="snav.toggle()">Register taxonomy</a>
+          </ng-container>
           <ng-container *ngIf="isEga()">
             <a mat-list-item [routerLink]="['/dac']" (click)="snav.toggle()">Register Dacs</a>
             <a mat-list-item [routerLink]="['/dac-policy']" (click)="snav.toggle()">Register policy</a>
             <a mat-list-item [routerLink]="['/dac-dataset']" (click)="snav.toggle()">Register dataset</a>
-
           </ng-container>
         </div>
         <mat-list-item class="parent">
@@ -69,6 +73,10 @@
         <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
           <a mat-list-item [routerLink]="['/report',ReportType.studies,{defaultSearch: true}]"
             (click)="snav.toggle()">Studies</a>
+          <a mat-list-item *ngIf="isSuperUser()"
+            [routerLink]="['/report',ReportType.umbrellaProjects,{defaultSearch: true}]"
+            (click)="snav.toggle()">Umbrella
+            Project</a>
           <a mat-list-item [routerLink]="['/report',ReportType.samples,{defaultSearch: true}]"
             (click)="snav.toggle()">Samples</a>
           <a mat-list-item [routerLink]="['/report',ReportType.analyses,{defaultSearch: true}]"

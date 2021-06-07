@@ -12,6 +12,12 @@
     <button mat-menu-item (click)="editProjectAction(reportData)"><i class="material-icons">mode_edit</i>Edit study
       (project)</button>
   </div>
+  <div *ngIf="isEditXmlAction(ReportType.umbrellaProjects)">
+    <button mat-menu-item (click)="editXmlAction(ReportType.umbrellaProjects)"><i
+        class="material-icons">mode_edit</i>Edit umbrella project XML</button>
+    <button mat-menu-item (click)="editUmbrellaProjectAction(reportData)"><i class="material-icons">mode_edit</i>Edit
+      umbrella project</button>
+  </div>
   <div *ngIf="isEditXmlAction(ReportType.studies)">
     <button mat-menu-item (click)="editXmlAction(ReportType.studies)"><i class="material-icons">mode_edit</i>Edit study
       XML</button>

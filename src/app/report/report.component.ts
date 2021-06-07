@@ -183,6 +183,31 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  setUmbrellaProjectReportColumns() {
+    this.displayedColumns = [
+      this._showAlias ? 'Unique name' : 'Accession',
+      'Title',
+      'Submission date',
+      'Release date',
+      'Status',
+      'Action', // No callback for Action column
+    ];
+    if (this.embeded) {
+      this.displayedColumns.splice(-1, 1);
+      this.displayedColumns.unshift('Select')
+    }
+    this.displayedColumnsCallback = {
+      'Select': this.accessionColumnCallback.bind(this),
+      Accession: this.accessionColumnCallback.bind(this),
+      'Unique name': this.aliasColumnCallback.bind(this),
+      'Secondary Accession': this.secondaryIdColumnCallback.bind(this),
+      Title: this.titleColumnCallback.bind(this),
+      'Submission date': this.submissionDateColumnCallback.bind(this),
+      'Release date': this.releaseDateColumnCallback.bind(this),
+      Status: this.statusColumnCallback.bind(this)
+    };
+  }
+
   setSampleReportColumns() {
     this.displayedColumns = [
       this._showAlias ? 'Unique name' : 'Accession',
@@ -454,16 +479,13 @@ export class ReportComponent implements OnInit {
     // Allow navigation to run report.
     if (this.reportType === ReportType.studies) {
       actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getSecondaryId(result)));
+      actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getSecondaryId(result)));
     }
     if (this.reportType === ReportType.samples ||
       this.reportType === ReportType.runFiles) {
       actions.push(ReportActionType.createChangeReportAction(ReportType.runs, this.getId(result)));
     }
 
-    // Allow navigation to analysis report.
-    if (this.reportType === ReportType.studies) {
-      actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getSecondaryId(result)));
-    }
     if (this.reportType === ReportType.samples ||
       this.reportType === ReportType.analysisFiles) {
       actions.push(ReportActionType.createChangeReportAction(ReportType.analyses, this.getId(result)));
@@ -515,8 +537,6 @@ export class ReportComponent implements OnInit {
       // console.log('** change report action **', action);
       //this.reportChange.emit(action);
       this.router.navigate(['/report', action.reportType, action.id]);
-
-
     }
 
     if (action && action.reportActionType === ReportActionType.editXml) {
@@ -567,6 +587,14 @@ export class ReportComponent implements OnInit {
         data => {
           // console.log('** Webin reports service **', data);
           this.data = data;
+
+          // Filtering umbrella projects using study_id (secondaryId === null) because study_id will be null for umbrella projects.
+          if (this.reportType === ReportType.umbrellaProjects) {
+            this.data = data.filter((record) => record.report.secondaryId === null)
+          }
+          if (this.reportType === ReportType.projects || this.reportType === ReportType.studies) {
+            this.data = data.filter((record) => record.report.secondaryId != null)
+          }
           this.dataSource = new MatTableDataSource<any>(this.data);
           this.dataSource.paginator = this.dataPaginator;
         },
@@ -610,6 +638,8 @@ export class ReportComponent implements OnInit {
       this.setPolicyReportColumns();
     } else if (this.reportType === ReportType.datasets) {
       this.setDatasetReportColumns();
+    } else if (this.reportType === ReportType.umbrellaProjects) {
+      this.setUmbrellaProjectReportColumns();
     }
   }
 
@@ -620,6 +650,15 @@ export class ReportComponent implements OnInit {
 
     if (this.reportType === ReportType.studies ||
       this.reportType === ReportType.projects) {
+      if (this.id) {
+        return this._webinReportService.getProjects(this.id, rows, format);
+        // return this._webinReportService.getStudies(this.id, rows, format);
+      }
+      return this._webinReportService.getProjectsAll(this._status, rows, format);
+      // return this._webinReportService.getStudiesAll(this._status, rows, format);
+    }
+
+    if (this.reportType === ReportType.umbrellaProjects) {
       if (this.id) {
         return this._webinReportService.getProjects(this.id, rows, format);
         // return this._webinReportService.getStudies(this.id, rows, format);

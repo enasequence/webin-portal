@@ -19,12 +19,20 @@ export class XmlService {
     private _webinRestService: WebinRestService,
     private util: UtilService) { }
 
-  generateStudyXml(form, selectedPubMedArray, attributeArray, locusTagArray) {
+  generateStudyXml(form, selectedPubMedArray, attributeArray, locusTagArray, umbrellaType?) {
 
     let pubMedXml = this.getPubMedXmlTags(selectedPubMedArray);
     let attributeXml = this.getAttributeXmlTags(attributeArray)
     let locusTagXml = this.getlocusTagXmlTags(locusTagArray);
     let alias = uuid();
+    let projectType = "";
+
+    // To create Umbrella / Submission project.
+    if (umbrellaType) {
+      projectType = this.generateUmbrellaTypeProject();
+    } else {
+      projectType = this.generateSubmissionTypeProject(locusTagXml);
+    }
 
     let projectXml = new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>' +
       '<PROJECT_SET>' +
@@ -32,11 +40,7 @@ export class XmlService {
       '<NAME>' + form.studyName + '</NAME>' +
       '<TITLE>' + form.studyTitle + '</TITLE>' +
       '<DESCRIPTION>' + form.description + '</DESCRIPTION>' +
-      '<SUBMISSION_PROJECT>' +
-      '<SEQUENCING_PROJECT>' +
-      locusTagXml +
-      '</SEQUENCING_PROJECT>' +
-      '</SUBMISSION_PROJECT>' +
+      projectType +
       pubMedXml +
       attributeXml +
       '</PROJECT>' +
@@ -63,6 +67,20 @@ export class XmlService {
     //let dateStr = this.getFormatedReleseDate(new Date(form.releaseDate));
     const observable: Observable<string> = this._webinRestService.updateXml(ReportType.dacs, dacXml, 'Add', form)
     return observable;
+  }
+
+  generateUmbrellaTypeProject() {
+    return "<UMBRELLA_PROJECT/>";
+  }
+
+  generateSubmissionTypeProject(locusTagXml) {
+    let submissionProj = '<SUBMISSION_PROJECT>' +
+      '<SEQUENCING_PROJECT>' +
+      locusTagXml +
+      '</SEQUENCING_PROJECT>' +
+      '</SUBMISSION_PROJECT>';
+
+    return submissionProj;
   }
 
   generateDacPolicyXml(form) {
@@ -131,11 +149,13 @@ export class XmlService {
 
   getlocusTagXmlTags(locusTagArray) {
     let locusTagXml = "";
-    locusTagArray.forEach(element => {
-      locusTagXml += '<LOCUS_TAG_PREFIX>' +
-        element.locusTag +
-        '</LOCUS_TAG_PREFIX>';
-    });
+    if (locusTagArray) {
+      locusTagArray.forEach(element => {
+        locusTagXml += '<LOCUS_TAG_PREFIX>' +
+          element.locusTag +
+          '</LOCUS_TAG_PREFIX>';
+      });
+    }
 
     return locusTagXml;
   }

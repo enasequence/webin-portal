@@ -68,4 +68,8 @@ export class SidenavComponent implements OnDestroy, AfterViewChecked {
     return this._webinAuthenticationService.ega;
   }
 
+  isSuperUser(): boolean {
+    return this._webinAuthenticationService.superUser;
+  }
+
 }

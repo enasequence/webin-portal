@@ -56,6 +56,30 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this._http.post(environment.webinRestUrl + "/portal/register/taxonomy", formData, { headers, responseType: 'text' });
   }
 
+  private postProjectLink(reqJSON: object): Observable<any> {
+    const headers = this.headers();
+    return this._http.post(environment.webinRestUrl + "/portal/project/link", reqJSON, { headers, responseType: 'text' });
+  }
+
+  private deleteProjectLink(reqJSON: object): Observable<any> {
+    const headers = this.headers();
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body:
+        reqJSON
+    };
+    return this._http.delete(environment.webinRestUrl + "/portal/project/link", options);
+  }
+
+  getProjectLink(projectId: string) {
+
+    const url: string = environment.webinRestUrl + '/portal/project/link/' + projectId;
+    return this._http.get(url, { responseType: 'text', observe: 'response' });
+  }
+
+
   private postEmail(mail) {
     return this._http.post(environment.webinRestUrl + '/email', mail);
   }
@@ -114,6 +138,10 @@ export class WebinRestService implements WebinRestServiceInterface {
         break;
       }
       case ReportType.projects: {
+        this.appendXml(formData, 'PROJECT', xml);
+        break;
+      }
+      case ReportType.umbrellaProjects: {
         this.appendXml(formData, 'PROJECT', xml);
         break;
       }
@@ -189,6 +217,14 @@ export class WebinRestService implements WebinRestServiceInterface {
     }
 
     return this.post(formData, postParam);
+  }
+
+  submitProjectLink(reqJson) {
+    return this.postProjectLink(reqJson);
+  }
+
+  removeProjectLink(reqJson) {
+    return this.deleteProjectLink(reqJson);
   }
 
   getCenterNamePostParam(centerName) {

@@ -1,0 +1,6 @@
+.centred {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    height:70px;
+  }

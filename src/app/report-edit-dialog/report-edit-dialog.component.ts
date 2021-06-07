@@ -78,6 +78,10 @@ export class ReportEditDialogComponent implements OnInit {
         observable = this._webinXmlReportService.getProjectXml(id);
         break;
       }
+      case ReportType.umbrellaProjects: {
+        observable = this._webinXmlReportService.getProjectXml(id);
+        break;
+      }
       case ReportType.samples: {
         observable = this._webinXmlReportService.getSampleXml(id);
         break;

@@ -11,5 +11,6 @@
 
 export interface WebinAuthenticationResultInterface {
     principle: string;
-    roles: { EGA?};
+    roles: { EGA?, SUPER_USER?};
+
 }

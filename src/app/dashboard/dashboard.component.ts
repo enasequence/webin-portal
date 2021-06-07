@@ -42,4 +42,8 @@ export class DashboardComponent implements OnInit {
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
   }
+
+  isSuperUser(): boolean {
+    return this._webinAuthenticationService.superUser;
+  }
 }

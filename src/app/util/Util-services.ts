@@ -111,6 +111,14 @@ export class UtilService {
     });
   }
 
+  showSubmissionResponseForUmbrellaProject(component, popupComponent, observable, projectLinkJsonForUpdate, projectLinkJsonForDelete, redirectPath?: string) {
+    component.dialog.open(popupComponent, {
+      width: '600px',
+      data: { "observable": observable, "redirectPath": redirectPath, "projectLinkJsonForUpdate": projectLinkJsonForUpdate, "projectLinkJsonForDelete": projectLinkJsonForDelete }
+
+    });
+  }
+
   showHttpError(component, popupComponent, err, title) {
     console.error('** Webin submission service failed **', err);
     const message = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';

@@ -144,22 +144,22 @@ export class WebinReportService implements WebinReportServiceInterface {
   }
 
   getChecklistGroups(type: string) {
-      const params = {};
-      params['type'] = type;
-      const url: string = this._baseUrl + '/checklist-groups' + '?' + this.getUrlParams(params);
-      return this._http.get(url);
+    const params = {};
+    params['type'] = type;
+    const url: string = this._baseUrl + '/checklist-groups' + '?' + this.getUrlParams(params);
+    return this._http.get(url);
   }
   getChecklists(type: string) {
-      const params = {};
-      params['type'] = type;
-      const url: string = this._baseUrl + '/checklists' + '?' + this.getUrlParams(params);
-      return this._http.get(url);
+    const params = {};
+    params['type'] = type;
+    const url: string = this._baseUrl + '/checklists' + '?' + this.getUrlParams(params);
+    return this._http.get(url);
   }
   getChecklistXmls(type: string) {
-      const params = {};
-      params['type'] = type;
-      const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
-      return this._http.get(url, { responseType: 'text', observe: 'response' });
+    const params = {};
+    params['type'] = type;
+    const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
+    return this._http.get(url, { responseType: 'text', observe: 'response' });
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {

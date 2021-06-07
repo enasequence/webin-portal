@@ -62,6 +62,13 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.setItem('ega', JSON.stringify(ega));
   }
 
+  get superUser(): boolean {
+    return JSON.parse(sessionStorage.getItem('superUser'));
+  }
+  set superUser(superUser: boolean) {
+    sessionStorage.setItem('superUser', JSON.stringify(superUser));
+  }
+
   get loginDate(): Date {
     return JSON.parse(sessionStorage.getItem('loginDate'));
   }
@@ -101,6 +108,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     sessionStorage.removeItem('authenticated');
     sessionStorage.removeItem('account');
     sessionStorage.removeItem('ega');
+    sessionStorage.removeItem('superUser');
     sessionStorage.removeItem('loginDate');
     sessionStorage.removeItem('logoutDate');
     sessionStorage.removeItem('submissionAccount');
@@ -158,6 +166,10 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     var submissionAccount = JSON.parse(
       sessionStorage.getItem('submissionAccount')
     );
-    return submissionAccount["brokerName"] != "";
+    // Check if submissionAccount is not null in case of EGA user
+    if (submissionAccount) {
+      return submissionAccount["brokerName"] != "";
+    }
+    return false;
   }
 }

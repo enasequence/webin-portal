@@ -65,6 +65,7 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { DacManagementComponent } from './dac-management/dac-management.component';
 import { DacPolicyManagementComponent } from './dac-policy-management/dac-policy-management.component';
 import { DacDatasetManagementComponent } from './dac-dataset-management/dac-dataset-management.component';
+import { UmbrellaManagementComponent } from './umbrella-management/umbrella-management.component';
 
 
 const appRoutes: Routes = [
@@ -132,6 +133,16 @@ const appRoutes: Routes = [
   {
     path: 'study/:id',
     component: StudyManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'umbrella',
+    component: UmbrellaManagementComponent,
+    canActivate: [WebinAuthenticationGuardService],
+  },
+  {
+    path: 'umbrella/:id',
+    component: UmbrellaManagementComponent,
     canActivate: [WebinAuthenticationGuardService],
   },
   {
@@ -236,6 +247,7 @@ const appRoutes: Routes = [
     DacManagementComponent,
     DacPolicyManagementComponent,
     DacDatasetManagementComponent,
+    UmbrellaManagementComponent,
 
 
   ],

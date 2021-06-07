@@ -48,6 +48,8 @@ export class SubmissionResultComponent {
   message;
   errorMessage;
   resultError;
+  projectLinkError;
+  projectLinkMessage;
   showReceiptXml = false;
   @Input() showReceiptSuccess = true;
   active: boolean;
@@ -112,6 +114,127 @@ export class SubmissionResultComponent {
           this.active = false;
         });
     }
+  }
+
+  submitUmbrellaProject(observable: Observable<string>, projectLinkJsonForUpdate: object, projectLinkJsonForDelete: object) {
+    if (observable) {
+      this.reset();
+      this.active = true;
+      let calledProjectLink = false;
+
+      observable.pipe(
+        retry(3)
+      ).subscribe(
+        data => {
+          // HttpResponse when using {observe: 'response'}
+          this.result = this._webinRestService.parseResult(data);
+          // console.log('** Webin submission **', this.result);
+
+          if (this.result.isError) {
+            this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
+            this.webinErrorDataSource.paginator = this.webinErrorPaginator;
+          } else {
+
+            // For project linking
+            var projectAccession = this.result.accessions.find(element => element.type === "PROJECT").accession;
+            projectLinkJsonForUpdate["projectId"] = projectAccession;
+
+            // Delete projectLink before insert / update
+            if (projectLinkJsonForDelete["parentId"] || projectLinkJsonForDelete["childIds"].length > 0) {
+              projectLinkJsonForDelete["projectId"] = projectAccession;
+              console.log("Delete project link: " + JSON.stringify(projectLinkJsonForDelete))
+              this.deleteProjectLink(projectLinkJsonForDelete);
+            }
+
+            // create project link if parentId or childId is added.
+            if (projectLinkJsonForUpdate["parentId"] || projectLinkJsonForUpdate["childIds"].length > 0) {
+              calledProjectLink = true;
+              console.log("Insert / update project link: " + JSON.stringify(projectLinkJsonForUpdate))
+              this.createProjectLink(projectLinkJsonForUpdate, this.result.accessions);
+            }
+
+            // If project link insertion is not called then show project submission success message here.
+            if (!calledProjectLink) {
+              this.displayUmbrelaProjectSucccess(this.result.accessions);
+            }
+          }
+        },
+        (err: HttpErrorResponse) => {
+          console.error('** Webin submission service failed **' + err);
+          const msg = 'Webin submission service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          this.resultError = msg;
+        },
+        () => {
+          if (!calledProjectLink) {
+            this.active = false;
+          }
+        });
+    }
+  }
+
+  createProjectLink(projectLinkJson: object, projectAccessions) {
+    this.active = true;
+    // Project link will be created if there is no record exist for the given parent and child id.
+    var projectLinkobservable: Observable<string> = this._webinRestService.submitProjectLink(projectLinkJson);
+    projectLinkobservable.pipe(
+      retry(3)
+    ).subscribe(
+      data => {
+        console.log(data);
+        this.projectLinkMessage = "Project link creation successful: " +
+          "Parent: " + projectLinkJson["parentId"] +
+          "Child: " + projectLinkJson["childIds"];
+        // Display submission success message  
+        this.displayUmbrelaProjectSucccess(projectAccessions);
+        this.active = false;
+
+      }, (err: HttpErrorResponse) => {
+
+        let msgJSON = JSON.parse(err.error);
+        let msgStr = "Error while creatinf project link." + err.error;
+        if (msgJSON) {
+          msgStr = msgJSON.message
+        }
+        console.error('** Project linking service failed **' + err);
+        const msg = 'Project linking failed: ' + msgStr;
+        this.projectLinkError = msg;
+        // Display submission success message
+        this.displayUmbrelaProjectSucccess(projectAccessions);
+        this.active = false;
+      },
+      () => {
+        this.active = false;
+      });
+  }
+
+  deleteProjectLink(projectLinkJson: object) {
+    // Project link will be created if there is no record exist for the given parent and child id.
+    var projectLinkobservable: Observable<string> = this._webinRestService.removeProjectLink(projectLinkJson);
+    projectLinkobservable.pipe(
+      retry(3)
+    ).subscribe(
+      data => {
+        console.log(data);
+        this.projectLinkMessage = "Project link creation successful: " +
+          "Parent: " + projectLinkJson["parentId"] +
+          "Child: " + projectLinkJson["childIds"];
+      }, (err: HttpErrorResponse) => {
+
+        let msgJSON = JSON.parse(err.error);
+        let msgStr = "Error while creatinf project link." + err.error;
+        if (msgJSON) {
+          msgStr = msgJSON.message
+        }
+        console.error('** Project linking service failed **' + err);
+        const msg = 'Project linking failed: ' + msgStr;
+        this.projectLinkError = msg;
+
+      });
+  }
+
+  displayUmbrelaProjectSucccess(projectAccessions) {
+    this.webinAccessionDataSource = new MatTableDataSource<WebinAccession>(projectAccessions);
+    this.webinAccessionDataSource.paginator = this.webinAccessionPaginator;
   }
 
   showMessage(resp) {

@@ -1,0 +1,251 @@
+<div class="body">
+  <div>
+    <div class="mat-h3 mat-tittle">Register umbrella project</div>
+  </div>
+  <mat-divider></mat-divider>
+  <form (ngSubmit)="submitUmbrellaProject(f)" #f="ngForm">
+    <div class="container">
+      <mat-card>
+        <div class="row">
+          <mat-card-subtitle>Submission Details</mat-card-subtitle>
+          <div class="column">
+            <mat-form-field class="app-field-padding" *ngIf="action==='Edit'">
+              <input matInput placeholder="Project Id" required [(ngModel)]="id" name="id" readonly>
+            </mat-form-field>
+            <mat-form-field appearance="fill" *ngIf="!isEga()">
+              <mat-label>Release date [ This is when your study will be made public. ] </mat-label>
+              <input matInput [matDatepicker]="picker" [readonly]="true" required [(ngModel)]="releaseDate"
+                [min]="today" [max]="maxDate" name="releaseDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="app-field-padding">
+              <input matInput placeholder="Study Name" [(ngModel)]="studyName" name="studyName">
+            </mat-form-field>
+          </div>
+          <div class="column" *ngIf="!editMode">
+            <mat-form-field class="app-field-padding">
+              <input matInput placeholder="Short descriptive study title" required [(ngModel)]="studyTitle"
+                name="studyTitle">
+            </mat-form-field>
+            <mat-form-field class="app-field-padding">
+              <textarea rows="6" matInput placeholder="Detailed study abstract" required [(ngModel)]="description"
+                name="description"></textarea>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </mat-card>
+
+
+      <!-- #################### P U B M E D    R E G I S T R A T I O N #################### -->
+
+      <mat-card class="mat-body">
+        <div class="row">
+          <mat-card-subtitle>PubMed Citations Registration</mat-card-subtitle>
+          <a (click)="addPubMed()">Add PubMed Citations <mat-icon>add_circle</mat-icon></a>
+          <div *ngIf="showPubMedSearch">
+            <mat-form-field class="app-field-padding">
+              <input matInput placeholder="Search PubMedId" [matAutocomplete]="auto" name="pubMedSearch"
+                #pubMedSearchVal="ngModel" [(ngModel)]="pubMedSearch" (ngModelChange)="getPubMed(pubMedSearch)">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedPubMed($event)"
+              [displayWith]="getPubMedDisplayText">
+              <mat-option *ngFor="let pubMed of pubMedArray" [value]="pubMed">
+                {{pubMed.id}} [ {{pubMed.title}} ]
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <mat-error *ngIf="showDuplicatePubMedErr">
+            Selected PubMed Citations is already added.
+          </mat-error>
+          <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> PubMedId </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef> Title </th>
+              <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="remove">
+              <th mat-header-cell *matHeaderCellDef> Remove </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="removePubMed(element)">delete</mat-icon>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card>
+
+
+      <!-- ####################   A T T R I B U T E   R G I S T R A T I O N  #################### -->
+
+      <mat-card class="mat-body">
+        <div class="row">
+          <mat-card-subtitle>Study Attributes</mat-card-subtitle>
+          <a (click)="showAttributeAddPanel()">Add Study Attributes <mat-icon>add_circle</mat-icon></a>
+          <div *ngIf="showAttributeAdd">
+            <div class="row">
+              <div class="column3">
+                <mat-form-field class="app-field-padding">
+                  <input matInput placeholder="Tag" name="tag" [(ngModel)]="tag">
+                </mat-form-field>
+              </div>
+              <div class="column3">
+                <mat-form-field class="app-field-padding">
+                  <input matInput placeholder="Value" name="tagValue" [(ngModel)]="tagValue">
+                </mat-form-field>
+              </div>
+              <div class="column3">
+                <button mat-raised-button color="primary" [disabled]="!tag || !tagValue"
+                  (click)="addAttribute()">Add</button>
+              </div>
+            </div>
+          </div>
+          <table mat-table *ngIf="attributeDataSource" #table [dataSource]="attributeDataSource"
+            class="mat-elevation-z8">
+
+            <ng-container matColumnDef="tag">
+              <th mat-header-cell *matHeaderCellDef> Tag </th>
+              <td mat-cell *matCellDef="let element"> {{element.tag}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tagValue">
+              <th mat-header-cell *matHeaderCellDef> Value </th>
+              <td mat-cell *matCellDef="let element"> {{element.tagValue}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="remove">
+              <th mat-header-cell *matHeaderCellDef> Remove </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="removeAttribute(element)">delete</mat-icon>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="attributeDisplayColumn"></tr>
+            <tr mat-row *matRowDef="let row; columns: attributeDisplayColumn;"></tr>
+          </table>
+        </div>
+      </mat-card>
+
+
+      <!-- ####################   P R O J E C T    L I N K I N G   #################### -->
+
+      <mat-card class="mat-body">
+        <div class="row">
+          <mat-card-subtitle>Project Linking</mat-card-subtitle>
+          <!-- P A R E N T    P R O J E C T  -->
+          <div>
+            <div *ngIf="parentProjectDatasource.data.length<=0">
+              <a (click)="showSearchParent()">Add parent project<mat-icon>add_circle</mat-icon></a>
+              <div *ngIf="showSearchParentFlag">
+                <div class="row">
+                  <div class="column3">
+                    <mat-form-field class="app-field-padding">
+                      <input matInput placeholder="Search parent project" name="parentSearch"
+                        [(ngModel)]="parentSearch">
+                    </mat-form-field>
+
+                  </div>
+                  <div class="column3">
+                    <button mat-raised-button color="primary" type="button" [disabled]="!parentSearch"
+                      (click)="addParentProjectId(parentSearch)">Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <mat-error *ngIf="parentErrorMessage">
+              {{parentErrorMessage}}
+            </mat-error>
+            <table mat-table *ngIf="parentProjectDatasource.data.length>0" #table [dataSource]="parentProjectDatasource"
+              class="mat-elevation-z8">
+
+              <ng-container matColumnDef="projectId">
+                <th mat-header-cell *matHeaderCellDef> Parent project accession </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="remove">
+                <th mat-header-cell *matHeaderCellDef> Remove </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon (click)="deleteParentProject(element)">delete</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="parentProjectDisplayColumn"></tr>
+              <tr mat-row *matRowDef="let row; columns: parentProjectDisplayColumn;"></tr>
+            </table>
+          </div>
+          <br>
+          <!-- C H I L D    P R O J E C T  -->
+          <div>
+            <a (click)="showSearchChild()">Add child project<mat-icon>add_circle</mat-icon></a>
+            <div *ngIf="showSearchChildFlag">
+              <div class="row">
+                <div class="column3">
+                  <mat-form-field class="app-field-padding">
+                    <input matInput placeholder="Search child project" name="childSearch" [(ngModel)]="childSearch">
+                  </mat-form-field>
+
+                </div>
+                <div class="column3">
+                  <button mat-raised-button color="primary" type="button" [disabled]="!childSearch"
+                    (click)="addChildProjectId(childSearch)">Add</button>
+                </div>
+              </div>
+            </div>
+            <mat-error *ngIf="childErrorMessage">
+              {{childErrorMessage}}
+            </mat-error>
+            <br>
+            <table mat-table *ngIf="childProjectDatasource.data.length>0" #table [dataSource]="childProjectDatasource"
+              class="mat-elevation-z8">
+
+              <ng-container matColumnDef="projectId">
+                <th mat-header-cell *matHeaderCellDef> Child project accession </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="remove">
+                <th mat-header-cell *matHeaderCellDef> Remove </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon (click)="deleteChildProject(element)">delete</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="childProjectDisplayColumn"></tr>
+              <tr mat-row *matRowDef="let row; columns: childProjectDisplayColumn;"></tr>
+            </table>
+          </div>
+        </div>
+      </mat-card>
+
+    </div>
+
+
+    <div class="centred" *ngIf="showLoadingFlag" style="height:70px;">
+      <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
+      </mat-spinner>
+    </div>
+
+
+    <div style="text-align:Center">
+      <mat-form-field *ngIf="isBroker()" appearance="outline" style="width:7%; margin-right: 5px;">
+        <input matInput placeholder="Center name" name="centerName" [(ngModel)]="centerName">
+      </mat-form-field>
+      <button mat-raised-button color="accent" [disabled]="f.invalid">Submit</button>
+      <button *ngIf="action==='Edit'" mat-raised-button style="margin-left: 5px;"
+        routerLink="/report/studies">Cancel</button>
+      <button *ngIf="action!='Edit'" mat-raised-button style="margin-left: 5px;" routerLink="">Cancel</button>
+    </div>
+  </form>
+</div>
