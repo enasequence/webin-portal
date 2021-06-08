@@ -1,6 +1,6 @@
 
 export const environment = {
-  production: false,
+  production: true,
   title: 'Webin submissions portal',
   webinRestUrl: 'https://www.ebi.ac.uk/ena/submit/drop-box',
   webinAuthUrl: 'https://www.ebi.ac.uk/ena/submit/webin/auth',
