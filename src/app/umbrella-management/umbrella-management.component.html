@@ -12,7 +12,7 @@
             <mat-form-field class="app-field-padding" *ngIf="action==='Edit'">
               <input matInput placeholder="Project Id" required [(ngModel)]="id" name="id" readonly>
             </mat-form-field>
-            <mat-form-field appearance="fill" *ngIf="!isEga()">
+            <mat-form-field appearance="fill" *ngIf="displayReleaseDate()">
               <mat-label>Release date [ This is when your study will be made public. ] </mat-label>
               <input matInput [matDatepicker]="picker" [readonly]="true" required [(ngModel)]="releaseDate"
                 [min]="today" [max]="maxDate" name="releaseDate">
@@ -23,7 +23,7 @@
               <input matInput placeholder="Study Name" [(ngModel)]="studyName" name="studyName">
             </mat-form-field>
           </div>
-          <div class="column" *ngIf="!editMode">
+          <div class="column">
             <mat-form-field class="app-field-padding">
               <input matInput placeholder="Short descriptive study title" required [(ngModel)]="studyTitle"
                 name="studyTitle">

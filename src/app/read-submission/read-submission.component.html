@@ -76,7 +76,7 @@
                                                 <mat-select class="checklist-restriction"
                                                     placeholder="Permitted values">
                                                     <mat-option *ngFor="let PermitedValues of field.value_choice"
-                                                        [value]="field.value_choice">
+                                                        [value]="PermitedValues" [disabled]="true">
                                                         {{ PermitedValues }}
                                                     </mat-option>
                                                 </mat-select>

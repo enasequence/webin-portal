@@ -213,7 +213,9 @@ export class StudyManagementComponent implements OnInit {
   }
 
   setPageValuesfromReport(data) {
-    this.releaseDate = new Date(data["holdDate"]);
+    if (data["holdDate"]) {
+      this.releaseDate = new Date(data["holdDate"]);
+    }
     this.releaseStatus = data["releaseStatus"];
   }
 
@@ -346,6 +348,21 @@ export class StudyManagementComponent implements OnInit {
       this.locusTagArray = [];
       this.locusTagDataSource = new MatTableDataSource<any>(this.locusTagArray);
     }
+  }
+
+  displayReleaseDate() {
+    // Show release_date if the action is not edit
+    if (!this.isEga() && this.action != 'Edit') {
+      return true;
+    }
+
+    // While study edit show release_ate field only if the study status is PRIVATE or TEMPORARY_SUPPRESSED
+    if (!this.isEga() && this.action === 'Edit' &&
+      (this.releaseStatus === 'PRIVATE' || this.releaseStatus === 'TEMPORARY_SUPPRESSED')) {
+
+      return true;
+    }
+    return false;
   }
 
   isEga(): boolean {

@@ -305,7 +305,9 @@ export class UmbrellaManagementComponent implements OnInit {
   }
 
   setPageValuesfromReport(data) {
-    this.releaseDate = new Date(data["holdDate"]);
+    if (data["holdDate"]) {
+      this.releaseDate = new Date(data["holdDate"]);
+    }
     this.releaseStatus = data["releaseStatus"];
   }
 
@@ -556,6 +558,19 @@ export class UmbrellaManagementComponent implements OnInit {
     this.childProjectDatasource = new MatTableDataSource<any>(this.childProjectDatasource.data);
   }
 
+  displayReleaseDate() {
+    // Show release_date if the action is not edit
+    if (!this.isEga() && this.action != 'Edit') {
+      return true;
+    }
+
+    // While umbrella edit show release_ate field only if the study status is PRIVATE or TEMPORARY_SUPPRESSED
+    if (!this.isEga() && this.action === 'Edit' &&
+      (this.releaseStatus === 'PRIVATE' || this.releaseStatus === 'TEMPORARY_SUPPRESSED')) {
+      return true;
+    }
+    return false;
+  }
 
   isEga(): boolean {
     return this._webinAuthenticationService.ega;

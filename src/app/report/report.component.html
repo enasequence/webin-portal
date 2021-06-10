@@ -238,7 +238,8 @@
                 <div>
                   {{getElementValue(element, col)}}
                   <span class=edit-icon-span *ngIf="!isEga() && !embeded">
-                    <mat-icon class="edit-icon" *ngIf="element.report.releaseStatus=='PRIVATE'"
+                    <mat-icon class="edit-icon"
+                      *ngIf="element.report.releaseStatus==='PRIVATE' || element.report.releaseStatus==='TEMPORARY_SUPPRESSED'"
                       (click)="updateReleaseDate(element)">edit</mat-icon>
                   </span>
                 </div>
