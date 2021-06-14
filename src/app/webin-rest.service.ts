@@ -19,6 +19,7 @@ import { tap, startWith, map, debounceTime, catchError } from 'rxjs/operators';
 import { ReportType } from './report-type.enum';
 import { WebinRestServiceInterface } from './webin-rest.service.interface';
 import { WebinAuthenticationService } from './webin-authentication.service';
+import { stringify } from '@angular/compiler/src/util';
 
 
 @Injectable()
@@ -245,7 +246,10 @@ export class WebinRestService implements WebinRestServiceInterface {
       xml: data,
       date: date,
       accessions: [],
-      errors: []
+      errors: [],
+      // Fields for Project / study
+      releaseDate: String,
+      releaseStatus: String
     };
 
     let i = 0;
@@ -271,6 +275,12 @@ export class WebinRestService implements WebinRestServiceInterface {
               accession: childNode.getAttribute('accession'),
               alias: childNode.getAttribute('alias')
             });
+
+          // Save project details for displaying project specific message.  
+          if (childNode.tagName === 'PROJECT') {
+            receipt.releaseDate = childNode.getAttribute('holdUntilDate');
+            receipt.releaseStatus = childNode.getAttribute('status');
+          }
         }
       }
     } else {

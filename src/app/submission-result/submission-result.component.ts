@@ -48,6 +48,9 @@ export class SubmissionResultComponent {
   message;
   errorMessage;
   resultError;
+  projectAccession: string;
+  projectStatus: string;
+  projectReleaseDateStr: string;
   projectLinkError;
   projectLinkMessage;
   showReceiptXml = false;
@@ -97,6 +100,14 @@ export class SubmissionResultComponent {
           this.result = this._webinRestService.parseResult(data);
           // console.log('** Webin submission **', this.result);
 
+          // Find project submission and used its response for displaying different success message. 
+          let projectResult = this.result.accessions.find(element => element.type === "PROJECT")
+          if (projectResult) {
+            this.projectAccession = projectResult.accession;
+            this.projectStatus = this.result.releaseStatus;
+            this.projectReleaseDateStr = this.result.releaseDate.slice(0, 10);
+          }
+
           if (this.result.isError) {
             this.webinErrorDataSource = new MatTableDataSource<WebinError>(this.result.errors);
             this.webinErrorDataSource.paginator = this.webinErrorPaginator;
@@ -136,12 +147,12 @@ export class SubmissionResultComponent {
           } else {
 
             // For project linking
-            var projectAccession = this.result.accessions.find(element => element.type === "PROJECT").accession;
-            projectLinkJsonForUpdate["projectId"] = projectAccession;
+            this.projectAccession = this.result.accessions.find(element => element.type === "PROJECT").accession;
+            projectLinkJsonForUpdate["projectId"] = this.projectAccession;
 
             // Delete projectLink before insert / update
             if (projectLinkJsonForDelete["parentId"] || projectLinkJsonForDelete["childIds"].length > 0) {
-              projectLinkJsonForDelete["projectId"] = projectAccession;
+              projectLinkJsonForDelete["projectId"] = this.projectAccession;
               console.log("Delete project link: " + JSON.stringify(projectLinkJsonForDelete))
               this.deleteProjectLink(projectLinkJsonForDelete);
             }
