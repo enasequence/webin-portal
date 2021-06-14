@@ -47,7 +47,7 @@
         <p>Please use the project accession {{projectAccession}} when <a
             href="https://ena-docs.readthedocs.io/en/latest/submit/general-guide/accessions.html#how-to-cite-your-ena-study">citing
             your data in publications</a></p>
-        <p *ngIf="projectStatus == 'PRIVATE'">
+        <p *ngIf="projectStatus === 'PRIVATE'">
           Your study will be held private until {{projectReleaseDateStr}}. You must release this study once data
           associated with it has been published. The release date can be changed by editing the study in 'Studies
           Report'.

@@ -103,9 +103,7 @@ export class SubmissionResultComponent {
           // Find project submission and used its response for displaying different success message. 
           let projectResult = this.result.accessions.find(element => element.type === "PROJECT")
           if (projectResult) {
-            this.projectAccession = projectResult.accession;
-            this.projectStatus = this.result.releaseStatus;
-            this.projectReleaseDateStr = this.result.releaseDate.slice(0, 10);
+            this.setProjectDetails(projectResult);
           }
 
           if (this.result.isError) {
@@ -147,8 +145,11 @@ export class SubmissionResultComponent {
           } else {
 
             // For project linking
-            this.projectAccession = this.result.accessions.find(element => element.type === "PROJECT").accession;
-            projectLinkJsonForUpdate["projectId"] = this.projectAccession;
+            // Find project submission and used its response for displaying different success message. 
+            let projectResult = this.result.accessions.find(element => element.type === "PROJECT")
+            if (projectResult) {
+              this.setProjectDetails(projectResult);
+            }
 
             // Delete projectLink before insert / update
             if (projectLinkJsonForDelete["parentId"] || projectLinkJsonForDelete["childIds"].length > 0) {
@@ -180,6 +181,15 @@ export class SubmissionResultComponent {
             this.active = false;
           }
         });
+    }
+  }
+
+  // Set project details beeded for displaying message.
+  setProjectDetails(projectResult) {
+    this.projectAccession = projectResult.accession;
+    this.projectStatus = this.result.releaseStatus;
+    if (this.result.releaseDate) {
+      this.projectReleaseDateStr = this.result.releaseDate.slice(0, 10);
     }
   }
 
