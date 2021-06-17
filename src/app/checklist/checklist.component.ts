@@ -169,7 +169,7 @@ export class ChecklistComponent implements OnInit {
     this.mandatoryFields = {};
     // Add sample related fields when checklist type is sample.
     if (this.checklistType === ChecklistType.sample) {
-      this.selectedChecklist.fieldGroups.push(this.getSampleSpecificFields())
+      this.selectedChecklist.fieldGroups.unshift(this.getSampleSpecificFields())
     }
     this.selectedChecklist.fieldGroups.forEach((fieldGroup) => {
       fieldGroup.fields.forEach((field) => {
@@ -492,7 +492,7 @@ export class ChecklistComponent implements OnInit {
         name: "sample_alias",
         label: "Sample alias (unique name)",
         description: "Unique name of the sample. If not selected system will auto generate an unique alias",
-        mandatory: "optional",
+        mandatory: "mandatory",
         textChoice: [],
         type: "TEXT_FIELD",
         units: []
@@ -501,7 +501,7 @@ export class ChecklistComponent implements OnInit {
         name: "sample_title",
         label: "Sample title",
         description: "Title of the sample",
-        mandatory: "optional",
+        mandatory: "mandatory",
         textChoice: [],
         type: "TEXT_FIELD",
         units: []
@@ -510,7 +510,7 @@ export class ChecklistComponent implements OnInit {
         name: "sample_description",
         label: "Sample description",
         description: "Description of the sample",
-        mandatory: "optional",
+        mandatory: "mandatory",
         textChoice: [],
         type: "TEXT_FIELD",
         units: []

@@ -1,7 +1,18 @@
 <form (ngSubmit)="login()" autocomplete="off">
-  <div fxLayout="row" fxLayoutAlign="center center" class="login-card-container">
+  <div fxLayout="row" fxLayoutAlign="left center" class="login-card-container">
+    <mat-card class="welcome-card mat-elevation-z0">
+      <mat-card-title>Welcome to the Webin submission service.</mat-card-title>
+      <div>
+        <mat-card-subtitle style="text-align: left;">
+          <p>You can use this service to submit sequence reads and to register metadata such as studies (projects) and
+            samples. To submit human data requiring controlled access please log in using EGA credentials.</p>
+
+          <p>New to Webin? Please register using the Register button.</p>
+        </mat-card-subtitle>
+      </div>
+    </mat-card>
     <mat-card class="login-card">
-      <mat-card-header>
+      <mat-card-header class="login-card">
         <mat-card-title>Login</mat-card-title>
         <mat-card-subtitle>Please provide your Webin credentials</mat-card-subtitle>
       </mat-card-header>

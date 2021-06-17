@@ -12,13 +12,19 @@
                 href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a>, raw sequences must
             be <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/upload.html">uploaded</a> in one of the
             supported <a href="https://ena-docs.readthedocs.io/en/latest/fileprep/reads.html">data formats</a> before
-            they can be submitted. The study and the sequenced samples must be pre-registered before the raw reads are
+            they can be submitted. The files can be uploaded using Webin <a
+                href="http://www.ebi.ac.uk/ena/upload/WebinUploader.jnlp">File Uploader</a>, FTP or Aspera</p>
+
+        <p class="mat-body"> The study and the sequenced samples must be pre-registered before the raw reads are
             submitted. Please note that each individual study and sample should be registered only once. You will be
             asked to provide information about the sequencing libraries and instruments. Please quote the study
             accession number (ERP*) when citing data submitted to ENA.</p>
 
         <p class="mat-body">Read <a href="https://ena-docs.readthedocs.io/en/latest/reads/interactive.html">here</a> for
             more information on how submit your raw reads to ENA.</p>
+
+        <p class="mat-body">A dedicated submission API for COVID-19 genomes is available <a
+                href="https://www.ebi.ac.uk/ena/submit/webin-cli">here</a></p>
 
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
             <mat-expansion-panel-header>
