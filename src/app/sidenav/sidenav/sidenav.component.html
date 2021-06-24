@@ -1,13 +1,11 @@
 <div class="sidenav-container" [class.sidenav-is-mobile]="mobileQuery.matches">
-  <header id="masthead-black-bar" class="clearfix masthead-black-bar">
-  </header>
   <mat-toolbar color="primary" class="sidenav-toolbar">
 
     <button *ngIf="isAuthenticated()" mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <div class="float-left inline-block padding-left-large" id="local-title">
-      <a routerLink="">
+      <a routerLink="" class="vf-link">
         <h4 style="color:white">
           {{getTitle()}}
         </h4>
