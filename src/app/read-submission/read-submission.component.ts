@@ -117,7 +117,7 @@ export class ReadSubmissionComponent implements OnInit {
     selectedChecklistObject["fields"] = this.selectedFieldsArray;
   }
 
-  uloadFile(form) {
+  uploadFile(form) {
     if (!this._webinRestService.isValidTabSubmissionFile(form.spreadSheet)) {
       this.util.showError(this, NonSubmissionResultDialogComponent, "The uploaded file is not valid for read submission. Please upload file in any of the following format: .csv, .tsv, .tab", "Submission Result")
     } else {
