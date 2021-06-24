@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
+import { NonSubmissionResultDialogComponent } from '../non-submission-result-dialog/non-submission-result-dialog.component';
 
 @Component({
   selector: 'app-read-submission',
@@ -116,23 +117,28 @@ export class ReadSubmissionComponent implements OnInit {
     selectedChecklistObject["fields"] = this.selectedFieldsArray;
   }
 
-  uploadFile(form) {
-    const formData: FormData = new FormData();
-    const observable: Observable<string> =
-      this._webinRestService.submitXml(
-        null,
-        null,
-        null,
-        null,
-        null,
-        form.spreadSheet,
-        null,
-        null,
-        null,
-        null,
-        this.centerName);
-    let redirectPath = "/read-submission";
-    this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath)
+  uloadFile(form) {
+    if (!this._webinRestService.isValidTabSubmissionFile(form.spreadSheet)) {
+      this.util.showError(this, NonSubmissionResultDialogComponent, "The uploaded file is not valid for read submission. Please upload file in any of the following format: .csv, .tsv, .tab", "Submission Result")
+    } else {
+      this._webinRestService.isValidTabSubmissionFile(form.spreadSheet);
+      const formData: FormData = new FormData();
+      const observable: Observable<string> =
+        this._webinRestService.submitXml(
+          null,
+          null,
+          null,
+          null,
+          null,
+          form.spreadSheet,
+          null,
+          null,
+          null,
+          null,
+          this.centerName);
+      let redirectPath = "/read-submission";
+      this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath)
+    }
   }
 
   isEga(): boolean {

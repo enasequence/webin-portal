@@ -343,4 +343,13 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this.postEmail(mail)
   }
 
+  isValidTabSubmissionFile(blob: Blob) {
+    var fileName = (blob as File).name;
+    // Check if the file is NOT in valid format.
+    if (!(fileName.endsWith("tab") || fileName.endsWith("tsv") || fileName.endsWith("csv"))) {
+      return false;
+    }
+    return true;
+  }
+
 }

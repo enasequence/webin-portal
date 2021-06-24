@@ -27,6 +27,7 @@ import { Observable } from 'rxjs';
 import { PopupMessageComponent } from '../popup-message/popup-message.component';
 import { UtilService } from '../util/Util-services'
 import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
+import { NonSubmissionResultDialogComponent } from '../non-submission-result-dialog/non-submission-result-dialog.component';
 
 interface BooleanFieldInterface {
   [key: string]: boolean;
@@ -467,22 +468,26 @@ export class ChecklistComponent implements OnInit {
   }
 
   uploadFile(form) {
-    const formData: FormData = new FormData();
-    const observable: Observable<string> =
-      this._webinRestService.submitXml(
-        null,
-        null,
-        null,
-        form.spreadSheet,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        form.value.centerName);
-    let redirectPath = "/app-checklist/sample/true"
-    this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath);
+    if (!this._webinRestService.isValidTabSubmissionFile(form.spreadSheet)) {
+      this.util.showError(this, NonSubmissionResultDialogComponent, "The uploaded file is not valid for sample submission. Please upload file in any of the following format: .csv, .tsv, .tab", "Submission Result")
+    } else {
+      const formData: FormData = new FormData();
+      const observable: Observable<string> =
+        this._webinRestService.submitXml(
+          null,
+          null,
+          null,
+          form.spreadSheet,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          form.value.centerName);
+      let redirectPath = "/app-checklist/sample/true"
+      this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath);
+    }
   }
 
   getSampleSpecificFields() {
