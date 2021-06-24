@@ -38,8 +38,31 @@
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
 
-  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="https://dev.ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all" />
+  <!-- VF CSS only -->
+  <link
+    rel="stylesheet"
+    href="https://assets.emblstatic.net/vf/v2.4.5/css/styles.css"
+  />
+
+  <!-- Fix this! Should not need this eventually. It's just to get VF wortking-->
+  <style>
+    #content {
+      width: 100%;
+      min-height: 100vh;
+    }
+    .vf-body {
+      max-width: 100%;
+    }
+  </style>
+
+
+<!--  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css" type="text/css" media="all" />-->
+  <link
+    rel="stylesheet"
+    href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css"
+    type="text/css"
+    media="all"
+  />
 
   <!-- Use this CSS file for any custom styling -->
   <!--
@@ -52,7 +75,7 @@
   -->
   <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
   <!-- also inform ES so we can host your colour palette file -->
-  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/theme-embl-petrol.css" type="text/css" media="all" />
+<!--  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/theme-embl-petrol.css" type="text/css" media="all" />-->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <!-- end CSS-->
 
@@ -70,30 +93,11 @@
 
 </head>
 
-<body class="level2"><!-- add any of your classes or IDs -->
+<body class="vf-body"><!-- add any of your classes or IDs -->
+
 <div id="skip-to">
   <a href="#content">Skip to main content</a>
 </div>
-<style type="text/css">
-  .masthead.compact-for-data .masthead-inner {
-    padding-top: .5rem;
-  }
-  .masthead.compact-for-data .masthead-inner div#local-title {
-    margin-bottom: 0;
-  }
-  .masthead.compact-for-data .masthead-inner h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0;
-    margin-top: -.5rem;
-  }
-  .masthead.compact-for-data .masthead-inner form {
-    margin-top: -1rem;
-  }
-  .masthead.compact-for-data .masthead-inner nav {
-    margin-top: .75rem;
-    clear: none;
-  }
-  </style>
 
   <app-header></app-header> <!-- ** Application specific content ** -->
 
@@ -131,6 +135,6 @@
   <script type="text/JavaScript">$(document).foundation();</script>
   <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 
- 
+
 </body>
 </html>
