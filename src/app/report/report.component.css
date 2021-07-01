@@ -42,5 +42,8 @@ mat-form-field.mat-form-field {
 input[readonly]{
   background-color:none;
 }
+.infoText:hover{
+  background: none;
+}
 
 

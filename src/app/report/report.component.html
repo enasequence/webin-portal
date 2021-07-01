@@ -5,39 +5,39 @@
   <mat-divider *ngIf="!embeded"></mat-divider>
   <div class="container">
     <p class="mat-body">
-      <span *ngIf="!embeded" class="app-primary-color">
+      <span class="infoText" *ngIf="!embeded" class="app-primary-color">
         <i class="material-icons">info</i>
       </span>
 
-      <span *ngIf="isMetadataReport() && !embeded">
+      <span class="infoText" *ngIf="isMetadataReport() && !embeded">
         Shows submitted {{ ReportType.getPluralName(reportType) }} and their release statuses. Search by accession or
         unique name, or simply click search to show most recent submissions. The results will show the most recently
         submitted {{ReportType.getPluralName(reportType)}}
         in your submission account.
       </span>
 
-      <span *ngIf="isFileReport() && !embeded">
+      <span class="infoText" *ngIf="isFileReport() && !embeded">
         Shows submitted {{ ReportType.getPluralName(reportType) }} and their archival statuses. Search by accession or
         other conditions, or simply click search to show most recent submissions. The results will show the most
         recently submitted {{ReportType.getPluralName(reportType)}}
         in your submission account.
       </span>
 
-      <span *ngIf="isProcessReport()">
+      <span class="infoText" *ngIf="isProcessReport()">
         Shows the {{ ReportType.getPluralName(reportType) }}. Search by accession or other conditions, or simply click
         search to show most recent submissions. The results will show the {{ReportType.getPluralName(reportType)}} in
         your submission account.
       </span>
 
-      <span *ngIf="reportType === ReportType.runProcess">
+      <span class="infoText" *ngIf="reportType === ReportType.runProcess">
       </span>
 
-      <span *ngIf="reportType === ReportType.analysisProcess">
+      <span class="infoText" *ngIf="reportType === ReportType.analysisProcess">
         The primary use of this report is to retrieve sequence accessions assigned as part of
         genome assembly, transcriptome assembly or sequence flat file submissions.
       </span>
 
-      <span *ngIf="reportType === ReportType.unsubmittedFiles">
+      <span class="infoText" *ngIf="reportType === ReportType.unsubmittedFiles">
         Shows uploaded files scheduled to be removed unless submitted by the expiration date.
         Uploaded files will only be included into the archive once they have been
         submitted either as runs or analyses. <b>Note that unlike all other reports, the
@@ -163,18 +163,6 @@
           </mat-form-field>
         </div>
 
-        <div class="app-field-padding">
-          <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
-            Search
-          </button>
-        </div>
-
-        <div class="app-field-padding">
-          <button mat-raised-button (click)="reset()">
-            Reset
-          </button>
-        </div>
-
         <div>
           <mat-form-field class="app-field-padding">
             <mat-select placeholder="Maximum rows" [(ngModel)]="rows">
@@ -198,6 +186,17 @@
           <mat-checkbox class="app-field-padding" [(ngModel)]="showAlias">
             Show unique name
           </mat-checkbox>
+        </div>
+        <div class="app-field-padding">
+          <button mat-raised-button color="accent" (click)="report()" [disabled]="active">
+            Search
+          </button>
+        </div>
+
+        <div class="app-field-padding">
+          <button mat-raised-button (click)="reset()">
+            Reset
+          </button>
         </div>
       </div>
     </mat-card>

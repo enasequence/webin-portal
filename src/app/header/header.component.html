@@ -1,3 +1,41 @@
-<!-- The below line is commented because it is added in sidenav-->
-<!--<header id="masthead-black-bar" class="clearfix masthead-black-bar">
-</header> -->
+<div fxFlex style="overflow: scroll;">
+    <header id="masthead-black-bar" class="clearfix masthead-black-bar">
+    </header>
+
+    <mat-toolbar color="primary" class="toolbar">
+
+        <mat-toolbar-row>
+
+            <div class="logo" routerLink="">
+                <img src="assets/ENA_Logo_notagline.png" alt="ENA Logo">
+            </div>
+            <div class="float-left inline-block padding-left-large" id="local-title">
+                <a routerLink="">
+                    <div class="title">
+                        {{getTitle()}}
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="linkDiv">
+                <nav class="float-right" style="margin-top: 0;">
+                    <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
+                        <li class="toolbar-text"><a href="https://www.ebi.ac.uk/ena/browser/support">Support <i
+                                    class="icon icon-generic" data-icon="x"></i></a></li>
+                        <li class="toolbar-text" *ngIf="isAuthenticated()"><a [routerLink]="['/accountInfo']">Manage
+                                Account
+
+                                <i class="material-icons accountIcon">account_box</i>
+                            </a></li>
+                        <li class="toolbar-text" *ngIf="isAuthenticated()"><a [routerLink]="['/login']"
+                                (click)='logout()'>Logout
+                                <span>({{getAccount()}})</span>
+                            </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+</div>

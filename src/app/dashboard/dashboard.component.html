@@ -6,7 +6,7 @@
 
 
   <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center end">
-    <ng-container *ngIf="!isEga()">
+    <!-- <ng-container *ngIf="!isEga()">
       <mat-card class="mat-card-css">
         <mat-card-subtitle>
           Account Management
@@ -18,7 +18,7 @@
           </span>
         </div>
       </mat-card>
-    </ng-container>
+    </ng-container> -->
 
     <ng-container>
       <mat-card class="mat-card-css">
@@ -26,19 +26,19 @@
         <div class="cat-element">
           <span [routerLink]="['/study']">
             <mat-icon class=note_add>add_box</mat-icon>
-            <p class="mat-small mat-caption">Register study (project)</p>
+            <p class="mat-small mat-caption">Register Study (Project)</p>
           </span>
           <span *ngIf="isSuperUser()" [routerLink]="['/umbrella']">
             <mat-icon class=note_add>add_box</mat-icon>
-            <p class="mat-small mat-caption">Register umbrella project</p>
+            <p class="mat-small mat-caption">Register Umbrella Project</p>
           </span>
           <span [routerLink]="['/app-checklist','sample',true]">
             <mat-icon class="note_add">add_box</mat-icon>
-            <p class="mat-small mat-caption">Register samples</p>
+            <p class="mat-small mat-caption">Register Samples</p>
           </span>
           <span *ngIf="!isEga()" [routerLink]="['/taxonomy']">
             <mat-icon class="note_add">add_box</mat-icon>
-            <p class="mat-small mat-caption">Register taxonomy</p>
+            <p class="mat-small mat-caption">Register Taxonomy</p>
           </span>
           <span *ngIf="isEga()" [routerLink]="['/dac']">
             <mat-icon class="note_add">add_box</mat-icon>
@@ -46,11 +46,11 @@
           </span>
           <span *ngIf="isEga()" [routerLink]="['/dac-policy']">
             <mat-icon class="note_add">add_box</mat-icon>
-            <p class="mat-small mat-caption">Register policy</p>
+            <p class="mat-small mat-caption">Register Policy</p>
           </span>
           <span *ngIf="isEga()" [routerLink]="['/dac-dataset']">
             <mat-icon class="note_add">add_box</mat-icon>
-            <p class="mat-small mat-caption">Register dataset</p>
+            <p class="mat-small mat-caption">Register Dataset</p>
           </span>
         </div>
       </mat-card>
@@ -63,15 +63,15 @@
         <div class="cat-element">
           <span [routerLink]="['/app-submit']">
             <mat-icon class="note_add">note_add</mat-icon>
-            <p class="mat-small mat-caption">Submit xml</p>
+            <p class="mat-small mat-caption">Submit XML</p>
           </span>
           <span [routerLink]="['/read-submission']">
             <mat-icon class="note_add">note_add</mat-icon>
-            <p class="mat-small mat-caption">Submit reads</p>
+            <p class="mat-small mat-caption">Submit Reads</p>
           </span>
           <span *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]">
             <mat-icon class="note_add">note_add</mat-icon>
-            <p class="mat-small mat-caption">Create annotated sequence spreadsheet</p>
+            <p class="mat-small mat-caption">Create Annotated Sequence Spreadsheet</p>
           </span>
         </div>
       </mat-card>

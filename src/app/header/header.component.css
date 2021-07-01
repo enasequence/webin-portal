@@ -1,11 +1,113 @@
 
 
-.homeDiv{
-    float: left;
-    padding: 0px 0px 0px 5px;
+.headerContent{
+  display: flex;
+  flex-direction: column;
 }
 
-.homeDiv mat-icon{
-    font-size: 33px;
+
+.toolbar {
+  display: flex ;
+  position: relative;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+  
+}
+
+#local-title{
+  padding-top: 14px;
+ 
+}
+
+
+.mat-toolbar.mat-primary {
+  background: #39a2a7c4;
+  color: white;
+}
+
+.mat-toolbar-single-row {
+  height: 50px;
+}
+
+
+nav ul.menu li:not(:last-child){
+  border-right: 1px solid #f8f8f8;
+}
+nav ul.menu li:hover{
+  background-color: rgb(71, 71, 71);
+} 
+nav ul.menu li a{
+  color: white;
+  border: none;
+}
+
+
+
+@media screen and (min-width: 980px) {
+  
+  .toolbar-text{
+    font-size: 18px;
+    font-weight: 500;  
+  }
+
+  .accountIcon{
+    font-size: 24px;
+    vertical-align: sub;
+    margin-top: -13px;
+  }
+
+  .linkDiv{
+    text-align: right;
+    width: 100%;
+  }
+  .logo{
+    width:25%;
+    min-width: 15%;
     cursor: pointer;
+  }
+  .title{
+    color:white;
+    width:25%;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  li.toolbar-text {
+    font-size: 12px;
+    font-weight: 300;  
+  }
+  .title{
+    font-size: 15px;
+  }
+  .accountIcon{
+    display: none;
+  }
+
+  .linkDiv{
+    width: 50%;
+  }
+  .logo{
+    width:15%;
+    cursor: pointer;
+  }
+  .title{
+    color:white;
+    width:25%;
+    
+  }
+  
+}
+
+@media screen and (max-width: 600px) {
+  .title{
+    display: none;
+  }
+  .logo{
+    width:25%;
+    cursor: pointer;
+  }
+  .linkDiv{
+    width: 75%;
+    text-align: right;
+  }
 }

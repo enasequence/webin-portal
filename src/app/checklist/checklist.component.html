@@ -11,7 +11,10 @@
 
   <div class="container">
     <mat-accordion>
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
+
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body"
+        [expanded]="getChecklistTypeParamValue()=='sequence'">
+
         <mat-expansion-panel-header>
           <mat-panel-title>
             <b *ngIf="checklistType === ChecklistType.sequence">Download spreadsheet template for annotated

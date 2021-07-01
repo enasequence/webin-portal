@@ -1,29 +1,8 @@
-<div class="sidenav-container" [class.sidenav-is-mobile]="mobileQuery.matches">
-  <header id="masthead-black-bar" class="clearfix masthead-black-bar">
-  </header>
-  <mat-toolbar color="primary" class="sidenav-toolbar">
+<div class="sidenav-container">
 
-    <button *ngIf="isAuthenticated()" mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <div class="float-left inline-block padding-left-large" id="local-title">
-      <a routerLink="">
-        <h4 style="color:white">
-          {{getTitle()}}
-        </h4>
-      </a> <!-- ** Application specific content ** -->
-    </div>
-    <nav class="float-left columns medium-6 large-6" style="margin-top: 0;">
-      <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
-        <li><a href="https://www.ebi.ac.uk/ena/browser/support">Support <i class="icon icon-generic"
-              data-icon="x"></i></a></li> <!-- ** Application specific content ** -->
-        <li *ngIf="isAuthenticated()"><a [routerLink]="['/login']" (click)='logout()'>Logout
-            <span>({{getAccount()}})</span> <!-- ** Application specific content ** -->
-          </a></li>
-      </ul>
-    </nav>
-  </mat-toolbar>
-
+  <button *ngIf="isAuthenticated()" mat-icon-button (click)="snav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
   <mat-sidenav-container class="sidenav-sidenav-container">
     <mat-sidenav #snav [mode]="over">
       <mat-nav-list>
@@ -31,14 +10,14 @@
           <mat-icon style="padding-right: 35px;">dashboard</mat-icon>
           <a class="full-width-dashboard">Dashboard</a>
         </mat-list-item>
-        <mat-list-item *ngIf="!isEga()" class="parent">
+        <mat-list-item *ngIf="!isEga()" class="parent" [ngStyle]="{'pointer-events':'none'}">
           <mat-icon style="padding-right: 35px;">account_box</mat-icon>
           <span class="full-width">Account Management</span>
         </mat-list-item>
         <div *ngIf="!isEga()" class="submenu" [ngClass]="{'expanded' : showSubmenu}">
           <a mat-list-item routerLink="/accountInfo" (click)="snav.toggle()">Edit Information</a>
         </div>
-        <mat-list-item class="parent">
+        <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
           <mat-icon style="padding-right: 35px;">add_box</mat-icon>
           <span class="full-width">Metadata Registration</span>
         </mat-list-item>
@@ -56,7 +35,7 @@
             <a mat-list-item [routerLink]="['/dac-dataset']" (click)="snav.toggle()">Register dataset</a>
           </ng-container>
         </div>
-        <mat-list-item class="parent">
+        <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
           <mat-icon style="padding-right: 35px;">note_add</mat-icon>
           <span class="full-width">Data Submissions</span>
         </mat-list-item>
@@ -66,7 +45,7 @@
           <a *ngIf="!isEga()" mat-list-item [routerLink]="['/app-checklist','sequence',true]"
             (click)="snav.toggle()">Create annotated sequence spreadsheet</a>
         </div>
-        <mat-list-item class="parent">
+        <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
           <mat-icon style="padding-right: 35px;">insert_chart</mat-icon>
           <span class="full-width">Reports</span>
         </mat-list-item>

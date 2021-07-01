@@ -35,4 +35,8 @@ export class HeaderComponent {
   getAccount() {
     return this._webinAuthenticationService.account;
   }
+
+  logout() {
+    this._webinAuthenticationService.logout();
+  }
 }

@@ -103,6 +103,7 @@ export class TaxonomyManagementComponent implements OnInit {
             err,
             'Taxonomy Registration'
           );
+          this.hideLoading();
         }
       );
     }
@@ -180,6 +181,7 @@ export class TaxonomyManagementComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       let source = result.source;
       if (result.event != "close") {
+        this.showLoading();
         let taxonRefObj = result.data;
         let tableArr =
           source === "Form" ? this.validFormArray : this.validSpreadsheetArray;
@@ -205,6 +207,7 @@ export class TaxonomyManagementComponent implements OnInit {
             })
             .indexOf(taxonRefObj.id);
           tableArr.splice(index, 1);
+          this.hideLoading();
         }
 
         if (typeof taxonRefObj != "undefined") {

@@ -2,13 +2,14 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 0;
+    top: 100px;
     bottom: 0;
     left: 0;
     right: 0;
   }
+
   
-  .sidenav-is-mobile .sidenav-toolbar {
+  .sidenav-is-mobile{
     position: fixed;
     /* Make sure the toolbar will stay on top of the content as it scrolls past. */
     z-index: 2;
@@ -33,22 +34,21 @@
        `<body>` to be our scrolling element for mobile layouts. */
     flex: 1 0 auto;
   }
-
-  #local-title{
-      margin-bottom: 0px;;
-  }
-  
-  nav ul.menu li:first-child{
-    border-right: 1px solid #f8f8f8;
-  }
-  nav ul.menu li:hover{
-    background-color: rgb(71, 71, 71);
-  } 
-  nav ul.menu li a{
-    color: white;
-    border: none;
-    font-size: 18px;
-    font-weight: 100;
+mat-sidenav{
+  padding-top: 50px;
+}
+  .mat-icon-button{
+    position:absolute;
+    z-index: 2;
+    top:0;
+    left:0;
+    margin: 10px;
+    min-width: 0;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    line-height: 40px;
+    border-radius: 50%;
     
   }
 
@@ -77,6 +77,8 @@
   .parent{
       background:#efefef;
   }
+  
+
   .full-width-dashboard:hover{
       outline: 0;
   }

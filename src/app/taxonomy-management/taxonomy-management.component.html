@@ -5,8 +5,25 @@
   <mat-divider></mat-divider>
   <div class="container">
     <mat-accordion>
-      <mat-expansion-panel #spreadExpansionPanel (opened)="panelOpenState = true;" (closed)="panelOpenState = false"
+      <mat-expansion-panel #formExpansionPanel (opened)="panelOpenState = true;" (closed)="panelOpenState = false"
         class="mat-body" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>Register using form</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        <a (click)="openDialog('Add',{'id':getId()},'Form')">Add taxa details<mat-icon>add_circle</mat-icon></a>
+        <br><br>
+        <div class="mat-vertical-content">
+          <ng-template [ngTemplateOutlet]="taxonTables"
+            [ngTemplateOutletContext]="{validDs:validFormDataSource,invalidDs:invalidFormDataSource,source:'Form'}">
+          </ng-template>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel #spreadExpansionPanel (opened)="panelOpenState = true;" (closed)="panelOpenState = false"
+        class="mat-body">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <b>Register using spreadsheet</b>
@@ -16,7 +33,7 @@
           <mat-expansion-panel (opened)="panelOpenState = true;" (closed)="panelOpenState = false" class="mat-body">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <b>Download spreadsheet to register taxons</b>
+                <b>Download spreadsheet to register taxa</b>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <p class="mat-body">
@@ -47,7 +64,7 @@
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <b>Upload filled spreadsheet to register taxons</b>
+                <b>Upload filled spreadsheet to register taxa</b>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-vertical-stepper #stepper>
@@ -59,7 +76,7 @@
                 </form>
 
               </mat-step>
-              <mat-step label="Register taxons">
+              <mat-step label="Register Taxa">
                 <br>
                 <ng-template [ngTemplateOutlet]="taxonTables"
                   [ngTemplateOutletContext]="{validDs:validSpreadsheetDataSource,invalidDs:invalidSpreadsheetDataSource,souece:'Spreadsheet'}">
@@ -70,20 +87,7 @@
         </mat-accordion>
       </mat-expansion-panel>
 
-      <mat-expansion-panel #formExpansionPanel (opened)="panelOpenState = true;" (closed)="panelOpenState = false"
-        class="mat-body">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <b>Register using form</b>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <br>
-        <a (click)="openDialog('Add',{'id':getId()},'Form')">Add taxa details<mat-icon>add_circle</mat-icon></a>
-        <br><br>
-        <ng-template [ngTemplateOutlet]="taxonTables"
-          [ngTemplateOutletContext]="{validDs:validFormDataSource,invalidDs:invalidFormDataSource,source:'Form'}">
-        </ng-template>
-      </mat-expansion-panel>
+
     </mat-accordion>
     <div class="centred" *ngIf="showLoadingFlag" style="height:70px;">
       <mat-spinner [diameter]="50" [strokeWidth]="5" style="margin:0 auto;">
