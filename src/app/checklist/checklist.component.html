@@ -66,7 +66,7 @@
           </div>
         </div>
 
-        <mat-vertical-stepper #stepper *ngIf="checklistGroupDataSource">
+        <mat-horizontal-stepper #stepper *ngIf="checklistGroupDataSource">
           <mat-step label="Select checklist group">
             <p>Please select a checklist group first.</p>
 
@@ -245,7 +245,7 @@
               <!-- <button mat-button matStepperNext (click)="">Done</button> -->
             </div>
           </mat-step>
-        </mat-vertical-stepper>
+        </mat-horizontal-stepper>
       </mat-expansion-panel>
       <mat-expansion-panel *ngIf="checklistType === ChecklistType.sample" (opened)="panelOpenState = true"
         (closed)="panelOpenState = false">

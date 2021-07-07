@@ -6,7 +6,7 @@
         <mat-divider></mat-divider>
         <div class="container">
             <mat-card>
-                <mat-vertical-stepper #stepper>
+                <mat-horizontal-stepper #stepper>
                     <mat-step label="Select an existing policy" *ngIf="action!='Edit'">
                         <app-report (selectedRecord)="getSelectedPolicy($event,stepper)"
                             [reportType]="ReportType.policies" [embDefaultSearch]="true" [embeded]="true">
@@ -66,7 +66,7 @@
                         </div>
                     </mat-step>
 
-                </mat-vertical-stepper>
+                </mat-horizontal-stepper>
             </mat-card>
 
         </div>

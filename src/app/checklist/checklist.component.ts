@@ -174,7 +174,7 @@ export class ChecklistComponent implements OnInit {
     }
     this.selectedChecklist.fieldGroups.forEach((fieldGroup) => {
       fieldGroup.fields.forEach((field) => {
-        this.selectedFields[field.label] = (field.mandatory === 'mandatory');
+        this.selectedFields[field.label] = (field.mandatory === 'mandatory' || field.mandatory === 'recommended');
         this.mandatoryFields[field.label] = (field.mandatory === 'mandatory');
       });
     });

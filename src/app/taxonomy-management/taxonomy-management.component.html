@@ -67,7 +67,7 @@
                 <b>Upload filled spreadsheet to register taxa</b>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-vertical-stepper #stepper>
+            <mat-horizontal-stepper #stepper>
               <mat-step label="Upload Spreadsheet">
                 <form (ngSubmit)="uploadFile(form,stepper)" #form="ngForm">
                   <input type="file" required name="spreadSheet" [(ngModel)]="form.spreadSheet" observeFiles />
@@ -82,7 +82,7 @@
                   [ngTemplateOutletContext]="{validDs:validSpreadsheetDataSource,invalidDs:invalidSpreadsheetDataSource,souece:'Spreadsheet'}">
                 </ng-template>
               </mat-step>
-            </mat-vertical-stepper>
+            </mat-horizontal-stepper>
           </mat-expansion-panel>
         </mat-accordion>
       </mat-expansion-panel>

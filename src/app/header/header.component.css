@@ -1,10 +1,7 @@
-
-
 .headerContent{
   display: flex;
   flex-direction: column;
 }
-
 
 .toolbar {
   display: flex ;
@@ -18,8 +15,6 @@
   padding-top: 14px;
  
 }
-
-
 .mat-toolbar.mat-primary {
   background: #70bdbd;
   color: white;
@@ -66,9 +61,10 @@ nav ul.menu li a{
     cursor: pointer;
   }
   .egalogo{
-    width:17%;
-    min-width: 12%;
+    width:16%;
+    min-width: 10%;
     cursor: pointer;
+    margin-left: 5px;
   }
   .title{
     color:white;
@@ -91,12 +87,15 @@ nav ul.menu li a{
   .linkDiv{
     width: 50%;
   }
-  .logo{
+  .enalogo{
     width:15%;
     cursor: pointer;
   }
 
-  
+  .egalogo{
+    width:10%;
+    cursor: pointer;
+  }
   .title{
     color:white;
     width:25%;
@@ -109,10 +108,15 @@ nav ul.menu li a{
   .title{
     display: none;
   }
-  .logo{
+  .enalogo{
     width:25%;
     cursor: pointer;
   }
+  .egalogo{
+    width:15%;
+    cursor:pointer
+  }
+
   .linkDiv{
     width: 75%;
     text-align: right;

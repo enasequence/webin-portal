@@ -13,6 +13,16 @@
                     <img src="assets/ega-logo.png" alt="ENA Logo">
                 </div>
             </ng-container>
+
+            <ng-container *ngIf="!isAuthenticated()">
+                <div class="enalogo" routerLink="">
+                    <img src="assets/ENA_Logo_notagline.png" alt="ENA Logo">
+                </div>
+                <div class="egalogo" routerLink="">
+                    <img src="assets/ega-logo.png" alt="ENA Logo">
+                </div>
+            </ng-container>
+
             <div class="float-left inline-block padding-left-large" id="local-title">
                 <a routerLink="">
                     <div class="title">
@@ -27,7 +37,8 @@
                     <ul id="local-nav" class="dropdown menu float-left" data-description="navigational">
                         <li class="toolbar-text"><a href="https://www.ebi.ac.uk/ena/browser/support">Support <i
                                     class="icon icon-generic" data-icon="x"></i></a></li>
-                        <li class="toolbar-text" *ngIf="isAuthenticated()"><a [routerLink]="['/accountInfo']">Manage
+                        <li class="toolbar-text" *ngIf="isAuthenticated() && !isEga()"><a
+                                [routerLink]="['/accountInfo']">Manage
                                 Account
 
                                 <i class="material-icons accountIcon">account_box</i>
