@@ -39,4 +39,8 @@ export class HeaderComponent {
   logout() {
     this._webinAuthenticationService.logout();
   }
+
+  isEga(): boolean {
+    return this._webinAuthenticationService.ega;
+  }
 }

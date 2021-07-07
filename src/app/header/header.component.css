@@ -60,9 +60,14 @@ nav ul.menu li a{
     text-align: right;
     width: 100%;
   }
-  .logo{
+  .enalogo{
     width:25%;
     min-width: 15%;
+    cursor: pointer;
+  }
+  .egalogo{
+    width:17%;
+    min-width: 12%;
     cursor: pointer;
   }
   .title{
@@ -90,6 +95,8 @@ nav ul.menu li a{
     width:15%;
     cursor: pointer;
   }
+
+  
   .title{
     color:white;
     width:25%;

@@ -5,10 +5,14 @@
     <mat-toolbar color="primary" class="toolbar">
 
         <mat-toolbar-row>
-
-            <div class="logo" routerLink="">
-                <img src="assets/ENA_Logo_notagline.png" alt="ENA Logo">
-            </div>
+            <ng-container *ngIf="isAuthenticated()">
+                <div *ngIf="!isEga()" class="enalogo" routerLink="">
+                    <img src="assets/ENA_Logo_notagline.png" alt="ENA Logo">
+                </div>
+                <div *ngIf="isEga()" class="egalogo" routerLink="">
+                    <img src="assets/ega-logo.png" alt="ENA Logo">
+                </div>
+            </ng-container>
             <div class="float-left inline-block padding-left-large" id="local-title">
                 <a routerLink="">
                     <div class="title">
