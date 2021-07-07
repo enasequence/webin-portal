@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 ARG configuration
 ARG basePath
-RUN node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration $configuration --base-href=$basePath
+RUN node --max_old_space_size=15360 node_modules/@angular/cli/bin/ng build --configuration $configuration --base-href=$basePath
 
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
