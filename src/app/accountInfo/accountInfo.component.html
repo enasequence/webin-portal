@@ -62,6 +62,8 @@
             </a>
           </div>
         </div>
+
+
       </mat-card>
 
       <mat-card class="mat-body">
@@ -114,11 +116,23 @@
           <!--<mat-error *ngIf="mainContact <= 0 ">
       Please enter atlease one primary contact to save the account.
    </mat-error>-->
+
         </div>
       </mat-card>
 
       <mat-card class="mat-body">
         <div class="row">
+          <mat-card-subtitle>No Sensitive Data</mat-card-subtitle>
+          <mat-checkbox matInput name="noEffectCheckbox" [(ngModel)]="noEffectCheckbox" style="padding-left: 20px"
+            [checked]="true" [disabled]="editMode">I
+            confirm that the data
+            submitted through this account is NOT sensitive,
+            restricted-access or human-identifiable.</mat-checkbox>
+        </div>
+      </mat-card>
+      <mat-card class="mat-body">
+        <div class="row">
+
           <mat-card-subtitle>Metagenomics Consent</mat-card-subtitle>
           <p>
             By keeping this box checked you give consent to the EBI Metagenomics
@@ -134,15 +148,15 @@
             this paper.
           </p>
           <mat-checkbox matInput name="metagenomicsConsented" [(ngModel)]="metagenomicsConsented"
-            style="padding-left: 20px">* I give consent and confirm that the data submitted through this
-            account is NOT sensitive, restricted-access or
-            human-identifiable:</mat-checkbox>
+            style="padding-left: 20px">I give consent that EBI MGnify team can analyse my pre-publication confidential
+            data.</mat-checkbox>
+
         </div>
       </mat-card>
     </div>
 
     <div style="text-align: Center">
-      <button mat-raised-button color="accent" [disabled]="f.invalid || mainContact <= 0">
+      <button mat-raised-button color="accent" [disabled]="f.invalid || mainContact <= 0 || noEffectCheckbox==false">
         Save
       </button>
       <button mat-raised-button style="margin-left: 5px" routerLink="">

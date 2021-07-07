@@ -49,6 +49,7 @@ export class AccountInfoComponent {
   ];
   metagenomeSubmitter = false;
   metagenomicsConsented = false;
+  noEffectCheckbox = false;
 
   /* Used for storing added emails, this will be used for validation */
   emails = [];
@@ -70,6 +71,7 @@ export class AccountInfoComponent {
     if (_webinAuthenticationService.authenticated) {
       this.loadUserInfo(_webinAuthenticationService.username);
       this.editMode = true;
+      this.noEffectCheckbox = true;
     }
   }
 
