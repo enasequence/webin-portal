@@ -186,9 +186,13 @@
     </div>
   </div>
   <br>
-  <!--<div style="text-align:Center" *ngIf="stepper.selectedIndex==1">-->
+  <!--<div style="text-align:Centener" *ngIf="stepper.selectedIndex==1">-->
   <div style="text-align:Center">
-    <button mat-raised-button color="accent" [disabled]="!taxonomySubmissionCheck(source)"
+    <div *ngIf="!isProductionEnv && taxonomySubmissionCheck(source)" style="padding: 30px;">
+      Your request is valid, but taxonomy requests are not supported in the test interface.
+      <br>
+    </div>
+    <button mat-raised-button color="accent" [disabled]="!isProductionEnv || !taxonomySubmissionCheck(source)"
       (click)=submitTaxonomyRequest(source)>Check and make taxonomy request </button>
     <button mat-raised-button style="margin-left: 5px;" routerLink="">Cancel</button>
   </div>

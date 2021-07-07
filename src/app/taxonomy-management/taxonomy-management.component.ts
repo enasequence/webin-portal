@@ -60,6 +60,7 @@ export class TaxonomyManagementComponent implements OnInit {
     "description",
     "message",
   ];
+  isProductionEnv = environment.production;
 
   constructor(
     private _webinRestService: WebinRestService,
@@ -188,6 +189,7 @@ export class TaxonomyManagementComponent implements OnInit {
 
         if (result.event === "Update") {
           this.updateTaxa(tableArr, taxonRefObj);
+          this.hideLoading();
         }
 
         if (result.event === "Add") {
@@ -198,6 +200,7 @@ export class TaxonomyManagementComponent implements OnInit {
             blob
           );
           this.handleServerResponse(observable, false);
+          this.hideLoading();
         }
 
         if (result.event === "Delete") {
@@ -264,6 +267,7 @@ export class TaxonomyManagementComponent implements OnInit {
   }
 
   submitTaxonomyRequest(source) {
+
     this.submissionAccount = JSON.parse(
       this._webinAuthService.getSubmissionAccount()
     );
