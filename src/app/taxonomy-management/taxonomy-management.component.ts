@@ -293,7 +293,7 @@ export class TaxonomyManagementComponent implements OnInit {
                 thisObj.util.showSuccess(
                   thisObj,
                   NonSubmissionResultDialogComponent,
-                  "Your request has been send to the ENA helpdesk.",
+                  "Your request has been sent to the ENA helpdesk.",
                   title,
                   redirect
                 );
