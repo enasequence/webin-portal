@@ -17,8 +17,10 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./header.component.css', '../../assets/ebi-vf-import.css'
+
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
 

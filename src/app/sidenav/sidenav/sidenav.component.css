@@ -1,11 +1,12 @@
 .sidenav-container {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: rleative;
     top: 100px;
     bottom: 0;
     left: 0;
     right: 0;
+    display: block;
   }
 
   
@@ -40,7 +41,7 @@ mat-sidenav{
   .mat-icon-button{
     position:absolute;
     z-index: 2;
-    top:0;
+    top:96px;
     left:0;
     margin: 10px;
     min-width: 0;
