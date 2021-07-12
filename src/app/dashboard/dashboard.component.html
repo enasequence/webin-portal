@@ -67,6 +67,10 @@
                 <mat-icon class="insert_chart icon-yellow">insert_chart</mat-icon>
                 <p class="mat-small mat-caption">Studies Report</p>
               </span>
+              <span *ngIf="isSuperUser()" [routerLink]="['/report',ReportType.umbrellaProjects,{defaultSearch: true}]">
+                <mat-icon class="insert_chart icon-yellow">insert_chart</mat-icon>
+                <p class="mat-small mat-caption">Umbrella Project Report</p>
+              </span>
             </div>
           </div>
         </mat-card>
