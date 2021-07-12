@@ -361,13 +361,11 @@ export class ReportComponent implements OnInit {
     this.displayedColumns = [
       'File name',
       'File size',
-      'Upload date',
       'Expiration date'
     ];
     this.displayedColumnsCallback = {
       'File name': this.fileNameColumnCallback.bind(this),
       'File size': this.fileSizeColumnCallback.bind(this),
-      'Upload date': this.uploadDateColumnCallback.bind(this),
       'Expiration date': this.expirationDateColumnCallback.bind(this)
     };
   }
