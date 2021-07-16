@@ -9,9 +9,10 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, Input, ViewEncapsulation, OnInit, Optional, Inject, ViewChild, QueryList, ElementRef, ViewChildren } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatExpansionPanel } from '@angular/material';
+
 import { saveAs } from 'file-saver';
 import { retry, mergeMap, map } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
@@ -28,9 +29,16 @@ import { PopupMessageComponent } from '../popup-message/popup-message.component'
 import { UtilService } from '../util/Util-services'
 import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
 import { NonSubmissionResultDialogComponent } from '../non-submission-result-dialog/non-submission-result-dialog.component';
+import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
+
 
 interface BooleanFieldInterface {
   [key: string]: boolean;
+}
+
+export interface GroupBy {
+  fieldType: string;
+  isGroupBy: boolean;
 }
 
 @Component({
@@ -39,10 +47,19 @@ interface BooleanFieldInterface {
   styleUrls: ['./checklist.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+
+
 export class ChecklistComponent implements OnInit {
+
+  @ViewChild('customFieldsPanel', { static: false }) customFieldsPanel: MatExpansionPanel;
+  //@ViewChild(MatExpansionPanel, { static: false }) customFieldsPanel: MatExpansionPanel;
   @Input() checklistType: ChecklistType;
   @Input() init = true;
   panelOpenState: boolean = false;
+
+  //@ViewChildren(MatExpansionPanel) matExpansionPanelQueryList: QueryList<MatExpansionPanel>;
+  //@ViewChild('itemDescInput', { static: true }) itemDescInput: ElementRef;
+
 
   ChecklistType = ChecklistType;   // Allows use in template
 
@@ -61,7 +78,20 @@ export class ChecklistComponent implements OnInit {
   active: boolean;
   dataError: string;
   spreadSheet: File;
+  checklistFields = [];
 
+  mandatoryFieldsDataSource: MatTableDataSource<any>;
+  recommendedFieldsDataSource: MatTableDataSource<any>;
+  optionalFieldsDataSource: MatTableDataSource<any>;
+  customFields: ChecklistFieldInterface;
+  customFieldsDataSource: MatTableDataSource<any>;
+  fieldsDisplayedColumns: string[] = [
+    "selection",
+    "fieldName",
+    "validation",
+    "units",
+  ];
+  showDescription = false;
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinReportService: WebinReportService,
@@ -69,7 +99,9 @@ export class ChecklistComponent implements OnInit {
     private _route: ActivatedRoute,
     public dialog: MatDialog,
     private util: UtilService,
-    private router: Router) {
+    private router: Router,
+
+  ) {
     if (_route) {
       switch (_route.snapshot.data.checklistType) {
         case 'sample': {
@@ -95,8 +127,10 @@ export class ChecklistComponent implements OnInit {
       this.initChecklists();
     }
 
-
-
+    // Adding fieldLabel only for sequence.
+    if (this.checklistType === ChecklistType.sequence) {
+      this.insertAt(this.fieldsDisplayedColumns, 1, "fieldLabel");
+    }
   }
 
   // field group restriction type (not supported for spreadsheets)
@@ -178,6 +212,30 @@ export class ChecklistComponent implements OnInit {
         this.mandatoryFields[field.label] = (field.mandatory === 'mandatory');
       });
     });
+
+
+    /** Code for checklist table view */
+
+    let mandatoryChecklistFields = [];
+    let recommendedChecklistFields = [];
+    let optionalChecklistFields = [];
+    this.selectedChecklist.fieldGroups.forEach((fieldGroup) => {
+      this.getValidFields(fieldGroup, 'mandatory') ? mandatoryChecklistFields = mandatoryChecklistFields.concat(this.getValidFields(fieldGroup, 'mandatory')) : "do nothing";
+      this.getValidFields(fieldGroup, 'recommended') ? recommendedChecklistFields = recommendedChecklistFields.concat(this.getValidFields(fieldGroup, 'recommended')) : "do nothing";
+      this.getValidFields(fieldGroup, 'optional') ? optionalChecklistFields = optionalChecklistFields.concat(this.getValidFields(fieldGroup, 'optional')) : "do nothing";
+    });
+
+    /** Spilit the  fields based on their type */
+    this.mandatoryFieldsDataSource = new MatTableDataSource<any>(mandatoryChecklistFields);
+    this.recommendedFieldsDataSource = new MatTableDataSource<any>(recommendedChecklistFields);
+    this.optionalFieldsDataSource = new MatTableDataSource<any>(optionalChecklistFields);
+
+
+    // Setting filterPredicate that is used for filtering.
+    this.mandatoryFieldsDataSource.filterPredicate = this.getPredicate();
+    this.recommendedFieldsDataSource.filterPredicate = this.getPredicate();
+    this.optionalFieldsDataSource.filterPredicate = this.getPredicate();
+
     stepper.next();
   }
 
@@ -467,6 +525,91 @@ export class ChecklistComponent implements OnInit {
 
   }
 
+  getPredicate() {
+    return (data: ChecklistFieldInterface, filter: string) => data.label.trim().toLowerCase().indexOf(filter.trim().toLowerCase()) != -1;
+  }
+
+  applyFilter(filterValue: string, accordion: any) {
+    // If the filter text is empty close all expansion panel.
+    if (filterValue != "") {
+      accordion.multi = true;
+      accordion.openAll();
+      filterValue = filterValue.trim();
+      filterValue = filterValue.toLowerCase();
+    } else {
+      // Open all expansions while filter text is not empty.
+      accordion.closeAll();
+      accordion.multi = false;
+    }
+
+    this.mandatoryFieldsDataSource.filter = filterValue;
+    this.recommendedFieldsDataSource.filter = filterValue;
+    this.optionalFieldsDataSource.filter = filterValue;
+    this.customFieldsDataSource.filter = filterValue;
+  }
+
+  addCustomField(customField: string, customText, accordion, form) {
+
+    if (!form.invalid) {
+      this.customFields = this.getCustomField(customField);
+      this.selectedFields[customField] = true;
+
+      // Get custom field group if already added to selectedChecklist.fieldGroups
+      let customFieldGroup: ChecklistFieldGroupInterface = this.selectedChecklist.fieldGroups.filter(fieldGroup => fieldGroup.name === "custom_fields")[0];
+      if (customFieldGroup) {
+        customFieldGroup.fields.push(this.customFields);
+      } else {
+        // create new custom field group
+        customFieldGroup = { "name": "custom_fields", fields: [this.customFields] };
+        this.selectedChecklist.fieldGroups.push(customFieldGroup);
+      }
+
+      this.customFieldsDataSource = new MatTableDataSource<any>(customFieldGroup.fields);
+      this.customFieldsDataSource.filterPredicate = this.getPredicate();
+      this.showSuccessPopup("Successfully added custom field '" + customField + "'. The field can be viewed in custom fields grouping below.", "Custom field");
+      customText.value = "";
+
+      //opening custom panal is not woeking as expected so closing all the panels after adding custom field. 
+      accordion.multi = true;
+      accordion.closeAll();
+      accordion.multi = false;
+      //this.customFieldsPanel.open();
+    }
+  }
+
+  showSuccessPopup(message, title) {
+    const dialogRef = this.dialog.open(PopupMessageComponent, {
+      width: '500px',
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: { 'action': 'SuccessAndClose', 'message': message, 'title': title }
+    });
+  }
+
+  getValidFields(fieldGroup, fieldType) {
+    let fieldArr = fieldGroup.fields.filter(field => field.mandatory === fieldType);
+    if (fieldArr && fieldArr.length > 0) {
+      return fieldArr;
+    }
+  }
+
+  addDescription(isChecked) {
+
+    if (isChecked) {
+      this.fieldsDisplayedColumns.push("description");
+      this.showDescription = true;
+    } else {
+      this.fieldsDisplayedColumns.pop()
+      this.showDescription = false;
+    }
+  }
+
+  // The below method is used to insert value to exact position of an array.
+  insertAt(array, index, elementsArray) {
+    array.splice(index, 0, elementsArray);
+  }
+
+
   uploadFile(form) {
     if (!this._webinRestService.isValidTabSubmissionFile(form.spreadSheet)) {
       this.util.showError(this, NonSubmissionResultDialogComponent, "The uploaded file is not valid for sample submission. Please upload file in any of the following format: .csv, .tsv, .tab", "Submission Result")
@@ -490,6 +633,18 @@ export class ChecklistComponent implements OnInit {
     }
   }
 
+  getCustomField(customFieldValue) {
+    return {
+      "name": customFieldValue,
+      "label": customFieldValue,
+      "type": "TEXT_FIELD",
+      "mandatory": "recommended",
+      "description": "custom field",
+      "units": [],
+      "textChoice": []
+    };
+  }
+
   getSampleSpecificFields() {
     let sampleSpecificFields = {
       name: "Sample Details",
@@ -500,7 +655,8 @@ export class ChecklistComponent implements OnInit {
         mandatory: "mandatory",
         textChoice: [],
         type: "TEXT_FIELD",
-        units: []
+        units: [],
+        isVisible: true
       },
       {
         name: "sample_title",
@@ -509,7 +665,8 @@ export class ChecklistComponent implements OnInit {
         mandatory: "mandatory",
         textChoice: [],
         type: "TEXT_FIELD",
-        units: []
+        units: [],
+        isVisible: true
       },
       {
         name: "sample_description",
@@ -518,7 +675,8 @@ export class ChecklistComponent implements OnInit {
         mandatory: "mandatory",
         textChoice: [],
         type: "TEXT_FIELD",
-        units: []
+        units: [],
+        isVisible: true
       }]
     }
     return sampleSpecificFields;

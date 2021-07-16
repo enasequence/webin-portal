@@ -89,19 +89,21 @@
             (click)="snav.toggle()">Unsubmitted Files Report</a>
 
         </div>
-        <mat-list-item *ngIf="!isEga()" class="parent" [ngStyle]="{'pointer-events':'none'}">
+        <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
           <mat-icon style="padding-right: 35px;">add_box</mat-icon>
           <span class="full-width"> Data Analyses</span>
         </mat-list-item>
-        <div class="submenu" *ngIf="!isEga()" [ngClass]="{'expanded' : showSubmenu}">
-          <a mat-list-item [routerLink]="['/app-checklist','sequence',true]" (click)="snav.toggle()">Generate annotated
+        <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+          <a mat-list-item *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]"
+            (click)="snav.toggle()">Generate annotated
             sequence spreadsheet</a>
-          <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML (advanced)</a>
+          <a mat-list-item *ngIf="!isEga()" [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML
+            (advanced)</a>
           <a mat-list-item [routerLink]="['/report',ReportType.analyses,{defaultSearch: true}]"
             (click)="snav.toggle()">Analyses Report</a>
-          <a mat-list-item [routerLink]="['/report',ReportType.analysisFiles,{defaultSearch: true}]"
+          <a mat-list-item *ngIf="!isEga()" [routerLink]="['/report',ReportType.analysisFiles,{defaultSearch: true}]"
             (click)="snav.toggle()">Analysis File Report</a>
-          <a mat-list-item [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]"
+          <a mat-list-item *ngIf="!isEga()" [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]"
             (click)="snav.toggle()">Analysis Processing Report</a>
         </div>
 

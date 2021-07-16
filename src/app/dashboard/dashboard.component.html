@@ -42,8 +42,6 @@
       </mat-card>
 
 
-
-
       <ng-container>
         <mat-card class="mat-elevation-z8 mat-card-css">
           <mat-card-title class="cardTitle"> Studies (Projects) </mat-card-title>
@@ -190,20 +188,21 @@
       </ng-container>
 
       <ng-container>
-        <mat-card *ngIf="!isEga()" class="mat-elevation-z8 mat-card-css">
+        <mat-card class="mat-elevation-z8 mat-card-css">
           <mat-card-title class="cardTitle"> Data Analyses</mat-card-title>
-          <mat-card-subtitle class="cardSubTitle">Assemblies and annotated sequences must be submitted with <a
-              href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a>. Other analyses can be
+          <mat-card-subtitle class="cardSubTitle" *ngIf="!isEga()">Assemblies and annotated sequences must be submitted
+            with <a href="https://ena-docs.readthedocs.io/en/latest/reads/webin-cli.html">Webin-CLI</a>. Other analyses
+            can be
             submitted as XMLs.
           </mat-card-subtitle>
           <div class="cat-element">
             <div class="cat-element">
               <div class="cat-column1">
-                <span [routerLink]="['/app-checklist','sequence',true]">
+                <span *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]">
                   <mat-icon class="note_add icon-blue">add_box</mat-icon>
                   <p class="mat-small mat-caption">Generate Annotated Sequence Spreadsheet</p>
                 </span>
-                <span [routerLink]="['/app-submit']">
+                <span *ngIf="!isEga()" [routerLink]="['/app-submit']">
                   <mat-icon class="note_add icon-blue">add_box</mat-icon>
                   <p class="mat-small mat-caption">Submit XMLs (advanced)</p>
                 </span>
@@ -220,7 +219,7 @@
                     <p class="mat-small mat-caption">Analysis File Report</p>
                   </span>
 
-                  <span [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]">
+                  <span *ngIf="!isEga()" [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]">
                     <mat-icon class="insert_chart icon-blue">insert_chart</mat-icon>
                     <p class="mat-small mat-caption">Analysis Processing Report</p>
                   </span>

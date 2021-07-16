@@ -138,70 +138,100 @@
                 You have selected <b>{{ selectedChecklist.name }}</b>. Please select the checklist fields below.
               </p>
 
-              <div class="mat-elevation-z8">
-                <mat-accordion>
-                  <mat-expansion-panel *ngFor="let fieldGroup of selectedChecklist.fieldGroups">
+              <!-- Show checklist fields in table-->
+              <mat-card class="mat-body">
+                <div class="tableOperations">
+                  <!-- form for custom field validation. -->
+                  <form #cf="ngForm">
+                    <mat-form-field class="app-field-padding">
+                      <input matInput placeholder="Add custom field" [(ngModel)]="customField"
+                        pattern="^[A-Za-z0-9_-]*$" name="customField" #customText />
+                      <mat-error *ngIf="cf.controls['customField']?.errors">
+                        Alphanumeric charecters with _ and - are allowed.
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-icon class=" app-primary-color addIcon" [disabled]="cf.invalid"
+                      (click)="addCustomField(customField,customText,accordion,cf)">add_box
+                    </mat-icon>
+
+                    <span style=" margin-left: 30px;">
+                      Show Description <mat-checkbox matInput [(ngModel)]="isChecked"
+                        (change)="addDescription(isChecked)" style="padding-left: 20px" name="showDesc">
+                      </mat-checkbox>
+                    </span>
+
+                    <span class="searchSpan">
+                      <mat-form-field class="app-field-padding">
+                        <input matInput type="filter" [(ngModel)]="filter" placeholder="Search fields"
+                          (keyup)="applyFilter($event.target.value,accordion)" name="filter" />
+                      </mat-form-field>
+                      <mat-icon class=" app-primary-color addIcon" (click)="applyFilter(filter)">pageview</mat-icon>
+                    </span>
+                  </form>
+                </div>
+                <!-- Field accordions -->
+                <mat-accordion [multi]="false" #accordion="matAccordion">
+
+                  <!-- Mandatory fields-->
+                  <mat-expansion-panel #firstPanel *ngIf="mandatoryFieldsDataSource.data.length > 0"
+                    (opened)=" panelOpenState=true" (closed)="panelOpenState = false" class="mat-body"
+                    [expanded]="true">
+
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        {{ fieldGroup.name
-                        }}<span fxHide fxShow.gt-sm>
-                          {{ getSelectedFieldsDisplayText(fieldGroup) }}</span>
+                        <b>Mandatory Fields</b>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
+                    <ng-template *ngIf="mandatoryFieldsDataSource" [ngTemplateOutlet]="checklistFieldsTable"
+                      [ngTemplateOutletContext]="{datasource:mandatoryFieldsDataSource}">
+                    </ng-template>
+                  </mat-expansion-panel>
+                  <!-- Recommended Fields -->
+                  <mat-expansion-panel *ngIf="recommendedFieldsDataSource.data.length > 0"
+                    (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body">
 
-                    <div *ngFor="let field of fieldGroup.fields">
-                      <mat-checkbox [(ngModel)]="selectedFields[field.label]" [disabled]="mandatoryFields[field.label]">
-                        {{
-                        field.label
-                        }}
-                      </mat-checkbox>
-                      <p fxHide fxShow.gt-sm>
-                        <i>{{ field.mandatory }}
-                          {{ getFieldTypeDisplayText(field) }}</i>
-                      </p>
-                      <!--
-            <p *ngIf="checklistType === ChecklistType.sequence">
-              {{field.name}}
-            </p>
-            -->
-                      <p>
-                        {{ field.description }}
-                      </p>
-                      <div fxLayout="row">
-                        <div fxFlex="200px">
-                          <p *ngIf="field.units.length > 0">
-                            <mat-select class="checklist-restriction" placeholder="Permitted units">
-                              <mat-option *ngFor="let unit of field.units" [value]="unit" disabled>
-                                {{ unit }}
-                              </mat-option>
-                            </mat-select>
-                          </p>
-                          <p *ngIf="field.regexValue" class="checklist-restriction">
-                            <mat-select class="checklist-restriction" placeholder="Regular expression">
-                              <mat-option disabled>
-                                {{ field.regexValue }}
-                              </mat-option>
-                            </mat-select>
-                          </p>
-                          <p *ngIf="
-                              field.textChoice && field.textChoice.length > 0
-                            ">
-                            <mat-select class="checklist-restriction" placeholder="Permitted values">
-                              <mat-option *ngFor="let textChoice of field.textChoice" [value]="textChoice" disabled>
-                                {{ textChoice }}
-                              </mat-option>
-                            </mat-select>
-                          </p>
-                          <p *ngIf="field.ontologyId" class="checklist-restriction">
-                            Permitted ontology: {{ field.ontologyId }}
-                          </p>
-                        </div>
-                        <div fxFlex></div>
-                      </div>
-                    </div>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <b>Recommended Fields</b>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-template [ngTemplateOutlet]="checklistFieldsTable"
+                      [ngTemplateOutletContext]="{datasource:recommendedFieldsDataSource}">
+                    </ng-template>
+                  </mat-expansion-panel>
+
+                  <!-- Optional Fields -->
+                  <mat-expansion-panel *ngIf="optionalFieldsDataSource.data.length > 0" (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false" class="mat-body">
+
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <b>Optional Fields</b>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-template [ngTemplateOutlet]="checklistFieldsTable"
+                      [ngTemplateOutletContext]="{datasource:optionalFieldsDataSource}">
+                    </ng-template>
+                  </mat-expansion-panel>
+
+                  <!-- Custom Fields -->
+                  <mat-expansion-panel *ngIf="customFieldsDataSource && customFieldsDataSource.data.length > 0"
+                    (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-body"
+                    #customFieldsPanel [hideToggle]="true">
+
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <b>Custom Fields</b>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-template [ngTemplateOutlet]="checklistFieldsTable"
+                      [ngTemplateOutletContext]="{datasource:customFieldsDataSource}">
+                    </ng-template>
                   </mat-expansion-panel>
                 </mat-accordion>
-              </div>
+                <!--  Field accordions -->
+
+              </mat-card>
             </div>
             <div>
               <button mat-button matStepperPrevious>Back</button>
@@ -286,3 +316,86 @@
 
   </div>
 </div>
+
+
+<!-- Template for displaying checklist-->
+<ng-template #checklistFieldsTable let-datasource="datasource">
+  <table mat-table class="mat-body" *ngIf="datasource" #table [dataSource]="datasource" class="mat-elevation-z8"
+    multiTemplateDataRows>
+    <ng-container matColumnDef="selection">
+      <th mat-header-cell *matHeaderCellDef class="w-5">Selection</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox *ngIf="element.mandatory=='mandatory'" matInput [checked]="true" disabled
+          [(ngModel)]="selectedFields[element.label]" style="padding-left: 20px"></mat-checkbox>
+        <mat-checkbox *ngIf="element.mandatory=='recommended'" matInput [checked]="true"
+          [(ngModel)]="selectedFields[element.label]" style="padding-left: 20px">
+        </mat-checkbox>
+        <mat-checkbox *ngIf="element.mandatory=='optional'" matInput [checked]="false"
+          [(ngModel)]="selectedFields[element.label]" style="padding-left: 20px">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container *ngIf="checklistType === ChecklistType.sequence" matColumnDef="fieldLabel">
+      <th mat-header-cell *matHeaderCellDef class="w-10">Field Label</th>
+      <td mat-cell *matCellDef="let element">{{ element.label }}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fieldName">
+      <th mat-header-cell *matHeaderCellDef class="w-10">Field Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="validation">
+      <th mat-header-cell *matHeaderCellDef class="w-20">Validation</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-select class="w-70" *ngIf="element.type=='TEXT_CHOICE_FIELD'" class="checklist-restriction"
+          placeholder="Permitted values">
+          <mat-option *ngFor="let textChoice of element.textChoice" [value]="textChoice" disabled>
+            {{ textChoice }}
+          </mat-option>
+        </mat-select>
+
+        <mat-select *ngIf="element.regexValue" class="checklist-restriction" placeholder="Regular expression">
+          <mat-option disabled>
+            {{ element.regexValue }}
+          </mat-option>
+        </mat-select>
+
+        <p *ngIf="element.type=='TEXT_FIELD' && !element.regexValue">
+          Text field
+        </p>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="units">
+      <th mat-header-cell *matHeaderCellDef class="w-5">Units</th>
+      <td mat-cell *matCellDef="let element">
+        <p *ngIf="element.units && element.units.length > 0">
+          {{ element.units }}
+        </p>
+
+        <p *ngIf="!element.units || element.units.length <= 0">
+          None
+        </p>
+      </td>
+    </ng-container>
+
+    <ng-container *ngIf="showDescription" matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef class="w-30">Description</th>
+      <td mat-cell *matCellDef="let element">{{ element.description }}
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="fieldsDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: fieldsDisplayedColumns; when: isVisible"></tr>
+
+
+  </table>
+</ng-template>

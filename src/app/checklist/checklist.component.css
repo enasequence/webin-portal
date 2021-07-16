@@ -49,3 +49,61 @@ mat-card {
 .mat-row:hover {
   background-color: #f0f5f5;
 }
+
+.w-5{
+  width: 5%;
+}
+.w-10{
+  width: 10%;
+}
+
+.w-20{
+  width: 20%;
+}
+
+.w-30{
+  width: 30%;
+}
+
+.w-70{
+  width: 70%;
+}
+mat-select{
+  width: 70% !important;
+}
+
+.table {
+  background: white;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.mat-header-cell{
+  font-weight: bold;
+    font-size: 14px;
+    color: #000000c7;
+}
+
+.mat-option-text {
+  overflow: auto !important;
+  text-overflow: unset !important;
+}
+.infoText{
+  float: right;
+    margin-right: 32px;
+    cursor: pointer;
+}
+
+.addIcon{
+  font-size: 34px;
+  padding-top: 0px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.searchSpan{
+  float: right;
+    margin-right: 10px;
+}
