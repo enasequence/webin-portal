@@ -13,11 +13,12 @@
 <br>
 
 <div style="text-align:center" *ngIf="action==='Success'">
-    <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()" routerLink="">Ok</button>
+    <button type="button" mat-raised-button color="primary" style="margin-left: 5px;" (click)="closePopup()"
+        routerLink="">Ok</button>
 </div>
 
 <div style="text-align:center" *ngIf="action==='SuccessAndClose'">
-    <button type="button" mat-raised-button style="margin-left: 5px;" (click)="closePopup()">Ok</button>
+    <button type="button" mat-raised-button color="primary" style="margin-left: 5px;" (click)="closePopup()">Ok</button>
 </div>
 
 <div style="text-align:center" *ngIf="action==='Error'">

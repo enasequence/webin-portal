@@ -4,7 +4,7 @@ import { WebinReportService } from '../webin-report.service';
 import { ChecklistComponent } from '../checklist/checklist.component';
 import { UtilService } from '../util/Util-services'
 import { retry, mergeMap } from 'rxjs/operators';
-import { MatStepper, MatDialog } from '@angular/material';
+import { MatStepper, MatDialog, MatTableDataSource } from '@angular/material';
 import { WebinRestService } from '../webin-rest.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -24,11 +24,23 @@ export class ReadSubmissionComponent implements OnInit {
   selectedStudy: string;
   readFileDetails = {};
   selectedFieldsArray = [];
+  selectedFieldDatasource: MatTableDataSource<any>;
+  mandatoryFieldDatasource: MatTableDataSource<any>;
+  optionalFieldDatasource: MatTableDataSource<any>;
+  customFieldDatasource: MatTableDataSource<any>;
+  customFields: any;
+  fieldsDisplayedColumns: string[] = [
+    "selection",
+    "fieldName",
+    "fieldLabel",
+    "permittedValue"
+  ];
   mandatoryFields = {};
   selectedFieldType: string;
   selectedFieldName: string;
   fieldType = {};
   centerName: String;
+  showDescription = false;
 
   constructor(private _webinReportService: WebinReportService,
     private util: UtilService,
@@ -54,7 +66,7 @@ export class ReadSubmissionComponent implements OnInit {
       });
   }
 
-  selectFileType(fieldType, name) {
+  selectFileType(fieldType, name, stepper) {
     this.selectedFieldsArray = [];
     this.selectedFieldType = fieldType;
     this.selectedFieldName = name
@@ -65,9 +77,94 @@ export class ReadSubmissionComponent implements OnInit {
             this.selectedFieldsArray.push(field);
           }
         })
+        this.mandatoryFieldDatasource = new MatTableDataSource<any>(fieldType.fields.filter(field => field.mandatory));
+        this.optionalFieldDatasource = new MatTableDataSource<any>(fieldType.fields.filter(field => !field.mandatory));
+
+        // Setting filterPredicate that is used for filtering.
+        this.mandatoryFieldDatasource.filterPredicate = this.getPredicate();
+        this.optionalFieldDatasource.filterPredicate = this.getPredicate();
+
+
 
       }
     });
+    stepper.next();
+  }
+
+  getPredicate() {
+    return (data: any, filter: string) => data.label.trim().toLowerCase().indexOf(filter.trim().toLowerCase()) != -1;
+  }
+
+  applyFilter(filterValue: string, accordion: any) {
+    // If the filter text is empty close all expansion panel.
+    if (filterValue != "") {
+      accordion.multi = true;
+      accordion.openAll();
+      filterValue = filterValue.trim();
+      filterValue = filterValue.toLowerCase();
+    } else {
+      // Open all expansions while filter text is not empty.
+      accordion.closeAll();
+      accordion.multi = false;
+    }
+
+    this.mandatoryFieldDatasource.filter = filterValue;
+    this.optionalFieldDatasource.filter = filterValue;
+    this.optionalFieldDatasource.filter = filterValue;
+  }
+
+  /** Below lines must be removed if custom fields are not needed for reads */
+
+  /*addCustomField(customField: string, customText, accordion, form) {
+
+     if (!form.invalid) {
+       this.customFields = this.getCustomField(customField);
+       this.selectedFields[customField] = true;
+ 
+       // Get custom field group if already added to selectedChecklist.fieldGroups
+       let customFieldGroup: any = this.selectedChecklist.fieldGroups.filter(fieldGroup => fieldGroup.name === "custom_fields")[0];
+       if (customFieldGroup) {
+         customFieldGroup.fields.push(this.customFields);
+       } else {
+         // create new custom field group
+         customFieldGroup = { "name": "custom_fields", fields: [this.customFields] };
+         this.selectedChecklist.fieldGroups.push(customFieldGroup);
+       }
+ 
+       this.customFieldsDataSource = new MatTableDataSource<any>(customFieldGroup.fields);
+       this.customFieldsDataSource.filterPredicate = this.getPredicate();
+       this.showSuccessPopup("Successfully added custom field '" + customField + "'. The field can be viewed in custom fields grouping below.", "Custom field");
+       customText.value = "";
+ 
+       //opening custom panal is not woeking as expected so closing all the panels after adding custom field. 
+       accordion.multi = true;
+       accordion.closeAll();
+       accordion.multi = false;
+       //this.customFieldsPanel.open();
+  }
+  }*/
+
+  getCustomField(customFieldValue) {
+    return {
+      "name": customFieldValue,
+      "label": customFieldValue,
+      "type": "TEXT_FIELD",
+      "mandatory": "recommended",
+      "description": "custom field",
+      "units": [],
+      "textChoice": []
+    };
+  }
+
+  addDescription(isChecked) {
+
+    if (isChecked) {
+      this.fieldsDisplayedColumns.push("description");
+      this.showDescription = true;
+    } else {
+      this.fieldsDisplayedColumns.pop()
+      this.showDescription = false;
+    }
   }
 
   selectedField(event, field) {
