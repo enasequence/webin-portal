@@ -103,7 +103,7 @@
                                     <input matInput type="filter" [(ngModel)]="filter" placeholder="Search fields"
                                         (keyup)="applyFilter($event.target.value,accordion)" name="filter" />
                                 </mat-form-field>
-                                <mat-icon class=" app-primary-color addIcon" (click)="applyFilter(filter)">
+                                <mat-icon class=" app-primary-color addIcon" (click)="applyFilter(filter,accordion)">
                                     pageview
                                 </mat-icon>
                             </span>
