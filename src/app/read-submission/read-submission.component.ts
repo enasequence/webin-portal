@@ -41,6 +41,8 @@ export class ReadSubmissionComponent implements OnInit {
   fieldType = {};
   centerName: String;
   showDescription = false;
+  isChecked: false;
+  filter: "";
 
   constructor(private _webinReportService: WebinReportService,
     private util: UtilService,
