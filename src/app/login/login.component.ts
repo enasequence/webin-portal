@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   error = false;
+  serverMessage: string;
 
   constructor(
     private _router: Router,
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
       //this._router.navigateByUrl('');
     }
 
-    this.getTweet();
+    this.getServerMessage();
   }
 
   login() {
@@ -102,12 +103,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  getTweet() {
+  getServerMessage() {
+    this.util.getServerMessage().subscribe((versionData: any) => {
+      this.serverMessage = versionData;
+    });
 
-    /*  this.util.getTweet().subscribe((data:any) => { 
-        console.log(data);
-      },(error) => {
-        console.log(error);
-      }); */
+
   }
 }

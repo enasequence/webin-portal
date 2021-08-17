@@ -146,15 +146,11 @@ export class UtilService {
     return { "isError": isError, "title": title, "message": message, "redirectPath": redirectPath }
   }
 
-  getTweet() {
-
-    /* var url="https://api.twitter.com/1.1/search/tweets.json?q=enasequence&result_type=popular";
-     var twitterToken="AAAAAAAAAAAAAAAAAAAAACHPOQAAAAAAK%2FQU%2BR0MB%2BcMXOiWrljWlX3%2BZ%2BU%3DFV9fOpABfT8s69ntGFAUNPwEf6fgcvNk3svOBfYXlKRsuEvUWd";
-     var headers = new Headers();
-     headers.append('Authorization', 'Bearer '+twitterToken);
-
-   return this.httpClient.jsonp(url,'callback');*/
-
+  getServerMessage() {
+    var url = environment.webinRestUrl + "/cli/comment";
+    return this.httpClient.get(url, {
+      responseType: 'text'
+    })
   }
 
 
