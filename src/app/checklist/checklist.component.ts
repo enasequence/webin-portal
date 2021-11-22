@@ -422,6 +422,9 @@ export class ChecklistComponent implements OnInit {
       var scientificNameField = { "name": "scientific_name", "description": "Taxon id for the sample", "mandatory": "mandatory" };
       selectedChecklistArray.push(taxIdField);
       selectedChecklistArray.push(scientificNameField);
+    } else if (this.checklistType === "sequence") {
+      var entryNumberField = { "name": "ENTRYNUMBER", "description": "ENTRYNUMBER", "mandatory": "mandatory" };
+      selectedChecklistArray.push(entryNumberField);
     }
   }
 
