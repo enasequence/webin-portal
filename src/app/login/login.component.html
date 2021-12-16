@@ -11,7 +11,7 @@
           <p>A dedicated submission API for COVID-19 genomes is available <a
               href="https://www.ebi.ac.uk/ena/submit/webin-cli">here.</a> </p>
 
-          <div *ngIf="serverMessage" class="message"> {{serverMessage}}</div>
+          <div *ngIf="serverMessage" class="message" [innerHTML]=serverMessage> </div>
         </mat-card-subtitle>
       </div>
     </mat-card>
