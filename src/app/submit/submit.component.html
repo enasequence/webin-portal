@@ -69,7 +69,8 @@
       <mat-form-field *ngIf="isBroker()" appearance="outline" style="width:7%; margin-right: 5px;">
         <input matInput placeholder="Center name" name="centerName" [(ngModel)]="centerName">
       </mat-form-field>
-      <button mat-raised-button color="accent" [disabled]="!canSubmit()" (click)="submit()">Submit</button>
+      <button mat-raised-button color="accent" [disabled]="!canSubmit() || !submitEnabled"
+        (click)="submit()">Submit</button>
     </div>
   </mat-card>
 

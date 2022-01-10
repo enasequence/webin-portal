@@ -85,6 +85,7 @@ export class ChecklistComponent implements OnInit {
   optionalFieldsDataSource: MatTableDataSource<any>;
   customFields: ChecklistFieldInterface;
   customFieldsDataSource: MatTableDataSource<any>;
+  submitEnabled = true;
   fieldsDisplayedColumns: string[] = [
     "selection",
     "fieldName",
@@ -614,9 +615,11 @@ export class ChecklistComponent implements OnInit {
 
 
   uploadFile(form) {
+
     if (!this._webinRestService.isValidTabSubmissionFile(form.spreadSheet)) {
       this.util.showError(this, NonSubmissionResultDialogComponent, "The uploaded file is not valid for sample submission. Please upload file in any of the following format: .csv, .tsv, .tab", "Submission Result")
     } else {
+      this.submitEnabled = false;
       const formData: FormData = new FormData();
       const observable: Observable<string> =
         this._webinRestService.submitXml(

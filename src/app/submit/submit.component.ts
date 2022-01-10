@@ -37,6 +37,7 @@ export class SubmitComponent {
   policyFile: File;
   datasetFile: File;
   centerName: String;
+  submitEnabled = true;
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
@@ -104,7 +105,7 @@ export class SubmitComponent {
 
   submit() {
     console.log("** Webin XML submission **");
-
+    this.submitEnabled = false;
     const observable: Observable<string> = this._webinRestService.submitXml(
       this.submissionFile,
       this.studyFile,
@@ -120,8 +121,9 @@ export class SubmitComponent {
     );
 
     this.dialog.open(SubmissionResultDialogComponent, {
+      disableClose: true,
       width: "600px",
-      data: { "observable": observable, "redirectPath": "/app-submit" },
+      data: { "observable": observable, "redirectPath": "" },
     });
   }
 

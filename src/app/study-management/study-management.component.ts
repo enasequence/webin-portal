@@ -73,6 +73,7 @@ export class StudyManagementComponent implements OnInit {
   showAttributeAdd = false;
   showLocusTagAdd = false;
   isProductionEnv = environment.production;
+  submitEnabled = true;
 
   pubMedSearch = "";
   today = new Date();
@@ -170,6 +171,7 @@ export class StudyManagementComponent implements OnInit {
   }
 
   submitStudy(form) {
+    this.submitEnabled = false;
     var observable: Observable<string>;
     let redirectPath = ""
     if (this.action != "Edit") {

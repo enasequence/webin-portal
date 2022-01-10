@@ -73,6 +73,7 @@ export class UmbrellaManagementComponent implements OnInit {
   showDuplicatePubMedErr = false;
   showAttributeAdd = false;
   isProductionEnv = environment.production;
+  submitEnabled = true;
 
   pubMedSearch = "";
   today = new Date();
@@ -214,6 +215,7 @@ export class UmbrellaManagementComponent implements OnInit {
       );
       redirectPath = null;
     }
+    this.submitEnabled = false;
 
     // Submit project and create project link
     this.util.showSubmissionResponseForUmbrellaProject(

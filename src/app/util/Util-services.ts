@@ -105,6 +105,7 @@ export class UtilService {
 
   showSubmissionResponse(component, popupComponent, observable, redirectPath?: string) {
     component.dialog.open(popupComponent, {
+      disableClose: true,
       width: '600px',
       data: { "observable": observable, "redirectPath": redirectPath }
 
@@ -113,6 +114,7 @@ export class UtilService {
 
   showSubmissionResponseForUmbrellaProject(component, popupComponent, observable, projectLinkJsonForUpdate, projectLinkJsonForDelete, redirectPath?: string) {
     component.dialog.open(popupComponent, {
+      disableClose: true,
       width: '600px',
       data: { "observable": observable, "redirectPath": redirectPath, "projectLinkJsonForUpdate": projectLinkJsonForUpdate, "projectLinkJsonForDelete": projectLinkJsonForDelete }
 
@@ -137,6 +139,7 @@ export class UtilService {
 
   showSuccess(component, popupComponent, message, title, redirectPath?: string) {
     component.dialog.open(popupComponent, {
+      disableClose: true,
       width: '600px',
       data: this.getMessage(false, title, message, redirectPath)
     });

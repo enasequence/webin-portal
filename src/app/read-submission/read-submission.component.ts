@@ -43,6 +43,7 @@ export class ReadSubmissionComponent implements OnInit {
   showDescription = false;
   isChecked: false;
   filter: "";
+  submitEnabled = true;
 
   constructor(private _webinReportService: WebinReportService,
     private util: UtilService,
@@ -222,6 +223,7 @@ export class ReadSubmissionComponent implements OnInit {
     } else {
       this._webinRestService.isValidTabSubmissionFile(form.spreadSheet);
       const formData: FormData = new FormData();
+      this.submitEnabled = false;
       const observable: Observable<string> =
         this._webinRestService.submitXml(
           null,
@@ -235,7 +237,7 @@ export class ReadSubmissionComponent implements OnInit {
           null,
           null,
           this.centerName);
-      let redirectPath = "/read-submission";
+      let redirectPath = "";
       this.util.showSubmissionResponse(this, SubmissionResultDialogComponent, observable, redirectPath)
     }
   }
