@@ -248,15 +248,16 @@
             <div *ngIf="selectedChecklist">
               <p>
                 Please download the spreadsheet template containing the fields
-                you have selected by using the 'Download' button below.
+                you have selected by using the button below.
               </p>
 
               <div *ngIf="checklistType === ChecklistType.sequence">
                 <p>
-                  Please do not modify the first two lines of the spreadsheet.
-                  The first line contains the checklist name and the second line
-                  contains the field names in separate columns. The first column
-                  in the spreadsheet, the ENTRYNUMBER, starts with 1 and is
+                  Please do not modify the first three lines of the spreadsheet.
+                  The first line contains the checklist name,
+                  the second line contains the field names in separate columns and the third line contains the units for
+                  relevant fields.
+                  The first column in the field names line, the ENTRYNUMBER, starts with 1 and is
                   incremented by 1 for each sequence. For example, if the
                   spreadsheet has 10 sequences the first ENTRYNUMBER should be 1
                   and the last should be 10. The other columns in the
@@ -265,6 +266,18 @@
                   for each column from the 'Select checklist fields' page.
                 </p>
               </div>
+
+              <div *ngIf="checklistType === ChecklistType.sample">
+                <p>
+                  Please do not modify the first three lines of the spreadsheet.
+                  The first line contains the checklist name, the second line contains the
+                  field names in separate columns and the third line contains the units for relevant fields.
+                  You can find information about permitted values for each column from the 'Select checklist fields'
+                  page.
+                </p>
+              </div>
+
+
 
               <!--<button mat-raised-button color="accent" (click)="downloadExcelSpreadsheet()">Download Excel Template</button> -->
               <button mat-raised-button color="accent" (click)="downloadTsvSpreadsheet()" style="margin-left: 5px">
