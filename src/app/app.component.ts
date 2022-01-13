@@ -10,7 +10,9 @@
  */
 
 import { Component } from '@angular/core';
-
+import { Router, NavigationEnd } from '@angular/router';
+import { environment } from '../environments/environment';
+declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -19,4 +21,40 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Webin';
+
+  constructor(public router: Router) {
+    // Adding code for Google Analytics
+    if (environment.googleAnalyticsTrackingId) {
+      // register google tag manager
+      const gTagManagerScript = document.createElement('script');
+      gTagManagerScript.async = true;
+      gTagManagerScript.src = `https://www.googletagmanager.com/gtag/js?id=${environment.googleAnalyticsTrackingId}`;
+      document.head.appendChild(gTagManagerScript);
+
+      // register google analytics
+      const gaScript = document.createElement('script');
+      gaScript.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());`;
+
+      document.head.appendChild(gaScript);
+    }
+
+    // Triggering route event.
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', environment.googleAnalyticsTrackingId,
+          {
+            'page_path': event.urlAfterRedirects,
+            'page_location': event.url
+          }
+        );
+      }
+    }
+    )
+  }
+
+
+
 }
