@@ -162,6 +162,11 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
       });
   }
 
+  setEgaSubmissionAccount() {
+    // For Google analytics
+    sessionStorage.setItem('submissionAccount', '{"id":"' + this.username + '"}');
+  }
+
   isBroker(): boolean {
     var submissionAccount = JSON.parse(
       sessionStorage.getItem('submissionAccount')

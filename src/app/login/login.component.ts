@@ -77,6 +77,8 @@ export class LoginComponent implements OnInit {
             this._router.navigateByUrl('');
             if (!this._webinAuthenticationService.ega) {
               this._webinAuthenticationService.setSubmissionAccount();
+            } else {
+              this._webinAuthenticationService.setEgaSubmissionAccount();
             }
           }
         },

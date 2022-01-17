@@ -12,6 +12,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
+import { WebinAuthenticationService } from './webin-authentication.service';
 declare let gtag: Function;
 
 @Component({
@@ -22,7 +23,8 @@ declare let gtag: Function;
 export class AppComponent {
   title = 'Webin';
 
-  constructor(public router: Router) {
+  constructor(public router: Router,
+    private _webinAuthService: WebinAuthenticationService) {
     // Adding code for Google Analytics
     if (environment.googleAnalyticsTrackingId) {
       // register google tag manager
@@ -41,20 +43,28 @@ export class AppComponent {
       document.head.appendChild(gaScript);
     }
 
-    // Triggering route event.
+    // Triggering route event for Google Analytics.
     this.router.events.subscribe(event => {
+
+      var submissionAccount = JSON.parse(
+        this._webinAuthService.getSubmissionAccount());
+
       if (event instanceof NavigationEnd) {
         gtag('config', environment.googleAnalyticsTrackingId,
           {
             'page_path': event.urlAfterRedirects,
-            'page_location': event.url
+            'page_location': event.url,
+            'user_id': submissionAccount ? submissionAccount.id : ""
           }
         );
+
+        if (submissionAccount) {
+          gtag('set', 'user_properties', {
+            'submission_account_id': submissionAccount.id
+          });
+        }
       }
-    }
-    )
+    })
   }
-
-
 
 }
