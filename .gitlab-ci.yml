@@ -67,6 +67,8 @@ k8s-deploy-dev:
     - kubectl delete secret gitlab --namespace=ena-dev
     - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-dev
     - kubectl apply -f Kubernetes-dev-deploy.yaml --namespace=ena-dev
+  tags:
+    - ena-dcap-gitlab-runner    
   when: manual
 
 k8s-deploy-test:
@@ -81,6 +83,8 @@ k8s-deploy-test:
     - kubectl delete secret gitlab --namespace=ena-test
     - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-test
     - kubectl apply -f Kubernetes-test-deploy.yaml --namespace=ena-test
+  tags:
+    - ena-dcap-gitlab-runner    
   when: manual
 
 k8s-deploy-prod:
@@ -96,4 +100,6 @@ k8s-deploy-prod:
     - kubectl delete secret gitlab --namespace=ena-prod
     - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-prod
     - kubectl apply -f Kubernetes-prod-deploy.yaml --namespace=ena-prod
+  tags:
+    - ena-dcap-gitlab-runner    
   when: manual
