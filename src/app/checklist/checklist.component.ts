@@ -91,8 +91,10 @@ export class ChecklistComponent implements OnInit {
     "fieldName",
     "validation",
     "units",
+    "description"
   ];
-  showDescription = false;
+  showDescription = true;
+  isShowDiscriptionChecked = true;
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _webinReportService: WebinReportService,
@@ -304,6 +306,14 @@ export class ChecklistComponent implements OnInit {
         checklists: new Array<ChecklistInterface>()
       });
     });
+
+    if (this.isEga()) {
+      // Remove non EGA checklists
+      this._checklistGroups = this._checklistGroups.filter(fieldGroup => fieldGroup.name === "EGA Checklists");
+    } else {
+      // Remove EGA checklists
+      this._checklistGroups.splice(this._checklistGroups.findIndex(group => group.name === "EGA Checklists"), 1);
+    }
   }
 
   setChecklistXmls(data): void {
@@ -417,21 +427,8 @@ export class ChecklistComponent implements OnInit {
     return this._webinAuthenticationService.ega;
   }
 
-  addMandatoryFields(selectedChecklistArray) {
-    if (this.checklistType === "sample") {
-      var taxIdField = { "name": "tax_id", "description": "Taxon id for the sample", "mandatory": "mandatory" };
-      var scientificNameField = { "name": "scientific_name", "description": "Taxon id for the sample", "mandatory": "mandatory" };
-      selectedChecklistArray.push(taxIdField);
-      selectedChecklistArray.push(scientificNameField);
-    } else if (this.checklistType === "sequence") {
-      var entryNumberField = { "name": "ENTRYNUMBER", "description": "ENTRYNUMBER", "mandatory": "mandatory" };
-      selectedChecklistArray.push(entryNumberField);
-    }
-  }
-
   buildSelectedChecklistRequestObject(callback) {
     let selectedChecklistArray = new Array();
-    this.addMandatoryFields(selectedChecklistArray)
     let fieldGroups = this.selectedChecklist.fieldGroups;
     let selectedFieldsCnt = 0;
     fieldGroups.forEach(fieldGroup => {
@@ -597,10 +594,12 @@ export class ChecklistComponent implements OnInit {
     }
   }
 
-  addDescription(isChecked) {
+  addDescription(isShowDiscriptionChecked) {
 
-    if (isChecked) {
-      this.fieldsDisplayedColumns.push("description");
+    if (isShowDiscriptionChecked) {
+      if (this.fieldsDisplayedColumns.indexOf("fieldsDisplayedColumns") == -1) {
+        this.fieldsDisplayedColumns.push("description");
+      }
       this.showDescription = true;
     } else {
       this.fieldsDisplayedColumns.pop()
@@ -654,36 +653,57 @@ export class ChecklistComponent implements OnInit {
   getSampleSpecificFields() {
     let sampleSpecificFields = {
       name: "Sample Details",
-      fields: [{
-        name: "sample_alias",
-        label: "Sample alias (unique name)",
-        description: "Unique name of the sample. If not selected system will auto generate an unique alias",
-        mandatory: "mandatory",
-        textChoice: [],
-        type: "TEXT_FIELD",
-        units: [],
-        isVisible: true
-      },
-      {
-        name: "sample_title",
-        label: "Sample title",
-        description: "Title of the sample",
-        mandatory: "mandatory",
-        textChoice: [],
-        type: "TEXT_FIELD",
-        units: [],
-        isVisible: true
-      },
-      {
-        name: "sample_description",
-        label: "Sample description",
-        description: "Description of the sample",
-        mandatory: "mandatory",
-        textChoice: [],
-        type: "TEXT_FIELD",
-        units: [],
-        isVisible: true
-      }]
+      fields: [
+        {
+          name: "tax_id",
+          label: "NCBI Taxonomy",
+          description: "Taxonomy ID of the organism as in the <a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi'> NCBI Taxonomy database</a>. Entries in the NCBI Taxonomy database have integer taxon IDs. See our tips for sample taxonomy <a href='https://ena-docs.readthedocs.io/en/latest/faq/taxonomy.html'>here</a>",
+          mandatory: "mandatory",
+          textChoice: [],
+          type: "TEXT_FIELD",
+          units: [],
+          isVisible: true
+        },
+        {
+          name: "scientific_name",
+          label: "Scientific name",
+          description: "Scientific name of the organism as in the <a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi'> NCBI Taxonomy database</a>. Scientific names typically follow the binomial nomenclature. For example, the scientific name for humans is Homo sapiens.",
+          mandatory: "mandatory",
+          textChoice: [],
+          type: "TEXT_FIELD",
+          units: [],
+          isVisible: true
+        },
+        {
+          name: "sample_alias",
+          label: "Sample alias (unique name)",
+          description: "Unique name of the sample. If not selected system will auto generate an unique alias",
+          mandatory: "mandatory",
+          textChoice: [],
+          type: "TEXT_FIELD",
+          units: [],
+          isVisible: true
+        },
+        {
+          name: "sample_title",
+          label: "Sample title",
+          description: "Title of the sample",
+          mandatory: "mandatory",
+          textChoice: [],
+          type: "TEXT_FIELD",
+          units: [],
+          isVisible: true
+        },
+        {
+          name: "sample_description",
+          label: "Sample description",
+          description: "Description of the sample",
+          mandatory: "mandatory",
+          textChoice: [],
+          type: "TEXT_FIELD",
+          units: [],
+          isVisible: true
+        }]
     }
     return sampleSpecificFields;
   }
