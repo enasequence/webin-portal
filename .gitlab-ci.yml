@@ -24,6 +24,8 @@ docker-build-dev:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  tags:
+    - ena-dcap-gitlab-runner  
 
 docker-build-test:
   stage: package
@@ -35,6 +37,8 @@ docker-build-test:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=test --build-arg basePath=/ena/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  tags:
+    - ena-dcap-gitlab-runner    
 
 docker-build-prod:
   stage: package
@@ -47,6 +51,8 @@ docker-build-prod:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production --build-arg basePath=/ena/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  tags:
+    - ena-dcap-gitlab-runner    
 
 k8s-deploy-dev:
   image: dtzar/helm-kubectl
