@@ -14,14 +14,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { ContactDialogModalComponent } from "../contact-dialog-modal/contact-dialog-modal.component";
 import { MatTableDataSource } from "@angular/material";
 import { UtilService } from "../util/Util-services";
-import { getLocaleDayNames } from "@angular/common";
-import { mergeMap, catchError } from "rxjs/operators";
 import { Router, ActivatedRoute } from "@angular/router";
 import { WebinAuthenticationService } from "../webin-authentication.service";
 import { Compiler } from "@angular/core";
 import { ResetPasswordRequestDialogComponent } from "../reset-password-request-dialog/reset-password-request-dialog.component";
 import { NonSubmissionResultDialogComponent } from "../non-submission-result-dialog/non-submission-result-dialog.component";
-import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-main",
@@ -50,6 +47,7 @@ export class AccountInfoComponent {
   metagenomeSubmitter = false;
   metagenomicsConsented = false;
   noEffectCheckbox = false;
+  countryErr = false;
 
   /* Used for storing added emails, this will be used for validation */
   emails = [];
@@ -292,5 +290,12 @@ export class AccountInfoComponent {
       panelClass: "custom-dialog-panel-class",
       data: { resetObj: obj },
     });
+  }
+
+  selectCountryOption(event: any): void {
+    this.countryErr = false;
+    if (event.target.value != "" && this.countries.indexOf(event.target.value) === -1) {
+      this.countryErr = true;
+    }
   }
 }

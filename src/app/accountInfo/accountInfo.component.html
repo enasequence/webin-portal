@@ -30,13 +30,17 @@
             </mat-form-field>
             <mat-form-field class="app-field-padding">
               <input matInput placeholder="Country" [matAutocomplete]="auto" name="country" #countryVal="ngModel"
-                [(ngModel)]="country" (ngModelChange)="getCountries(country)" autocomplete="new-password" />
+                [(ngModel)]="country" (ngModelChange)="getCountries(country)" (blur)="selectCountryOption($event)" />
+
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let country of countries" [value]="country">
                 {{ country }}
               </mat-option>
             </mat-autocomplete>
+            <mat-error class="mat-body" *ngIf="countryErr">
+              Invalid country. Please select a country from the provided list.
+            </mat-error>
           </div>
           <div class="column" *ngIf="!editMode">
             <mat-form-field class="app-field-padding">
@@ -156,7 +160,8 @@
     </div>
 
     <div style="text-align: Center">
-      <button mat-raised-button color="accent" [disabled]="f.invalid || mainContact <= 0 || noEffectCheckbox==false">
+      <button mat-raised-button color="accent"
+        [disabled]="f.invalid || countryErr || mainContact <= 0 || noEffectCheckbox==false">
         Save
       </button>
       <button mat-raised-button style="margin-left: 5px" routerLink="">
