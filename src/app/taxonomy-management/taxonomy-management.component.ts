@@ -184,6 +184,7 @@ export class TaxonomyManagementComponent implements OnInit {
       if (result.event != "close") {
         this.showLoading();
         let taxonRefObj = result.data;
+
         let tableArr =
           source === "Form" ? this.validFormArray : this.validSpreadsheetArray;
 
@@ -268,6 +269,7 @@ export class TaxonomyManagementComponent implements OnInit {
 
   submitTaxonomyRequest(source) {
 
+    const proposedNameRegexp = "(Proposed name: )(.*)";
     this.submissionAccount = JSON.parse(
       this._webinAuthService.getSubmissionAccount()
     );
@@ -275,11 +277,12 @@ export class TaxonomyManagementComponent implements OnInit {
     mail["from"] = this.submissionAccount["submissionContacts"]
       .filter((contact) => contact.mainContact)
       .map((contact) => contact.emailAddress)[0];
-    mail["subject"] = "Taxonomy Consultation";
+
     mail["to"] = environment.taxonomySubmissionEmail;
     this.constructTaxonContentAndSendMail(
       function (taxonContent, thisObj) {
         mail["content"] = taxonContent;
+        mail["subject"] = "Taxonomy Consultation - " + taxonContent.match(proposedNameRegexp)[2];
         console.log(taxonContent);
         const observable: Observable<string> = thisObj._webinRestService.sendTaxonEmail(
           mail
