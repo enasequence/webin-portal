@@ -371,7 +371,7 @@
       <td mat-cell *matCellDef="let element">
         <mat-select class="w-70" *ngIf="element.type=='TEXT_CHOICE_FIELD'" class="checklist-restriction"
           placeholder="Permitted values">
-          <mat-option *ngFor="let textChoice of element.textChoice" [value]="textChoice" disabled>
+          <mat-option *ngFor="let textChoice of element.textChoice" [value]="textChoice">
             {{ textChoice }}
           </mat-option>
         </mat-select>
