@@ -274,18 +274,22 @@ export class TaxonomyManagementComponent implements OnInit {
       this._webinAuthService.getSubmissionAccount()
     );
     let mail = {};
+    let headerList = ["proposedName", "nameType", "host", "projectId", "description"]
     mail["from"] = this.submissionAccount["submissionContacts"]
       .filter((contact) => contact.mainContact)
       .map((contact) => contact.emailAddress)[0];
 
     mail["to"] = environment.taxonomySubmissionEmail;
     this.constructTaxonContentAndSendMail(
-      function (taxonContent, thisObj) {
+      function (jsonContent, taxonContent, thisObj) {
         mail["content"] = taxonContent;
-        mail["subject"] = "Taxonomy Consultation - " + taxonContent.match(proposedNameRegexp)[2];
+        mail["subject"] = "Taxonomy Consultation - " + jsonContent[0].proposedName;
+        mail["attachedFileName"] = "taxonomy.csv"
         console.log(taxonContent);
+
         const observable: Observable<string> = thisObj._webinRestService.sendTaxonEmail(
-          mail
+          mail,
+          thisObj.convertToCSV(jsonContent, headerList)
         );
         let title = "Taxonomy Registration";
         let redirect = "/taxonomy"
@@ -330,7 +334,8 @@ export class TaxonomyManagementComponent implements OnInit {
     let count = 0;
     let tableArr =
       source === "Form" ? this.validFormArray : this.validSpreadsheetArray;
-    for (const taxon of tableArr) {
+    // Remove the commented code if the taxonomy content is not needed in email body
+    /*for (const taxon of tableArr) {
       contentStr += "\n";
       contentStr += "Number " + ++count + "\n";
       contentStr += "Name type: " + taxon.nameType + "\n";
@@ -339,10 +344,10 @@ export class TaxonomyManagementComponent implements OnInit {
       contentStr += "Project / Study id: " + taxon.projectId + "\n";
       contentStr += "Short description: " + taxon.description + "\n";
       contentStr += "\n";
-    }
+    }*/
 
     contentStr += "Dear ENA" + "\n\n";
-    contentStr += "Please examine above " + count + " organisms. " + "\n";
+    contentStr += "Please examine attached organism(s). " + "\n";
     contentStr += "Below are my contact details: " + "\n\n";
     contentStr += "Webin account id: " + this.submissionAccount["id"] + "\n";
     contentStr +=
@@ -358,7 +363,7 @@ export class TaxonomyManagementComponent implements OnInit {
       ) +
       "\n\n";
     contentStr += "Thank you and regards";
-    callback(contentStr, thisComponent);
+    callback(tableArr, contentStr, thisComponent);
   }
 
   getContactName(contact) {
@@ -436,4 +441,35 @@ export class TaxonomyManagementComponent implements OnInit {
   isBroker(): boolean {
     return this._webinAuthenticationService.isBroker();
   }
+
+  convertToCSV(objArray, headerList) {
+    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+    let row = 'Number,';
+
+    for (let index = 0; index < headerList.length; index++) {
+      row += this.capitalize(headerList[index]) + ',';
+    }
+    //row = row.slice(0, -1);
+    str += row + '\r\n';
+    for (let i = 0; i < array.length; i++) {
+      let line = i + 1 + ',';
+
+      for (let j = 0; j < headerList.length; j++) {
+        let head = headerList[j];
+
+        line += array[i][head] + ',';
+      }
+      str += line + '\r\n';
+    }
+    console.log(str)
+    let blob = new Blob([str], { type: 'text/csv' });
+    return blob;
+  }
+
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
 }
+

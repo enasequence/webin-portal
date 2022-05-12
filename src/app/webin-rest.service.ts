@@ -81,8 +81,9 @@ export class WebinRestService implements WebinRestServiceInterface {
   }
 
 
-  private postEmail(mail) {
-    return this._http.post(environment.webinRestUrl + '/email', mail);
+  private postEmail(formData) {
+    const headers = this.headers();
+    return this._http.post(environment.webinRestUrl + '/email', formData, { headers });
   }
 
   submitProjectXml(formData) {
@@ -338,9 +339,15 @@ export class WebinRestService implements WebinRestServiceInterface {
     return this.postTaxon(formData);
   }
 
-  sendTaxonEmail(mail: any) {
+  sendTaxonEmail(mail: any, attachment) {
+    const mailStr = JSON.stringify(mail);
+    const mailBytes = new TextEncoder().encode(mailStr);
     console.log('** Send email for taxon **');
-    return this.postEmail(mail)
+    const formData: FormData = new FormData();
+    formData.append("mail", new Blob([mailBytes], { type: 'application/json' }));
+
+    formData.append("attachmentFile", attachment, "taxonomy.csv");
+    return this.postEmail(formData)
   }
 
   isValidTabSubmissionFile(blob: Blob) {
