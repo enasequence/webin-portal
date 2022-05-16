@@ -17,9 +17,9 @@ spec:
           image: %DOCKER_IMAGE%
           resources:
             requests:
-              memory: "2Gi"
+              memory: "1Gi"
             limits:
-              memory: "2Gi"
+              memory: "1Gi"
           ports:
             - containerPort: 80
         #     - containerPort: 443
