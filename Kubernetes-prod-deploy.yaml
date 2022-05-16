@@ -15,9 +15,14 @@ spec:
       containers:
         - name: webin-portal
           image: %DOCKER_IMAGE%
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
           ports:
             - containerPort: 80
-         #   - containerPort: 443
+        #   - containerPort: 443
       imagePullSecrets:
         - name: gitlab
 ---
