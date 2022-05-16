@@ -2,9 +2,6 @@ image: docker:latest
 services:
   - docker:dind
 
-before_script:
-  - export KUBECONFIG=./Kubernetes-cluster.yaml
-
 variables:
   DOCKER_DRIVER: overlay
   DOCKER_TLS_CERTDIR: ""
@@ -25,7 +22,7 @@ docker-build-dev:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=dev --build-arg basePath=/ena/dev/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   tags:
-    - ena-dcap-gitlab-runner  
+    - ena-dcap-gitlab-runner
 
 docker-build-test:
   stage: package
@@ -38,7 +35,7 @@ docker-build-test:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=test --build-arg basePath=/ena/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   tags:
-    - ena-dcap-gitlab-runner    
+    - ena-dcap-gitlab-runner
 
 docker-build-prod:
   stage: package
@@ -52,7 +49,7 @@ docker-build-prod:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG --build-arg configuration=production --build-arg basePath=/ena/submit/webin/ .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   tags:
-    - ena-dcap-gitlab-runner    
+    - ena-dcap-gitlab-runner
 
 k8s-deploy-dev:
   image: dtzar/helm-kubectl
@@ -64,11 +61,14 @@ k8s-deploy-dev:
     - triggers
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-dev-deploy.yaml
-    - kubectl delete secret gitlab --namespace=ena-dev
-    - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-dev
+    - kubectl config set-cluster ena-cluster --server="${K8_HX_SERVER}"
+    - kubectl config set clusters.ena-cluster.certificate-authority-data ${K8_HX_CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials ena-user --token="${K8_HX_CREDENTIALS}"
+    - kubectl config set-context ena-context --cluster=ena-cluster --user=ena-user
+    - kubectl config use-context ena-context
     - kubectl apply -f Kubernetes-dev-deploy.yaml --namespace=ena-dev
   tags:
-    - ena-dcap-gitlab-runner    
+    - ena-dcap-gitlab-runner
   when: manual
 
 k8s-deploy-test:
@@ -80,11 +80,14 @@ k8s-deploy-test:
     - triggers
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-test-deploy.yaml
-    - kubectl delete secret gitlab --namespace=ena-test
-    - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-test
+    - kubectl config set-cluster ena-cluster --server="${K8_HX_SERVER}"
+    - kubectl config set clusters.ena-cluster.certificate-authority-data ${K8_HX_CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials ena-user --token="${K8_HX_CREDENTIALS}"
+    - kubectl config set-context ena-context --cluster=ena-cluster --user=ena-user
+    - kubectl config use-context ena-context
     - kubectl apply -f Kubernetes-test-deploy.yaml --namespace=ena-test
   tags:
-    - ena-dcap-gitlab-runner    
+    - ena-dcap-gitlab-runner
   when: manual
 
 k8s-deploy-prod:
@@ -97,9 +100,12 @@ k8s-deploy-prod:
     - triggers
   script:
     - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deploy.yaml
-    - kubectl delete secret gitlab --namespace=ena-prod
-    - kubectl create secret docker-registry gitlab --docker-server=$CI_REGISTRY --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --namespace=ena-prod
+    - kubectl config set-cluster ena-cluster --server="${K8_HX_SERVER}"
+    - kubectl config set clusters.ena-cluster.certificate-authority-data ${K8_HX_CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials ena-user --token="${K8_HX_CREDENTIALS}"
+    - kubectl config set-context ena-context --cluster=ena-cluster --user=ena-user
+    - kubectl config use-context ena-context
     - kubectl apply -f Kubernetes-prod-deploy.yaml --namespace=ena-prod
   tags:
-    - ena-dcap-gitlab-runner    
+    - ena-dcap-gitlab-runner
   when: manual
