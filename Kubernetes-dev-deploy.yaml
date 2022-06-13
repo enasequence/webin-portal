@@ -15,6 +15,11 @@ spec:
       containers:
         - name: webin-portal
           image: %DOCKER_IMAGE%
+          resources:
+            requests:
+              memory: "1Gi"
+            limits:
+              memory: "1Gi"
           ports:
             - containerPort: 80
         #    - containerPort: 443
