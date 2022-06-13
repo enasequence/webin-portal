@@ -41,7 +41,8 @@
         </div>
         <p class="app-error" *ngIf="error">
           <i class="material-icons">error</i>
-          Invalid Webin submission account or password
+          <span [innerHTML]=errorMessage> </span>
+
         </p>
       </mat-card-content>
     </mat-card>
