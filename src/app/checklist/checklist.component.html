@@ -143,17 +143,19 @@
                 <div class="tableOperations">
                   <!-- form for custom field validation. -->
                   <form #cf="ngForm">
-                    <mat-form-field class="app-field-padding">
-                      <!-- Pattern matching alphanumeric characters with "_", "-" and "space" in middle. -->
-                      <input matInput placeholder="Add custom field" [(ngModel)]="customField"
-                        pattern="^[^_-\s][A-Za-z0-9_-\s]*[^_-\s]$" name="customField" #customText />
-                      <mat-error *ngIf="cf.controls['customField']?.errors">
-                        Alphanumeric charecters with space, _ and - inbetween are allowed.
-                      </mat-error>
-                    </mat-form-field>
-                    <mat-icon class=" app-primary-color addIcon" [disabled]="cf.invalid"
-                      (click)="addCustomField(customField,customText,accordion,cf)">add_box
-                    </mat-icon>
+                    <span *ngIf="checklistType === ChecklistType.sample" class="addCustomSpan">
+                      <mat-form-field class="app-field-padding">
+                        <!-- Pattern matching alphanumeric characters with "_", "-" and "space" in middle. -->
+                        <input matInput placeholder="Add custom field" [(ngModel)]="customField"
+                          pattern="^[^_-\s][A-Za-z0-9_-\s]*[^_-\s]$" name="customField" #customText />
+                        <mat-error *ngIf="cf.controls['customField']?.errors">
+                          Alphanumeric charecters with space, _ and - inbetween are allowed.
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-icon class=" app-primary-color addIcon" [disabled]="cf.invalid"
+                        (click)="addCustomField(customField,customText,accordion,cf)">add_box
+                      </mat-icon>
+                    </span>
 
                     <!--<span style=" margin-left: 30px;">
                       Show Description <mat-checkbox matInput [(ngModel)]="isShowDiscriptionChecked"
