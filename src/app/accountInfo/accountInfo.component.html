@@ -139,21 +139,20 @@
 
           <mat-card-subtitle>Metagenomics Consent</mat-card-subtitle>
           <p>
-            By keeping this box checked you give consent to the EBI Metagenomics
-            team to analyse those data for which you have requested a
-            pre-publication confidential hold. Note that the data as well as the
-            analysis results will remain confidential until the specified
-            release date of the associated sequencing study. This service
-            provides pre-publication state-of-the-art analysis results, along
-            with visualisations, that you may use in subsequent publications.
-            The service is described in
-            http://europepmc.org/abstract/MED/29069476 and we kindly request,
-            should you use these analyes in your publications, that you cite
-            this paper.
+            By keeping this box checked you give consent to the EBI MGnify team to analyse those data for which you have
+            requested a pre-publication confidential hold. Note that the data as well as the analysis results will
+            remain confidential until the specified release date of the associated sequencing study. If you are also
+            requesting assembly of your data by MGnify, you also give consent to MGnify to submit these assemblies to
+            your ENA study on your behalf. MGnify will not change any metadata or data you have already submitted but
+            may need to perform updates to submissions performed by their team in exceptional circumstances. This
+            service provides pre-publication state-of-the-art analysis results, along with visualisations, that you may
+            use in subsequent publications. The service is described in <a
+              href="http://europepmc.org/article/MED/31696235">http://europepmc.org/article/MED/31696235</a> and we
+            kindly request, should you use these analyses in your publications, that you cite this paper.
           </p>
           <mat-checkbox matInput name="metagenomicsConsented" [(ngModel)]="metagenomicsConsented"
-            style="padding-left: 20px">I give consent that EBI MGnify team can analyse my pre-publication confidential
-            data.</mat-checkbox>
+            style="padding-left: 20px">I give consent and confirm that the data submitted through this account is NOT
+            sensitive, restricted-access or human-identifiable</mat-checkbox>
 
         </div>
       </mat-card>
