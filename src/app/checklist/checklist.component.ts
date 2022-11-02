@@ -616,7 +616,7 @@ export class ChecklistComponent implements OnInit {
   uploadFile(form) {
 
     if (!this._webinRestService.isValidTabSubmissionFile(form.spreadSheet)) {
-      this.util.showError(this, NonSubmissionResultDialogComponent, "The uploaded file is not valid for sample submission. Please upload file in any of the following format: .csv, .tsv, .tab", "Submission Result")
+      this.util.showError(this, NonSubmissionResultDialogComponent, "You have used an unsupported spreadsheet format. Please submit a tab-separated (.tsv or .tab) file.", "Submission Result")
     } else {
       this.submitEnabled = false;
       const formData: FormData = new FormData();

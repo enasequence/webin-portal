@@ -15,7 +15,6 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
-import { ObservableMedia } from '@angular/flex-layout';
 
 import { ReportEditDialogComponent } from '../report-edit-dialog/report-edit-dialog.component';
 import { ReportType } from '../report-type.enum';
@@ -27,6 +26,7 @@ import { ReportActionInterface } from '../report-action.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
+import { MediaObserver } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-report',
@@ -63,7 +63,7 @@ export class ReportComponent implements OnInit {
     private _webinReportService: WebinReportService,
     private _webinAuthenticationService: WebinAuthenticationService,
     private _reportDialog: MatDialog,
-    public media: ObservableMedia,
+    public media: MediaObserver,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;

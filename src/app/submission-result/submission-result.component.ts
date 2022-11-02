@@ -12,7 +12,7 @@
 import { Component, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ObservableMedia } from '@angular/flex-layout';
+
 
 import { WebinRestService } from '../webin-rest.service';
 
@@ -20,6 +20,7 @@ import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
 import { saveAs as importedSaveAs } from 'file-saver';
+import { MediaObserver } from '@angular/flex-layout';
 
 export interface WebinError {
   error: string;
@@ -60,7 +61,7 @@ export class SubmissionResultComponent {
 
   constructor(
     private _webinRestService: WebinRestService,
-    public media: ObservableMedia) { }
+    public media: MediaObserver) { }
 
   isResult(): boolean {
     return this.result ? true : false;

@@ -5,6 +5,10 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0 and has been later upgraded to
 version 1.6.8
 version 7.3.8
+## Initialize Project
+Run the below command from project directory (where package.json file is found) for initializing the project.
+
+`npm update`
 
 ## Development server
 
