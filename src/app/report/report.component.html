@@ -233,7 +233,6 @@
 
             <ng-container *ngIf="col=='Release date'">
               <td cdk-cell *cdkCellDef="let element">
-
                 <div>
                   {{getElementValue(element, col)}}
                   <span class=edit-icon-span *ngIf="!isEga() && !embeded">
@@ -242,10 +241,7 @@
                       (click)="updateReleaseDate(element)">edit</mat-icon>
                   </span>
                 </div>
-
-
               </td>
-
             </ng-container>
 
             <ng-container *ngIf="col=='Archive status'">

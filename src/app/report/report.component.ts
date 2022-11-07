@@ -330,12 +330,16 @@ export class ReportComponent implements OnInit {
       'Accession',
       'Process status',
       'Process error',
+      'Processing start',
+      'Processing end',
       'Action', // No callback for Action column
     ];
     this.displayedColumnsCallback = {
       Accession: this.accessionColumnCallback.bind(this),
       'Process status': this.processingStatusColumnCallback.bind(this),
-      'Process error': this.processingErrorColumnCallback.bind(this)
+      'Process error': this.processingErrorColumnCallback.bind(this),
+      'Processing start': this.processingExecStartCallback.bind(this),
+      'Processing end': this.processingExecEndCallback.bind(this)
     };
   }
 
@@ -346,6 +350,8 @@ export class ReportComponent implements OnInit {
       'Sequence accession',
       'Process status',
       'Process error',
+      'Processing start',
+      'Processing end',
       'Action', // No callback for Action column
     ];
     this.displayedColumnsCallback = {
@@ -353,7 +359,9 @@ export class ReportComponent implements OnInit {
       'Analysis type': this.analysisTypeColumnCallback.bind(this),
       'Sequence accession': this.processingAccessionColumnCallback.bind(this),
       'Process status': this.processingStatusColumnCallback.bind(this),
-      'Process error': this.processingErrorColumnCallback.bind(this)
+      'Process error': this.processingErrorColumnCallback.bind(this),
+      'Processing start': this.processingExecStartCallback.bind(this),
+      'Processing end': this.processingExecEndCallback.bind(this)
     };
   }
 
@@ -839,6 +847,22 @@ export class ReportComponent implements OnInit {
     return this.removeNullAndUndefined(result.report.acc);
   }
 
+  processingExecStartCallback(result) {
+    if (result.report.processingStart) {
+      const date: Date = new Date(result.report.processingStart);
+      return this.dateTimeFormat(date);
+    }
+    return '';
+  }
+
+  processingExecEndCallback(result) {
+    if (result.report.processingEnd) {
+      const date: Date = new Date(result.report.processingEnd);
+      return this.dateTimeFormat(date);
+    }
+    return '';
+  }
+
   dateFormat(date: Date) {
     const month = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -859,6 +883,31 @@ export class ReportComponent implements OnInit {
     return date.getDate() + daySuffix + ' ' +
       month[date.getMonth()] + ' ' +
       date.getFullYear();
+  }
+
+  dateTimeFormat(date: Date) {
+    const month = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const day = date.getDate();
+    let daySuffix: string;
+    if (day > 3 && day < 21) {
+      daySuffix = 'th';
+    } else {
+      switch (day % 10) {
+        case 1: daySuffix = 'st'; break;
+        case 2: daySuffix = 'nd'; break;
+        case 3: daySuffix = 'rd'; break;
+        default: daySuffix = 'th';
+      }
+    }
+
+    return date.getDate() + daySuffix + ' ' +
+      month[date.getMonth()] + ' ' +
+      date.getFullYear() + ' ' +
+      date.getHours() + ':' +
+      date.getMinutes() + ':' +
+      date.getSeconds();
   }
 
   submissionDateColumnCallback(result) {
