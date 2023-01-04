@@ -848,19 +848,11 @@ export class ReportComponent implements OnInit {
   }
 
   processingExecStartCallback(result) {
-    if (result.report.processingStart) {
-      const date: Date = new Date(result.report.processingStart);
-      return this.dateTimeFormat(date);
-    }
-    return '';
+    return this.removeNullAndUndefined(result.report.processingStart);
   }
 
   processingExecEndCallback(result) {
-    if (result.report.processingEnd) {
-      const date: Date = new Date(result.report.processingEnd);
-      return this.dateTimeFormat(date);
-    }
-    return '';
+    return this.removeNullAndUndefined(result.report.processingEnd);
   }
 
   dateFormat(date: Date) {
