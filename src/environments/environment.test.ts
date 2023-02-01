@@ -10,6 +10,7 @@ export const environment = {
   webinAuthUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/admin',
+  sourceAttributeHelperURL: 'https://wwwdev.ebi.ac.uk/ena/sah/',
   webinGdprServiceUrl: 'TODO',
   pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',
   taxonomySubmissionEmail: 'ena-collaborations@ebi.ac.uk',

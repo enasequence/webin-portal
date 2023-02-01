@@ -20,11 +20,12 @@ export class SidenavComponent implements OnDestroy, AfterViewChecked {
   showSubSubMenu: boolean = true;
   over = "over";
   authFlag = false;
-
+  sourceAttributeHelperURL: string;
 
   constructor(private _webinAuthenticationService: WebinAuthenticationService,
     private changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 700px)');
+    this.sourceAttributeHelperURL = environment.sourceAttributeHelperURL;
   }
 
   ngOnDestroy(): void {

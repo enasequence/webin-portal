@@ -106,6 +106,14 @@
           <a mat-list-item *ngIf="!isEga()" [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]"
             (click)="snav.toggle()">Analysis Processing Report</a>
         </div>
+        <!-- Added 'Tools' category to display links to different tools to support the submission data -->
+        <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
+          <mat-icon style="padding-right: 35px;">add_box</mat-icon>
+          <span class="full-width"> Tools</span>
+        </mat-list-item>
+        <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+          <a mat-list-item target='_blank' href='{{sourceAttributeHelperURL}}'>Source Attribute Helper</a>
+        </div>
 
       </mat-nav-list>
 
