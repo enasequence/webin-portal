@@ -276,3 +276,15 @@ table tbody tr:nth-child(odd) {
 		display: none;
 	}
 }
+
+.mat-tooltip.infobox {
+  font-size: 0.75rem;
+  color: #ffffff;
+  background-color: #515558FF;
+
+  &.exaggerated-tooltip { // to modify the tooltip create a class like this
+    font-size: 0.75rem; // and use it like this: *matTooltipClass="exaggerated-tooltip"* in the
+    color: #ffffff; // component in which you are putting the tooltip
+    background-color: #515558FF;
+  }
+}
