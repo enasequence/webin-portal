@@ -230,6 +230,32 @@
           </div>
         </mat-card>
       </ng-container>
-
+      <!-- Added Tools Card to add external submission support tools -->
+      <ng-container>
+        <mat-card class="mat-elevation-z8 mat-card-css">
+          <mat-card-title class="cardTitle">Tools</mat-card-title>
+          <mat-card-subtitle class="cardSubTitle" *ngIf="!isEga()">
+            External Submission Support Tools
+          </mat-card-subtitle>
+          <div class="cat-element">
+            <div class="cat-element">
+              <div class="cat-column1">
+                <span matTooltip="Source Attribute Helper tool can be used to construct an attribute or
+                validate/enhance a constructed attribute for referring to the biological source of the sequence data. "
+                      matTooltipPosition="left"
+                      [matTooltipShowDelay]="0"
+                      [matTooltipClass]='{infobox: true}'>
+                  <mat-icon class="note_add icon-blue">difference</mat-icon>
+                  <p class="mat-small mat-caption">
+                    <a mat-list-item target='_blank' href='{{sourceAttributeHelperURL}}'>
+                      Source Attribute Helper
+                    </a>
+                  </p>
+                </span>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </ng-container>
 
     </div>

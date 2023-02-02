@@ -14,6 +14,7 @@ import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
 import { MatIconModule } from '@angular/material'
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -24,12 +25,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   ReportType = ReportType;   // Allows use in template
+  sourceAttributeHelperURL: string;
 
   constructor(
     private _webinAuthenticationService: WebinAuthenticationService,
     private _route: ActivatedRoute,
     private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.sourceAttributeHelperURL = environment.sourceAttributeHelperURL;
   }
 
   ngOnInit() {
