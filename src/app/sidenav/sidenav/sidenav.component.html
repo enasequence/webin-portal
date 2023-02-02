@@ -27,11 +27,11 @@
           <a mat-list-item [routerLink]="['/study']" (click)="snav.toggle()">Register Study (Project)</a>
           <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML (advanced)</a>
           <a mat-list-item *ngIf="isSuperUser()"
-             [routerLink]="['/report',ReportType.umbrellaProjects,{defaultSearch: true}]"
-             (click)="snav.toggle()">Umbrella
+            [routerLink]="['/report',ReportType.umbrellaProjects,{defaultSearch: true}]"
+            (click)="snav.toggle()">Umbrella
             Project</a>
           <a mat-list-item [routerLink]="['/report',ReportType.studies,{defaultSearch: true}]"
-             (click)="snav.toggle()">Study Report</a>
+            (click)="snav.toggle()">Study Report</a>
 
 
           <ng-container *ngIf="isEga()">
@@ -49,7 +49,7 @@
           </ng-container>
           <a mat-list-item [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML (advanced)</a>
           <a mat-list-item [routerLink]="['/report',ReportType.samples,{defaultSearch: true}]"
-             (click)="snav.toggle()">Samples Report</a>
+            (click)="snav.toggle()">Samples Report</a>
 
         </div>
         <!-- EGA-->
@@ -65,9 +65,9 @@
           <a mat-list-item [routerLink]="['/report',ReportType.dacs,{defaultSearch: true}]" (click)="snav.toggle()">Dacs
             Report</a>
           <a mat-list-item [routerLink]="['/report',ReportType.policies,{defaultSearch: true}]"
-             (click)="snav.toggle()">Policies Report</a>
+            (click)="snav.toggle()">Policies Report</a>
           <a mat-list-item [routerLink]="['/report',ReportType.datasets,{defaultSearch: true}]"
-             (click)="snav.toggle()">Datasets Report</a>
+            (click)="snav.toggle()">Datasets Report</a>
         </div>
         <!-- EGA end -->
 
@@ -82,11 +82,11 @@
           <a mat-list-item [routerLink]="['/report',ReportType.runs,{defaultSearch: true}]" (click)="snav.toggle()">Runs
             Report</a>
           <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.runFiles,{defaultSearch: true}]"
-             (click)="snav.toggle()">Run Files Report</a>
+            (click)="snav.toggle()">Run Files Report</a>
           <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.runProcess,{defaultSearch: true}]"
-             (click)="snav.toggle()">Run Processing Report</a>
+            (click)="snav.toggle()">Run Processing Report</a>
           <a *ngIf="!isEga()" mat-list-item [routerLink]="['/report',ReportType.unsubmittedFiles,{defaultSearch: true}]"
-             (click)="snav.toggle()">Unsubmitted Files Report</a>
+            (click)="snav.toggle()">Unsubmitted Files Report</a>
 
         </div>
         <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
@@ -95,16 +95,16 @@
         </mat-list-item>
         <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
           <a mat-list-item *ngIf="!isEga()" [routerLink]="['/app-checklist','sequence',true]"
-             (click)="snav.toggle()">Generate annotated
+            (click)="snav.toggle()">Generate annotated
             sequence spreadsheet</a>
           <a mat-list-item *ngIf="!isEga()" [routerLink]="['/app-submit']" (click)="snav.toggle()">Submit XML
             (advanced)</a>
           <a mat-list-item [routerLink]="['/report',ReportType.analyses,{defaultSearch: true}]"
-             (click)="snav.toggle()">Analyses Report</a>
+            (click)="snav.toggle()">Analyses Report</a>
           <a mat-list-item *ngIf="!isEga()" [routerLink]="['/report',ReportType.analysisFiles,{defaultSearch: true}]"
-             (click)="snav.toggle()">Analysis File Report</a>
+            (click)="snav.toggle()">Analysis File Report</a>
           <a mat-list-item *ngIf="!isEga()" [routerLink]="['/report',ReportType.analysisProcess,{defaultSearch: true}]"
-             (click)="snav.toggle()">Analysis Processing Report</a>
+            (click)="snav.toggle()">Analysis Processing Report</a>
         </div>
         <!-- Added 'Tools' category to display links to different tools to support the submission data -->
         <mat-list-item class="parent" [ngStyle]="{'pointer-events':'none'}">
@@ -138,7 +138,11 @@
   </div>
 
 
+
+
 </div>
+
+
 
 
 <!-- Copyright 2020 Google LLC. All Rights Reserved.
