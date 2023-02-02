@@ -1,93 +1,94 @@
 .sidenav-container {
-    display: flex;
-    flex-direction: column;
-    position: rleative;
-    top: 100px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: block;
-  }
+  display: flex;
+  flex-direction: column;
+  position: rleative;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+}
 
 
-  .sidenav-is-mobile{
-    position: fixed;
-    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
-    z-index: 2;
-  }
+.sidenav-is-mobile{
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
 
-  .mat-toolbar-single-row {
-    height: 50px;
-  }
+.mat-toolbar-single-row {
+  height: 50px;
+}
 
-  h1.sidenav-app-name {
-    margin-left: 8px;
-  }
+h1.sidenav-app-name {
+  margin-left: 8px;
+}
 
-  .sidenav-sidenav-container {
-    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-    flex: 1;
-  }
+.sidenav-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
 
-  .sidenav-is-mobile .sidenav-sidenav-container {
-    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
-       `<body>` to be our scrolling element for mobile layouts. */
-    flex: 1 0 auto;
-  }
+.sidenav-is-mobile .sidenav-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
 mat-sidenav{
   padding-top: 50px;
 }
-  .mat-icon-button{
-    position:absolute;
-    z-index: 2;
-    top:96px;
-    left:0;
-    margin: 10px;
-    min-width: 0;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    line-height: 40px;
-    border-radius: 50%;
+.mat-icon-button{
+  position:absolute;
+  z-index: 2;
+  top:96px;
+  left:0;
+  margin: 10px;
+  min-width: 0;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  line-height: 40px;
+  border-radius: 50%;
 
-  }
+}
 
-  .menu-button {
-    transition: 300ms ease-in-out;
-    transform: rotate(0deg);
-  }
-  .menu-button.rotated {
-    transform: rotate(180deg);
-  }
-  .submenu {
-    overflow-y: hidden;
-    transition: transform 300ms ease;
-    transform: scaleY(0);
-    transform-origin: top;
-    padding-left: 30px;
-  }
-  .submenu.expanded {
-    transform: scaleY(1);
-  }
+.menu-button {
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+.submenu {
+  overflow-y: hidden;
+  transition: transform 300ms ease;
+  transform: scaleY(0);
+  transform-origin: top;
+  padding-left: 30px;
+}
+.submenu.expanded {
+  transform: scaleY(1);
+}
 
-  div a{
-      border: none;
-  }
+div a{
+  border: none;
+}
 
-  .parent{
-      background:#efefef;
-  }
+.parent{
+  background:#efefef;
+}
 
 
-  .full-width-dashboard:hover{
-      outline: 0;
-  }
-  .full-width-dashboard:not(:hover){
-    outline: 0;
+.full-width-dashboard:hover{
+  outline: 0;
+}
+.full-width-dashboard:not(:hover){
+  outline: 0;
 }
 
 /* For center name text box. */
 ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
   padding: 0.3em 0em 0.7em 0em  !important;
 }
+
