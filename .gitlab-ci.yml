@@ -52,7 +52,7 @@ docker-build-prod:
     - ena-dcap-gitlab-runner
 
 k8s-deploy-dev:
-  image: dtzar/helm-kubectl
+  image: dtzar/helm-kubectl:3.11.0
   stage: deploy
   only:
     - /^dev-.*$/
@@ -72,7 +72,7 @@ k8s-deploy-dev:
   when: manual
 
 k8s-deploy-test:
-  image: dtzar/helm-kubectl
+  image: dtzar/helm-kubectl:3.11.0
   stage: deploy
   only:
     - /^test-.*$/
@@ -91,7 +91,7 @@ k8s-deploy-test:
   when: manual
 
 k8s-deploy-prod:
-  image: dtzar/helm-kubectl
+  image: dtzar/helm-kubectl:3.11.0
   stage: deploy
   only:
     - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
