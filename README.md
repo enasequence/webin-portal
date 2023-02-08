@@ -2,6 +2,9 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2dd3617875b940c2a4963a7d740250ff)](https://app.codacy.com/app/enasequence/webin-portal?utm_source=github.com&utm_medium=referral&utm_content=enasequence/webin-portal&utm_campaign=badger)
 
+`Google Analytics URL`
+https://analytics.google.com/analytics/web/#/p299294785/realtime/overview?params=_u..nav%3Dmaui
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0 and has been later upgraded to
 version 1.6.8
 version 7.3.8
