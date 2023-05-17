@@ -30,11 +30,46 @@
       </span>
 
       <span class="infoText" *ngIf="reportType === ReportType.runProcess">
+        <br> <br>
+        <p class="mat-body-strong">Not all runs will be processed into standard <a
+            href="https://ena-docs.readthedocs.io/en/latest/faq/archive-generated-files.html">archive generated
+            run files.</a></p>
+
+        <p><span class="mat-body-strong">Please note that <span style="color:red">in most cases</span> the system will
+            retry failed runs so errors may
+            resolve themselves.</span> If we
+          require you to modify your data files, you will receive an email detailing these processing errors and how to
+          reupload or resubmit corrected files. Please contact us if you have not been emailed and the process status of
+          your runs is ‘FAILED’ for a week since its Processed Date.</p>
       </span>
 
       <span class="infoText" *ngIf="reportType === ReportType.analysisProcess">
         The primary use of this report is to retrieve sequence accessions assigned as part of
         genome assembly, transcriptome assembly or sequence flat file submissions.
+        <br> <br>
+        <p class="mat-body-strong">Not all analyses will be processed into standard <a
+            href="https://ena-docs.readthedocs.io/en/latest/faq/archive-generated-analysis-files.html">archive generated
+            analysis files.</a></p>
+
+        <p><span class="mat-body-strong">Analysis ERZ accessions should not be used in publications.</span> For some
+          types of
+          assemblies, the Analysis
+          accession
+          will not be publicly released and instead Sequence accessions are released. Please see <a
+            hred="https://ena-docs.readthedocs.io/en/latest/faq/analysis-and-accessions.html">here</a> for a summary of
+          the
+          different analysis types and their resulting public accessions.</p>
+
+        <p>
+          <span class="mat-body-strong">Please note that <span style="color:red">in most cases </span>the system
+            will
+            retry failed analyses so errors
+            may
+            resolve themselves.</span> Please contact us if the process status if your analyses are ‘FAILED’ for a week
+          since
+          its Processed Date.
+
+        </p>
       </span>
 
       <span class="infoText" *ngIf="reportType === ReportType.unsubmittedFiles">
