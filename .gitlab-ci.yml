@@ -1,6 +1,6 @@
-image: docker:latest
+image: docker:stable
 services:
-  - docker:dind
+  - docker:stable-dind
 
 variables:
   DOCKER_DRIVER: overlay
