@@ -37,9 +37,9 @@ export class XmlService {
     let projectXml = new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>' +
       '<PROJECT_SET>' +
       '<PROJECT alias="' + alias + '">' +
-      '<NAME>' + form.studyName + '</NAME>' +
-      '<TITLE>' + form.studyTitle + '</TITLE>' +
-      '<DESCRIPTION>' + form.description + '</DESCRIPTION>' +
+      '<NAME>' + this.encodeXml(form.studyName) + '</NAME>' +
+      '<TITLE>' + this.encodeXml(form.studyTitle) + '</TITLE>' +
+      '<DESCRIPTION>' + this.encodeXml(form.description) + '</DESCRIPTION>' +
       projectType +
       pubMedXml +
       attributeXml +
@@ -59,7 +59,7 @@ export class XmlService {
     let dacXml = new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>' +
       '<DAC_SET>' +
       '<DAC alias="' + alias + '">' +
-      '<TITLE>' + form.title + '</TITLE>' +
+      '<TITLE>' + this.encodeXml(form.title) + '</TITLE>' +
       contactXml +
       '</DAC>' +
       '</DAC_SET>'])
@@ -89,9 +89,9 @@ export class XmlService {
     let dacPolicyXml = new Blob(['<?xml version = "1.0" encoding = "UTF-8"?>' +
       '<POLICY_SET>' +
       '<POLICY alias="' + alias + '" center_name="" accession="" >' +
-      '<TITLE>' + form.title + '</TITLE>' +
+      '<TITLE>' + this.encodeXml(form.title) + '</TITLE>' +
       '<DAC_REF accession="' + form.dacRef + '"/>' +
-      '<POLICY_TEXT>' + form.policyText + '</POLICY_TEXT>' +
+      '<POLICY_TEXT>' + this.encodeXml(form.policyText) + '</POLICY_TEXT>' +
       '</POLICY>' +
       '</POLICY_SET>'])
     var action = { name: "add" };
@@ -106,8 +106,8 @@ export class XmlService {
     let dacDatasetXmlStr = '' +
       '<DATASETS>' +
       '<DATASET alias="' + alias + '" broker_name="EGA" >' +
-      '<TITLE>' + form.title + '</TITLE>' +
-      '<DESCRIPTION>' + form.description + '</DESCRIPTION>' +
+      '<TITLE>' + this.encodeXml(form.title) + '</TITLE>' +
+      '<DESCRIPTION>' + this.encodeXml(form.description) + '</DESCRIPTION>' +
       typeXml +
       refXml +
       '<POLICY_REF accession="' + form.policyRef + '"/>' +
@@ -435,4 +435,15 @@ export class XmlService {
     }
   }
 
+  encodeXml(xmlContent) {
+    const replacements = {
+      '<': '&lt;',
+      '>': '&gt;',
+      '&': '&amp;',
+      '"': '&quot;',
+      "'": '&apos;'
+    };
+
+    return xmlContent.replace(/[<>&"']/g, match => replacements[match]);
+  }
 }
