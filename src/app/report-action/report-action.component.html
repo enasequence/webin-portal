@@ -56,6 +56,49 @@
       dataset</button>
   </div>
 
+  <!-- View records actions (when the records are public) -->
+
+  <div *ngIf="isViewRecordsAction(ReportType.projects)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.projects)"><i class="material-icons">launch</i>&#160;View in
+    browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.umbrellaProjects)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.umbrellaProjects)"><i class="material-icons">launch</i>&#160;View in
+    browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.studies)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.studies)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.samples)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.samples)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.runs)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.runs)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.experiments)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.experiments)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.analyses)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.analyses)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.dacs)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.dacs)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.policies)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.policies)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+  <div *ngIf="isViewRecordsAction(ReportType.datasets)">
+    <button mat-menu-item (click)="viewRecordsAction(ReportType.datasets)"><i class="material-icons">launch</i>&#160;View in
+      browser</button>
+  </div>
+
 
   <!-- Change report actions. -->
 

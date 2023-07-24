@@ -533,6 +533,21 @@ export class ReportComponent implements OnInit {
       actions.push(ReportActionType.createChangeReportAction(ReportType.policies, this.getPolicyId(result)));
     }
 
+    // Allow navigation to view records for all reports except file and processing reports when the records are public
+    const reportExceptions = [ReportType.runFiles, ReportType.analysisFiles,ReportType.runProcess, ReportType.analysisProcess]
+
+    if (this.getStatus(result) === "PUBLIC" && !reportExceptions.includes(this.reportType)) {
+       // View records for runs' reports
+      if (this.reportType === ReportType.runs && !this.isEga()) {
+        actions.push(ReportActionType.createViewRecordsAction(ReportType.runs, this.getId(result)));
+      } else if (this.reportType === ReportType.analyses && !this.isEga()) {
+        // View records for analyses' reports
+        actions.push(ReportActionType.createViewRecordsAction(ReportType.analyses, this.getId(result)));
+      } else {
+        // View records for other reports
+        actions.push(ReportActionType.createViewRecordsAction(this.reportType, this.getId(result)));
+      }   
+    }
     return actions;
   }
 
@@ -548,6 +563,12 @@ export class ReportComponent implements OnInit {
     if (action && action.reportActionType === ReportActionType.editXml) {
       // console.log('** edit xml action **', action);
       this.editXml(action);
+    }
+
+    if (action && action.reportActionType === ReportActionType.viewRecords) {
+      // console.log('** view records action **', action);
+      // window.location.href = `https://www.ebi.ac.uk/ena/browser/view/${action.id}`;  // Opens the link and views the records in the same tab
+      (window as any).open(`https://www.ebi.ac.uk/ena/browser/view/${action.id}`, "_blank"); // Opens the link and views the record in a new tab
     }
 
   }
@@ -792,12 +813,17 @@ export class ReportComponent implements OnInit {
     return result.report.secondaryId;
   }
 
+  getStatus(result) {
+    return result.report.releaseStatus;
+  }
+
   removeNullAndUndefined(value) {
     if (value === null || value === undefined) {
       return '';
     }
     return value;
   }
+
 
   // Column callbacks
   //

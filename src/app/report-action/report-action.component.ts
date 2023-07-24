@@ -47,12 +47,20 @@ export class ReportActionComponent {
     return this.actions.some(action => this.isAction(reportType, ReportActionType.editXml, action));
   }
 
+  isViewRecordsAction(reportType: ReportType): boolean {
+    return this.actions.some(action => this.isAction(reportType, ReportActionType.viewRecords, action));
+  }
+
   getChangeReportAction(reportType: ReportType): ReportActionInterface {
     return this.actions.find(action => this.isAction(reportType, ReportActionType.changeReport, action));
   }
 
   getEditXmlAction(reportType: ReportType): ReportActionInterface {
     return this.actions.find(action => this.isAction(reportType, ReportActionType.editXml, action));
+  }
+
+  getViewRecordsAction(reportType: ReportType): ReportActionInterface {
+    return this.actions.find(action => this.isAction(reportType, ReportActionType.viewRecords, action));
   }
 
   changeReportAction(reportType: ReportType): void {
@@ -63,6 +71,11 @@ export class ReportActionComponent {
   editXmlAction(reportType: ReportType): void {
     console.log('** edit xml action **', reportType);
     this.actionChange.emit(this.getEditXmlAction(reportType));
+  }
+
+  viewRecordsAction(reportType: ReportType): void {
+    console.log('** view records action **', reportType);
+    this.actionChange.emit(this.getViewRecordsAction(reportType));
   }
 
   editProjectAction(projObj) {
@@ -87,4 +100,5 @@ export class ReportActionComponent {
   editDatasetAction(datasetObj) {
     this.router.navigate(['/dac-dataset', datasetObj.report.id]);
   }
+
 }

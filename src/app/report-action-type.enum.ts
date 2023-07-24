@@ -15,6 +15,7 @@ import { ReportActionInterface } from './report-action.interface';
 export enum ReportActionType {
   changeReport = 'changeReport',
   editXml = 'editXml',
+  viewRecords = 'viewRecords'
 }
 
 export namespace ReportActionType {
@@ -30,6 +31,14 @@ export namespace ReportActionType {
   export function createEditXmlAction(reportType: ReportType, id: string): ReportActionInterface {
   return {
       reportActionType: ReportActionType.editXml,
+      reportType: reportType,
+      id: id
+    };
+  }
+
+  export function createViewRecordsAction(reportType: ReportType, id: string): ReportActionInterface {
+  return {
+      reportActionType: ReportActionType.viewRecords,
       reportType: reportType,
       id: id
     };
