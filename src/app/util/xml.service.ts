@@ -444,7 +444,7 @@ export class XmlService {
       "'": '&apos;'
     };
 
-    if (xmlContent != null) {
+    if (xmlContent !== undefined && xmlContent !== null) {
       return xmlContent.replace(/[<>&"']/g, match => replacements[match]);
     } else {
       return null;
