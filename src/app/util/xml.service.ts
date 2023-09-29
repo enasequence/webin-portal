@@ -381,7 +381,7 @@ export class XmlService {
 
       // Add new XREF_LINK [ PubMed ] tag
       for (var j = 0; j < newXrefLinkCnt; j++) {
-        /**  
+        /**
          * The appendChild() method of DOM element moves the element from newProjectLinks to existingProjectLinks (it dose not copy )
          * that is why we are adding [0]th element always to the xml document.
          */
@@ -444,6 +444,10 @@ export class XmlService {
       "'": '&apos;'
     };
 
-    return xmlContent.replace(/[<>&"']/g, match => replacements[match]);
+    if (xmlContent != null) {
+      return xmlContent.replace(/[<>&"']/g, match => replacements[match]);
+    } else {
+      return null;
+    }
   }
 }
