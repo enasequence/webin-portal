@@ -16,13 +16,14 @@
                 [(ngModel)]="id" />
             </mat-form-field>
             <mat-form-field class="app-field-padding">
-              <input name="centerName" matInput placeholder="Abbreviated center Name" required [(ngModel)]="centerName" />
+              <input name="centerName" matInput placeholder="Abbreviated center name" required
+                     [(ngModel)]="centerName"/>
               <mat-hint *ngIf="editMode">
                 Changing Center Name will not affect existing submissions
               </mat-hint>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
-              <input name="fullCenterName" matInput placeholder="Full center Name" required
+              <input name="fullCenterName" matInput placeholder="Full center name" required
                      [(ngModel)]="fullCenterName"/>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
