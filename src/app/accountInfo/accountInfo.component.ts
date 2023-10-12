@@ -29,6 +29,7 @@ import { NonSubmissionResultDialogComponent } from "../non-submission-result-dia
 export class AccountInfoComponent {
   id: string;
   centerName: string;
+  fullCenterName: string;
   address: string;
   laboratoryName: string;
   country: string;
@@ -197,7 +198,7 @@ export class AccountInfoComponent {
         this.util.showSuccess(
           this,
           NonSubmissionResultDialogComponent,
-          "Successfully saved account with submission account id : " + data.id,
+          'Successfully saved account with submission account id : ' + data.submissionAccountId,
           title,
           redirectPage
         );
@@ -257,6 +258,7 @@ export class AccountInfoComponent {
   setAccountInformation(data) {
     this.id = data.id;
     this.centerName = data.centerName;
+    this.fullCenterName = data.fullCenterName;
     this.address = data.address;
     this.laboratoryName = data.laboratoryName;
     this.country = data.country;
