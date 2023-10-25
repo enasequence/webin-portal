@@ -27,7 +27,7 @@ import { NonSubmissionResultDialogComponent } from "../non-submission-result-dia
   encapsulation: ViewEncapsulation.None,
 })
 export class AccountInfoComponent {
-  id: string;
+  submissionAccountId: string;
   centerName: string;
   fullCenterName: string;
   address: string;
@@ -256,7 +256,7 @@ export class AccountInfoComponent {
   }
 
   setAccountInformation(data) {
-    this.id = data.id;
+    this.submissionAccountId = data.submissionAccountId;
     this.centerName = data.centerName;
     this.fullCenterName = data.fullCenterName;
     this.address = data.address;
