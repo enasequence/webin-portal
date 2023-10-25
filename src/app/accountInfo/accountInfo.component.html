@@ -12,8 +12,8 @@
 
           <div class="column">
             <mat-form-field class="app-field-padding" *ngIf="editMode">
-              <input name="id" [readonly]="true" matInput placeholder="Submission Account Id" required
-                [(ngModel)]="id" />
+              <input name="submissionAccountId" [readonly]="true" matInput placeholder="Submission Account Id" required
+                [(ngModel)]="submissionAccountId" />
             </mat-form-field>
             <mat-form-field class="app-field-padding">
               <input name="centerName" matInput placeholder="Abbreviated center name" required
@@ -63,7 +63,7 @@
           <div class="column" *ngIf="editMode" style="padding-top: 20px">
             <a (click)="
                 openResetPasswordRequestDialog({
-                  submissionAccountId: id,
+                  submissionAccountId: submissionAccountId,
                   loggedIn: true
                 })
               ">Change Password
@@ -77,7 +77,7 @@
       <mat-card class="mat-body">
         <div class="row">
           <mat-card-subtitle>Contact Information</mat-card-subtitle>
-          <a (click)="openDialog('Add', { submissionAccountId: id })">Add At Least One Contact<mat-icon>add_circle
+          <a (click)="openDialog('Add', { submissionAccountId: submissionAccountId })">Add At Least One Contact<mat-icon>add_circle
             </mat-icon></a>
 
           <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">
