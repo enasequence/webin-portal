@@ -46,7 +46,7 @@ export class AccountInfoComponent {
     "remove",
   ];
   metagenomeSubmitter = false;
-  metagenomicsConsented = false;
+  metagenomicsAnalysis = false;
   noEffectCheckbox = false;
   countryErr = false;
 
@@ -183,7 +183,7 @@ export class AccountInfoComponent {
     var submissionAccount = form.value;
     submissionAccount["metagenomeSubmitter"] = this.metagenomeSubmitter;
     if (!this.metagenomeSubmitter) {
-      submissionAccount["metagenomeSubmitter"] = this.metagenomicsConsented
+      submissionAccount["metagenomeSubmitter"] = this.metagenomicsAnalysis
         ? true
         : false;
     }
@@ -263,7 +263,7 @@ export class AccountInfoComponent {
     this.laboratoryName = data.laboratoryName;
     this.country = data.country;
     this.metagenomeSubmitter = data.metagenomeSubmitter;
-    this.metagenomicsConsented = data.metagenomicsConsented;
+    this.metagenomicsAnalysis = data.metagenomicsAnalysis;
 
     data.submissionContacts.forEach((contact) => {
       contact.id = this.util.getId();
