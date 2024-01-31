@@ -34,7 +34,7 @@
             </mat-form-field>
             <mat-form-field class="app-field-padding">
               <input matInput placeholder="Country" [matAutocomplete]="auto" name="country" #countryVal="ngModel"
-                [(ngModel)]="country" (ngModelChange)="getCountries(country)" (blur)="selectCountryOption($event)" />
+                required [(ngModel)]="country" (ngModelChange)="getCountries(country)" (blur)="selectCountryOption($event)" />
 
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
@@ -44,6 +44,10 @@
             </mat-autocomplete>
             <mat-error class="mat-body" *ngIf="countryErr">
               Invalid country. Please select a country from the provided list.
+            </mat-error>
+
+            <mat-error class="mat-body" *ngIf="blacklistedCountryErr">
+              Webin submission account registration is not supported for Russia or Belarus.
             </mat-error>
           </div>
           <div class="column" *ngIf="!editMode">
