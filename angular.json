@@ -40,11 +40,6 @@
             ],
             "styles": [
               "src/styles.scss"
-            ],
-            "scripts": [
-              "./node_modules/ace-builds/src/ace.js",
-              "./node_modules/ace-builds/src/mode-xml.js",
-              "./node_modules/ace-builds/src/theme-eclipse.js"
             ]
           },
           "configurations": {

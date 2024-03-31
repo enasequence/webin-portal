@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { SubmissionResultComponent } from '../submission-result/submission-result.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
 
 @Component({

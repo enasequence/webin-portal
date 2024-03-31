@@ -51,7 +51,9 @@ import { ResetPasswordPageComponent } from './reset-password-page/reset-password
 import { StudyManagementComponent } from './study-management/study-management.component';
 import { PopupMessageComponent } from './popup-message/popup-message.component';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule, MatCardSubtitle, MatSidenavModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { FileInputValueAccessor } from './directives/file-input.accessor.directive';
 import { DiableAutofillDirective } from './directives/app-disable-autofill.directive';
 import { ReleaseDatePopupComponent } from './release-date-popup/release-date-popup/release-date-popup.component';
@@ -61,7 +63,6 @@ import { TaxonomyManagementComponent } from './taxonomy-management/taxonomy-mana
 import { TaxonomyDialogModalComponent } from './taxonomy-dialog-modal/taxonomy-dialog-modal.component';
 import { UniqueNameByArrayDirective } from './directives/unique-name-by-array.directive';
 import { NonSubmissionResultDialogComponent } from './non-submission-result-dialog/non-submission-result-dialog.component';
-import { AceEditorModule } from 'ng2-ace-editor';
 import { DacManagementComponent } from './dac-management/dac-management.component';
 import { DacPolicyManagementComponent } from './dac-policy-management/dac-policy-management.component';
 import { DacDatasetManagementComponent } from './dac-dataset-management/dac-dataset-management.component';
@@ -209,8 +210,7 @@ const appRoutes: Routes = [
         enableTracing: false, // <-- debugging purposes only
         onSameUrlNavigation: "reload"
       }
-    ),
-    AceEditorModule,
+    )
   ],
   declarations: [
     AppComponent,

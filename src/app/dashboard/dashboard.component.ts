@@ -12,7 +12,7 @@
 import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportType } from '../report-type.enum';
-import { MatIconModule } from '@angular/material'
+import { MatIconModule } from '@angular/material/icon'
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 

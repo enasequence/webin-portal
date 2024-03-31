@@ -12,7 +12,7 @@
 import { Component, ViewEncapsulation, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ContactDialogModalComponent } from "../contact-dialog-modal/contact-dialog-modal.component";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 import { UtilService } from "../util/Util-services";
 import { Router, ActivatedRoute } from "@angular/router";
 import { WebinAuthenticationService } from "../webin-authentication.service";

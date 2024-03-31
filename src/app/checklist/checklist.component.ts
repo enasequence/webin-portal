@@ -11,8 +11,9 @@
 
 import { Component, Input, ViewEncapsulation, OnInit, Optional, Inject, ViewChild, QueryList, ElementRef, ViewChildren } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatExpansionPanel } from '@angular/material';
-
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { saveAs } from 'file-saver';
 import { retry, mergeMap, map } from 'rxjs/operators';
 import { ChecklistType } from '../checklist-type.enum';
@@ -570,7 +571,7 @@ export class ChecklistComponent implements OnInit {
       this.showSuccessPopup("Successfully added custom field '" + customField + "'. The field can be viewed in custom fields grouping below.", "Custom field");
       customText.value = "";
 
-      //opening custom panal is not woeking as expected so closing all the panels after adding custom field. 
+      //opening custom panal is not woeking as expected so closing all the panels after adding custom field.
       accordion.multi = true;
       accordion.closeAll();
       accordion.multi = false;

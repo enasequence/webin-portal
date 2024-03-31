@@ -3,10 +3,13 @@ import { UtilService } from "../util/Util-services";
 import { XmlService } from "../util/xml.service";
 import { WebinRestService } from "../webin-rest.service";
 
-import { getMatIconNoHttpProviderError, MatTableDataSource, MAT_DATE_LOCALE } from "@angular/material";
+import { getMatIconNoHttpProviderError } from '@angular/material/icon';
+import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Observable } from "rxjs";
 import { retry } from "rxjs/operators";
-import { DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { DateAdapter } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import * as _moment from "moment";
 import { ActivatedRoute, Router } from "@angular/router";

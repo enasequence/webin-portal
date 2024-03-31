@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  MatStepper,
-  MatTableDataSource,
-  MatDialog,
-  MatExpansionPanel,
-} from "@angular/material";
+import { MatStepper } from '@angular/material/stepper';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { WebinRestService } from "../webin-rest.service";
 import { Observable } from "rxjs";
 import { retry } from "rxjs/operators";

@@ -11,7 +11,7 @@
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, Inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
 import { WebinXmlReportService } from '../webin-xml-report.service';
@@ -20,7 +20,6 @@ import { SubmissionResultComponent } from '../submission-result/submission-resul
 
 import { ReportType } from '../report-type.enum';
 import { ReportActionInterface } from '../report-action.interface';
-import { AceEditorModule } from 'ng2-ace-editor';
 
 @Component({
   selector: 'app-report-edit-dialog',

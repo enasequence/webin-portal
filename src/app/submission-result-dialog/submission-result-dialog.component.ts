@@ -12,7 +12,7 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { Observable } from "rxjs";
 import { SubmissionResultComponent } from "../submission-result/submission-result.component";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "app-submission-result-dialog",
