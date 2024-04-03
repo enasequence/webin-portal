@@ -12,7 +12,6 @@ import { TaxonomyDialogModalComponent } from "../taxonomy-dialog-modal/taxonomy-
 import { utils } from "protractor";
 import { UtilService } from "../util/Util-services";
 import { WebinAuthenticationService } from "../webin-authentication.service";
-import { TagContentType, ThrowStmt } from "@angular/compiler";
 import { CustomValidationService } from "../validation/custom-validation.service";
 import { environment } from "../../environments/environment";
 import { SubmissionResultDialogComponent } from "../submission-result-dialog/submission-result-dialog.component";
