@@ -20,6 +20,6 @@
     ]
   },
   "angularCompilerOptions": {
-    "compilationMode": "partial"
+    "compilationMode": "full"
   }
 }
