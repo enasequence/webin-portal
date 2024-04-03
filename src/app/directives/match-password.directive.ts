@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { NG_VALIDATORS, Validator, ValidationErrors, FormGroup } from '@angular/forms';
+import { NG_VALIDATORS, Validator, ValidationErrors, UntypedFormGroup } from '@angular/forms';
 import { CustomValidationService } from '../validation/custom-validation.service';
 
 @Directive({
@@ -12,7 +12,7 @@ export class MatchPasswordDirective implements Validator {
 
   constructor(private customValidator: CustomValidationService) { }
 
-  validate(formGroup: FormGroup): ValidationErrors {
+  validate(formGroup: UntypedFormGroup): ValidationErrors {
     return this.customValidator.MatchPassword(this.MatchPassword[0], this.MatchPassword[1])(formGroup);
   }
 

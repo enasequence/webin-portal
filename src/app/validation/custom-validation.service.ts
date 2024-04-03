@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class CustomValidationService {
 
 
   MatchPassword(password: string, confirmPassword: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const passwordControl = formGroup.controls[password];
       const confirmPasswordControl = formGroup.controls[confirmPassword];
 
@@ -52,7 +52,7 @@ export class CustomValidationService {
   }
 
   UniqueName(name: string, nameArrayStr: string, action: string): any {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       //if(name){
       const nameControl = formGroup.controls[name];
       const nameArr = formGroup.controls[nameArrayStr];

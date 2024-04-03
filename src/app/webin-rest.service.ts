@@ -19,8 +19,6 @@ import { tap, startWith, map, debounceTime, catchError } from 'rxjs/operators';
 import { ReportType } from './report-type.enum';
 import { WebinRestServiceInterface } from './webin-rest.service.interface';
 import { WebinAuthenticationService } from './webin-authentication.service';
-import { stringify } from '@angular/compiler/src/util';
-
 
 @Injectable()
 export class WebinRestService implements WebinRestServiceInterface {
@@ -277,7 +275,7 @@ export class WebinRestService implements WebinRestServiceInterface {
               alias: childNode.getAttribute('alias')
             });
 
-          // Save project details for displaying project specific message.  
+          // Save project details for displaying project specific message.
           if (childNode.tagName === 'PROJECT') {
             receipt.releaseDate = childNode.getAttribute('holdUntilDate');
             receipt.releaseStatus = childNode.getAttribute('status');

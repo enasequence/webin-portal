@@ -194,94 +194,76 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    UiModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
-    FormsModule,
-    MatIconModule,
-    MatSidenavModule,
-
-    // Router
-    RouterModule.forRoot(
-      appRoutes,
-      {
-        enableTracing: false, // <-- debugging purposes only
-        onSameUrlNavigation: "reload"
-      }
-    )
-  ],
-  declarations: [
-    AppComponent,
-    SubmitComponent,
-    SubmissionResultComponent,
-    SubmissionResultDialogComponent,
-    LoginComponent,
-    LogoutComponent,
-    DashboardComponent,
-    HeaderComponent,
-    FooterComponent,
-    ReportComponent,
-    ReportEditDialogComponent,
-    ReportActionComponent,
-    GdprComponent,
-    ChecklistComponent,
-    AccountInfoComponent,
-    ContactDialogModalComponent,
-    UniqueContactEmailDirective,
-    MatchPasswordDirective,
-    ResetPasswordRequestDialogComponent,
-    ResetPasswordPageComponent,
-    StudyManagementComponent,
-    PopupMessageComponent,
-    FileInputValueAccessor,
-    DiableAutofillDirective,
-    ReleaseDatePopupComponent,
-    SidenavComponent,
-    ReadSubmissionComponent,
-    TaxonomyManagementComponent,
-    TaxonomyDialogModalComponent,
-    UniqueNameByArrayDirective,
-    NonSubmissionResultDialogComponent,
-    DacManagementComponent,
-    DacPolicyManagementComponent,
-    DacDatasetManagementComponent,
-    UmbrellaManagementComponent,
-
-
-  ],
-  bootstrap: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-  ],
-  providers: [
-    WebinRestService,
-    WebinReportService,
-    WebinXmlReportService,
-    WebinAuthenticationService,
-    WebinGdprService,
-    WebinAuthenticationGuardService,
-    WebinGdprGuardService,
-
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: WebinAuthenticationInterceptor,
-      multi: true,
-    }
-  ],
-  entryComponents: [
-    ReportEditDialogComponent,
-    SubmissionResultDialogComponent,
-    ContactDialogModalComponent,
-    ResetPasswordRequestDialogComponent,
-    PopupMessageComponent,
-    ReleaseDatePopupComponent,
-    TaxonomyDialogModalComponent,
-    NonSubmissionResultDialogComponent
-
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+    imports: [
+        BrowserModule,
+        UiModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        FormsModule,
+        MatIconModule,
+        MatSidenavModule,
+        // Router
+        RouterModule.forRoot(appRoutes, {
+            enableTracing: false,
+            onSameUrlNavigation: "reload"
+        })
+    ],
+    declarations: [
+        AppComponent,
+        SubmitComponent,
+        SubmissionResultComponent,
+        SubmissionResultDialogComponent,
+        LoginComponent,
+        LogoutComponent,
+        DashboardComponent,
+        HeaderComponent,
+        FooterComponent,
+        ReportComponent,
+        ReportEditDialogComponent,
+        ReportActionComponent,
+        GdprComponent,
+        ChecklistComponent,
+        AccountInfoComponent,
+        ContactDialogModalComponent,
+        UniqueContactEmailDirective,
+        MatchPasswordDirective,
+        ResetPasswordRequestDialogComponent,
+        ResetPasswordPageComponent,
+        StudyManagementComponent,
+        PopupMessageComponent,
+        FileInputValueAccessor,
+        DiableAutofillDirective,
+        ReleaseDatePopupComponent,
+        SidenavComponent,
+        ReadSubmissionComponent,
+        TaxonomyManagementComponent,
+        TaxonomyDialogModalComponent,
+        UniqueNameByArrayDirective,
+        NonSubmissionResultDialogComponent,
+        DacManagementComponent,
+        DacPolicyManagementComponent,
+        DacDatasetManagementComponent,
+        UmbrellaManagementComponent,
+    ],
+    bootstrap: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+    ],
+    providers: [
+        WebinRestService,
+        WebinReportService,
+        WebinXmlReportService,
+        WebinAuthenticationService,
+        WebinGdprService,
+        WebinAuthenticationGuardService,
+        WebinGdprGuardService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: WebinAuthenticationInterceptor,
+            multi: true,
+        }
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
