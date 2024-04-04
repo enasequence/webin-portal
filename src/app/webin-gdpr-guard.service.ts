@@ -10,12 +10,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { WebinGdprService } from './webin-gdpr.service';
 
 @Injectable()
-export class WebinGdprGuardService implements CanActivate {
+export class WebinGdprGuardService  {
 
   constructor(private webinGdprService: WebinGdprService, private router: Router) {}
 

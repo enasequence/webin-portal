@@ -25,7 +25,7 @@ import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportActionInterface } from '../report-action.interface';
 import { ActivatedRoute } from '@angular/router';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
 import { MediaObserver } from '@angular/flex-layout';
 

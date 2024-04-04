@@ -13,7 +13,7 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
 import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 import { ReportActionInterface } from '../report-action.interface';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-action',

@@ -10,11 +10,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { WebinAuthenticationService } from './webin-authentication.service';
 
 @Injectable()
-export class WebinAuthenticationGuardService implements CanActivate {
+export class WebinAuthenticationGuardService  {
 
   constructor(private webinAuthenticationService: WebinAuthenticationService, private router: Router) { }
 
