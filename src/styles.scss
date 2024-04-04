@@ -4,6 +4,7 @@
 @use '@angular/material' as mat;
 @include mat.core();
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+// @import url('https://fonts.googleapis.com/icon?family=Roboto');
 // Fonts
 // @import url('https://fonts.googleapis.com/icon?family=Roboto');
 // body {
@@ -14,6 +15,13 @@
 // primary #007c82
 // accent (analogous) #38983e
 // http://mcg.mbitson.com
+/*@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5fCRc4EsA.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}*/
 $mat-ebi-primary: (
   50 : #e0eff0,
   100 : #b3d8da,
@@ -83,15 +91,17 @@ $mat-ebi-accent: (
 $app-primary: mat.define-palette($mat-ebi-primary);
 $app-accent:  mat.define-palette($mat-ebi-accent);
 $app-warn:    mat.define-palette(mat.$red-palette);
+/*$app-typography: mat.define-typography-config(
+  $font-family: 'Roboto'
+);*/
 
 $app-theme: mat.define-light-theme((
   color: (
     primary: $app-primary,
     accent: $app-accent,
     warn: $app-warn
-  ),
-  typography: mat.define-typography-config(),
-  density: 0,
+  )
+  /*typography: $app-typography*/
 ));
 
 @include mat.all-component-themes($app-theme);
