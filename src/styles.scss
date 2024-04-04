@@ -4,7 +4,7 @@
 @use '@angular/material' as mat;
 @include mat.core();
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-// @import url('https://fonts.googleapis.com/icon?family=Roboto');
+@import url('https://fonts.googleapis.com/icon?family=Roboto');
 // Fonts
 // @import url('https://fonts.googleapis.com/icon?family=Roboto');
 // body {
@@ -91,17 +91,17 @@ $mat-ebi-accent: (
 $app-primary: mat.define-palette($mat-ebi-primary);
 $app-accent:  mat.define-palette($mat-ebi-accent);
 $app-warn:    mat.define-palette(mat.$red-palette);
-/*$app-typography: mat.define-typography-config(
+$app-typography: mat.define-typography-config(
   $font-family: 'Roboto'
-);*/
+);
 
 $app-theme: mat.define-light-theme((
   color: (
     primary: $app-primary,
     accent: $app-accent,
     warn: $app-warn
-  )
-  /*typography: $app-typography*/
+  ),
+  typography: $app-typography
 ));
 
 @include mat.all-component-themes($app-theme);
