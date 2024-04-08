@@ -1,148 +1,162 @@
-.body{
-    padding:10px 20px 10px 10px;
+.body {
+  padding: 10px 20px 10px 10px;
 }
 
-.container{
-    padding: 10px 0px 0px 0px;
-}
-.cardTitle{
-    font-weight: 550;
-    font-size: 16px;
-    text-align: center;
-    color: #00000080;
-}
-.cardSubTitle{
-    font-style: italic;
-    text-align: left;
-    font-size: 12px;
-}
-.cat-element span{
-    display: inline-block;
-    text-align: center;
-    width: 280px;
-    vertical-align: middle;
-    cursor: pointer;
-    height: 60px;
-
-}
-.cat-column1{
-    float: left;
-    width: 55%;
+.container {
+  padding: 10px 0px 0px 0px;
 }
 
-.cat-column2{
-    float: left;
-    width: 45%;
-    
-}
-.cat-element span p{
-    padding-top: 14px;
-    padding-left: 60px;
-    text-align: left;
-}
-.cat-element span mat-icon{
-    font-size: 50px;
-    margin-right: 10px;
-    margin-top: 5PX;
+.cardTitle {
+  font-weight: 550;
+  font-size: 16px;
+  text-align: center;
+  color: #00000080;
 }
 
-.cat-column span mat-icon{
-    font-size: 50px;
-    margin-right: 10px;
+.cardSubTitle {
+  font-style: italic;
+  text-align: left;
+  font-size: 12px;
+}
+
+.cat-element span {
+  display: inline-block;
+  text-align: center;
+  width: 280px;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 60px;
+
+}
+
+.cat-column1 {
+  float: left;
+  width: 55%;
+}
+
+.cat-column2 {
+  float: left;
+  width: 45%;
+
+}
+
+.cat-element span p {
+  padding-top: 14px;
+  padding-left: 60px;
+  text-align: left;
+}
+
+.cat-element span mat-icon {
+  font-size: 50px;
+  margin-right: 10px;
+  margin-top: 5PX;
+  width: 50px;
+  height: 50px;
+}
+
+.cat-column span mat-icon {
+  font-size: 50px;
+  margin-right: 10px;
 }
 
 span:hover {
-    background-color: rgba(180, 180, 180, 0.164);
-  }
+  background-color: rgba(180, 180, 180, 0.164);
+}
 
- mat-card{
-     margin:30px;
- }
+mat-card {
+  margin: 30px;
+}
 
-  .mat-card-css{
+.mat-card-css {
+  background: #f5f5f5;
+  padding: 30px !important;
+  width: 45%;
+}
+
+.metadataImage {
+  width: 100%;
+  text-align: right;
+}
+
+mat-card-subtitle {
+  text-align: center;
+}
+
+.category {
+  text-align: left;
+}
+
+.dashboard-welcome-card {
+  width: 55%;
+  margin-right: 15px;
+  background: none;
+  padding: 0 !important;
+  box-shadow: none;
+}
+
+.dashboard-image-card {
+  width: 35%;
+  margin-bottom: 0px;
+  background: none;
+  box-shadow: none;
+}
+
+.note_add,
+.insert_chart {
+  float: left;
+}
+
+.dashboard-content {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.icon-yellow {
+  color: #ffbe1b;
+}
+
+.icon-green {
+  color: #71ab46;
+}
+
+.icon-blue {
+  color: #5596d3;
+}
+
+.icon-gray {
+  color: #aeabab;
+}
+
+.icon-safron {
+  color: #ef8a43;
+}
+
+@media screen and (max-width: 980px) {
+  .mat-card-css {
     background: #f5f5f5;
-    padding:30px !important;
-    width:45%;
+    width: 100%;
+    overflow: auto;
   }
 
-  .metadataImage{
-      width: 100%;
-      text-align: right;
-  }
-
-  mat-card-subtitle{
-      text-align: center;
-  }
-
-  .category{
-    text-align: left;
-  }
-
-  .dashboard-welcome-card  {
-    width: 55%;
-    margin-right:15px;
+  .dashboard-welcome-card {
+    width: 100%;
+    margin-right: 15px;
     background: none;
     padding: 0 !important;
   }
 
-  .dashboard-image-card{
-    width: 35%;
+  .dashboard-image-card {
+    width: 100%;
     margin-bottom: 0px;
-    background: none;
   }
 
-  .note_add, .insert_chart{
-      float: left;
+  .cat-column1 {
+    width: 100%;
   }
 
-  .dashboard-content{
-    padding-left: 5%;
-    padding-right: 5%;
-  }
+  .cat-column2 {
+    float: left;
+    width: 100%;
 
-  .icon-yellow{
-    color: #ffbe1b;
   }
-    
-  .icon-green{
-    color: #71ab46;
-   }
-   .icon-blue{
-    color: #5596d3;
-  }
-
-  .icon-gray{
-    color: #aeabab;
-  }
-
-  .icon-safron{
-    color: #ef8a43;
-  }
-
-  @media screen and (max-width: 980px) {
-    .mat-card-css{
-        background: #f5f5f5;
-        width:100%;
-        overflow: auto;
-      }
-      .dashboard-welcome-card  {
-        width: 100%;
-        margin-right:15px;
-        background: none;
-        padding: 0 !important;
-      }
-      .dashboard-image-card{
-        width: 100%;
-        margin-bottom: 0px;
-      }
-    .cat-column1{
-        width: 100%;
-    }
-    
-    .cat-column2{
-        float: left;
-        width: 100%;
-        
-    }  
-  }
- 
+}
