@@ -124,6 +124,31 @@
     .mat-typography {
       font: 400 14px / 20px Roboto, "Helvetica Neue", sans-serif;
     }
+
+    .mat-card-subtitle {
+      color: rgba(0, 0, 0, .54);
+      text-align: center;
+
+    }
+
+    .row.expanded .row {
+      margin-right: auto;
+      margin-left: auto;
+      width: 100%;
+    }
+
+    mat-card-content,
+    mat-card-subtitle {
+      font-size: 14px;
+    }
+
+    mat-card {
+      transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+      display: block;
+      position: relative;
+      padding: 16px;
+      border-radius: 4px;
+    }
   </style>
 
   <app-header></app-header> <!-- ** Application specific content ** -->
