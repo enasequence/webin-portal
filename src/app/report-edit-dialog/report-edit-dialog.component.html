@@ -16,10 +16,7 @@
 
     <!-- Show XML editor -->
 
-    <ace-editor [(value)]="xml" [mode]="'xml'" [(ngModel)]="xml" [theme]="'eclipse'" [wrap]="'false'"
-      style="min-height: 100% ;">
-    </ace-editor>
-
+    <ace [mode]="'text'" [theme]="'eclipse'" [(value)]="xml"></ace>
   </div>
 
   <!-- Show XML update result -->

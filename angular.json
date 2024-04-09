@@ -61,6 +61,7 @@
               ]
             },
             "production": {
+              "baseHref": "/ena/submit/webin/",
               "optimization": {
                 "scripts": true,
                 "styles": true,
@@ -68,7 +69,6 @@
               },
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,

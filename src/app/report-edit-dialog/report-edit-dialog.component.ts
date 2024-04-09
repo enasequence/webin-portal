@@ -9,17 +9,21 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, Inject } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import {Component, OnInit, ViewEncapsulation, ViewChild, Inject} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Observable} from 'rxjs';
 
-import { WebinXmlReportService } from '../webin-xml-report.service';
-import { WebinRestService } from '../webin-rest.service';
-import { SubmissionResultComponent } from '../submission-result/submission-result.component';
+import {WebinXmlReportService} from '../webin-xml-report.service';
+import {WebinRestService} from '../webin-rest.service';
+import {SubmissionResultComponent} from '../submission-result/submission-result.component';
 
-import { ReportType } from '../report-type.enum';
-import { ReportActionInterface } from '../report-action.interface';
+import {ReportType} from '../report-type.enum';
+import {ReportActionInterface} from '../report-action.interface';
+
+import 'brace';
+import 'brace/mode/xml';
+import 'brace/theme/eclipse';
 
 @Component({
   selector: 'app-report-edit-dialog',
@@ -29,13 +33,14 @@ import { ReportActionInterface } from '../report-action.interface';
 })
 export class ReportEditDialogComponent implements OnInit {
 
-  @ViewChild(SubmissionResultComponent, { static: true }) submissionResult: SubmissionResultComponent;
+  @ViewChild(SubmissionResultComponent, {static: true}) submissionResult: SubmissionResultComponent;
 
   constructor(
     private _webinXmlReportService: WebinXmlReportService,
     private _webinRestService: WebinRestService,
     public dialogRef: MatDialogRef<ReportEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReportActionInterface) { }
+    @Inject(MAT_DIALOG_DATA) public data: ReportActionInterface) {
+  }
 
   retrieveXmlError: string;
   xml: string;
@@ -132,7 +137,7 @@ export class ReportEditDialogComponent implements OnInit {
   }
 
   save() {
-    var action = { name: "Edit" };
+    var action = {name: "Edit"};
     const observable: Observable<string> = this._webinRestService.updateXml(
       this.data.reportType, new Blob([this.xml]), action, null);
 
