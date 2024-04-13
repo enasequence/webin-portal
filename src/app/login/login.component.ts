@@ -9,16 +9,17 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { WebinAuthenticationService } from '../webin-authentication.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { mergeMap } from 'rxjs/operators';
-import { RouterModule } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { ResetPasswordRequestDialogComponent } from '../reset-password-request-dialog/reset-password-request-dialog.component'
-import { UtilService } from '../util/Util-services';
-
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {WebinAuthenticationService} from '../webin-authentication.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {mergeMap} from 'rxjs/operators';
+import {RouterModule} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  ResetPasswordRequestDialogComponent
+} from '../reset-password-request-dialog/reset-password-request-dialog.component'
+import {UtilService} from '../util/Util-services';
 
 
 @Component({
@@ -40,8 +41,8 @@ export class LoginComponent implements OnInit {
     private _webinAuthenticationService: WebinAuthenticationService,
     public dialog: MatDialog,
     private util: UtilService,
-
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     //  console.log('LoginComponent.ngOnInit');
@@ -55,49 +56,46 @@ export class LoginComponent implements OnInit {
   login() {
     this._webinAuthenticationService.logout();
 
-    this._webinAuthenticationService.login(this.username, this.password).
-      pipe(
-        mergeMap(data => {
-          // console.log('WebinAuthenticationService.login succeeded');
-          this._webinAuthenticationService.ega = data.roles.EGA;
-          this._webinAuthenticationService.superUser = data.roles.SUPER_USER;
-          this._webinAuthenticationService.account = data.principle;
-          return this._webinAuthenticationService.loginToken(this.username, this.password);
-        })
-      ).
-      subscribe(
-        data => {
-          // console.log('WebinAuthenticationService.loginToken succeeded');
-          this._webinAuthenticationService.token = data;
-          const redirectUrl = this._webinAuthenticationService.redirectUrl;
-          if (redirectUrl) {
-            this._router.navigateByUrl(redirectUrl);
-            this._webinAuthenticationService.redirectUrl = null;
+    this._webinAuthenticationService.login(this.username, this.password).pipe(
+      mergeMap(data => {
+        // console.log('WebinAuthenticationService.login succeeded');
+        this._webinAuthenticationService.ega = data.roles.EGA;
+        this._webinAuthenticationService.superUser = data.roles.SUPER_USER;
+        this._webinAuthenticationService.account = data.principle;
+        return this._webinAuthenticationService.loginToken(this.username, this.password);
+      })
+    ).subscribe(
+      data => {
+        // console.log('WebinAuthenticationService.loginToken succeeded');
+        this._webinAuthenticationService.token = data;
+        const redirectUrl = this._webinAuthenticationService.redirectUrl;
+        if (redirectUrl) {
+          this._router.navigateByUrl(redirectUrl);
+          this._webinAuthenticationService.redirectUrl = null;
+        } else {
+          this._router.navigateByUrl('');
+          if (!this._webinAuthenticationService.ega) {
+            this._webinAuthenticationService.setSubmissionAccount();
+          } else {
+            this._webinAuthenticationService.setEgaSubmissionAccount();
           }
-          else {
-            this._router.navigateByUrl('');
-            if (!this._webinAuthenticationService.ega) {
-              this._webinAuthenticationService.setSubmissionAccount();
-            } else {
-              this._webinAuthenticationService.setEgaSubmissionAccount();
-            }
-          }
-        },
-        // Errors.
-        (err: HttpErrorResponse) => {
-          this.error = true;
-          this._webinAuthenticationService.authenticated = false;
-
-          if (err.status === 403) {
-            this.errorMessage = "Webin submission account has been suspended. Please contact the <a href='https://www.ebi.ac.uk/ena/browser/support'>ENA helpdesk</a>"
-          }
-          console.error(err);
-        },
-        () => {
-          this.error = false;
-          this._webinAuthenticationService.authenticated = true;
         }
-      );
+      },
+      // Errors.
+      (err: HttpErrorResponse) => {
+        this.error = true;
+        this._webinAuthenticationService.authenticated = false;
+
+        if (err.status === 403) {
+          this.errorMessage = "Webin submission account has been suspended. Please contact the <a href='https://www.ebi.ac.uk/ena/browser/support'>ENA helpdesk</a>"
+        }
+        console.error(err);
+      },
+      () => {
+        this.error = false;
+        this._webinAuthenticationService.authenticated = true;
+      }
+    );
 
   }
 
@@ -106,7 +104,7 @@ export class LoginComponent implements OnInit {
       width: '400px',
       backdropClass: 'custom-dialog-backdrop-class',
       panelClass: 'custom-dialog-panel-class',
-      data: { resetObj: obj }
+      data: {resetObj: obj}
     });
   }
 

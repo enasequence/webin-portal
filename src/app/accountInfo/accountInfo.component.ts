@@ -53,8 +53,6 @@ export class AccountInfoComponent {
   metagenomicsAnalysis = false;
   noEffectCheckbox = false;
   countryErr = false;
-  sanctionedCountryError = false;
-
   /* Used for storing added emails, this will be used for validation */
   emails = [];
 
@@ -301,12 +299,6 @@ export class AccountInfoComponent {
   }
 
   selectCountryOption(event: any): void {
-    const selectedCountry = event.target.value;
-
-    // Check if the selected country is not an empty string and is not in the countries array
-    this.countryErr = selectedCountry !== '' && this.countries.indexOf(selectedCountry) === -1;
-
-    // Check if the selected country is Russia or Belarus
-    this.sanctionedCountryError = selectedCountry === 'Russia' || selectedCountry === 'Belarus';
+    this.countryErr = event.target.value != "" && this.countries.indexOf(event.target.value) === -1;
   }
 }
