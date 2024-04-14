@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
         this._webinAuthenticationService.authenticated = false;
 
         if (err.status === 403) {
-          this.errorMessage = "Webin submission account has been suspended. Please contact the <a href='https://www.ebi.ac.uk/ena/browser/support'>ENA helpdesk</a>"
+          this.errorMessage = err.error;
         }
         console.error(err);
       },
