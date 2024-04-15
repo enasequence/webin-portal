@@ -45,6 +45,7 @@
           },
           "configurations": {
             "dev": {
+              "baseHref": "/ena/dev/submit/webin/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -53,6 +54,7 @@
               ]
             },
             "test": {
+              "baseHref": "/ena/submit/webin/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
