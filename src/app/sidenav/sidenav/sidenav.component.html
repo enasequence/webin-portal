@@ -1,6 +1,6 @@
 <div class="sidenav-container">
 
-  <button *ngIf="isAuthenticated()" mat-icon-button (click)="snav.toggle()">
+  <button *ngIf="isAuthenticated()" mat-icon-button (click)="snav.toggle()" class="menu-button">
     <mat-icon>menu</mat-icon>
   </button>
   <mat-sidenav-container class="sidenav-sidenav-container">
@@ -115,9 +115,8 @@
           <a mat-list-item target='_blank' href='{{sourceAttributeHelperURL}}'>
             <span matTooltip="Source Attribute Helper tool can be used to construct an attribute or
             validate/enhance a constructed attribute for referring to the biological source of the sequence data. "
-                  matTooltipPosition="right"
-                  [matTooltipShowDelay]="0"
-                  [matTooltipClass]='{infobox: true}'>Source Attribute Helper
+              matTooltipPosition="right" [matTooltipShowDelay]="0" [matTooltipClass]='{infobox: true}'>Source Attribute
+              Helper
             </span>
           </a>
         </div>

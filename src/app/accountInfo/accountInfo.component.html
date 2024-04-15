@@ -4,7 +4,7 @@
   </div>
   <mat-divider></mat-divider>
   <form (ngSubmit)="submitAccount(f)" #f="ngForm" [appMatchPassword]="['webinPassword', 'confirmPassword']"
-    autocomplete="off">
+        autocomplete="off">
     <div class="container">
       <mat-card>
         <div class="row">
@@ -13,7 +13,7 @@
           <div class="column">
             <mat-form-field class="app-field-padding" *ngIf="editMode">
               <input name="submissionAccountId" [readonly]="true" matInput placeholder="Submission Account Id" required
-                [(ngModel)]="submissionAccountId" />
+                     [(ngModel)]="submissionAccountId"/>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
               <input name="centerName" matInput placeholder="Abbreviated center name" required
@@ -27,15 +27,15 @@
                      [(ngModel)]="fullCenterName"/>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
-              <input matInput placeholder="Laboratory Name" [(ngModel)]="laboratoryName" name="laboratoryName" />
+              <input matInput placeholder="Laboratory Name" [(ngModel)]="laboratoryName" name="laboratoryName"/>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
-              <input matInput placeholder="Address" required [(ngModel)]="address" name="address" />
+              <input matInput placeholder="Address" required [(ngModel)]="address" name="address"/>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
               <input matInput placeholder="Country" [matAutocomplete]="auto" name="country" #countryVal="ngModel"
-                [(ngModel)]="country" (ngModelChange)="getCountries(country)" (blur)="selectCountryOption($event)" />
-
+                     required [(ngModel)]="country" (ngModelChange)="getCountries(country)"
+                     (blur)="selectCountryOption($event)"/>
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let country of countries" [value]="country">
@@ -49,11 +49,11 @@
           <div class="column" *ngIf="!editMode">
             <mat-form-field class="app-field-padding">
               <input matInput [disabled]="editMode" type="password" placeholder="Password" required
-                [(ngModel)]="webinPassword" name="webinPassword" autocomplete="new-password" />
+                     [(ngModel)]="webinPassword" name="webinPassword" autocomplete="new-password"/>
             </mat-form-field>
             <mat-form-field class="app-field-padding">
               <input matInput [disabled]="editMode" type="password" placeholder="Confirm Password" required
-                [(ngModel)]="confirmPassword" name="confirmPassword" autocomplete="new-c-password" />
+                     [(ngModel)]="confirmPassword" name="confirmPassword" autocomplete="new-c-password"/>
               <mat-error *ngIf="f.controls['confirmPassword']?.errors?.passwordMismatch">
                 Passwords do not match
               </mat-error>
@@ -77,8 +77,10 @@
       <mat-card class="mat-body">
         <div class="row">
           <mat-card-subtitle>Contact Information</mat-card-subtitle>
-          <a (click)="openDialog('Add', { submissionAccountId: submissionAccountId })">Add At Least One Contact<mat-icon>add_circle
-            </mat-icon></a>
+          <a (click)="openDialog('Add', { submissionAccountId: submissionAccountId })">Add At Least One Contact
+            <mat-icon>add_circle
+            </mat-icon>
+          </a>
 
           <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="firstName">
@@ -99,7 +101,7 @@
                 <mat-checkbox *ngIf="element.mainContact" matInput [checked]="true" disabled style="padding-left: 20px">
                 </mat-checkbox>
                 <mat-checkbox *ngIf="!element.mainContact" matInput [checked]="false" disabled
-                  style="padding-left: 20px"></mat-checkbox>
+                              style="padding-left: 20px"></mat-checkbox>
               </td>
             </ng-container>
 
@@ -132,10 +134,11 @@
         <div class="row">
           <mat-card-subtitle>No Sensitive Data</mat-card-subtitle>
           <mat-checkbox matInput name="noEffectCheckbox" [(ngModel)]="noEffectCheckbox" style="padding-left: 20px"
-            [checked]="true" [disabled]="editMode">I
+                        [checked]="true" [disabled]="editMode">I
             confirm that the data
             submitted through this account is NOT sensitive,
-            restricted-access or human-identifiable.</mat-checkbox>
+            restricted-access or human-identifiable.
+          </mat-checkbox>
         </div>
       </mat-card>
       <mat-card class="mat-body">
@@ -151,12 +154,14 @@
             may need to perform updates to submissions performed by their team in exceptional circumstances. This
             service provides pre-publication state-of-the-art analysis results, along with visualisations, that you may
             use in subsequent publications. The service is described in <a
-              href="http://europepmc.org/article/MED/31696235">http://europepmc.org/article/MED/31696235</a> and we
+            href="http://europepmc.org/article/MED/31696235">http://europepmc.org/article/MED/31696235</a> and we
             kindly request, should you use these analyses in your publications, that you cite this paper.
           </p>
           <mat-checkbox matInput name="metagenomicsAnalysis" [(ngModel)]="metagenomicsAnalysis"
-            style="padding-left: 20px">I give consent and confirm that the data submitted through this account is NOT
-            sensitive, restricted-access or human-identifiable</mat-checkbox>
+                        style="padding-left: 20px">I give consent and confirm that the data submitted through this
+            account is NOT
+            sensitive, restricted-access or human-identifiable
+          </mat-checkbox>
 
         </div>
       </mat-card>
@@ -164,7 +169,7 @@
 
     <div style="text-align: Center">
       <button mat-raised-button color="accent"
-        [disabled]="f.invalid || countryErr || mainContact <= 0 || noEffectCheckbox==false">
+              [disabled]="f.invalid || countryErr || mainContact <= 0 || noEffectCheckbox==false">
         Save
       </button>
       <button mat-raised-button style="margin-left: 5px" routerLink="">

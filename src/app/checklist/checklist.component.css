@@ -100,7 +100,7 @@ mat-select {
 }
 
 .addIcon {
-  font-size: 34px;
+  font-size: 42px;
   padding-top: 0px;
   vertical-align: middle;
   cursor: pointer;
@@ -113,4 +113,15 @@ mat-select {
 
 .tableOperations {
   display: flow-root;
+}
+
+.mat-icon {
+  -webkit-user-select: none;
+  user-select: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 38px;
+  width: 38px;
+  overflow: hidden;
 }

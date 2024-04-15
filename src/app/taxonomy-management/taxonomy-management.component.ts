@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  MatStepper,
-  MatTableDataSource,
-  MatDialog,
-  MatExpansionPanel,
-} from "@angular/material";
+import { MatStepper } from '@angular/material/stepper';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { WebinRestService } from "../webin-rest.service";
 import { Observable } from "rxjs";
 import { retry } from "rxjs/operators";
@@ -14,7 +12,6 @@ import { TaxonomyDialogModalComponent } from "../taxonomy-dialog-modal/taxonomy-
 import { utils } from "protractor";
 import { UtilService } from "../util/Util-services";
 import { WebinAuthenticationService } from "../webin-authentication.service";
-import { TagContentType, ThrowStmt } from "@angular/compiler";
 import { CustomValidationService } from "../validation/custom-validation.service";
 import { environment } from "../../environments/environment";
 import { SubmissionResultDialogComponent } from "../submission-result-dialog/submission-result-dialog.component";

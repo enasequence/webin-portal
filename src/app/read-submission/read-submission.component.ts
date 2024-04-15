@@ -4,7 +4,9 @@ import { WebinReportService } from '../webin-report.service';
 import { ChecklistComponent } from '../checklist/checklist.component';
 import { UtilService } from '../util/Util-services'
 import { retry, mergeMap } from 'rxjs/operators';
-import { MatStepper, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { WebinRestService } from '../webin-rest.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -123,7 +125,7 @@ export class ReadSubmissionComponent implements OnInit {
      if (!form.invalid) {
        this.customFields = this.getCustomField(customField);
        this.selectedFields[customField] = true;
- 
+
        // Get custom field group if already added to selectedChecklist.fieldGroups
        let customFieldGroup: any = this.selectedChecklist.fieldGroups.filter(fieldGroup => fieldGroup.name === "custom_fields")[0];
        if (customFieldGroup) {
@@ -133,13 +135,13 @@ export class ReadSubmissionComponent implements OnInit {
          customFieldGroup = { "name": "custom_fields", fields: [this.customFields] };
          this.selectedChecklist.fieldGroups.push(customFieldGroup);
        }
- 
+
        this.customFieldsDataSource = new MatTableDataSource<any>(customFieldGroup.fields);
        this.customFieldsDataSource.filterPredicate = this.getPredicate();
        this.showSuccessPopup("Successfully added custom field '" + customField + "'. The field can be viewed in custom fields grouping below.", "Custom field");
        customText.value = "";
- 
-       //opening custom panal is not woeking as expected so closing all the panels after adding custom field. 
+
+       //opening custom panal is not woeking as expected so closing all the panels after adding custom field.
        accordion.multi = true;
        accordion.closeAll();
        accordion.multi = false;

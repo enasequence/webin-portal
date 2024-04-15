@@ -10,7 +10,8 @@
  */
 
 import { Component, ViewChild, ViewEncapsulation, Input } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
@@ -101,7 +102,7 @@ export class SubmissionResultComponent {
           this.result = this._webinRestService.parseResult(data);
           // console.log('** Webin submission **', this.result);
 
-          // Find project submission and used its response for displaying different success message. 
+          // Find project submission and used its response for displaying different success message.
           let projectResult = this.result.accessions.find(element => element.type === "PROJECT")
           if (projectResult) {
             this.setProjectDetails(projectResult);
@@ -146,7 +147,7 @@ export class SubmissionResultComponent {
           } else {
 
             // For project linking
-            // Find project submission and used its response for displaying different success message. 
+            // Find project submission and used its response for displaying different success message.
             let projectResult = this.result.accessions.find(element => element.type === "PROJECT")
             if (projectResult) {
               this.setProjectDetails(projectResult);
@@ -206,7 +207,7 @@ export class SubmissionResultComponent {
         this.projectLinkMessage = "Project link creation successful: " +
           "Parent: " + projectLinkJson["parentId"] +
           "Child: " + projectLinkJson["childIds"];
-        // Display submission success message  
+        // Display submission success message
         this.displayUmbrelaProjectSucccess(projectAccessions);
         this.active = false;
 

@@ -11,8 +11,9 @@
 
 import { Component, EventEmitter, ViewEncapsulation, ViewChild, Input, Output, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MatDialog } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
@@ -24,7 +25,7 @@ import { WebinReportService } from '../webin-report.service';
 import { WebinAuthenticationService } from '../webin-authentication.service';
 import { ReportActionInterface } from '../report-action.interface';
 import { ActivatedRoute } from '@angular/router';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
 import { MediaObserver } from '@angular/flex-layout';
 

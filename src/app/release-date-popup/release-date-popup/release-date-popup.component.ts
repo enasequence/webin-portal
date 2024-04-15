@@ -1,5 +1,5 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UtilService } from '../../util/Util-services';
 import { XmlService } from '../../util/xml.service'
 import { PopupMessageComponent } from '../../popup-message/popup-message.component';

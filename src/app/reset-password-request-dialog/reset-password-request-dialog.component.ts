@@ -1,5 +1,5 @@
 import { Component, OnInit, Optional, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FormBuilder } from "@angular/forms";
 import { UtilService } from "../util/Util-services";
 import { MatDialog } from "@angular/material/dialog";

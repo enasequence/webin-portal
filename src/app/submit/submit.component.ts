@@ -14,7 +14,7 @@ import { Observable } from "rxjs";
 import { ChecklistType } from "../checklist-type.enum";
 import { WebinAuthenticationService } from "../webin-authentication.service";
 import { WebinRestService } from "../webin-rest.service";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { SubmissionResultDialogComponent } from "../submission-result-dialog/submission-result-dialog.component";
 
 @Component({

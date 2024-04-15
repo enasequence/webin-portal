@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatStepper } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatStepper } from '@angular/material/stepper';
 import { getEnabledCategories } from 'trace_events';
 import { ReportType } from '../report-type.enum';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';

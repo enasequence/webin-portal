@@ -16,7 +16,7 @@ import { ReportType } from '../report-type.enum';
 import { ReportActionType } from '../report-action-type.enum';
 
 import { ReportActionComponent } from './report-action.component';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute, RouterModule } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('ReportActionComponent', () => {
   let component: ReportActionComponent;

@@ -9,16 +9,20 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ViewChild } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { ContactDialogModalComponent } from "../contact-dialog-modal/contact-dialog-modal.component";
-import { MatTableDataSource } from "@angular/material";
-import { UtilService } from "../util/Util-services";
-import { Router, ActivatedRoute } from "@angular/router";
-import { WebinAuthenticationService } from "../webin-authentication.service";
-import { Compiler } from "@angular/core";
-import { ResetPasswordRequestDialogComponent } from "../reset-password-request-dialog/reset-password-request-dialog.component";
-import { NonSubmissionResultDialogComponent } from "../non-submission-result-dialog/non-submission-result-dialog.component";
+import {Component, ViewEncapsulation, ViewChild} from "@angular/core";
+import {MatDialog} from "@angular/material/dialog";
+import {ContactDialogModalComponent} from "../contact-dialog-modal/contact-dialog-modal.component";
+import {MatTableDataSource} from "@angular/material/table";
+import {UtilService} from "../util/Util-services";
+import {Router, ActivatedRoute} from "@angular/router";
+import {WebinAuthenticationService} from "../webin-authentication.service";
+import {Compiler} from "@angular/core";
+import {
+  ResetPasswordRequestDialogComponent
+} from "../reset-password-request-dialog/reset-password-request-dialog.component";
+import {
+  NonSubmissionResultDialogComponent
+} from "../non-submission-result-dialog/non-submission-result-dialog.component";
 
 @Component({
   selector: "app-main",
@@ -49,7 +53,6 @@ export class AccountInfoComponent {
   metagenomicsAnalysis = false;
   noEffectCheckbox = false;
   countryErr = false;
-
   /* Used for storing added emails, this will be used for validation */
   emails = [];
 
@@ -83,14 +86,15 @@ export class AccountInfoComponent {
     });
   }
 
-  ngOnDestroy() { }
+  ngOnDestroy() {
+  }
 
   openDialog(action, obj): void {
     const dialogRef = this.dialog.open(ContactDialogModalComponent, {
       width: "500px",
       backdropClass: "custom-dialog-backdrop-class",
       panelClass: "custom-dialog-panel-class",
-      data: { action: action, emailList: this.emails, contactObj: obj },
+      data: {action: action, emailList: this.emails, contactObj: obj},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -290,14 +294,11 @@ export class AccountInfoComponent {
       width: "400px",
       backdropClass: "custom-dialog-backdrop-class",
       panelClass: "custom-dialog-panel-class",
-      data: { resetObj: obj },
+      data: {resetObj: obj},
     });
   }
 
   selectCountryOption(event: any): void {
-    this.countryErr = false;
-    if (event.target.value != "" && this.countries.indexOf(event.target.value) === -1) {
-      this.countryErr = true;
-    }
+    this.countryErr = event.target.value != "" && this.countries.indexOf(event.target.value) === -1;
   }
 }
