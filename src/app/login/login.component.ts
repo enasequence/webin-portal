@@ -11,7 +11,7 @@
 
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {WebinAuthenticationService} from '../webin-authentication.service';
+import {SignInFederatedRequest, SignInResponse, WebinAuthenticationService} from '../webin-authentication.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {mergeMap} from 'rxjs/operators';
 import {RouterModule} from '@angular/router';
@@ -19,8 +19,14 @@ import {MatDialog} from '@angular/material/dialog';
 import {
   ResetPasswordRequestDialogComponent
 } from '../reset-password-request-dialog/reset-password-request-dialog.component'
+import {
+  ForgotFirebasePasswordResetDialogComponent
+} from '../forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog';
 import {UtilService} from '../util/Util-services';
-
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
+import {SignInSignUpLocalRequest} from '../webin-authentication.service';
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -36,11 +42,18 @@ export class LoginComponent implements OnInit {
   errorMessage = "Invalid Webin submission account or password";
   serverMessage: string;
 
+  firebaseEmail: string = '';
+  firebasePassword: string = '';
+  webinSubmissionAccountIds: string[] = [];
+  selectedSubmissionAccount: string | null = null;
+  showLoginFields: boolean = true; // Initially show login fields
+
   constructor(
     private _router: Router,
     private _webinAuthenticationService: WebinAuthenticationService,
     public dialog: MatDialog,
     private util: UtilService,
+    private afAuth: AngularFireAuth
   ) {
   }
 
@@ -51,6 +64,109 @@ export class LoginComponent implements OnInit {
     }
 
     this.getServerMessage();
+  }
+
+  firebaseLocalAccountLogin() {
+    const signInRequest = new SignInSignUpLocalRequest(this.firebaseEmail, this.firebasePassword);
+
+    this._webinAuthenticationService.signInLocalAccount(signInRequest)
+      .subscribe(
+        (response: SignInResponse) => {
+          this.error = false;
+          // Handle successful response
+          console.log('Response:', response);
+          console.log('Webin Submission Account IDs:', response.webinSubmissionAccountIds);
+
+          // Set the property to populate the dropdown
+          this.webinSubmissionAccountIds = response.webinSubmissionAccountIds;
+          this.showLoginFields = false;
+        },
+        (error) => {
+          this.error = true;
+          // Handle error
+          console.error('Error:', error);
+
+          if (error.status === 404) {
+            this.errorMessage = 'User not found.';
+          } else if (error.status === 403) {
+            this.errorMessage = 'Invalid credentials.';
+          } else {
+            this.errorMessage = error.message || 'An unexpected error occurred.';
+          }
+        }
+      );
+  }
+
+  firebaseGoogleSignIn() {
+    (async () => {
+      try {
+        const result = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        // Handle successful Google sign-in
+        console.log(result);
+
+        // Get the ID token from the user
+        const idToken = await result.user?.getIdToken();
+
+        // Check if idToken is null or undefined
+        if (!idToken) {
+          console.error('ID token not found.');
+          return;
+        }
+
+        // Create an instance of SignInFederatedRequest
+        const request = new SignInFederatedRequest(idToken, 'google.com');
+
+        // Call the signInFederatedAccount endpoint
+        this._webinAuthenticationService.signInFederatedAccount(request)
+          .subscribe(
+            (response: SignInResponse) => {
+              // Handle successful response
+              console.log('Response:', response);
+              console.log('Webin Submission Account IDs:', response.webinSubmissionAccountIds);
+
+              // Set the property to populate the dropdown
+              this.webinSubmissionAccountIds = response.webinSubmissionAccountIds;
+              this.showLoginFields = false;
+            },
+            (error) => {
+              // Handle error
+              console.error('Error:', error);
+
+              // Display the error message
+              this.errorMessage = error.message || 'An unexpected error occurred.';
+            }
+          );
+      } catch (error) {
+        // Handle errors
+        console.error(error);
+      }
+    })();
+  }
+
+  proceedWithSelectedAccount() {
+    console.log("Proceed with " + this.selectedSubmissionAccount);
+
+    this.loginWithWebinToken();
+  }
+
+  onSubmissionAccountSelected(accountId: string) {
+    this.selectedSubmissionAccount = accountId;
+  }
+
+  openForgotPasswordDialog() {
+    const dialogRef = this.dialog.open(ForgotFirebasePasswordResetDialogComponent);
+  }
+
+  forgotPassword(email: string) {
+    this.afAuth.sendPasswordResetEmail(email)
+      .then(() => {
+        // Password reset email sent successfully
+        console.log('Password reset email sent successfully');
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error('Error sending password reset email:', error);
+      });
   }
 
   login() {
@@ -96,7 +212,59 @@ export class LoginComponent implements OnInit {
         this._webinAuthenticationService.authenticated = true;
       }
     );
+  }
 
+  loginWithWebinToken() {
+    this._webinAuthenticationService.logout();
+
+    this._webinAuthenticationService.getOneWebinToken(this.firebaseEmail, this.selectedSubmissionAccount).pipe(
+      mergeMap(data => {
+        // Set the values
+        this._webinAuthenticationService.ega = data.ega;
+        this._webinAuthenticationService.superUser = data.superUser;
+        this._webinAuthenticationService.account = data.submissionAccountId;
+        this._webinAuthenticationService.token = data.webinToken;
+
+        // Return a new observable with the values set
+        return of({
+          ega: data.ega,
+          superUser: data.superUser,
+          account: data.submissionAccountId,
+          token: data.webinToken
+        });
+      })
+    ).subscribe(
+      data => {
+        // console.log('WebinAuthenticationService.loginToken succeeded');
+        this._webinAuthenticationService.token = data.token;
+        const redirectUrl = this._webinAuthenticationService.redirectUrl;
+        if (redirectUrl) {
+          this._router.navigateByUrl(redirectUrl);
+          this._webinAuthenticationService.redirectUrl = null;
+        } else {
+          this._router.navigateByUrl('');
+          if (!this._webinAuthenticationService.ega) {
+            this._webinAuthenticationService.setSubmissionAccount();
+          } else {
+            this._webinAuthenticationService.setEgaSubmissionAccount();
+          }
+        }
+      },
+      // Errors.
+      (err: HttpErrorResponse) => {
+        this.error = true;
+        this._webinAuthenticationService.authenticated = false;
+
+        if (err.status === 403) {
+          this.errorMessage = err.error;
+        }
+        console.error(err);
+      },
+      () => {
+        this.error = false;
+        this._webinAuthenticationService.authenticated = true;
+      }
+    );
   }
 
   openResetPasswordRequestDialog(obj) {
@@ -112,7 +280,5 @@ export class LoginComponent implements OnInit {
     this.util.getServerMessage().subscribe((versionData: any) => {
       this.serverMessage = versionData;
     });
-
-
   }
 }

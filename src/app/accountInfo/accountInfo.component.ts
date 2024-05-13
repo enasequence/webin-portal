@@ -15,7 +15,7 @@ import {ContactDialogModalComponent} from "../contact-dialog-modal/contact-dialo
 import {MatTableDataSource} from "@angular/material/table";
 import {UtilService} from "../util/Util-services";
 import {Router, ActivatedRoute} from "@angular/router";
-import {WebinAuthenticationService} from "../webin-authentication.service";
+import {SignInResponse, SignInSignUpLocalRequest, WebinAuthenticationService} from "../webin-authentication.service";
 import {Compiler} from "@angular/core";
 import {
   ResetPasswordRequestDialogComponent
@@ -185,17 +185,24 @@ export class AccountInfoComponent {
 
   submitAccount(form) {
     var submissionAccount = form.value;
+    var webinPassword = submissionAccount["webinPassword"];
+
     submissionAccount["metagenomeSubmitter"] = this.metagenomeSubmitter;
+
     if (!this.metagenomeSubmitter) {
-      submissionAccount["metagenomeSubmitter"] = this.metagenomicsAnalysis
-        ? true
-        : false;
+      submissionAccount["metagenomeSubmitter"] = this.metagenomicsAnalysis;
     }
+
     submissionAccount["submissionContacts"] = this.contactArray;
+
     this.deleteServerContacts();
-    this.saveNewContacts();
+
+    console.log("Saving contacts now");
+
+    this.saveNewContacts(webinPassword);
     let title = "Account Management";
     let redirectPage = "";
+
     this.util.saveSubmissionAccount(submissionAccount, this.editMode).subscribe(
       (data: any) => {
         this.deletedContacts = [];
@@ -225,6 +232,10 @@ export class AccountInfoComponent {
         }
       }
     );
+
+    for (var i in this.contactArray) {
+      this.register(this.contactArray[i].emailAddress, webinPassword);
+    }
   }
 
   getCountries(prefix) {
@@ -239,14 +250,51 @@ export class AccountInfoComponent {
     });
   }
 
-  saveNewContacts() {
+  saveNewContacts(webinPassword) {
+    console.log("Saving contacts");
+
     for (const contact of this.newContacts) {
+      console.log("Contact " + contact.emailAddress);
+
       this.util.saveNewContact(contact).subscribe((data: any) => {
         if (data) {
           console.log("Created " + contact.emailAddress);
         }
       });
+
+      this.register(contact.emailAddress, webinPassword);
     }
+  }
+
+  register(email, password) {
+    // Call the signup method
+    if (email) {
+      console.log("Registering " + email + " to firbase");
+      this.firebaseSignUp(email, password);
+    } else {
+      console.log("Undefined email " + email);
+    }
+  }
+
+  firebaseSignUp(email, password) {
+    // Construct the signup request
+    const signUpRequest = new SignInSignUpLocalRequest(email, password);
+
+    // Call the signup service method
+    this._webinAuthenticationService.signUp(signUpRequest)
+      .subscribe(
+        (response: SignInResponse) => {
+          // Handle successful signup response
+          console.log('Signup successful:', response);
+
+          // Proceed with the registered account
+          // this.proceedWithSelectedAccount();
+        },
+        (error) => {
+          // Handle signup error
+          console.error('Error:', error);
+        }
+      );
   }
 
   deleteServerContacts() {

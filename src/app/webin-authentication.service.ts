@@ -11,13 +11,48 @@
 
 // https://medium.com/@ryanchenkie_40935/angular-webin-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../environments/environment';
-import { WebinAuthenticationServiceInterface } from './webin-authentication.service.interface';
-import { WebinAuthenticationResultInterface } from './webin-authentication-result.interface';
-import { UtilService } from './util/Util-services';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../environments/environment';
+import {WebinAuthenticationServiceInterface} from './webin-authentication.service.interface';
+import {WebinAuthenticationResultInterface} from './webin-authentication-result.interface';
+import {UtilService} from './util/Util-services';
+
+export class SignInSignUpLocalRequest {
+  email: string;
+  password: string;
+
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.password = password;
+  }
+}
+
+export class SignInFederatedRequest {
+  constructor(public idToken: string, public provider: string) {
+  }
+}
+
+export class SignInResponse {
+  email: string;
+  displayName: string;
+  registered: boolean;
+  providerId: string;
+  firstName: string;
+  fullName: string;
+  lastName: string;
+  webinSubmissionAccountIds: string[];
+  invitedWebinSubmissionAccountIds: string[];
+}
+
+export class WebinTokenResponse {
+  webinToken: string;
+  submissionAccountId: string;
+  ega: boolean;
+  superUser: boolean;
+  roleMetagenomeAnalysis: boolean;
+}
 
 @Injectable()
 export class WebinAuthenticationService implements WebinAuthenticationServiceInterface {
@@ -27,6 +62,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get username(): string {
     return sessionStorage.getItem('username');
   }
+
   set username(username: string) {
     sessionStorage.setItem('username', username);
   }
@@ -34,6 +70,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get token(): string {
     return sessionStorage.getItem('token');
   }
+
   set token(token: string) {
     sessionStorage.setItem('token', token);
   }
@@ -44,6 +81,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     }
     return false;
   }
+
   set authenticated(authenticated: boolean) {
     sessionStorage.setItem('authenticated', JSON.stringify(authenticated));
   }
@@ -51,6 +89,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get account(): string {
     return sessionStorage.getItem('account');
   }
+
   set account(account: string) {
     sessionStorage.setItem('account', account);
   }
@@ -58,6 +97,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get ega(): boolean {
     return JSON.parse(sessionStorage.getItem('ega'));
   }
+
   set ega(ega: boolean) {
     sessionStorage.setItem('ega', JSON.stringify(ega));
   }
@@ -65,6 +105,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get superUser(): boolean {
     return JSON.parse(sessionStorage.getItem('superUser'));
   }
+
   set superUser(superUser: boolean) {
     sessionStorage.setItem('superUser', JSON.stringify(superUser));
   }
@@ -72,6 +113,7 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get loginDate(): Date {
     return JSON.parse(sessionStorage.getItem('loginDate'));
   }
+
   set loginDate(loginDate: Date) {
     sessionStorage.setItem('loginDate', JSON.stringify(loginDate));
   }
@@ -79,14 +121,15 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   get logoutDate(): Date {
     return JSON.parse(sessionStorage.getItem('logoutDate'));
   }
+
   set logoutDate(logoutDate: Date) {
     sessionStorage.setItem('logoutDate', JSON.stringify(logoutDate));
   }
 
 
-
   constructor(private _http: HttpClient,
-    private util: UtilService) { }
+              private util: UtilService) {
+  }
 
   /*
   getAuthorizationHeader() {
@@ -124,12 +167,29 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-    const body = { authRealms: ['ENA', 'EGA'], password: password, username: this.username };
+    const body = {authRealms: ['ENA', 'EGA'], password: password, username: this.username};
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
 
-    return this._http.post<WebinAuthenticationResultInterface>(baseUrl, body, { headers, withCredentials: false });
+    return this._http.post<WebinAuthenticationResultInterface>(baseUrl, body, {headers, withCredentials: false});
+  }
+
+  getOneWebinToken(email: string, webinId: string): Observable<WebinTokenResponse> {
+    const baseUrl: string = environment.webinAuthUrl + "/signin/webinToken";
+    // console.log('Webin authentication login', baseUrl);
+
+    this.username = webinId;
+    const today = new Date();
+    this.loginDate = today;
+    this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+
+    const body = {email: email, submissionAccountId: this.username};
+    const headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json')
+      .append('Accept', '*/*');
+
+    return this._http.post<WebinTokenResponse>(baseUrl, body, {headers, withCredentials: false});
   }
 
   loginToken(username: string, password: string): Observable<string> {
@@ -141,14 +201,44 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     this.loginDate = today;
     this.logoutDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-    const body = { authRealms: ['ENA', 'EGA'], password: password, username: this.username };
+    const body = {authRealms: ['ENA', 'EGA'], password: password, username: this.username};
     const headers: HttpHeaders = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Accept', '*/*');
     /*var txt=this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
     console.log(txt)
     return txt;*/
-    return this._http.post(baseUrl, body, { headers, withCredentials: false, responseType: 'text' });
+    return this._http.post(baseUrl, body, {headers, withCredentials: false, responseType: 'text'});
+  }
+
+  signInLocalAccount(request: SignInSignUpLocalRequest): Observable<SignInResponse> {
+    const baseUrl: string = environment.webinAuthUrl + "/signin/local";
+
+    const body = {email: request.email, password: request.password};
+    const headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json');
+
+    return this._http.post<SignInResponse>(baseUrl, body, {headers});
+  }
+
+  signUp(signUpRequest: SignInSignUpLocalRequest) {
+    const baseUrl: string = environment.webinAuthUrl + "/signup";
+
+    const body = {email: signUpRequest.email, password: signUpRequest.password};
+    const headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json');
+
+    return this._http.post<SignInResponse>(baseUrl, body, {headers});
+  }
+
+  signInFederatedAccount(request: SignInFederatedRequest): Observable<SignInResponse> {
+    const baseUrl: string = environment.webinAuthUrl + "/signin/federated";
+
+    const body = {idToken: request.idToken, provider: request.provider};
+    const headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json');
+
+    return this._http.post<SignInResponse>(baseUrl, body, {headers});
   }
 
   getSubmissionAccount() {
@@ -156,10 +246,9 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
   }
 
   async setSubmissionAccount() {
-    (await this.util.getAccountDetails()).
-      subscribe((data: any) => {
-        sessionStorage.setItem('submissionAccount', JSON.stringify(data));
-      });
+    (await this.util.getAccountDetails()).subscribe((data: any) => {
+      sessionStorage.setItem('submissionAccount', JSON.stringify(data));
+    });
   }
 
   setEgaSubmissionAccount() {

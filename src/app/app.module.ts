@@ -74,8 +74,19 @@ import {UmbrellaManagementComponent} from './umbrella-management/umbrella-manage
 import {AceModule} from 'ngx-ace-wrapper';
 import {ACE_CONFIG} from 'ngx-ace-wrapper';
 import {AceConfigInterface} from 'ngx-ace-wrapper';
+import {AngularFireModule} from '@angular/fire/compat';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import {
+  ForgotFirebasePasswordResetDialogComponent
+} from './forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog';
+import {environment} from '../environments/environment';
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {};
+
+const firebaseConfig = [
+  AngularFireAuthModule,
+  AngularFireModule.initializeApp(environment.firebase) // Your config
+];
 
 const appRoutes: Routes = [
   {
@@ -203,6 +214,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     BrowserModule,
     UiModule,
     HttpClientModule,
@@ -253,6 +266,7 @@ const appRoutes: Routes = [
     DacPolicyManagementComponent,
     DacDatasetManagementComponent,
     UmbrellaManagementComponent,
+    ForgotFirebasePasswordResetDialogComponent
   ],
   bootstrap: [
     AppComponent,
