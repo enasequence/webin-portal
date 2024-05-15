@@ -76,17 +76,10 @@
           </div>
         </div>
 
-        <div *ngIf="!showLoginFields && (!webinSubmissionAccountIds || webinSubmissionAccountIds.length === 0)">
-          <!-- Redirect to the register page automatically -->
-          <!--<ng-container *ngIf="firebaseEmail && firebasePassword">
-            <ng-container *ngIf="firebaseEmail && firebasePassword">
-              &lt;!&ndash; If email and password are available, automatically redirect to register page &ndash;&gt;-->
-          <script>
-            window.location.href = '/accountInfo?email=' + encodeURIComponent('{{ firebaseEmail }}') +
-              '&password=' + encodeURIComponent('{{ firebasePassword }}');
-          </script>
-          <!-- </ng-container>
-         </ng-container>-->
+        <div *ngIf="!webinSubmissionAccountIds">
+          <button mat-raised-button color="primary" (click)="redirectToRegister()">Complete your WEBIN account
+            registration
+          </button>
         </div>
       </mat-card-content>
     </mat-card>

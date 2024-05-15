@@ -55,10 +55,13 @@ export class AccountInfoComponent {
   countryErr = false;
   /* Used for storing added emails, this will be used for validation */
   emails = [];
-
   countries = <any>[];
-
   editMode = false;
+
+  private federatedEmail: string;
+  private password: string;
+  private federated: string;
+  private federatedUserName: string;
 
   constructor(
     private _router: Router,
@@ -79,6 +82,28 @@ export class AccountInfoComponent {
 
   ngOnInit() {
     this.util.getCountries(null);
+    this._activatedRoute.queryParamMap.subscribe(params => {
+      this.federatedEmail = params.get('email');
+      this.password = params.get('password');
+      this.federated = params.get('federated');
+      this.federatedUserName = params.get('federatedUserName');
+
+      console.log("Email is " + this.federatedEmail + " password is " +
+        this.password + " and user is federated " + this.federated
+        + " and federated user name is " + this.federatedUserName);
+    });
+
+    if (this.federated) {
+      let newContact = {
+        emailAddress: this.federatedEmail,
+        surname: this.federatedUserName,
+        mainContact: 1
+      };
+
+      this.mainContact = 1;
+      this.contactArray.push(newContact);
+    }
+
     this._activatedRoute.fragment.subscribe((fragment: string) => {
       if (fragment === "metagenome_registration") {
         this.metagenomeSubmitter = true;
@@ -184,6 +209,10 @@ export class AccountInfoComponent {
   }
 
   submitAccount(form) {
+    if (this.federated) {
+      this.mainContact = 1;
+    }
+
     var submissionAccount = form.value;
     var webinPassword = submissionAccount["webinPassword"];
 
@@ -234,7 +263,9 @@ export class AccountInfoComponent {
     );
 
     for (var i in this.contactArray) {
-      this.register(this.contactArray[i].emailAddress, webinPassword);
+      if (this.contactArray[i].emailAddress !== this.federatedEmail) {
+        this.register(this.contactArray[i].emailAddress, webinPassword);
+      }
     }
   }
 

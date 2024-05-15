@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   webinSubmissionAccountIds: string[] = [];
   selectedSubmissionAccount: string | null = null;
   showLoginFields: boolean = true; // Initially show login fields
+  federatedUserName: string;
 
   constructor(
     private _router: Router,
@@ -127,6 +128,8 @@ export class LoginComponent implements OnInit {
               // Set the property to populate the dropdown
               this.webinSubmissionAccountIds = response.webinSubmissionAccountIds;
               this.showLoginFields = false;
+              this.firebaseEmail = response.email;
+              this.federatedUserName = response.fullName;
             },
             (error) => {
               // Handle error
@@ -275,6 +278,19 @@ export class LoginComponent implements OnInit {
       data: {resetObj: obj}
     });
   }
+
+  redirectToRegister() {
+    // Navigate to the register page with query parameters
+    this._router.navigate(['/accountInfo'], {
+      queryParams: {
+        email: this.firebaseEmail,
+        password: this.firebasePassword,
+        federatedUserName: this.federatedUserName,
+        federated: true
+      }
+    });
+  }
+
 
   getServerMessage() {
     this.util.getServerMessage().subscribe((versionData: any) => {
