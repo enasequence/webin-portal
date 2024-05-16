@@ -78,7 +78,8 @@ import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {
   ForgotFirebasePasswordResetDialogComponent
-} from './forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog';
+} from './forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog.component';
+import {RegisterComponent} from './register-firebase/register-firebase.component';
 import {environment} from '../environments/environment';
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {};
@@ -140,6 +141,10 @@ const appRoutes: Routes = [
   {
     path: 'account',
     component: AccountInfoComponent,
+  },
+  {
+    path: 'register-firebase',
+    component: RegisterComponent,
   },
   {
     path: 'accountInfo',
@@ -266,7 +271,8 @@ const appRoutes: Routes = [
     DacPolicyManagementComponent,
     DacDatasetManagementComponent,
     UmbrellaManagementComponent,
-    ForgotFirebasePasswordResetDialogComponent
+    ForgotFirebasePasswordResetDialogComponent,
+    RegisterComponent
   ],
   bootstrap: [
     AppComponent,

@@ -58,10 +58,12 @@ export class AccountInfoComponent {
   countries = <any>[];
   editMode = false;
 
-  private federatedEmail: string;
+  private firebaseEmail: string;
   private password: string;
-  private federated: string;
-  private federatedUserName: string;
+  private firebaseUserName: string;
+
+  private federated: boolean = false;
+  private local: boolean = false;
 
   constructor(
     private _router: Router,
@@ -83,20 +85,40 @@ export class AccountInfoComponent {
   ngOnInit() {
     this.util.getCountries(null);
     this._activatedRoute.queryParamMap.subscribe(params => {
-      this.federatedEmail = params.get('email');
+      this.firebaseEmail = params.get('email');
       this.password = params.get('password');
-      this.federated = params.get('federated');
-      this.federatedUserName = params.get('federatedUserName');
+      const federatedParam = params.get('federated');
+      const localParam = params.get('local');
+      // Convert string values to boolean
+      this.federated = federatedParam === 'true';
+      this.local = localParam === 'true';
+      this.firebaseUserName = params.get('federatedUserName');
 
-      console.log("Email is " + this.federatedEmail + " password is " +
+      console.log("Email is " + this.firebaseEmail + " password is " +
         this.password + " and user is federated " + this.federated
-        + " and federated user name is " + this.federatedUserName);
+        + " and federated user name is " + this.firebaseUserName
+        + " user is local " + this.local);
     });
 
     if (this.federated) {
+      console.log("Adding federated contact");
+
       let newContact = {
-        emailAddress: this.federatedEmail,
-        surname: this.federatedUserName,
+        emailAddress: this.firebaseEmail,
+        surname: this.firebaseUserName,
+        mainContact: 1
+      };
+
+      this.mainContact = 1;
+      this.contactArray.push(newContact);
+    }
+
+    if (this.local) {
+      console.log("Adding local contact");
+
+      let newContact = {
+        emailAddress: this.firebaseEmail,
+        surname: this.firebaseEmail,
         mainContact: 1
       };
 
@@ -209,7 +231,7 @@ export class AccountInfoComponent {
   }
 
   submitAccount(form) {
-    if (this.federated) {
+    if (this.federated || this.local) {
       this.mainContact = 1;
     }
 
@@ -263,7 +285,7 @@ export class AccountInfoComponent {
     );
 
     for (var i in this.contactArray) {
-      if (this.contactArray[i].emailAddress !== this.federatedEmail) {
+      if (this.contactArray[i].emailAddress !== this.firebaseEmail) {
         this.register(this.contactArray[i].emailAddress, webinPassword);
       }
     }
@@ -317,9 +339,6 @@ export class AccountInfoComponent {
         (response: SignInResponse) => {
           // Handle successful signup response
           console.log('Signup successful:', response);
-
-          // Proceed with the registered account
-          // this.proceedWithSelectedAccount();
         },
         (error) => {
           // Handle signup error

@@ -21,7 +21,7 @@ import {
 } from '../reset-password-request-dialog/reset-password-request-dialog.component'
 import {
   ForgotFirebasePasswordResetDialogComponent
-} from '../forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog';
+} from '../forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog.component';
 import {UtilService} from '../util/Util-services';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';

@@ -4,8 +4,8 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-forgot-password-dialog',
-  templateUrl: './forgot-firebase-password-reset-dialog.html',
-  styleUrls: ['./forgot-firebase-password-reset-dialog.css']
+  templateUrl: './forgot-firebase-password-reset-dialog.component.html',
+  styleUrls: ['./forgot-firebase-password-reset-dialog.component.css']
 })
 export class ForgotFirebasePasswordResetDialogComponent {
   email: string;
