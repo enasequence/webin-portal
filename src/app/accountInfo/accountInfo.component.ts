@@ -23,6 +23,7 @@ import {
 import {
   NonSubmissionResultDialogComponent
 } from "../non-submission-result-dialog/non-submission-result-dialog.component";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: "app-main",
@@ -60,7 +61,7 @@ export class AccountInfoComponent {
 
   private firebaseEmail: string;
   private password: string;
-  private firebaseUserName: string;
+  private firebaseFederatedUserName: string;
 
   private federated: boolean = false;
   private local: boolean = false;
@@ -87,16 +88,17 @@ export class AccountInfoComponent {
     this._activatedRoute.queryParamMap.subscribe(params => {
       this.firebaseEmail = params.get('email');
       this.password = params.get('password');
+      this.firebaseFederatedUserName = params.get('firebaseFederatedUserName');
+
       const federatedParam = params.get('federated');
       const localParam = params.get('local');
       // Convert string values to boolean
       this.federated = federatedParam === 'true';
       this.local = localParam === 'true';
-      this.firebaseUserName = params.get('federatedUserName');
 
       console.log("Email is " + this.firebaseEmail + " password is " +
         this.password + " and user is federated " + this.federated
-        + " and federated user name is " + this.firebaseUserName
+        + " and federated user name is " + this.firebaseFederatedUserName
         + " user is local " + this.local);
     });
 
@@ -105,7 +107,7 @@ export class AccountInfoComponent {
 
       let newContact = {
         emailAddress: this.firebaseEmail,
-        surname: this.firebaseUserName,
+        surname: this.firebaseFederatedUserName,
         mainContact: 1
       };
 
@@ -147,6 +149,9 @@ export class AccountInfoComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event != "close") {
         let contactObj = result.data;
+
+        console.log("Contact object " + contactObj)
+
         if (result.event === "Add") {
           this.addContactRow(contactObj);
           if (this.editMode) {
@@ -284,11 +289,11 @@ export class AccountInfoComponent {
       }
     );
 
-    for (var i in this.contactArray) {
+    /*for (var i in this.contactArray) {
       if (this.contactArray[i].emailAddress !== this.firebaseEmail) {
         this.register(this.contactArray[i].emailAddress, webinPassword);
       }
-    }
+    }*/
   }
 
   getCountries(prefix) {
@@ -340,9 +345,10 @@ export class AccountInfoComponent {
           // Handle successful signup response
           console.log('Signup successful:', response);
         },
-        (error) => {
-          // Handle signup error
-          console.error('Error:', error);
+        (error: HttpErrorResponse) => {
+          if (error.status === 400 && error.error && error.error.includes("EMAIL_EXISTS")) {
+            console.warn("Email already exists during registration for " + email + ", ignoring.");
+          }
         }
       );
   }

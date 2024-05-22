@@ -192,6 +192,19 @@ export class WebinAuthenticationService implements WebinAuthenticationServiceInt
     return this._http.post<WebinTokenResponse>(baseUrl, body, {headers, withCredentials: false});
   }
 
+  acceptInvite(contact): Observable<object> {
+    const baseUrl: string = environment.webinAuthUrl + "/signup/acceptInvite";
+    console.log('Webin authentication create new contact for Firebase user using', baseUrl);
+    console.log("Contact email is " + contact.emailAddress + " and subs acc is " + contact.submissionAccountId);
+
+    const body = contact;
+    const headers: HttpHeaders = new HttpHeaders()
+      .append('Content-Type', 'application/json')
+      .append('Accept', 'text/plain'); // Expect plain text response
+
+    return this._http.post(baseUrl, body, {headers, responseType: 'text' as 'json'});
+  }
+
   loginToken(username: string, password: string): Observable<string> {
     const baseUrl: string = environment.webinAuthUrl + "/token";
     // console.log('Webin authentication token', baseUrl);

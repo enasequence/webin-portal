@@ -45,9 +45,11 @@ export class LoginComponent implements OnInit {
   firebaseEmail: string = '';
   firebasePassword: string = '';
   webinSubmissionAccountIds: string[] = [];
+  invitedWebinSubmissionAccountIds: string[] = [];
   selectedSubmissionAccount: string | null = null;
+  selectedInvitedSubmissionAccount: string | null = null;
   showLoginFields: boolean = true; // Initially show login fields
-  federatedUserName: string;
+  firebaseFederatedUserName: string;
 
   constructor(
     private _router: Router,
@@ -80,6 +82,7 @@ export class LoginComponent implements OnInit {
 
           // Set the property to populate the dropdown
           this.webinSubmissionAccountIds = response.webinSubmissionAccountIds;
+          this.invitedWebinSubmissionAccountIds = response.invitedWebinSubmissionAccountIds;
           this.showLoginFields = false;
         },
         (error) => {
@@ -127,9 +130,10 @@ export class LoginComponent implements OnInit {
 
               // Set the property to populate the dropdown
               this.webinSubmissionAccountIds = response.webinSubmissionAccountIds;
+              this.invitedWebinSubmissionAccountIds = response.invitedWebinSubmissionAccountIds;
               this.showLoginFields = false;
               this.firebaseEmail = response.email;
-              this.federatedUserName = response.fullName;
+              this.firebaseFederatedUserName = response.fullName;
             },
             (error) => {
               // Handle error
@@ -150,6 +154,22 @@ export class LoginComponent implements OnInit {
     console.log("Proceed with " + this.selectedSubmissionAccount);
 
     this.loginWithWebinToken();
+  }
+
+  proceedWithSelectedInvitedAccount() {
+    console.log("Proceed with " + this.selectedInvitedSubmissionAccount);
+
+    this.redirectToCreateNewComtact();
+  }
+
+  redirectToCreateNewComtact() {
+    // Navigate to the register page with query parameters
+    this._router.navigate(['/accept-invite'], {
+      queryParams: {
+        email: this.firebaseEmail,
+        selectedInvitedSubmissionAccount: this.selectedInvitedSubmissionAccount,
+      }
+    });
   }
 
   onSubmissionAccountSelected(accountId: string) {
@@ -280,13 +300,21 @@ export class LoginComponent implements OnInit {
   }
 
   redirectToRegister() {
+    let federated = false;
+    let local = false;
     // Navigate to the register page with query parameters
+    if (this.firebaseFederatedUserName) {
+      federated = true;
+    } else {
+      local = true;
+    }
     this._router.navigate(['/accountInfo'], {
       queryParams: {
         email: this.firebaseEmail,
         password: this.firebasePassword,
-        federatedUserName: this.federatedUserName,
-        federated: true
+        firebaseFederatedUserName: this.firebaseFederatedUserName,
+        federated: federated,
+        local: local
       }
     });
   }

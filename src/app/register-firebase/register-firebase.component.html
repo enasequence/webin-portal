@@ -16,20 +16,37 @@
       </form>
     </div>
   </mat-card>
-  <div *ngIf="!showLoginFields && webinSubmissionAccountIds && webinSubmissionAccountIds.length > 0"
-       class="form-container">
-    <mat-form-field>
-      <mat-label>Select Webin Submission Account</mat-label>
-      <mat-select [(ngModel)]="selectedSubmissionAccount">
-        <mat-option *ngFor="let accountId of webinSubmissionAccountIds" [value]="accountId">
-          {{ accountId }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <!-- Button to proceed with selected account -->
-    <div style="text-align: center;">
-      <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedAccount()">Proceed
-      </button>
+  <div *ngIf="!showLoginFields">
+    <div *ngIf="webinSubmissionAccountIds && webinSubmissionAccountIds.length > 0" class="form-container">
+      <mat-form-field>
+        <mat-label>Memberships</mat-label>
+        <mat-select [(ngModel)]="selectedSubmissionAccount">
+          <mat-option *ngFor="let accountId of webinSubmissionAccountIds" [value]="accountId">
+            {{ accountId }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- Button to proceed with selected account -->
+      <div style="text-align: center;">
+        <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedAccount()">Proceed
+        </button>
+      </div>
+    </div>
+    <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0" class="form-container">
+      <mat-form-field>
+        <mat-label>Invitations</mat-label>
+        <mat-select [(ngModel)]="selectedInvitedSubmissionAccount">
+          <mat-option *ngFor="let accountId of invitedWebinSubmissionAccountIds" [value]="accountId">
+            {{ accountId }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- Button to proceed with selected account -->
+      <div style="text-align: center;">
+        <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedInvitedAccount()"> Accept
+          Invitation
+        </button>
+      </div>
     </div>
   </div>
   <div *ngIf="!webinSubmissionAccountIds" class="form-container">

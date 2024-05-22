@@ -24,6 +24,8 @@ export class RegisterComponent implements OnInit {
   webinSubmissionAccountIds: string[] = [];
   showLoginFields: boolean = true; // Initially show login fields
   selectedSubmissionAccount: string;
+  selectedInvitedSubmissionAccount: string;
+  invitedWebinSubmissionAccountIds: string[] = [];
 
   constructor(private _router: Router,
               private _webinAuthenticationService: WebinAuthenticationService) {
@@ -35,7 +37,7 @@ export class RegisterComponent implements OnInit {
   register() {
     // Call the signup method
     if (this.firebaseEmail) {
-      console.log("Registering " + this.firebaseEmail + " to firbase");
+      console.log("Registering " + this.firebaseEmail + " to firebase");
       this.firebaseSignUp();
     } else {
       console.log("Undefined email " + this.firebaseEmail);
@@ -56,6 +58,7 @@ export class RegisterComponent implements OnInit {
 
           this.showLoginFields = false;
           this.webinSubmissionAccountIds = response.webinSubmissionAccountIds;
+          this.invitedWebinSubmissionAccountIds = response.invitedWebinSubmissionAccountIds;
         },
         (error) => {
           // Handle signup error
@@ -101,6 +104,22 @@ export class RegisterComponent implements OnInit {
         password: this.firebasePassword,
         federated: false,
         local: true
+      }
+    });
+  }
+
+  proceedWithSelectedInvitedAccount() {
+    console.log("Proceed with " + this.selectedInvitedSubmissionAccount);
+
+    this.redirectToCreateNewComtact();
+  }
+
+  redirectToCreateNewComtact() {
+    // Navigate to the register page with query parameters
+    this._router.navigate(['/accept-invite'], {
+      queryParams: {
+        email: this.firebaseEmail,
+        selectedInvitedSubmissionAccount: this.selectedInvitedSubmissionAccount,
       }
     });
   }

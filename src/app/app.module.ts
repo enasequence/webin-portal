@@ -80,6 +80,7 @@ import {
   ForgotFirebasePasswordResetDialogComponent
 } from './forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog.component';
 import {RegisterComponent} from './register-firebase/register-firebase.component';
+import {AcceptInviteComponent} from "./accept-invite/accept-invite.component";
 import {environment} from '../environments/environment';
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {};
@@ -145,6 +146,10 @@ const appRoutes: Routes = [
   {
     path: 'register-firebase',
     component: RegisterComponent,
+  },
+  {
+    path: 'accept-invite',
+    component: AcceptInviteComponent
   },
   {
     path: 'accountInfo',
@@ -272,7 +277,8 @@ const appRoutes: Routes = [
     DacDatasetManagementComponent,
     UmbrellaManagementComponent,
     ForgotFirebasePasswordResetDialogComponent,
-    RegisterComponent
+    RegisterComponent,
+    AcceptInviteComponent
   ],
   bootstrap: [
     AppComponent,
