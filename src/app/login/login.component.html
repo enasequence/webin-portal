@@ -96,8 +96,9 @@
         </div>
 
         <div *ngIf="!webinSubmissionAccountIds">
-          <div *ngIf="invitedWebinSubmissionAccountIds"
-               style="text-align: center; margin: 10px 0;">OR
+          <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0"
+               style="text-align: center; margin: 10px 0;">
+            OR
           </div>
           <button mat-raised-button color="primary" (click)="redirectToRegister()">Complete your WEBIN account
             registration

@@ -12,6 +12,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {SignInResponse, SignInSignUpLocalRequest, WebinAuthenticationService} from "../webin-authentication.service";
+import {mergeMap} from "rxjs/operators";
+import {of} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -26,6 +29,10 @@ export class RegisterComponent implements OnInit {
   selectedSubmissionAccount: string;
   selectedInvitedSubmissionAccount: string;
   invitedWebinSubmissionAccountIds: string[] = [];
+
+  // TODO: check
+  error = false;
+  errorMessage = "Invalid Webin submission account or password";
 
   constructor(private _router: Router,
               private _webinAuthenticationService: WebinAuthenticationService) {
@@ -93,7 +100,60 @@ export class RegisterComponent implements OnInit {
   proceedWithSelectedAccount() {
     console.log("Proceed with " + this.selectedSubmissionAccount);
 
-    // TODO: login
+    this.loginWithWebinToken();
+  }
+
+  loginWithWebinToken() {
+    this._webinAuthenticationService.logout();
+
+    this._webinAuthenticationService.getOneWebinToken(this.firebaseEmail, this.selectedSubmissionAccount).pipe(
+      mergeMap(data => {
+        // Set the values
+        this._webinAuthenticationService.ega = data.ega;
+        this._webinAuthenticationService.superUser = data.superUser;
+        this._webinAuthenticationService.account = data.submissionAccountId;
+        this._webinAuthenticationService.token = data.webinToken;
+
+        // Return a new observable with the values set
+        return of({
+          ega: data.ega,
+          superUser: data.superUser,
+          account: data.submissionAccountId,
+          token: data.webinToken
+        });
+      })
+    ).subscribe(
+      data => {
+        // console.log('WebinAuthenticationService.loginToken succeeded');
+        this._webinAuthenticationService.token = data.token;
+        const redirectUrl = this._webinAuthenticationService.redirectUrl;
+        if (redirectUrl) {
+          this._router.navigateByUrl(redirectUrl);
+          this._webinAuthenticationService.redirectUrl = null;
+        } else {
+          this._router.navigateByUrl('');
+          if (!this._webinAuthenticationService.ega) {
+            this._webinAuthenticationService.setSubmissionAccount();
+          } else {
+            this._webinAuthenticationService.setEgaSubmissionAccount();
+          }
+        }
+      },
+      // Errors.
+      (err: HttpErrorResponse) => {
+        this.error = true;
+        this._webinAuthenticationService.authenticated = false;
+
+        if (err.status === 403) {
+          this.errorMessage = err.error;
+        }
+        console.error(err);
+      },
+      () => {
+        this.error = false;
+        this._webinAuthenticationService.authenticated = true;
+      }
+    );
   }
 
   redirectToRegister() {
