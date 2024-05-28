@@ -10,55 +10,58 @@
           <p>To submit human data requiring controlled access please log in using EGA credentials.</p>
           <p>You can use this service for a range of submission activities as well as reports
             on your submissions.</p>
-          <div *ngIf="serverMessage" class="message" [innerHTML]=serverMessage></div>
+          <div *ngIf="serverMessage" class="message" [innerHTML]="serverMessage"></div>
         </mat-card-subtitle>
       </div>
     </mat-card>
 
-    <mat-card class="login-card">
+    <mat-card class="login-card mat-elevation-z0">
       <mat-card-header>
         <mat-card-title>Webin Portal Login (supported by Firebase)</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <!-- Show login fields if `showLoginFields` is true -->
         <div *ngIf="showLoginFields">
-          <mat-form-field>
-            <input matInput placeholder="Email" required [(ngModel)]="firebaseEmail" name="firebaseEmail"
-                   autocomplete="new-password">
-          </mat-form-field>
-          <mat-form-field>
-            <input type="password" matInput placeholder="Password" required [(ngModel)]="firebasePassword"
-                   name="firebasePassword"
-                   autocomplete="new-password">
-            <!-- Forgot password hyperlink -->
-          </mat-form-field>
-          <a mat-button color="warn" (click)="openForgotPasswordDialog()">Forgot Password?</a>
-          <!-- Button for login -->
-          <div style="text-align: left;">
-            <!-- Sign in button -->
-            <button mat-raised-button color="accent" type="button" (click)="firebaseLocalAccountLogin()">
-              Sign in
-            </button>
+          <div *ngIf="!hideFeatureLocalLogin">
+            <mat-form-field>
+              <input matInput placeholder="Email" required [(ngModel)]="firebaseEmail" name="firebaseEmail"
+                     autocomplete="new-password">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="password" matInput placeholder="Password" required [(ngModel)]="firebasePassword"
+                     name="firebasePassword"
+                     autocomplete="new-password">
+            </mat-form-field>
+            <a mat-button color="warn" (click)="openForgotPasswordDialog()">Forgot Password?</a>
+            <!-- Button for login -->
+            <div style="text-align: left;">
+              <!-- Sign in button -->
+              <button mat-raised-button color="accent" type="button" (click)="firebaseLocalAccountLogin()">
+                Sign in
+              </button>
 
-            <!-- OR Separator -->
-            <span style="margin: 0 10px;"> OR </span>
-
-            <!-- Continue with Google link -->
-            <a mat-button color="accent" (click)="firebaseGoogleSignIn()">
-              <mat-icon>g</mat-icon>
-              Continue with Google
-            </a>
-
-            <!-- Need an account? Sign up link -->
-            <div style="text-align: left; margin-top: 10px;">
-              <a [routerLink]="['/register-firebase']">Need an account? Sign up</a>
+              <!-- OR Separator -->
+              <span style="margin: 0 10px;"> OR </span>
             </div>
           </div>
+
+          <!-- Continue with Google link -->
+          <a mat-button color="accent" (click)="firebaseGoogleSignIn()">
+            <mat-icon>g</mat-icon>
+            Continue with Google
+          </a>
+
+          <!-- Need an account? Sign up link -->
+          <div style="text-align: left; margin-top: 10px;">
+            <a [routerLink]="['/register-firebase']">Need an account? Sign up</a>
+          </div>
         </div>
+
         <p class="app-error" *ngIf="error">
           <i class="material-icons">error</i>
-          <span [innerHTML]=errorMessage> </span>
+          <span [innerHTML]="errorMessage"> </span>
         </p>
+
         <!-- Dropdown for Webin Submission Account IDs -->
         <div *ngIf="!showLoginFields">
           <div *ngIf="webinSubmissionAccountIds && webinSubmissionAccountIds.length > 0">

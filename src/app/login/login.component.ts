@@ -27,6 +27,7 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import {SignInSignUpLocalRequest} from '../webin-authentication.service';
 import {of} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -50,6 +51,9 @@ export class LoginComponent implements OnInit {
   selectedInvitedSubmissionAccount: string | null = null;
   showLoginFields: boolean = true; // Initially show login fields
   firebaseFederatedUserName: string;
+
+  hideFeatureLocalLogin: boolean = environment.hideFeatureLocalLogin;
+  hideFeatureInvitation: boolean = environment.hideFeatureInvitation;
 
   constructor(
     private _router: Router,
