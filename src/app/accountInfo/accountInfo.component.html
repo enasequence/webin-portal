@@ -77,9 +77,16 @@
       <mat-card class="mat-body">
         <div class="row">
           <mat-card-subtitle>Contact Information</mat-card-subtitle>
-          <a (click)="openDialog('Add', { submissionAccountId: submissionAccountId })">Invite contacts
-            <mat-icon>add_circle
-            </mat-icon>
+          <!-- Show 'Invite contacts' if hideFeatureInvitation is false -->
+          <a *ngIf="!hideFeatureInvitation" (click)="openDialog('Add', { submissionAccountId: submissionAccountId })">
+            Invite contacts
+            <mat-icon>add_circle</mat-icon>
+          </a>
+
+          <!-- Show 'Add submission contacts' if hideFeatureInvitation is true -->
+          <a *ngIf="hideFeatureInvitation" (click)="openDialog('Add', { submissionAccountId: submissionAccountId })">
+            Add At Least One Contact
+            <mat-icon>add_circle</mat-icon>
           </a>
 
           <table mat-table *ngIf="dataSource" #table [dataSource]="dataSource" class="mat-elevation-z8">

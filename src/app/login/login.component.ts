@@ -184,18 +184,6 @@ export class LoginComponent implements OnInit {
     const dialogRef = this.dialog.open(ForgotFirebasePasswordResetDialogComponent);
   }
 
-  forgotPassword(email: string) {
-    this.afAuth.sendPasswordResetEmail(email)
-      .then(() => {
-        // Password reset email sent successfully
-        console.log('Password reset email sent successfully');
-      })
-      .catch((error) => {
-        // Handle errors here
-        console.error('Error sending password reset email:', error);
-      });
-  }
-
   login() {
     this._webinAuthenticationService.logout();
 
