@@ -22,7 +22,7 @@
       <mat-card-content>
         <!-- Show login fields if `showLoginFields` is true -->
         <div *ngIf="showLoginFields">
-          <div *ngIf="!hideFeatureLocalLogin">
+          <div *ngIf="!hideFeatureLocalLogin; else webinLogin">
             <mat-form-field>
               <input matInput placeholder="Email" required [(ngModel)]="firebaseEmail" name="firebaseEmail"
                      autocomplete="new-password">
@@ -44,6 +44,27 @@
               <span style="margin: 0 10px;"> OR </span>
             </div>
           </div>
+          <ng-template #webinLogin>
+            <mat-card-content>
+              <mat-form-field>
+                <input matInput placeholder="Submission account" required [(ngModel)]="username" name="username"
+                       autocomplete="new-password">
+              </mat-form-field>
+              <mat-form-field>
+                <input type="password" matInput placeholder="Password" required [(ngModel)]="password" name="password"
+                       autocomplete="new-password">
+              </mat-form-field>
+
+              <a mat-button color="warn" (click)="openResetPasswordRequestDialog({})">Forgot Password?</a>
+
+              <div style="text-align: left;">
+                <button mat-raised-button color="accent" type="submit" name="action" (click)="login()">Login</button>
+                <button mat-raised-button color="primary" type="button" style="margin-left: 5px;"
+                        [routerLink]="['/accountInfo']">Register
+                </button>
+              </div>
+            </mat-card-content>
+          </ng-template>
 
           <!-- Continue with Google link -->
           <a mat-button color="accent" (click)="firebaseGoogleSignIn()">
@@ -52,7 +73,7 @@
           </a>
 
           <!-- Need an account? Sign up link -->
-          <div style="text-align: left; margin-top: 10px;">
+          <div *ngIf="!hideFeatureLocalLogin" style="text-align: left; margin-top: 10px;">
             <a [routerLink]="['/register-firebase']">Need an account? Sign up</a>
           </div>
         </div>
@@ -80,7 +101,8 @@
             </div>
           </div>
           <br/>
-          <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0">
+          <div
+            *ngIf="!hideFeatureInvitation && invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0">
             <mat-form-field>
               <mat-label>Invitations</mat-label>
               <mat-select [(ngModel)]="selectedInvitedSubmissionAccount">
@@ -99,8 +121,9 @@
         </div>
 
         <div *ngIf="!webinSubmissionAccountIds">
-          <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0"
-               style="text-align: center; margin: 10px 0;">
+          <div
+            *ngIf="!hideFeatureInvitation && invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0"
+            style="text-align: center; margin: 10px 0;">
             OR
           </div>
           <button mat-raised-button color="primary" (click)="redirectToRegister()">Complete your WEBIN account

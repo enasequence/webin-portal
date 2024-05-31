@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { tap, startWith, map, debounceTime, catchError } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
-
-
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpClientJsonpModule} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {tap, startWith, map, debounceTime, catchError} from 'rxjs/operators';
+import {throwError, Observable} from 'rxjs';
 
 
 @Injectable({
@@ -12,18 +10,25 @@ import { throwError, Observable } from 'rxjs';
 })
 export class UtilService {
   constructor(private httpClient: HttpClient,
-  ) { }
+  ) {
+  }
 
   getCountries(prefix) {
     var url = environment.webinAdminServiceUrl + "/country" + "?partialCountry=" + prefix;
-    return this.httpClient.get<string[]>(url, { responseType: 'json' });
+    return this.httpClient.get<string[]>(url, {responseType: 'json'});
   }
 
-  saveSubmissionAccount(payload, editMode) {
+  saveSubmissionAccount(payload, editMode, invitationDisabled) {
+    let baseUrl = environment.webinAdminServiceUrl + '/' + 'submission-account';
+
+    if (!invitationDisabled) {
+      baseUrl = `${baseUrl}?invite=true`;
+    }
+
     if (editMode) {
-      return this.httpClient.put(environment.webinAdminServiceUrl + '/' + 'submission-account', payload);
+      return this.httpClient.put(baseUrl, payload);
     } else {
-      return this.httpClient.post(environment.webinAdminServiceUrl + '/' + 'submission-account', payload);
+      return this.httpClient.post(baseUrl, payload);
     }
   }
 
@@ -64,30 +69,30 @@ export class UtilService {
 
   getProjectXml(projectId) {
     var url = environment.webinReportServiceUrl + "/projects/xml/" + projectId;
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, {responseType: 'text'})
   }
 
   getDacXml(dacId) {
     var url = environment.webinReportServiceUrl + "/dacs/xml/" + dacId;
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, {responseType: 'text'})
   }
 
   getDacPolicyXml(policyId) {
     var url = environment.webinReportServiceUrl + "/policies/xml/" + policyId;
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, {responseType: 'text'})
   }
 
   getDacDatasetXml(datasetId) {
     var url = environment.webinReportServiceUrl + "/datasets/xml/" + datasetId;
-    return this.httpClient.get(url, { responseType: 'text' })
+    return this.httpClient.get(url, {responseType: 'text'})
   }
 
   downloadExcelTemplate(checklistJson) {
-    return this.httpClient.post(environment.webinRestUrl + '/tab/spreadsheet', checklistJson, { responseType: 'arraybuffer' });
+    return this.httpClient.post(environment.webinRestUrl + '/tab/spreadsheet', checklistJson, {responseType: 'arraybuffer'});
   }
 
   downloadTsvTemplate(checklistJson) {
-    return this.httpClient.post(environment.webinRestUrl + '/tab/tsv', checklistJson, { responseType: 'arraybuffer' });
+    return this.httpClient.post(environment.webinRestUrl + '/tab/tsv', checklistJson, {responseType: 'arraybuffer'});
   }
 
   getFileName(checklist, extension) {
@@ -106,7 +111,7 @@ export class UtilService {
     component.dialog.open(popupComponent, {
       disableClose: true,
       width: '600px',
-      data: { "observable": observable, "redirectPath": redirectPath }
+      data: {"observable": observable, "redirectPath": redirectPath}
 
     });
   }
@@ -115,7 +120,12 @@ export class UtilService {
     component.dialog.open(popupComponent, {
       disableClose: true,
       width: '600px',
-      data: { "observable": observable, "redirectPath": redirectPath, "projectLinkJsonForUpdate": projectLinkJsonForUpdate, "projectLinkJsonForDelete": projectLinkJsonForDelete }
+      data: {
+        "observable": observable,
+        "redirectPath": redirectPath,
+        "projectLinkJsonForUpdate": projectLinkJsonForUpdate,
+        "projectLinkJsonForDelete": projectLinkJsonForDelete
+      }
 
     });
   }
@@ -145,7 +155,7 @@ export class UtilService {
   }
 
   getMessage(isError, title, message, redirectPath?: string) {
-    return { "isError": isError, "title": title, "message": message, "redirectPath": redirectPath }
+    return {"isError": isError, "title": title, "message": message, "redirectPath": redirectPath}
   }
 
   getServerMessage() {
@@ -154,8 +164,6 @@ export class UtilService {
       responseType: 'text'
     })
   }
-
-
 
 
 }
