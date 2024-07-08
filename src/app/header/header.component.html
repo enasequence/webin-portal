@@ -21,10 +21,10 @@
     <mat-toolbar-row>
       <!--  TODO: check the router links-->
       <ng-container *ngIf="isAuthenticated()">
-        <div *ngIf="!isEga()" class="enalogo" routerLink="/login">
+        <div *ngIf="!isEga()" class="enalogo" routerLink="/elixir-login">
           <img src="assets/ENA_Logo_notagline.png" alt="ENA Logo">
         </div>
-        <div *ngIf="isEga()" class="egalogo" routerLink="/login">
+        <div *ngIf="isEga()" class="egalogo" routerLink="/elixir-login">
           <img src="assets/ega-logo.png" alt="ENA Logo">
         </div>
       </ng-container>
@@ -58,7 +58,7 @@
 
               <i class="material-icons accountIcon">account_box</i>
             </a></li>
-            <li class="toolbar-text" *ngIf="isAuthenticated()"><a [routerLink]="['/login']"
+            <li class="toolbar-text" *ngIf="isAuthenticated()"><a [routerLink]="['/elixir-login']"
                                                                   (click)='logout()'>Logout
               <span>({{getAccount()}})</span>
             </a></li>
