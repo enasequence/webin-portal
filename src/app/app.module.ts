@@ -95,7 +95,7 @@ const firebaseConfig = [
 const appRoutes: Routes = [
   {
     path: 'login',
-    component: ElixirLoginComponent,
+    component: AaiCallbackComponent,
   },
   {
     path: 'elixir-login',

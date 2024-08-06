@@ -9,14 +9,15 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { WebinAuthenticationService } from './webin-authentication.service';
+import {Injectable} from '@angular/core';
+import {Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate} from '@angular/router';
+import {WebinAuthenticationService} from './webin-authentication.service';
 
 @Injectable()
-export class WebinAuthenticationGuardService  {
-
-  constructor(private webinAuthenticationService: WebinAuthenticationService, private router: Router) { }
+export class WebinAuthenticationGuardService implements CanActivate {
+  constructor(private webinAuthenticationService: WebinAuthenticationService,
+              private router: Router) {
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     // console.log('WebinAuthenticationGuardService.canActivate');
@@ -25,10 +26,11 @@ export class WebinAuthenticationGuardService  {
         this.webinAuthenticationService.logoutDate) {
         // console.log('WebinAuthenticationGuardService: authentication timeout');
         this.webinAuthenticationService.logout();
-        this.router.navigate(['login']);
+        this.router.navigate(['elixir-login']);
         return false;
       } else {
-        // console.log('WebinAuthenticationGuardService: authenticated');
+        console.log('WebinAuthenticationGuardService: authenticated');
+
         return true;
       }
     }
@@ -38,15 +40,13 @@ export class WebinAuthenticationGuardService  {
     const url = state.url;
     console.log("URL ::");
     console.log(url);
+
     if (url.startsWith("/?page=")) {
-      // console.log('WebinAuthenticationGuardService: set redirectUrl', url);
+      console.log('WebinAuthenticationGuardService: set redirectUrl', url);
       this.webinAuthenticationService.redirectUrl = url;
     }
 
-
-
-    this.router.navigate(['login']);
+    this.router.navigate(['elixir-login']);
     return false;
-
   }
 }

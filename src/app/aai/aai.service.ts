@@ -18,7 +18,7 @@ export class AaiService {
   manager = new UserManager({
     authority: environment.AAI_AUTHORITY,
     client_id: environment.AAI_CLIENT_ID,
-    redirect_uri: window.location.origin + '/aai-callback',
+    redirect_uri: window.location.origin + '/ena/dev/submit/webin',
     post_logout_redirect_uri: window.location.origin,
     response_type: 'token id_token',
     scope: 'email openid profile',
@@ -77,7 +77,16 @@ export class AaiService {
   }
 
   userLoggedIn(): Observable<boolean> {
-    return this.getUser().pipe(map(user => AaiService.loggedIn(user)));
+    console.log("User logged in called");
+    let user = this.getUser();
+
+    user.subscribe(props => {
+        console.log("Access token is " + props.access_token);
+        console.log("Email is " + props.profile.email)
+      }
+    )
+
+    return user.pipe(map(user => AaiService.loggedIn(user)));
   }
 
   userAuthHeader(): Observable<string> {

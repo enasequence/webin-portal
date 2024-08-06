@@ -14,7 +14,7 @@ export class ElixirLoginComponent {
   constructor(private aai: AaiService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.redirect = '/login';
+    this.redirect = '/elixir-login';
     this.aai.userLoggedIn().subscribe(isLoggedIn => {
       console.log("Logged in 1");
 
@@ -25,6 +25,8 @@ export class ElixirLoginComponent {
   }
 
   login(): void {
+    console.log("Login called");
+
     this.aai.userLoggedIn().subscribe(isLoggedIn => {
       if (isLoggedIn) {
         console.log("Logged in 2");
@@ -46,7 +48,7 @@ export class ElixirLoginComponent {
     } else {
       console.log("Navigating to login");
 
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/elixir-login');
     }
   }
 }
