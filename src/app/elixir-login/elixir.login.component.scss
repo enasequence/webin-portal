@@ -1,0 +1,17 @@
+.mat-card {
+  margin: 2em auto;
+  text-align: center;
+  background-color: #f3f3f3;
+  border-bottom: 4px solid;
+  border-color: #3b6fb6;
+
+  .mat-card-content {
+    padding: 5px;
+  }
+
+  :first-child {
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}

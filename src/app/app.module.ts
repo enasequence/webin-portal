@@ -81,7 +81,9 @@ import {
 } from './forgot-firebase-password-request-dialog/forgot-firebase-password-reset-dialog.component';
 import {RegisterComponent} from './register-firebase/register-firebase.component';
 import {AcceptInviteComponent} from "./accept-invite/accept-invite.component";
+import {ElixirLoginComponent} from "./elixir-login/elixir.login.component"
 import {environment} from '../environments/environment';
+import {AaiCallbackComponent} from "./aai-callback/aai-callback.component";
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {};
 
@@ -93,7 +95,15 @@ const firebaseConfig = [
 const appRoutes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
+    component: AaiCallbackComponent,
+  },
+  {
+    path: 'elixir-login',
+    component: ElixirLoginComponent,
+  },
+  {
+    path: 'aai-callback',
+    component: AaiCallbackComponent
   },
   {
     path: 'resetPassword',
@@ -278,7 +288,9 @@ const appRoutes: Routes = [
     UmbrellaManagementComponent,
     ForgotFirebasePasswordResetDialogComponent,
     RegisterComponent,
-    AcceptInviteComponent
+    AcceptInviteComponent,
+    ElixirLoginComponent,
+    AaiCallbackComponent
   ],
   bootstrap: [
     AppComponent,
