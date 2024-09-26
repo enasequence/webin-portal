@@ -20,6 +20,7 @@ import { WebinReportServiceInterface } from './webin-report.service.interface';
 export class WebinReportService implements WebinReportServiceInterface {
 
   private _baseUrl = environment.webinReportServiceUrl;
+  private _jsonSchemaUrl = environment.schemaStoreUrl;
 
   constructor(private _webinAuthenticationService: WebinAuthenticationService, private _http: HttpClient) { }
 
@@ -160,6 +161,16 @@ export class WebinReportService implements WebinReportServiceInterface {
     params['type'] = type;
     const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
     return this._http.get(url, { responseType: 'text', observe: 'response' });
+  }
+
+  getChecklistSchemas() {
+    console.log("** getChecklistSchemas **");
+    return this._http.get(this._jsonSchemaUrl, { responseType: 'json', observe: 'response' });
+  }
+
+  getDereferencedSchema(schemaUrl: string) {
+    console.log("** getDereferencedSchema **", schemaUrl);
+    return this._http.get(schemaUrl, { responseType: 'json', observe: 'response' });
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {

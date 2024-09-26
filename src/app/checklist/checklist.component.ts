@@ -277,12 +277,14 @@ export class ChecklistComponent implements OnInit {
         retry(3),
         mergeMap(data => {
           this.setChecklistGroups(data);
-          return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+          // return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+          return this._webinReportService.getChecklistSchemas();
         })
       ).
       subscribe(
         data => {
-          this.setChecklistXmls(data);
+          // this.setChecklistXmls(data);
+          this.setChecklistSchemas(data);
         }
         ,
         (err: HttpErrorResponse) => {
@@ -422,6 +424,154 @@ export class ChecklistComponent implements OnInit {
 
     // console.log('** Checklists **', this._checklistGroups );
     this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
+  }
+
+  setChecklistSchemas(data: any): void {
+    // console.log('** setChecklistSchemas **', data);
+    const schemas = data.body._embedded.schemas;
+
+    schemas.forEach((schema) => {
+      // Dereference the schema URL
+      this._webinReportService.getDereferencedSchema(schema._links.self.href).subscribe(
+        (dereferencedSchemaData: any) => {
+          const dereferencedSchema = dereferencedSchemaData.body as any;
+
+          const checklist: ChecklistInterface = {
+            id: schema.accession,
+            name: dereferencedSchema.title,
+            description: dereferencedSchema.description,
+            type: dereferencedSchema.version,
+            fieldGroups: new Array<ChecklistFieldGroupInterface>()
+          };
+
+          // Parse the "properties" section
+          const properties = dereferencedSchema.schema.properties;
+
+          const fieldGroup: ChecklistFieldGroupInterface = {
+            name: "Characteristics",
+            fields: []
+          };
+
+          // Handle 'characteristics' specifically if it exists
+          if (properties.characteristics) {
+            const characteristics = properties.characteristics;
+
+            // Extract mandatory fields from allOf directly within characteristics
+            const mandatoryFields = this.extractMandatoryFieldsFromAllOf(characteristics);
+
+            // Recursively parse nested fields within 'characteristics.properties'
+            if (characteristics.properties) {
+              Object.keys(characteristics.properties).forEach((characteristicKey) => {
+                this.parseNestedProperties(characteristicKey, characteristics.properties[characteristicKey], fieldGroup, mandatoryFields);
+              });
+            }
+          }
+
+          checklist.fieldGroups.push(fieldGroup);
+
+          // Add the checklist to the appropriate group
+          this._checklistGroups.forEach(checklistGroup => {
+            checklistGroup.checklistIds.forEach(id => {
+              if (checklist.id === id) {
+                checklistGroup.checklists.push(checklist);
+              }
+            });
+          });
+
+          // Update the checklist data source for the UI
+          this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('** Dereferencing schema failed **', err);
+        }
+      );
+    });
+  }
+
+  extractMandatoryFieldsFromAllOf(characteristics: any): string[] {
+    const mandatoryFields: string[] = [];
+
+    if (characteristics.allOf) {
+      characteristics.allOf.forEach((allOfEntry: any) => {
+        if (allOfEntry.oneOf) {
+          allOfEntry.oneOf.forEach((oneOfEntry: any) => {
+            if (oneOfEntry.required) {
+              mandatoryFields.push(...oneOfEntry.required);
+            }
+          });
+        }
+      });
+    }
+
+    return mandatoryFields;
+  }
+
+  parseNestedProperties(
+    key: string,
+    property: any,
+    fieldGroup: ChecklistFieldGroupInterface,
+    mandatoryFields: string[]
+  ): void {
+    const field: ChecklistFieldInterface = {
+      name: key,
+      label: key,  // using the key as label
+      description: property.description || "No description available",
+      mandatory: mandatoryFields.includes(key) ? "mandatory" : "optional",
+      type: "field",
+      textChoice: [],
+      units: [],
+      regexValue: ""
+    };
+
+    // Determine the type of field based on the properties and requirements
+    if (property.items && property.items.properties && property.items.properties.text) {
+      if (property.items.properties.text.enum) {
+        field.textChoice = property.items.properties.text.enum;
+        field.type = "TEXT_CHOICE_FIELD";
+      } else if (property.items.properties.text.type === "string") {
+        field.type = "TEXT_FIELD";
+      }
+
+      // Handle regex pattern for text fields
+      if (property.items.properties.text.pattern) {
+        field.regexValue = property.items.properties.text.pattern;
+        field.type = "TEXT_FIELD";
+      }
+    }
+
+    // Handle other potential types
+    if (property.items && property.items.properties && property.items.properties.unit) {
+      field.units = property.items.properties.unit.enum || [];
+    }
+
+    // Ensure default "Text field" for non-specialized cases
+    // if (!field.textChoice.length && !field.regexValue && !field.units.length) {
+    //   field.type = "TEXT_FIELD";  // Default to TEXT_FIELD when no specific validation or choice exists
+    // }
+
+    // **Handle other nested properties (without overwriting textChoice and units)**
+    if (property.items && property.items.properties) {
+      Object.keys(property.items.properties).forEach((nestedKey) => {
+        const nestedProperty = property.items.properties[nestedKey];
+
+        if (nestedProperty.enum && field.textChoice.length === 0) {
+          field.textChoice = nestedProperty.enum;
+        }
+
+        if (nestedProperty.unit && nestedProperty.unit.enum && field.units.length === 0) {
+          field.units = nestedProperty.unit.enum;
+        }
+      });
+    }
+
+    // console.log('Adding field:', field);
+    fieldGroup.fields.push(field);
+
+    if (property.properties) {
+      Object.keys(property.properties).forEach((nestedKey) => {
+        this.parseNestedProperties(nestedKey, property.properties[nestedKey], fieldGroup, mandatoryFields);
+      });
+    }
   }
 
   isEga(): boolean {

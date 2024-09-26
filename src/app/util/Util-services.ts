@@ -87,7 +87,8 @@ export class UtilService {
   }
 
   downloadTsvTemplate(checklistJson) {
-    return this.httpClient.post(environment.webinRestUrl + '/tab/tsv', checklistJson, { responseType: 'arraybuffer' });
+    // return this.httpClient.post(environment.webinRestUrl + '/tab/tsv', checklistJson, { responseType: 'arraybuffer' });
+    return this.httpClient.post(environment.spreadsheetGeneratorUrl + '/generate-tsv-from-checklist', checklistJson, { responseType: 'arraybuffer' });
   }
 
   getFileName(checklist, extension) {
