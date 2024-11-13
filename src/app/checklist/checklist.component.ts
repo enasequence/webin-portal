@@ -426,151 +426,75 @@ export class ChecklistComponent implements OnInit {
     this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
   }
 
-  setChecklistSchemas(data: any): void {
-    // console.log('** setChecklistSchemas **', data);
-    const schemas = data.body._embedded.schemas;
+  private setChecklistSchemas(data: any): void {
+    const schemas = data.body._embedded.mongoJsonSchemas;
+    const nextPageLink = data.body._links?.next?.href;
 
     schemas.forEach((schema) => {
-      // Dereference the schema URL
-      this._webinReportService.getDereferencedSchema(schema._links.self.href).subscribe(
-        (dereferencedSchemaData: any) => {
-          const dereferencedSchema = dereferencedSchemaData.body as any;
+      const checklist: ChecklistInterface = {
+        id: schema.accession,
+        name: schema.title,
+        description: schema.description,
+        type: schema.version,
+        fieldGroups: new Array<ChecklistFieldGroupInterface>(),
+      };
 
-          const checklist: ChecklistInterface = {
-            id: schema.accession,
-            name: dereferencedSchema.title,
-            description: dereferencedSchema.description,
-            type: dereferencedSchema.version,
-            fieldGroups: new Array<ChecklistFieldGroupInterface>()
-          };
+      const fieldGroup: ChecklistFieldGroupInterface = {
+        name: 'Characteristics',
+        fields: [],
+      };
 
-          // Parse the "properties" section
-          const properties = dereferencedSchema.schema.properties;
+      const schemaId = `${schema.accession}:${schema.version}`;
+      this._webinReportService.getSchemaFields(schemaId).subscribe(
+        (fieldsResponse: any) => {
+          const fields = fieldsResponse.body._embedded.fields;
 
-          const fieldGroup: ChecklistFieldGroupInterface = {
-            name: "Characteristics",
-            fields: []
-          };
+          schema.schemaFieldAssociations.forEach((assoc) => {
+            const fieldName = assoc.fieldId.split(':')[0];
+            const fieldInfo = fields.find((field: any) => field.name === fieldName);
 
-          // Handle 'characteristics' specifically if it exists
-          if (properties.characteristics) {
-            const characteristics = properties.characteristics;
+            if (fieldInfo) {
+              const field: ChecklistFieldInterface = {
+                name: fieldName,
+                label: fieldInfo.label || fieldName,
+                description: fieldInfo.description || 'No description available',
+                mandatory: assoc.requirementType === 'MANDATORY' ? 'mandatory' :
+                  assoc.requirementType === 'RECOMMENDED' ? 'recommended' : 'optional',
+                type: fieldInfo.type === 'choice' ? 'TEXT_CHOICE_FIELD' : 'TEXT_FIELD',
+                textChoice: fieldInfo.choices || [],
+                units: fieldInfo.units || [],
+                regexValue: fieldInfo.pattern || ''
+              };
 
-            // Extract mandatory fields from allOf directly within characteristics
-            const mandatoryFields = this.extractMandatoryFieldsFromAllOf(characteristics);
-
-            // Recursively parse nested fields within 'characteristics.properties'
-            if (characteristics.properties) {
-              Object.keys(characteristics.properties).forEach((characteristicKey) => {
-                this.parseNestedProperties(characteristicKey, characteristics.properties[characteristicKey], fieldGroup, mandatoryFields);
-              });
+              fieldGroup.fields.push(field);
             }
-          }
+          });
 
           checklist.fieldGroups.push(fieldGroup);
 
-          // Add the checklist to the appropriate group
-          this._checklistGroups.forEach(checklistGroup => {
-            checklistGroup.checklistIds.forEach(id => {
+          this._checklistGroups.forEach((checklistGroup) => {
+            checklistGroup.checklistIds.forEach((id) => {
               if (checklist.id === id) {
                 checklistGroup.checklists.push(checklist);
               }
             });
           });
 
-          // Update the checklist data source for the UI
           this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
         },
         (err: HttpErrorResponse) => {
-          console.log('** Dereferencing schema failed **', err);
+          console.log('** Failed to fetch fields for schema **', schemaId, err);
         }
       );
     });
-  }
 
-  extractMandatoryFieldsFromAllOf(characteristics: any): string[] {
-    const mandatoryFields: string[] = [];
-
-    if (characteristics.allOf) {
-      characteristics.allOf.forEach((allOfEntry: any) => {
-        if (allOfEntry.oneOf) {
-          allOfEntry.oneOf.forEach((oneOfEntry: any) => {
-            if (oneOfEntry.required) {
-              mandatoryFields.push(...oneOfEntry.required);
-            }
-          });
+    if (nextPageLink) {
+      this._webinReportService.getPaginatedSchemas(nextPageLink).subscribe(
+        (nextPageData: any) => this.setChecklistSchemas(nextPageData),
+        (err: HttpErrorResponse) => {
+          console.log('** Failed to fetch next page of schemas **', err);
         }
-      });
-    }
-
-    return mandatoryFields;
-  }
-
-  parseNestedProperties(
-    key: string,
-    property: any,
-    fieldGroup: ChecklistFieldGroupInterface,
-    mandatoryFields: string[]
-  ): void {
-    const field: ChecklistFieldInterface = {
-      name: key,
-      label: key,  // using the key as label
-      description: property.description || "No description available",
-      mandatory: mandatoryFields.includes(key) ? "mandatory" : "optional",
-      type: "field",
-      textChoice: [],
-      units: [],
-      regexValue: ""
-    };
-
-    // Determine the type of field based on the properties and requirements
-    if (property.items && property.items.properties && property.items.properties.text) {
-      if (property.items.properties.text.enum) {
-        field.textChoice = property.items.properties.text.enum;
-        field.type = "TEXT_CHOICE_FIELD";
-      } else if (property.items.properties.text.type === "string") {
-        field.type = "TEXT_FIELD";
-      }
-
-      // Handle regex pattern for text fields
-      if (property.items.properties.text.pattern) {
-        field.regexValue = property.items.properties.text.pattern;
-        field.type = "TEXT_FIELD";
-      }
-    }
-
-    // Handle other potential types
-    if (property.items && property.items.properties && property.items.properties.unit) {
-      field.units = property.items.properties.unit.enum || [];
-    }
-
-    // Ensure default "Text field" for non-specialized cases
-    // if (!field.textChoice.length && !field.regexValue && !field.units.length) {
-    //   field.type = "TEXT_FIELD";  // Default to TEXT_FIELD when no specific validation or choice exists
-    // }
-
-    // **Handle other nested properties (without overwriting textChoice and units)**
-    if (property.items && property.items.properties) {
-      Object.keys(property.items.properties).forEach((nestedKey) => {
-        const nestedProperty = property.items.properties[nestedKey];
-
-        if (nestedProperty.enum && field.textChoice.length === 0) {
-          field.textChoice = nestedProperty.enum;
-        }
-
-        if (nestedProperty.unit && nestedProperty.unit.enum && field.units.length === 0) {
-          field.units = nestedProperty.unit.enum;
-        }
-      });
-    }
-
-    // console.log('Adding field:', field);
-    fieldGroup.fields.push(field);
-
-    if (property.properties) {
-      Object.keys(property.properties).forEach((nestedKey) => {
-        this.parseNestedProperties(nestedKey, property.properties[nestedKey], fieldGroup, mandatoryFields);
-      });
+      );
     }
   }
 

@@ -10,6 +10,8 @@ export const environment = {
   webinAuthUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/report',
   webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/submit/webin/auth/admin',
+  schemaStoreUrl: 'https://wwwint.ebi.ac.uk/biosamples/schema-store/api/v2',
+  spreadsheetGeneratorUrl: ' http://127.0.0.1:5000', // custom local spreadsheet generator, not deployed yet
   sourceAttributeHelperURL: 'https://wwwdev.ebi.ac.uk/ena/sah/',
   webinGdprServiceUrl: 'TODO',
   pupMedUrl: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search',

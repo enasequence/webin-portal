@@ -164,13 +164,17 @@ export class WebinReportService implements WebinReportServiceInterface {
   }
 
   getChecklistSchemas() {
-    console.log("** getChecklistSchemas **");
-    return this._http.get(this._jsonSchemaUrl, { responseType: 'json', observe: 'response' });
+    const url: string = this._jsonSchemaUrl + '/mongoJsonSchemas?latest=true';
+    return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
 
-  getDereferencedSchema(schemaUrl: string) {
-    console.log("** getDereferencedSchema **", schemaUrl);
-    return this._http.get(schemaUrl, { responseType: 'json', observe: 'response' });
+  getSchemaFields(schemaId: string) {
+    const url = this._jsonSchemaUrl + `/fields/search/findByUsedBySchemas?schemaId=${schemaId}`;
+    return this._http.get(url, { responseType: 'json', observe: 'response' });
+  }
+
+  getPaginatedSchemas(url: string) {
+    return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
