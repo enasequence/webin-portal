@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   title: 'Webin Submissions Portal (DEV)',
-  webinRestUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/drop-box',
-  webinAuthUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth',
-  webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/report',
-  webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/admin',
-  schemaStoreUrl: 'https://wwwint.ebi.ac.uk/biosamples/schema-store/api/v2',
+  webinRestUrl: 'https://www.ebi.ac.uk/ena/submit/drop-box',
+  webinAuthUrl: 'https://www.ebi.ac.uk/ena/submit/webin/auth',
+  webinReportServiceUrl: 'https://www.ebi.ac.uk/ena/submit/report',
+  webinAdminServiceUrl: 'https://www.ebi.ac.uk/ena/submit/webin/auth/admin',
+  schemaStoreUrl: '/schema-store',
   spreadsheetGeneratorUrl: 'http://10.49.22.107:30000', // Updated to point to deployed service
   sourceAttributeHelperURL: 'https://wwwdev.ebi.ac.uk/ena/sah/',
   webinGdprServiceUrl: 'TODO',

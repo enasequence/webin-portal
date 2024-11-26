@@ -173,8 +173,16 @@ export class WebinReportService implements WebinReportServiceInterface {
     return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
 
-  getPaginatedSchemas(url: string) {
-    return this._http.get(url, { responseType: 'json', observe: 'response' });
+  getPaginatedSchemas(nextPageLink: string) {
+    const paginatedUrl = this.generatePaginatedUrl(nextPageLink); // Generate the full URL dynamically
+    return this._http.get(paginatedUrl, { responseType: 'json', observe: 'response' });
+  }
+
+  generatePaginatedUrl(nextPageLink: string): string {
+    const schemaStoreBaseUrl = this._jsonSchemaUrl;
+    const relativePathSearch = new URL(nextPageLink).search;
+    console.log('generatePaginatedUrl: ' + `${schemaStoreBaseUrl}/mongoJsonSchemas${relativePathSearch}`);
+    return `${schemaStoreBaseUrl}/mongoJsonSchemas${relativePathSearch}`;
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {

@@ -489,6 +489,7 @@ export class ChecklistComponent implements OnInit {
     });
 
     if (nextPageLink) {
+      console.log('Next page link:', nextPageLink);
       this._webinReportService.getPaginatedSchemas(nextPageLink).subscribe(
         (nextPageData: any) => this.setChecklistSchemas(nextPageData),
         (err: HttpErrorResponse) => {

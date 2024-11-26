@@ -88,14 +88,17 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "sub-ang:build"
+            "buildTarget": "sub-ang:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "dev": {
-              "buildTarget": "sub-ang:build:dev"
+              "buildTarget": "sub-ang:build:dev",
+              "proxyConfig": "proxy.conf.json"
             },
             "test": {
-              "buildTarget": "sub-ang:build:test"
+              "buildTarget": "sub-ang:build:test",
+              "proxyConfig": "proxy.conf.json"
             },
             "production": {
               "buildTarget": "sub-ang:build:production"
