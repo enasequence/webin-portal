@@ -165,7 +165,7 @@ export class WebinReportService implements WebinReportServiceInterface {
 
   getChecklistSchemas() {
     console.log('Calling getChecklistSchemas() - _jsonSchemaUrl:' + this._jsonSchemaUrl);
-    const url: string = 'api/' + this._jsonSchemaUrl + '/mongoJsonSchemas?latest=true';
+    const url: string = this._jsonSchemaUrl + '/mongoJsonSchemas?latest=true';
     console.log('Calling getChecklistSchemas() - url:' + url);
     return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
