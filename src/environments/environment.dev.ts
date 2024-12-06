@@ -10,7 +10,7 @@ export const environment = {
   webinAuthUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth',
   webinReportServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/report',
   webinAdminServiceUrl: 'https://wwwdev.ebi.ac.uk/ena/dev/submit/webin/auth/admin',
-  schemaStoreUrl: '/api/schema-store',
+  schemaStoreUrl: 'https://wwwdev.ebi.ac.uk/biosamples/schema-store/api/v2',
   spreadsheetGeneratorUrl: 'http://10.49.22.107:30000',
   sourceAttributeHelperURL: 'https://wwwdev.ebi.ac.uk/ena/sah/',
   webinGdprServiceUrl: 'TODO',
