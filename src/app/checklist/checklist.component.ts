@@ -509,6 +509,10 @@ export class ChecklistComponent implements OnInit {
     fieldGroups.forEach(fieldGroup => {
       fieldGroup.fields.forEach(field => {
         if (this.selectedFields[field.name] || this.selectedFields[field.label]) {
+          if (field.name != null) {
+            field.name = field.label;
+          }
+
           if (field.textChoice) {
             field["value_choice"] = field.textChoice;
           } else {
