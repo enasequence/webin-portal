@@ -165,13 +165,11 @@ export class WebinReportService implements WebinReportServiceInterface {
 
   getChecklistSchemas() {
     console.log('Calling getChecklistSchemas() - _jsonSchemaUrl:' + this._jsonSchemaUrl);
-    const url: string = this._jsonSchemaUrl + '/mongoJsonSchemas?latest=true';
-    console.log('Calling getChecklistSchemas() - url:' + url);
+    const url: string = this._jsonSchemaUrl + '/schemas/search/findByExample?latest=true';
     return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
 
   getSchemaFields(schemaId: string) {
-    console.log('Calling getSchemaFields() - _jsonSchemaUrl:' + this._jsonSchemaUrl);
     const url = this._jsonSchemaUrl + `/fields/search/findByUsedBySchemas?schemaId=${schemaId}`;
     return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
@@ -184,8 +182,7 @@ export class WebinReportService implements WebinReportServiceInterface {
   generatePaginatedUrl(nextPageLink: string): string {
     const schemaStoreBaseUrl = this._jsonSchemaUrl;
     const relativePathSearch = new URL(nextPageLink).search;
-    console.log('generatePaginatedUrl: ' + `${schemaStoreBaseUrl}/mongoJsonSchemas${relativePathSearch}`);
-    return `${schemaStoreBaseUrl}/mongoJsonSchemas${relativePathSearch}`;
+    return `${schemaStoreBaseUrl}/schemas/search/findByExample${relativePathSearch}`;
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
