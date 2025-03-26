@@ -9,28 +9,29 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, OnInit, Optional, Inject, ViewChild, QueryList, ElementRef, ViewChildren } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { saveAs } from 'file-saver';
-import { retry, mergeMap, map } from 'rxjs/operators';
-import { ChecklistType } from '../checklist-type.enum';
-import { ChecklistInterface } from '../checklist.interface';
-import { ChecklistGroupInterface } from '../checklist-group.interface';
-import { ChecklistFieldGroupInterface } from '../checklist-field-group.interface';
-import { ChecklistFieldInterface } from '../checklist-field.interface';
-import { WebinAuthenticationService } from '../webin-authentication.service';
-import { WebinReportService } from '../webin-report.service';
-import { WebinRestService } from '../webin-rest.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { PopupMessageComponent } from '../popup-message/popup-message.component';
-import { UtilService } from '../util/Util-services'
-import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
-import { NonSubmissionResultDialogComponent } from '../non-submission-result-dialog/non-submission-result-dialog.component';
-import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog} from '@angular/material/dialog';
+import {MatExpansionPanel} from '@angular/material/expansion';
+import {saveAs} from 'file-saver';
+import {mergeMap, retry} from 'rxjs/operators';
+import {ChecklistType} from '../checklist-type.enum';
+import {ChecklistInterface} from '../checklist.interface';
+import {ChecklistGroupInterface} from '../checklist-group.interface';
+import {ChecklistFieldGroupInterface} from '../checklist-field-group.interface';
+import {ChecklistFieldInterface} from '../checklist-field.interface';
+import {WebinAuthenticationService} from '../webin-authentication.service';
+import {WebinReportService} from '../webin-report.service';
+import {WebinRestService} from '../webin-rest.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {PopupMessageComponent} from '../popup-message/popup-message.component';
+import {UtilService} from '../util/Util-services'
+import {SubmissionResultDialogComponent} from '../submission-result-dialog/submission-result-dialog.component';
+import {
+  NonSubmissionResultDialogComponent
+} from '../non-submission-result-dialog/non-submission-result-dialog.component';
 
 
 interface BooleanFieldInterface {
@@ -124,7 +125,9 @@ export class ChecklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.checklistType = this._route.snapshot.params.checklistType;
+
     console.log("this.checklistType : " + this.checklistType)
+
     this.init = this._route.snapshot.params.init;
 
     if (this.init) {
@@ -277,14 +280,20 @@ export class ChecklistComponent implements OnInit {
         retry(3),
         mergeMap(data => {
           this.setChecklistGroups(data);
-          // return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
-          return this._webinReportService.getChecklistSchemas();
+          if (this.checklistType == ChecklistType.sample) {
+            return this._webinReportService.getChecklistSchemasFromJsonSchemaStore();
+          } else {
+            return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+          }
         })
       ).
       subscribe(
         data => {
-          // this.setChecklistXmls(data);
-          this.setChecklistSchemas(data);
+          if (this.checklistType == ChecklistType.sample) {
+            this.setChecklistSchemas(data);
+          } else {
+            this.setChecklistXmls(data);
+          }
         }
         ,
         (err: HttpErrorResponse) => {
@@ -503,7 +512,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   buildSelectedChecklistRequestObject(callback) {
-    let selectedChecklistArray = new Array();
+    let selectedChecklistArray = [];
     let fieldGroups = this.selectedChecklist.fieldGroups;
     let selectedFieldsCnt = 0;
     fieldGroups.forEach(fieldGroup => {
@@ -593,16 +602,23 @@ export class ChecklistComponent implements OnInit {
   downloadTsvSpreadsheet() {
     this.buildSelectedChecklistRequestObject(function (util, selectedChecklistObject) {
       console.log(selectedChecklistObject)
-      util.downloadTsvTemplate(selectedChecklistObject).
-        subscribe((data) => {
-          let blob = new Blob([data], { type: "text/plain;charset=utf-8'" });
+
+      if (selectedChecklistObject.checklistType == ChecklistType.sample) {
+        util.downloadSampleTsvTemplate(selectedChecklistObject).subscribe((data) => {
+          let blob = new Blob([data], {type: "text/plain;charset=utf-8'"});
           saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
         }, (error) => {
           console.log('Error', error);
         });
+      } else {
+        util.downloadTsvTemplate(selectedChecklistObject).subscribe((data) => {
+          let blob = new Blob([data], {type: "text/plain;charset=utf-8'"});
+          saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
+        }, (error) => {
+          console.log('Error', error);
+        });
+      }
     });
-
-
   }
 
   getPredicate() {

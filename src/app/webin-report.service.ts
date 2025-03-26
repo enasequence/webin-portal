@@ -163,14 +163,15 @@ export class WebinReportService implements WebinReportServiceInterface {
     return this._http.get(url, { responseType: 'text', observe: 'response' });
   }
 
-  getChecklistSchemas() {
+  getChecklistSchemasFromJsonSchemaStore() {
     console.log('Calling getChecklistSchemas() - _jsonSchemaUrl:' + this._jsonSchemaUrl);
+
     const url: string = this._jsonSchemaUrl + '/schemas/search/findByExample?latest=true';
     return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
 
   getSchemaFields(schemaId: string) {
-    const url = this._jsonSchemaUrl + `/fields/search/findByUsedBySchemas?schemaId=${schemaId}`;
+    const url = this._jsonSchemaUrl + '/fields/search/findByUsedBySchemas?schemaId=${schemaId}' + '&size=10000';
     return this._http.get(url, { responseType: 'json', observe: 'response' });
   }
 
