@@ -171,8 +171,8 @@ export class WebinReportService implements WebinReportServiceInterface {
   }
 
   getSchemaFields(schemaId: string) {
-    const url = this._jsonSchemaUrl + '/fields/search/findByUsedBySchemas?schemaId=${schemaId}' + '&size=10000';
-    return this._http.get(url, { responseType: 'json', observe: 'response' });
+    const url = `${this._jsonSchemaUrl}/fields/search/findByUsedBySchemas?schemaId=${schemaId}&size=10000`;
+    return this._http.get(url, {responseType: 'json', observe: 'response'});
   }
 
   getPaginatedSchemas(nextPageLink: string) {
