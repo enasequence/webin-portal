@@ -280,7 +280,7 @@ export class ChecklistComponent implements OnInit {
         retry(3),
         mergeMap(data => {
           this.setChecklistGroups(data);
-          if (this.checklistType == ChecklistType.sample) {
+          if (this.checklistType === ChecklistType.sample) {
             return this._webinReportService.getChecklistSchemasFromJsonSchemaStore();
           } else {
             return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
@@ -289,7 +289,7 @@ export class ChecklistComponent implements OnInit {
       ).
       subscribe(
         data => {
-          if (this.checklistType == ChecklistType.sample) {
+          if (this.checklistType === ChecklistType.sample) {
             this.setChecklistSchemas(data);
           } else {
             this.setChecklistXmls(data);
@@ -603,7 +603,7 @@ export class ChecklistComponent implements OnInit {
     this.buildSelectedChecklistRequestObject((util, selectedChecklistObject) => {
       console.log(selectedChecklistObject)
 
-      if (this.checklistType == ChecklistType.sample) {
+      if (this.checklistType === ChecklistType.sample) {
         util.downloadSampleTsvTemplate(selectedChecklistObject).subscribe((data) => {
           let blob = new Blob([data], {type: "text/plain;charset=utf-8'"});
           saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
@@ -746,12 +746,12 @@ export class ChecklistComponent implements OnInit {
   }
 
   getSampleSpecificFields() {
-    let sampleSpecificFields = {
+    return {
       name: "Sample Details",
       fields: [
         {
           name: "tax_id",
-          label: "NCBI Taxonomy",
+          label: "tax_id",
           description: "Taxonomy ID of the organism as in the <a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi'> NCBI Taxonomy database</a>. Entries in the NCBI Taxonomy database have integer taxon IDs. See our tips for sample taxonomy <a href='https://ena-docs.readthedocs.io/en/latest/faq/taxonomy.html'>here</a>",
           mandatory: "mandatory",
           textChoice: [],
@@ -761,7 +761,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "scientific_name",
-          label: "Scientific name",
+          label: "scientific_name",
           description: "Scientific name of the organism as in the <a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi'> NCBI Taxonomy database</a>. Scientific names typically follow the binomial nomenclature. For example, the scientific name for humans is Homo sapiens.",
           mandatory: "mandatory",
           textChoice: [],
@@ -771,7 +771,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "sample_alias",
-          label: "Sample alias (unique name)",
+          label: "sample_alias",
           description: "Unique name of the sample. If not selected system will auto generate an unique alias",
           mandatory: "mandatory",
           textChoice: [],
@@ -781,7 +781,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "sample_title",
-          label: "Sample title",
+          label: "sample_title",
           description: "Title of the sample",
           mandatory: "mandatory",
           textChoice: [],
@@ -791,7 +791,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "sample_description",
-          label: "Sample description",
+          label: "sample_description",
           description: "Description of the sample",
           mandatory: "mandatory",
           textChoice: [],
@@ -799,8 +799,7 @@ export class ChecklistComponent implements OnInit {
           units: [],
           isVisible: true
         }]
-    }
-    return sampleSpecificFields;
+    };
   }
 
   isBroker(): boolean {
