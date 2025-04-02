@@ -604,7 +604,7 @@ export class ChecklistComponent implements OnInit {
       console.log(selectedChecklistObject)
 
       if (this.checklistType === ChecklistType.sample) {
-        util.downloadTsvTemplate(selectedChecklistObject).subscribe((data) => {
+        util.downloadSampleTsvTemplate(selectedChecklistObject).subscribe((data) => {
           let blob = new Blob([data], {type: "text/plain;charset=utf-8'"});
           saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
         }, (error) => {
