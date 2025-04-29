@@ -1,12 +1,9 @@
 <div>
-
   <link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css"
     media="all" />
   <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
   <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css"
-    type="text/css" media="all" />
-
-
+        type="text/css" media="all"/>
 
   <footer class="vf-footer" data-vf-google-analytics-region="embl-footer">
     <div class="vf-footer__inner">
@@ -138,5 +135,26 @@
 
     </div>
   </footer>
-
+  <div class="consent-banner vf-component__container">
+    <!-- dismissible banner -->
+    <div class="consent-banner__inner vf-banner vf-banner--fixed vf-banner--bottom vf-banner--notice"
+         id="consent-banner">
+      <div class="vf-banner__content | vf-grid">
+        <p class="vf-banner__text vf-banner__text--lg">
+          This website requires cookies, and the limited processing of your personal data in order to function.
+          By using the site you are agreeing to this as outlined in our
+          <a target="_blank" rel="noopener noreferrer"
+             href="/assets/privacy_notice.pdf" class="white-color">Privacy
+            Notice</a> and
+          <a target="_blank" href="https://www.ebi.ac.uk/about/terms-of-use" class="white-color">Terms of Use</a>.
+        </p>
+        <p>
+          <a href="#" class="vf-button vf-button--primary"
+             onclick="document.getElementById('consent-banner').style.display='none'; localStorage.setItem('ena-custom-consent', 'v1.0'); return false;">
+            I agree
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

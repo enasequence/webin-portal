@@ -20,8 +20,13 @@ export class FooterComponent implements OnInit {
 
   constructor() { }
 
-
   ngOnInit() {
+    if (localStorage.getItem('ena-custom-consent') === 'v1.0') {
+      const banner = document.getElementById('consent-banner');
 
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    }
   }
 }
