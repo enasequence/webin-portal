@@ -16,7 +16,7 @@ Run `ng serve --base-href=/ena/dev/submit/webin/` for a dev server. Navigate to 
 
 ## Production server
 
-Run `ng build --prod` and then `ng serve --prod --base-href=/ena/submit/webin/` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
+Run `ng build --configutation=production` and then `ng serve --configutation=production` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
 
 ## Docker image build (for local system only)
 

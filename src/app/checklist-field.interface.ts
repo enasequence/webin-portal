@@ -19,4 +19,5 @@ export interface ChecklistFieldInterface {
   ontologyId?: string;
   units: Array<string>;
   textChoice: Array<string>;
+  isVisible?: boolean
 }
