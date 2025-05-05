@@ -1,0 +1,57 @@
+<div class="register-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Webin Portal Registration (supported by Firebase)</mat-card-title>
+    </mat-card-header>
+    <div *ngIf="showLoginFields" class="form-container">
+      <form (ngSubmit)="register()">
+        <mat-form-field>
+          <input matInput placeholder="Email" required [(ngModel)]="firebaseEmail" name="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" required [(ngModel)]="firebasePassword"
+                 name="password">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Register</button>
+      </form>
+    </div>
+  </mat-card>
+  <div *ngIf="!showLoginFields">
+    <div *ngIf="webinSubmissionAccountIds && webinSubmissionAccountIds.length > 0" class="form-container">
+      <mat-form-field>
+        <mat-label>Memberships</mat-label>
+        <mat-select [(ngModel)]="selectedSubmissionAccount">
+          <mat-option *ngFor="let accountId of webinSubmissionAccountIds" [value]="accountId">
+            {{ accountId }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- Button to proceed with selected account -->
+      <div style="text-align: center;">
+        <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedAccount()">Proceed
+        </button>
+      </div>
+    </div>
+    <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0" class="form-container">
+      <mat-form-field>
+        <mat-label>Invitations</mat-label>
+        <mat-select [(ngModel)]="selectedInvitedSubmissionAccount">
+          <mat-option *ngFor="let accountId of invitedWebinSubmissionAccountIds" [value]="accountId">
+            {{ accountId }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- Button to proceed with selected account -->
+      <div style="text-align: center;">
+        <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedInvitedAccount()"> Accept
+          Invitation
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!webinSubmissionAccountIds" class="form-container">
+    <button mat-raised-button color="primary" (click)="redirectToRegister()">Complete your WEBIN account
+      registration
+    </button>
+  </div>
+</div>

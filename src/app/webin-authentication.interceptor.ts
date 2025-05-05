@@ -26,6 +26,8 @@ export class WebinAuthenticationInterceptor implements HttpInterceptor {
     console.log(req.url);
 
     if (!req.url.startsWith(environment.webinAuthUrl + "/login") &&
+      !req.url.startsWith(environment.webinAuthUrl + "/signin") &&
+      !req.url.startsWith(environment.webinAuthUrl + "/signup") &&
       !req.url.startsWith(environment.webinReportServiceUrl + "/checklist-groups") &&
       !req.url.startsWith(environment.webinReportServiceUrl + "/checklists") &&
       !req.url.startsWith(environment.webinAuthUrl + "/token") &&
