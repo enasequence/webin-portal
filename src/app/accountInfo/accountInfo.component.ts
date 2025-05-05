@@ -24,6 +24,7 @@ import {
   NonSubmissionResultDialogComponent
 } from "../non-submission-result-dialog/non-submission-result-dialog.component";
 import {HttpErrorResponse} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: "app-main",
@@ -66,6 +67,9 @@ export class AccountInfoComponent {
   private federated: boolean = false;
   private local: boolean = false;
 
+  hideFeatureLocalLogin: boolean = environment.hideFeatureLocalLogin;
+  hideFeatureInvitation: boolean = environment.hideFeatureInvitation;
+
   constructor(
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
@@ -107,6 +111,7 @@ export class AccountInfoComponent {
 
       let newContact = {
         emailAddress: this.firebaseEmail,
+        firstName: this.firebaseFederatedUserName,
         surname: this.firebaseFederatedUserName,
         mainContact: 1
       };
@@ -120,6 +125,7 @@ export class AccountInfoComponent {
 
       let newContact = {
         emailAddress: this.firebaseEmail,
+        firstName: this.firebaseEmail,
         surname: this.firebaseEmail,
         mainContact: 1
       };
@@ -259,7 +265,7 @@ export class AccountInfoComponent {
     let title = "Account Management";
     let redirectPage = "";
 
-    this.util.saveSubmissionAccount(submissionAccount, this.editMode).subscribe(
+    this.util.saveSubmissionAccount(submissionAccount, this.editMode, this.hideFeatureInvitation).subscribe(
       (data: any) => {
         this.deletedContacts = [];
         this.util.showSuccess(
