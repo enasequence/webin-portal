@@ -90,7 +90,7 @@ k8s-deploy-test:
     - ena-dcap-gitlab-runner
   when: manual
 
-k8s-deploy-prod:
+k8s-deploy-prod-hx:
   image: dtzar/helm-kubectl:3.11.0
   stage: deploy
   only:
