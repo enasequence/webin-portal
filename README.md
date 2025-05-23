@@ -12,11 +12,15 @@ Run the below command from project directory (where package.json file is found) 
 
 ## Development server
 
-Run `ng serve --base-href=/ena/dev/submit/webin/` for a dev server. Navigate to `http://localhost:4200/ena/dev/submit/webin`. The app will automatically reload if you change any of the source files.
+Run `ng build --base-href=/ena/dev/submit/webin/` and `ng serve`for a dev server. 
+Navigate to `http://localhost:4200/ena/dev/submit/webin`. 
+The app will automatically reload if you change any of the source files.
 
 ## Production server
 
-Run `ng build --prod` and then `ng serve --prod --base-href=/ena/submit/webin/` for a production server. Navigate to `http://localhost:4200/ena/submit/webin`.
+Run `ng build --configuration=production --base-href=/ena/submit/webin/` 
+and then `ng serve --configuration=production` for a production server. 
+Navigate to `http://localhost:4200/ena/submit/webin`.
 
 ## Docker image build (for local system only)
 
