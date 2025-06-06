@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 EMBL - European Bioinformatics Institute
+ * Copyright 2024 EMBL - European Bioinformatics Institute
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
  * file except in compliance with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,29 @@
  * specific language governing permissions and limitations under the License.
  */
 
-export interface WebinAuthenticationResultInterface {
-    principle: string;
-    roles: { EGA?, SUPER_USER?};
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container {
+  margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.register-container h2 {
+  text-align: center;
+}
+
+.register-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-container mat-form-field {
+  margin-bottom: 20px;
+}
+
+.register-container button[type="submit"] {
+  align-self: center;
 }

@@ -1,0 +1,27 @@
+<div class="register-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Webin Portal Registration (supported by Firebase)</mat-card-title>
+    </mat-card-header>
+    <div class="form-container">
+      <form (ngSubmit)="acceptInvite()" #contactForm="ngForm">
+        <mat-form-field>
+          <input matInput name="firstName" [(ngModel)]="firstName" placeholder="First Name" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput name="middleInitials" [(ngModel)]="middleInitials" placeholder="Middle Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput name="surname" [(ngModel)]="surname" placeholder="Surname" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Proceed</button>
+      </form>
+    </div>
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }} <a [routerLink]="['/login']">Redirect to Login</a>.
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </mat-card>
+</div>

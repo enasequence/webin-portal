@@ -15,7 +15,7 @@ import {ContactDialogModalComponent} from "../contact-dialog-modal/contact-dialo
 import {MatTableDataSource} from "@angular/material/table";
 import {UtilService} from "../util/Util-services";
 import {Router, ActivatedRoute} from "@angular/router";
-import {WebinAuthenticationService} from "../webin-authentication.service";
+import {SignInResponse, SignInSignUpLocalRequest, WebinAuthenticationService} from "../webin-authentication.service";
 import {Compiler} from "@angular/core";
 import {
   ResetPasswordRequestDialogComponent
@@ -23,6 +23,7 @@ import {
 import {
   NonSubmissionResultDialogComponent
 } from "../non-submission-result-dialog/non-submission-result-dialog.component";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: "app-main",
@@ -55,10 +56,15 @@ export class AccountInfoComponent {
   countryErr = false;
   /* Used for storing added emails, this will be used for validation */
   emails = [];
-
   countries = <any>[];
-
   editMode = false;
+
+  private firebaseEmail: string;
+  private password: string;
+  private firebaseFederatedUserName: string;
+
+  private federated: boolean = false;
+  private local: boolean = false;
 
   constructor(
     private _router: Router,
@@ -79,6 +85,49 @@ export class AccountInfoComponent {
 
   ngOnInit() {
     this.util.getCountries(null);
+    this._activatedRoute.queryParamMap.subscribe(params => {
+      this.firebaseEmail = params.get('email');
+      this.password = params.get('password');
+      this.firebaseFederatedUserName = params.get('firebaseFederatedUserName');
+
+      const federatedParam = params.get('federated');
+      const localParam = params.get('local');
+      // Convert string values to boolean
+      this.federated = federatedParam === 'true';
+      this.local = localParam === 'true';
+
+      console.log("Email is " + this.firebaseEmail + " password is " +
+        this.password + " and user is federated " + this.federated
+        + " and federated user name is " + this.firebaseFederatedUserName
+        + " user is local " + this.local);
+    });
+
+    if (this.federated) {
+      console.log("Adding federated contact");
+
+      let newContact = {
+        emailAddress: this.firebaseEmail,
+        surname: this.firebaseFederatedUserName,
+        mainContact: 1
+      };
+
+      this.mainContact = 1;
+      this.contactArray.push(newContact);
+    }
+
+    if (this.local) {
+      console.log("Adding local contact");
+
+      let newContact = {
+        emailAddress: this.firebaseEmail,
+        surname: this.firebaseEmail,
+        mainContact: 1
+      };
+
+      this.mainContact = 1;
+      this.contactArray.push(newContact);
+    }
+
     this._activatedRoute.fragment.subscribe((fragment: string) => {
       if (fragment === "metagenome_registration") {
         this.metagenomeSubmitter = true;
@@ -100,6 +149,9 @@ export class AccountInfoComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event != "close") {
         let contactObj = result.data;
+
+        console.log("Contact object " + contactObj)
+
         if (result.event === "Add") {
           this.addContactRow(contactObj);
           if (this.editMode) {
@@ -184,18 +236,29 @@ export class AccountInfoComponent {
   }
 
   submitAccount(form) {
-    var submissionAccount = form.value;
-    submissionAccount["metagenomeSubmitter"] = this.metagenomeSubmitter;
-    if (!this.metagenomeSubmitter) {
-      submissionAccount["metagenomeSubmitter"] = this.metagenomicsAnalysis
-        ? true
-        : false;
+    if (this.federated || this.local) {
+      this.mainContact = 1;
     }
+
+    var submissionAccount = form.value;
+    var webinPassword = submissionAccount["webinPassword"];
+
+    submissionAccount["metagenomeSubmitter"] = this.metagenomeSubmitter;
+
+    if (!this.metagenomeSubmitter) {
+      submissionAccount["metagenomeSubmitter"] = this.metagenomicsAnalysis;
+    }
+
     submissionAccount["submissionContacts"] = this.contactArray;
+
     this.deleteServerContacts();
-    this.saveNewContacts();
+
+    console.log("Saving contacts now");
+
+    this.saveNewContacts(webinPassword);
     let title = "Account Management";
     let redirectPage = "";
+
     this.util.saveSubmissionAccount(submissionAccount, this.editMode).subscribe(
       (data: any) => {
         this.deletedContacts = [];
@@ -225,6 +288,12 @@ export class AccountInfoComponent {
         }
       }
     );
+
+    /*for (var i in this.contactArray) {
+      if (this.contactArray[i].emailAddress !== this.firebaseEmail) {
+        this.register(this.contactArray[i].emailAddress, webinPassword);
+      }
+    }*/
   }
 
   getCountries(prefix) {
@@ -239,14 +308,49 @@ export class AccountInfoComponent {
     });
   }
 
-  saveNewContacts() {
+  saveNewContacts(webinPassword) {
+    console.log("Saving contacts");
+
     for (const contact of this.newContacts) {
+      console.log("Contact " + contact.emailAddress);
+
       this.util.saveNewContact(contact).subscribe((data: any) => {
         if (data) {
           console.log("Created " + contact.emailAddress);
         }
       });
+
+      this.register(contact.emailAddress, webinPassword);
     }
+  }
+
+  register(email, password) {
+    // Call the signup method
+    if (email) {
+      console.log("Registering " + email + " to firbase");
+      this.firebaseSignUp(email, password);
+    } else {
+      console.log("Undefined email " + email);
+    }
+  }
+
+  firebaseSignUp(email, password) {
+    // Construct the signup request
+    const signUpRequest = new SignInSignUpLocalRequest(email, password);
+
+    // Call the signup service method
+    this._webinAuthenticationService.signUp(signUpRequest)
+      .subscribe(
+        (response: SignInResponse) => {
+          // Handle successful signup response
+          console.log('Signup successful:', response);
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 400 && error.error && error.error.includes("EMAIL_EXISTS")) {
+            console.warn("Email already exists during registration for " + email + ", ignoring.");
+          }
+        }
+      );
   }
 
   deleteServerContacts() {

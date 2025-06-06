@@ -1,5 +1,8 @@
-<form (ngSubmit)="login()" autocomplete="off">
+<!-- login.component.html -->
+
+<form autocomplete="off">
   <div fxLayout="row" fxLayoutAlign="left center" class="login-card-container">
+    <!-- Existing welcome card -->
     <mat-card class="welcome-card mat-elevation-z0">
       <mat-card-title>Welcome to the Webin submission Portal.</mat-card-title>
       <div>
@@ -7,41 +10,103 @@
           <p>To submit human data requiring controlled access please log in using EGA credentials.</p>
           <p>You can use this service for a range of submission activities as well as reports
             on your submissions.</p>
-
-
-          <div *ngIf="serverMessage" class="message" [innerHTML]=serverMessage> </div>
+          <div *ngIf="serverMessage" class="message" [innerHTML]="serverMessage"></div>
         </mat-card-subtitle>
       </div>
     </mat-card>
-    <mat-card class="login-card">
+
+    <mat-card class="login-card mat-elevation-z0">
       <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
-        <mat-card-subtitle>Please provide your Webin credentials</mat-card-subtitle>
+        <mat-card-title>Webin Portal Login (supported by Firebase)</mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        <!-- Show login fields if `showLoginFields` is true -->
+        <div *ngIf="showLoginFields">
+          <div *ngIf="!hideFeatureLocalLogin">
+            <mat-form-field>
+              <input matInput placeholder="Email" required [(ngModel)]="firebaseEmail" name="firebaseEmail"
+                     autocomplete="new-password">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="password" matInput placeholder="Password" required [(ngModel)]="firebasePassword"
+                     name="firebasePassword"
+                     autocomplete="new-password">
+            </mat-form-field>
+            <a mat-button color="warn" (click)="openForgotPasswordDialog()">Forgot Password?</a>
+            <!-- Button for login -->
+            <div style="text-align: left;">
+              <!-- Sign in button -->
+              <button mat-raised-button color="accent" type="button" (click)="firebaseLocalAccountLogin()">
+                Sign in
+              </button>
 
-        <mat-form-field>
-          <input matInput placeholder="Submission account" required [(ngModel)]="username" name="username"
-            autocomplete="new-password">
-        </mat-form-field>
-        <mat-form-field>
-          <input type="password" matInput placeholder="Password" required [(ngModel)]="password" name="password"
-            autocomplete="new-password">
-        </mat-form-field>
+              <!-- OR Separator -->
+              <span style="margin: 0 10px;"> OR </span>
+            </div>
+          </div>
 
-        <div style="text-align: center;">
-          <button mat-raised-button color="accent" type="submit" name="action">Login</button>
-          <button mat-raised-button color="primary" type="button" style="margin-left: 5px;"
-            [routerLink]="['/accountInfo']">Register</button>
-          <p>
-            <a (click)="openResetPasswordRequestDialog({})">Forgot Password ? </a>
-          </p>
+          <!-- Continue with Google link -->
+          <a mat-button color="accent" (click)="firebaseGoogleSignIn()">
+            <mat-icon>g</mat-icon>
+            Continue with Google
+          </a>
+
+          <!-- Need an account? Sign up link -->
+          <div style="text-align: left; margin-top: 10px;">
+            <a [routerLink]="['/register-firebase']">Need an account? Sign up</a>
+          </div>
         </div>
+
         <p class="app-error" *ngIf="error">
           <i class="material-icons">error</i>
-          <span [innerHTML]=errorMessage> </span>
-
+          <span [innerHTML]="errorMessage"> </span>
         </p>
+
+        <!-- Dropdown for Webin Submission Account IDs -->
+        <div *ngIf="!showLoginFields">
+          <div *ngIf="webinSubmissionAccountIds && webinSubmissionAccountIds.length > 0">
+            <mat-form-field>
+              <mat-label>Memberships</mat-label>
+              <mat-select [(ngModel)]="selectedSubmissionAccount">
+                <mat-option *ngFor="let accountId of webinSubmissionAccountIds" [value]="accountId">
+                  {{ accountId }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- Button to proceed with selected account -->
+            <div style="text-align: center;">
+              <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedAccount()">Proceed
+              </button>
+            </div>
+          </div>
+          <br/>
+          <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0">
+            <mat-form-field>
+              <mat-label>Invitations</mat-label>
+              <mat-select [(ngModel)]="selectedInvitedSubmissionAccount">
+                <mat-option *ngFor="let accountId of invitedWebinSubmissionAccountIds" [value]="accountId">
+                  {{ accountId }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- Button to proceed with selected account -->
+            <div style="text-align: center;">
+              <button mat-raised-button color="primary" type="button" (click)="proceedWithSelectedInvitedAccount()">
+                Accept Invitation
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!webinSubmissionAccountIds">
+          <div *ngIf="invitedWebinSubmissionAccountIds && invitedWebinSubmissionAccountIds.length > 0"
+               style="text-align: center; margin: 10px 0;">
+            OR
+          </div>
+          <button mat-raised-button color="primary" (click)="redirectToRegister()">Complete your WEBIN account
+            registration
+          </button>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
