@@ -12,6 +12,16 @@ spec:
       labels:
         run: webin-portal
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - dev-test
       containers:
         - name: webin-portal
           image: %DOCKER_IMAGE%
@@ -22,7 +32,7 @@ spec:
               memory: "1Gi"
           ports:
             - containerPort: 80
-        #    - containerPort: 443
+          #    - containerPort: 443
           env:
             - name: HTTPS_PROXY
               value: "http://hx-wwwcache.ebi.ac.uk:3128"
