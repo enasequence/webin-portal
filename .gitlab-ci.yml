@@ -90,7 +90,27 @@ k8s-deploy-test:
     - ena-dcap-gitlab-runner
   when: manual
 
-k8s-deploy-prod:
+k8s-deploy-prod-hx:
+  image: dtzar/helm-kubectl:3.11.0
+  stage: deploy
+  only:
+    - /^(\d+\.)?(\d+\.)?(\*|\d+)$/
+  except:
+    - branches
+    - triggers
+  script:
+    - sed -i s#%DOCKER_IMAGE%#$CI_REGISTRY_IMAGE\:$CI_COMMIT_TAG#g Kubernetes-prod-deploy.yaml
+    - kubectl config set-cluster ena-cluster --server="${K8_HL2_SERVER}"
+    - kubectl config set clusters.ena-cluster.certificate-authority-data ${K8_HL2_CERTIFICATE_AUTHORITY_DATA}
+    - kubectl config set-credentials ena-user --token="${K8_HL2_CREDENTIALS}"
+    - kubectl config set-context ena-context --cluster=ena-cluster --user=ena-user
+    - kubectl config use-context ena-context
+    - kubectl apply -f Kubernetes-prod-deploy.yaml --namespace=ena-prod
+  tags:
+    - ena-dcap-gitlab-runner
+  when: manual
+
+k8s-deploy-prod-hl:
   image: dtzar/helm-kubectl:3.11.0
   stage: deploy
   only:
