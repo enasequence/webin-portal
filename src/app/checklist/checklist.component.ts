@@ -9,28 +9,29 @@
  * specific language governing permissions and limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, OnInit, Optional, Inject, ViewChild, QueryList, ElementRef, ViewChildren } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { saveAs } from 'file-saver';
-import { retry, mergeMap, map } from 'rxjs/operators';
-import { ChecklistType } from '../checklist-type.enum';
-import { ChecklistInterface } from '../checklist.interface';
-import { ChecklistGroupInterface } from '../checklist-group.interface';
-import { ChecklistFieldGroupInterface } from '../checklist-field-group.interface';
-import { ChecklistFieldInterface } from '../checklist-field.interface';
-import { WebinAuthenticationService } from '../webin-authentication.service';
-import { WebinReportService } from '../webin-report.service';
-import { WebinRestService } from '../webin-rest.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { PopupMessageComponent } from '../popup-message/popup-message.component';
-import { UtilService } from '../util/Util-services'
-import { SubmissionResultDialogComponent } from '../submission-result-dialog/submission-result-dialog.component';
-import { NonSubmissionResultDialogComponent } from '../non-submission-result-dialog/non-submission-result-dialog.component';
-import { ReleaseDatePopupComponent } from '../release-date-popup/release-date-popup/release-date-popup.component';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog} from '@angular/material/dialog';
+import {MatExpansionPanel} from '@angular/material/expansion';
+import {saveAs} from 'file-saver';
+import {mergeMap, retry} from 'rxjs/operators';
+import {ChecklistType} from '../checklist-type.enum';
+import {ChecklistInterface} from '../checklist.interface';
+import {ChecklistGroupInterface} from '../checklist-group.interface';
+import {ChecklistFieldGroupInterface} from '../checklist-field-group.interface';
+import {ChecklistFieldInterface} from '../checklist-field.interface';
+import {WebinAuthenticationService} from '../webin-authentication.service';
+import {WebinReportService} from '../webin-report.service';
+import {WebinRestService} from '../webin-rest.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {PopupMessageComponent} from '../popup-message/popup-message.component';
+import {UtilService} from '../util/Util-services'
+import {SubmissionResultDialogComponent} from '../submission-result-dialog/submission-result-dialog.component';
+import {
+  NonSubmissionResultDialogComponent
+} from '../non-submission-result-dialog/non-submission-result-dialog.component';
 
 
 interface BooleanFieldInterface {
@@ -124,7 +125,9 @@ export class ChecklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.checklistType = this._route.snapshot.params.checklistType;
+
     console.log("this.checklistType : " + this.checklistType)
+
     this.init = this._route.snapshot.params.init;
 
     if (this.init) {
@@ -277,12 +280,20 @@ export class ChecklistComponent implements OnInit {
         retry(3),
         mergeMap(data => {
           this.setChecklistGroups(data);
-          return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+          if (this.checklistType === ChecklistType.sample) {
+            return this._webinReportService.getChecklistSchemasFromJsonSchemaStore();
+          } else {
+            return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
+          }
         })
       ).
       subscribe(
         data => {
-          this.setChecklistXmls(data);
+          if (this.checklistType === ChecklistType.sample) {
+            this.setChecklistSchemas(data);
+          } else {
+            this.setChecklistXmls(data);
+          }
         }
         ,
         (err: HttpErrorResponse) => {
@@ -424,17 +435,93 @@ export class ChecklistComponent implements OnInit {
     this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
   }
 
+  private setChecklistSchemas(data: any): void {
+    const schemas = data.body._embedded.mongoJsonSchemas;
+    const nextPageLink = data.body._links?.next?.href;
+
+    schemas.forEach((schema) => {
+      const checklist: ChecklistInterface = {
+        id: schema.accession,
+        name: schema.title,
+        description: schema.description,
+        type: schema.version,
+        fieldGroups: new Array<ChecklistFieldGroupInterface>(),
+      };
+
+      const fieldGroup: ChecklistFieldGroupInterface = {
+        name: 'Characteristics',
+        fields: [],
+      };
+
+      const schemaId = `${schema.accession}:${schema.version}`;
+      this._webinReportService.getSchemaFields(schemaId).subscribe(
+        (fieldsResponse: any) => {
+          const fields = fieldsResponse.body._embedded.fields;
+
+          schema.schemaFieldAssociations.forEach((assoc) => {
+            const fieldName = assoc.fieldId.split(':')[0];
+            const fieldInfo = fields.find((field: any) => field.name === fieldName);
+
+            if (fieldInfo) {
+              const field: ChecklistFieldInterface = {
+                name: fieldName,
+                label: fieldInfo.label || fieldName,
+                description: fieldInfo.description || 'No description available',
+                mandatory: assoc.requirementType === 'MANDATORY' ? 'mandatory' :
+                  assoc.requirementType === 'RECOMMENDED' ? 'recommended' : 'optional',
+                type: fieldInfo.type === 'choice' ? 'TEXT_CHOICE_FIELD' : 'TEXT_FIELD',
+                textChoice: fieldInfo.choices || [],
+                units: fieldInfo.units || [],
+                regexValue: fieldInfo.pattern || ''
+              };
+
+              fieldGroup.fields.push(field);
+            }
+          });
+
+          checklist.fieldGroups.push(fieldGroup);
+
+          this._checklistGroups.forEach((checklistGroup) => {
+            checklistGroup.checklistIds.forEach((id) => {
+              if (checklist.id === id) {
+                checklistGroup.checklists.push(checklist);
+              }
+            });
+          });
+
+          this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('** Failed to fetch fields for schema **', schemaId, err);
+        }
+      );
+    });
+
+    if (nextPageLink) {
+      this._webinReportService.getPaginatedSchemas(nextPageLink).subscribe(
+        (nextPageData: any) => this.setChecklistSchemas(nextPageData),
+        (err: HttpErrorResponse) => {
+          console.log('** Failed to fetch next page of schemas **', err);
+        }
+      );
+    }
+  }
+
   isEga(): boolean {
     return this._webinAuthenticationService.ega;
   }
 
   buildSelectedChecklistRequestObject(callback) {
-    let selectedChecklistArray = new Array();
+    let selectedChecklistArray = [];
     let fieldGroups = this.selectedChecklist.fieldGroups;
     let selectedFieldsCnt = 0;
     fieldGroups.forEach(fieldGroup => {
       fieldGroup.fields.forEach(field => {
         if (this.selectedFields[field.name] || this.selectedFields[field.label]) {
+          if (field.name != null) {
+            field.name = field.label;
+          }
+
           if (field.textChoice) {
             field["value_choice"] = field.textChoice;
           } else {
@@ -513,18 +600,25 @@ export class ChecklistComponent implements OnInit {
   }
 
   downloadTsvSpreadsheet() {
-    this.buildSelectedChecklistRequestObject(function (util, selectedChecklistObject) {
+    this.buildSelectedChecklistRequestObject((util, selectedChecklistObject) => {
       console.log(selectedChecklistObject)
-      util.downloadTsvTemplate(selectedChecklistObject).
-        subscribe((data) => {
-          let blob = new Blob([data], { type: "text/plain;charset=utf-8'" });
+
+      if (this.checklistType === ChecklistType.sample) {
+        util.downloadSampleTsvTemplate(selectedChecklistObject).subscribe((data) => {
+          let blob = new Blob([data], {type: "text/plain;charset=utf-8'"});
           saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
         }, (error) => {
           console.log('Error', error);
         });
+      } else {
+        util.downloadTsvTemplate(selectedChecklistObject).subscribe((data) => {
+          let blob = new Blob([data], {type: "text/plain;charset=utf-8'"});
+          saveAs(blob, util.getFileName(selectedChecklistObject, ".tsv"));
+        }, (error) => {
+          console.log('Error', error);
+        });
+      }
     });
-
-
   }
 
   getPredicate() {
@@ -652,12 +746,12 @@ export class ChecklistComponent implements OnInit {
   }
 
   getSampleSpecificFields() {
-    let sampleSpecificFields = {
+    return {
       name: "Sample Details",
       fields: [
         {
           name: "tax_id",
-          label: "NCBI Taxonomy",
+          label: "tax_id",
           description: "Taxonomy ID of the organism as in the <a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi'> NCBI Taxonomy database</a>. Entries in the NCBI Taxonomy database have integer taxon IDs. See our tips for sample taxonomy <a href='https://ena-docs.readthedocs.io/en/latest/faq/taxonomy.html'>here</a>",
           mandatory: "mandatory",
           textChoice: [],
@@ -667,7 +761,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "scientific_name",
-          label: "Scientific name",
+          label: "scientific_name",
           description: "Scientific name of the organism as in the <a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi'> NCBI Taxonomy database</a>. Scientific names typically follow the binomial nomenclature. For example, the scientific name for humans is Homo sapiens.",
           mandatory: "mandatory",
           textChoice: [],
@@ -677,7 +771,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "sample_alias",
-          label: "Sample alias (unique name)",
+          label: "sample_alias",
           description: "Unique name of the sample. If not selected system will auto generate an unique alias",
           mandatory: "mandatory",
           textChoice: [],
@@ -687,7 +781,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "sample_title",
-          label: "Sample title",
+          label: "sample_title",
           description: "Title of the sample",
           mandatory: "mandatory",
           textChoice: [],
@@ -697,7 +791,7 @@ export class ChecklistComponent implements OnInit {
         },
         {
           name: "sample_description",
-          label: "Sample description",
+          label: "sample_description",
           description: "Description of the sample",
           mandatory: "mandatory",
           textChoice: [],
@@ -705,8 +799,7 @@ export class ChecklistComponent implements OnInit {
           units: [],
           isVisible: true
         }]
-    }
-    return sampleSpecificFields;
+    };
   }
 
   isBroker(): boolean {

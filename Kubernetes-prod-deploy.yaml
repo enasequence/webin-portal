@@ -12,6 +12,16 @@ spec:
       labels:
         run: webin-portal
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - prod
       containers:
         - name: webin-portal
           image: %DOCKER_IMAGE%

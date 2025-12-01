@@ -90,8 +90,12 @@ export class UtilService {
     return this.httpClient.post(environment.webinRestUrl + '/tab/tsv', checklistJson, { responseType: 'arraybuffer' });
   }
 
+  downloadSampleTsvTemplate(checklistJson) {
+    return this.httpClient.post(environment.spreadsheetGeneratorUrl + '/generate-tsv-from-checklist', checklistJson, { responseType: 'arraybuffer' });
+  }
+
   getFileName(checklist, extension) {
-    return checklist.checklistType + "_" + checklist.checklistFieldName.replace(" ", "-") + "_" + new Date().getTime() + extension;
+    return checklist.checklistType + "_" + checklist.checklistFieldName.replace(" ", "-") + "_" + checklist.checklistFieldValue + "_" + new Date().getTime() + extension;
   }
 
   getFileNameByTemplate(template, extension) {

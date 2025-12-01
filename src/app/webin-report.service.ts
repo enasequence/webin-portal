@@ -20,6 +20,7 @@ import { WebinReportServiceInterface } from './webin-report.service.interface';
 export class WebinReportService implements WebinReportServiceInterface {
 
   private _baseUrl = environment.webinReportServiceUrl;
+  private _jsonSchemaUrl = environment.schemaStoreUrl;
 
   constructor(private _webinAuthenticationService: WebinAuthenticationService, private _http: HttpClient) { }
 
@@ -160,6 +161,29 @@ export class WebinReportService implements WebinReportServiceInterface {
     params['type'] = type;
     const url: string = this._baseUrl + '/checklists/xml/*' + '?' + this.getUrlParams(params);
     return this._http.get(url, { responseType: 'text', observe: 'response' });
+  }
+
+  getChecklistSchemasFromJsonSchemaStore() {
+    console.log('Calling getChecklistSchemas() - _jsonSchemaUrl:' + this._jsonSchemaUrl);
+
+    const url: string = this._jsonSchemaUrl + '/schemas/search/findByExample?latest=true';
+    return this._http.get(url, { responseType: 'json', observe: 'response' });
+  }
+
+  getSchemaFields(schemaId: string) {
+    const url = `${this._jsonSchemaUrl}/fields/search/findByUsedBySchemas?schemaId=${schemaId}&size=10000`;
+    return this._http.get(url, {responseType: 'json', observe: 'response'});
+  }
+
+  getPaginatedSchemas(nextPageLink: string) {
+    const paginatedUrl = this.generatePaginatedUrl(nextPageLink); // Generate the full URL dynamically
+    return this._http.get(paginatedUrl, { responseType: 'json', observe: 'response' });
+  }
+
+  generatePaginatedUrl(nextPageLink: string): string {
+    const schemaStoreBaseUrl = this._jsonSchemaUrl;
+    const relativePathSearch = new URL(nextPageLink).search;
+    return `${schemaStoreBaseUrl}/schemas/search/findByExample${relativePathSearch}`;
   }
 
   private getAll(reportType: string, status: string, rows: string, format: string) {
