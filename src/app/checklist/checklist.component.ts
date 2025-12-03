@@ -373,15 +373,25 @@ export class ChecklistComponent implements OnInit {
   }
 
   private organizeSchemasIntoGroups(schemas: any[]): void {
+    // Static descriptions for checklist groups
+    const groupDescriptions: { [key: string]: string } = {
+      'Environmental Checklists': 'This group currently includes Genomic Standards Consortium (GSC) MixS sample checklists',
+      'Marine Checklists': 'This group currently includes Micro B3 and Tara Oceans sample checklists',
+      'Other Checklists': 'This group currently includes the ENA default sample checklist and a few project specific checklists',
+      'Pathogens Checklists': 'This group currently includes several prokaryote and virus pathogen sample checklists'
+    };
+
     const groupMap = new Map<string, { checklistIds: Array<string>, description: string }>();
 
     // Group schemas by their 'group' property
     schemas.forEach((schema) => {
       const groupName = schema.group || 'Other Checklists';
       if (!groupMap.has(groupName)) {
+        // Use static description if available, otherwise fall back to the group name
+        const description = groupDescriptions[groupName] || groupName;
         groupMap.set(groupName, {
           checklistIds: [],
-          description: schema.description || groupName
+          description: description
         });
       }
       groupMap.get(groupName).checklistIds.push(schema.accession);
