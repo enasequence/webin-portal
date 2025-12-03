@@ -270,40 +270,58 @@ export class ChecklistComponent implements OnInit {
     this.dataError = undefined;
     this._checklistGroups = new Array<ChecklistGroupInterface>();
 
-    const checklistGroups = this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
-    if (!checklistGroups) {
-      return;
-    }
+    if (this.checklistType === ChecklistType.sample) {
+      // For sample type, get checklist groups from schema store
+      const schemaStoreObservable = this._webinReportService.getChecklistSchemasFromJsonSchemaStore();
+      if (!schemaStoreObservable) {
+        return;
+      }
 
-    checklistGroups.
-      pipe(
-        retry(3),
-        mergeMap(data => {
-          this.setChecklistGroups(data);
-          if (this.checklistType === ChecklistType.sample) {
-            return this._webinReportService.getChecklistSchemasFromJsonSchemaStore();
-          } else {
+      schemaStoreObservable.
+        pipe(
+          retry(3)
+        ).
+        subscribe(
+          data => {
+            // Collect all schemas from all pages and organize into groups
+            this.collectAllSchemasAndOrganizeGroups(data);
+          },
+          (err: HttpErrorResponse) => {
+            console.log('** Webin checklist service failed **', err);
+            this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          },
+          () => {
+            this.active = false;
+          }
+        );
+    } else {
+      // For sequence type, keep the original flow
+      const checklistGroups = this._webinReportService.getChecklistGroups(this.getChecklistTypeParamValue());
+      if (!checklistGroups) {
+        return;
+      }
+
+      checklistGroups.
+        pipe(
+          retry(3),
+          mergeMap(data => {
+            this.setChecklistGroups(data);
             return this._webinReportService.getChecklistXmls(this.getChecklistTypeParamValue());
-          }
-        })
-      ).
-      subscribe(
-        data => {
-          if (this.checklistType === ChecklistType.sample) {
-            this.setChecklistSchemas(data);
-          } else {
+          })
+        ).
+        subscribe(
+          data => {
             this.setChecklistXmls(data);
+          },
+          (err: HttpErrorResponse) => {
+            console.log('** Webin checklist service failed **', err);
+            this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
+          },
+          () => {
+            this.active = false;
           }
-        }
-        ,
-        (err: HttpErrorResponse) => {
-          console.log('** Webin checklist service failed **', err);
-          this.dataError = 'Webin checklist service failed. Please try again later. If the problem persists please contact the helpdesk.';
-        },
-        () => {
-          this.active = false;
-        }
-      );
+        );
+    }
   }
 
   private setChecklistGroups(data): void {
@@ -326,6 +344,131 @@ export class ChecklistComponent implements OnInit {
       // Remove EGA checklists
       this._checklistGroups.splice(this._checklistGroups.findIndex(group => group.name === "EGA Checklists"), 1);
     }
+  }
+
+  private collectAllSchemasAndOrganizeGroups(data: any, allSchemas: any[] = []): void {
+    // Collect schemas from current page
+    const schemas = data.body._embedded.mongoJsonSchemas;
+    allSchemas = allSchemas.concat(schemas);
+    const nextPageLink = data.body._links?.next?.href;
+
+    if (nextPageLink) {
+      // If there's a next page, fetch it and continue collecting
+      this._webinReportService.getPaginatedSchemas(nextPageLink).subscribe(
+        (nextPageData: any) => {
+          this.collectAllSchemasAndOrganizeGroups(nextPageData, allSchemas);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('** Failed to fetch next page of schemas **', err);
+          // Even if pagination fails, organize what we have
+          this.organizeSchemasIntoGroups(allSchemas);
+          this.processAllSchemas(allSchemas);
+        }
+      );
+    } else {
+      // No more pages, organize all collected schemas into groups
+      this.organizeSchemasIntoGroups(allSchemas);
+      this.processAllSchemas(allSchemas);
+    }
+  }
+
+  private organizeSchemasIntoGroups(schemas: any[]): void {
+    const groupMap = new Map<string, { checklistIds: Array<string>, description: string }>();
+
+    // Group schemas by their 'group' property
+    schemas.forEach((schema) => {
+      const groupName = schema.group || 'Other Checklists';
+      if (!groupMap.has(groupName)) {
+        groupMap.set(groupName, {
+          checklistIds: [],
+          description: schema.description || groupName
+        });
+      }
+      groupMap.get(groupName).checklistIds.push(schema.accession);
+    });
+
+    // Create checklist groups from the grouped schemas
+    groupMap.forEach((groupData, groupName) => {
+      this._checklistGroups.push({
+        name: groupName,
+        description: groupData.description,
+        checklistIds: groupData.checklistIds,
+        checklists: new Array<ChecklistInterface>()
+      });
+    });
+
+    // Handle EGA filtering if needed
+    if (this.isEga()) {
+      // Remove non EGA checklists
+      this._checklistGroups = this._checklistGroups.filter(fieldGroup => fieldGroup.name === "EGA Checklists");
+    } else {
+      // Remove EGA checklists
+      const egaIndex = this._checklistGroups.findIndex(group => group.name === "EGA Checklists");
+      if (egaIndex !== -1) {
+        this._checklistGroups.splice(egaIndex, 1);
+      }
+    }
+  }
+
+  private processAllSchemas(schemas: any[]): void {
+    // Process each schema to create checklists (reusing logic from setChecklistSchemas)
+    schemas.forEach((schema) => {
+      const checklist: ChecklistInterface = {
+        id: schema.accession,
+        name: schema.title,
+        description: schema.description,
+        type: schema.version,
+        fieldGroups: new Array<ChecklistFieldGroupInterface>(),
+      };
+
+      const fieldGroup: ChecklistFieldGroupInterface = {
+        name: 'Characteristics',
+        fields: [],
+      };
+
+      const schemaId = `${schema.accession}:${schema.version}`;
+      this._webinReportService.getSchemaFields(schemaId).subscribe(
+        (fieldsResponse: any) => {
+          const fields = fieldsResponse.body._embedded.fields;
+
+          schema.schemaFieldAssociations.forEach((assoc) => {
+            const fieldName = assoc.fieldId.split(':')[0];
+            const fieldInfo = fields.find((field: any) => field.name === fieldName);
+
+            if (fieldInfo) {
+              const field: ChecklistFieldInterface = {
+                name: fieldName,
+                label: fieldInfo.label || fieldName,
+                description: fieldInfo.description || 'No description available',
+                mandatory: assoc.requirementType === 'MANDATORY' ? 'mandatory' :
+                  assoc.requirementType === 'RECOMMENDED' ? 'recommended' : 'optional',
+                type: fieldInfo.type === 'choice' ? 'TEXT_CHOICE_FIELD' : 'TEXT_FIELD',
+                textChoice: fieldInfo.choices || [],
+                units: fieldInfo.units || [],
+                regexValue: fieldInfo.pattern || ''
+              };
+
+              fieldGroup.fields.push(field);
+            }
+          });
+
+          checklist.fieldGroups.push(fieldGroup);
+
+          this._checklistGroups.forEach((checklistGroup) => {
+            checklistGroup.checklistIds.forEach((id) => {
+              if (checklist.id === id) {
+                checklistGroup.checklists.push(checklist);
+              }
+            });
+          });
+
+          this.checklistGroupDataSource = new MatTableDataSource<ChecklistGroupInterface>(this._checklistGroups);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('** Failed to fetch fields for schema **', schemaId, err);
+        }
+      );
+    });
   }
 
   setChecklistXmls(data): void {
