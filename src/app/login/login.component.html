@@ -8,7 +8,23 @@
           <p>You can use this service for a range of submission activities as well as reports
             on your submissions.</p>
 
+        </mat-card-subtitle>
+        <mat-card-subtitle style="text-align: left;">
+          <a
+             href="https://www.ebi.ac.uk/ena/gff3/converter/"
+             target="_blank"
+             routerLinkActive="active"
+             matTooltip="A web-based GFF3 conversion tool">
+            <span>
+              Flatfile
+                   <i class="icon icon-common icon-exchange-alt" style="font-size: 2em;"></i> GFF3 Converter
+             </span>
+          </a>
+          <p>Use the above link to convert between EMBL/GenBank flatfiles and GFF3 files by uploading a file or using the
+          editor.</p>
+        </mat-card-subtitle>
 
+        <mat-card-subtitle style="text-align: left;">
           <div *ngIf="serverMessage" class="message" [innerHTML]=serverMessage> </div>
         </mat-card-subtitle>
       </div>
